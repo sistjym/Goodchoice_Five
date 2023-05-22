@@ -26,12 +26,22 @@
   <link rel="stylesheet" type="text/css" href="<%= ctxPath%>/resources/css/product_search.css" />
   <link rel="stylesheet" type="text/css" href="<%=ctxPath %>/resources/css/style2.css" />
   
+  <link rel="stylesheet" type="text/css" href="<%=ctxPath %>/resources/css/common.css" />
+  <link rel="stylesheet" type="text/css" href="<%=ctxPath %>/resources/css/gaeun.css" />
+  
   
   
   <!-- Optional JavaScript -->
   <script type="text/javascript" src="<%= ctxPath%>/resources/js/jquery-3.6.4.min.js"></script>
   <script type="text/javascript" src="<%= ctxPath%>/resources/bootstrap-4.6.0-dist/js/bootstrap.bundle.min.js" ></script> 
   <script type="text/javascript" src="<%= ctxPath%>/resources/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script> 
+  
+    <!-- slick-slider -->
+  <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+  <link rel="stylesheet" href="http://cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script type="text/javascript" src="http://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+  
   
   <!-- RangeDatePicker JS -->
   <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
@@ -51,6 +61,10 @@
 		<div id="myheader">
 			<tiles:insertAttribute name="header" />
 		</div>
+		
+		<div id="mysubtop">
+			<tiles:insertAttribute name="subtop" />
+		</div>		
 		
 		<div id="mycontent">
 			<tiles:insertAttribute name="content" />
