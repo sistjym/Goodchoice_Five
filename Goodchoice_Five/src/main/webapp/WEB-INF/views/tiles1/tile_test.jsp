@@ -8,7 +8,6 @@
 </head>
 <body>
 
-tiles 테스트 합니다
 
 </body>
 </html>

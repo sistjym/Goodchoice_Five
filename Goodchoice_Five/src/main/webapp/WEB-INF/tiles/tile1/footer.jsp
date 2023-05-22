@@ -2,10 +2,35 @@
     pageEncoding="UTF-8"%>
 
 <%-- ======= #27. tile1 중 footer 페이지 만들기  ======= --%>
-
-<div style="color: #999999; margin: auto; padding: 7px;">
-쌍용교육센터 | 강남 서울특별시 강남구 테혜란로 132(역삼동) 한독약품빌딩 8층 쌍용교육센터 | 강남 Tel 02)3482-4632-5 Fax 02)3482-4636<br>
-강북 서울특별시 마포구 월드컵북로 21 풍성빌딩 2,3,4층 쌍용강북교육센터 | 강북  Tel 02)336-8546-8 Fax 02)334-5405<br>
-사업자번호 : 214-85-29296 | 대표 : 노경한 | 개인정보처리관리책임자 : 장일규<br>       
-Copyright ⓒ 2012 Ssangyong institute of System Technology. All Right Reserved
-</div> 
+<footer>
+	<div class="align">
+	   <ul class="link">
+	       <li><a href="#">회사소개</a><span>|</span></li>
+	       <li><a href="#">이용약관</a><span>|</span></li>
+	       <li><a href="#">개인정보처리방침</a><span>|</span></li>
+	       <li><a href="#">소비자분쟁해결 기준</a><span>|</span></li>
+	       <li><a href="#">사업자정보확인</a><span>|</span></li>
+	       <li><a href="#">여기어때 마케팅센터</a><span>|</span></li>
+	       <li><a href="#">액티비티 호스트센터</a><span>|</span></li>
+	       <li><a href="#"> HOTEL 여기어때</a><span>|</span></li>
+	       <li><a href="#">콘텐츠산업진흥법에의한 표시</a><span>
+	   </ul>
+	   <p>
+	       <b>고객행복센터 1670-6250</b>
+	       <span>오전 9시 - 세벽 3시</span>
+	   </p>
+	   <address>
+	       <span>(주) 여기어때컴퍼니</span>
+	       주소 : 서울특별시 강남구 봉은사로 479, 479타워 11층 | 대표이사 : 정명훈 | 사업자등록번호: 742-86-00224 | 전자우편주소 :
+	       help@goodchoice.kr<br>
+	       통신판매번호 : 2017-서울강남-01779 | 관광사업자 등록번호: 제1026-24호 | 전화번호 : 1670-6250 | 호스팅서비스제공자의 상호 표시: (주)여기어때컴퍼니<br>
+	       <span class="order">(주) 여기어때컴퍼니는 통신판매중개자로서 통신판매의 당사자가 아니며, 상품의 예약, 이용 및 환불 등과 관련한 의무와 책임은 각 판매자에게
+	           있습니다.</span><br>
+	       Copyright GC COMPANY Corp. All rights reserved.
+	   </address>
+	   <div class="ico">
+	
+	       class="icon-ic_naverpost"><span>네이버포스트</span></a>
+	   </div>
+	</div> 
+</footer>

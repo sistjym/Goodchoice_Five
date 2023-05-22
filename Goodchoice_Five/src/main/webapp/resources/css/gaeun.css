@@ -1,0 +1,375 @@
+
+.wrap {
+    width: 100%;
+    background: #fff;
+}
+/* body */
+
+body {
+    font-family: 'Pretendard', 'Apple SD Gothic Neo', '맑은 고딕', '맑은고딕', 'Malgun Gothic', sans-serif;
+    font-size: 14px;
+    line-height: 1;
+    color: rgba(0,0,0,0.87);
+    -webkit-text-size-adjust: none;
+}
+ul, ol, li{
+    list-style: none;
+}
+
+
+button{
+    padding:0;
+    cursor: pointer;
+    font-family: 'Pretendard', 'Apple SD Gothic Neo', '맑은 고딕', '맑은고딕', 'Malgun Gothic', sans-serif;
+}
+
+button span{
+    position: relative;
+}
+.dropbtn {
+    border: none;
+    padding: 0;
+    background: none;
+    font-size: 18px;
+    line-height: 1;
+    color: rgba(255,255,255,0.8);
+    letter-spacing: 0;
+}
+
+ul{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box
+}
+
+
+.gnb_pc li ul {
+    display: none;
+    position: absolute;
+    top: 50;
+    left: 0;
+    border-radius: 5px;
+    padding: 10px;
+    background: #c04141;
+    text-align: left;
+    box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.2);
+}
+.gnb_pc li a {
+    display: block;
+    font-size: 18px;
+    color: rgba(255,255,255,0.8);
+    letter-spacing: 0;
+   
+}
+
+ul.dropdown-content a {
+    font-size: 13px;
+    line-height: 30px;
+}
+
+
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+
+#content {
+    overflow: hidden;
+}
+
+/* body */
+/* 검색칭 */
+
+
+.search_boxContainter{
+    padding: 30px;
+    width: 1024px;
+    height: 300px;
+    margin: 0 auto;
+    position: relative;
+}
+.inner_searchBox{
+    padding: 32px 48px 32px;
+    width: 100%;
+    position: relative;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 8px 3px;
+    border-radius: 16px;
+    background-color: rgb(248, 247, 249);
+}
+
+i.icon{
+    color: #d4c4cb;
+    padding-top: 20px;
+    padding-left: 10px;
+}
+.searchBar{
+    margin-bottom: 15px;
+    border: 1px solid;
+    border-color: #dddfe2;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: none;
+    font-size: 16px;
+    height: 60px;
+    padding: 10px;
+    
+}
+.icon_wrapper{ 
+    position: absolute;
+    margin:20px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+input.iconBox_child:focus {outline:none;}
+input:focus::-webkit-input-placeholder,
+textarea:focus::-webkit-input-placeholder { /* WebKit browsers */
+  color:transparent;
+}
+.iconBox_child{
+    border: none;
+    font-size: 16px;
+    height: 45px;
+    cursor: pointer;
+  
+}
+.input_info{
+    margin-left: 50px;
+} 
+
+
+.count{
+    background-color: #fff;
+    text-align: center;
+   
+}
+
+.plus,.minus{
+    cursor: pointer;
+}
+.person-spinner{
+    margin-left: 50px;
+}
+
+/* 검색하기 버튼  */
+.searchBtnBox{
+   
+   
+    margin: 0 auto;
+    max-width: 760px;
+    min-width: 580px;
+    text-align: center;
+    width: 75%;
+    margin-bottom: 100px;
+   
+}
+#searchBtn{
+    margin: -32px auto;
+    position: relative;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    background-color: #f7323f;
+    color: rgb(255, 255, 255);
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 3px 1px;
+    width: 490px;
+    height: 64px;
+}
+.searcText{
+    font-size: 20px;
+    line-height: 26px;
+    font-weight: 400;
+}
+/*베너용*/
+.banner{
+	padding: 30px 0 29px 30px;
+    width: 60%;
+    height: 300px;
+    margin: auto 300px;
+    position: relative;
+    
+}
+
+/* 카테고리 */
+div{
+    display: block;
+}
+
+.main_link {
+    padding: 30px 0 29px 30px;
+    background: rgb(253,253,253);
+}
+
+.main_link ul {
+    overflow: hidden;
+    width: 1024px;
+    margin: 0 auto;
+}
+.main_link li {
+    float: left;
+    width: 163px;
+}
+
+
+.main_link li a {
+    display: block;
+    height: 107px;
+    font-size: 18px;
+    color: rgba(0,0,0,0.56);
+    text-align: center;
+    cursor: pointer;
+}
+
+.main_link li a span {
+    display: inline-block;
+    width: 48px;
+    height: 48px;
+    margin: 0 auto;
+}
+p {
+    display: block;
+   
+}
+.main_link li a p {
+    height: auto;
+    padding-top: 14px;
+}
+/* 카테고리별 사진 */
+.slide-track{
+    display: block;
+    position: relative;
+    top: 0;
+    left: 0;
+
+}
+
+.main_link .ico_01 {
+    background: url(//image.goodchoice.kr/images/web_v3/ico_category_01.png) no-repeat;
+    background-size: 48px auto;
+}
+
+.main_link .ico_02 {
+    background: url(//image.goodchoice.kr/images/web_v3/ico_category_02.png) no-repeat;
+    background-size: 48px auto;
+}
+
+.main_link .ico_03 {
+    background: url(//image.goodchoice.kr/images/web_v3/ico_category_03.png) no-repeat;
+    background-size: 48px auto;
+}
+
+.main_link .ico_04 {
+    background: url(//image.goodchoice.kr/images/web_v3/ico_category_04.png) no-repeat;
+    background-size: 48px auto;
+}
+
+.main_link .ico_05 {
+    background: url(//image.goodchoice.kr/images/web_v3/ico_category_05.png) no-repeat;
+    background-size: 48px auto;
+}
+
+.main_link .ico_09 {
+    background: url(//image.goodchoice.kr/images/web_v3/ico_category_09.png) no-repeat;
+    background-size: 48px auto;
+}
+.destination_name{
+    display: block;  
+    text-align: center;
+}
+
+/* 추천 카테고리 */
+.display_top_destination{
+    text-align: center;
+    margin-top: 70px;
+    font-size: 22pt;
+    margin-bottom: 30px;
+}
+.top_wrapper{
+    display: flex;
+    width: 820px;
+    position: relative;
+    padding: 30px 0 29px 30px;
+    margin: 0 auto;
+
+}
+.destination_1{
+    padding-right: 0px;
+    padding-left: 0px;
+    width: 410px;
+    align-items: stretch;
+    display: flex;
+    
+}
+
+.destnationImg{
+    border-radius: 50%;
+
+    border-width: 1px;
+    height: 150px;
+    position: relative;
+}
+.destination_name{
+    margin-top: 10px;
+}
+
+/* 리뷰 보여주기 */
+
+.sort_category{
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 30px;
+    font-size: 22pt;
+   
+}
+
+.card{
+    font-size: 12pt;
+    text-align: center;
+    display: flex;
+    float: left;
+    margin: 1%;
+    outline: 1px solid;
+    padding: 10px 20px;   
+}
+.center{
+    width: 1024px;
+    position: relative;
+    padding: 30px 0 29px 30px;
+    margin: 0 auto;  
+}
+
+.slick-center {
+    transform: scale(1.6);
+    transition: transform 500ms ease-in-out;
+    transition-delay: 300ms;
+}
+
+/* The container <div> - needed to position the dropdown content
+       추후에 사용예정 
+
+ */
+.dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  /* Dropdown Content (Hidden by Default) */
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    min-width: 145px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+
+  /* Show the dropdown menu on hover */
+  .dropdown:hover .dropdown-content {display: block;}
+  
+
+
+
+
+
