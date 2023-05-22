@@ -20,11 +20,8 @@ public class IndexController {
 		return mav ;
 	}
 
-	@RequestMapping(value="/test/tiles_test_1.gc") // tiles test 입니다.
-	public String tiles_test_1() {
-		
-		return "tile_test.tiles1" ;
-	}
+	
+
 
 	
 }
