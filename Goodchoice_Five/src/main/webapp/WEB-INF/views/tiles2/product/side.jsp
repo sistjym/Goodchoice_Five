@@ -132,7 +132,7 @@
 		<section id="filter" class="mx-4">
 			<form name="product_filter_form">
 				<section class="date-wrap">
-					<h3 class="pt-4 pl-1 filter_text">날짜</h3>						
+					<h3 class="py-3 pl-2 filter_text">날짜</h3>						
 					<input type="text" id="daterange" class="p-3 mr-4" style="background-image: url(<%=request.getContextPath()%>/resources/images/cal_icon.png);" readonly/>
 					<input type="hidden" id="sel_date" name="sel_date" value=""/>
 					<input type="hidden" id="sel_date2" name="sel_date2" value=""/>
@@ -141,9 +141,9 @@
 				<hr class="mt-4 mb-0">
 				
 				<section class="btn-wrap">
-					<h3 class="pt-4 pl-1 filter_text">상세조건</h3>
-					<button type="button" class="mx-1 py-1 rounded">초기화</button>			
-					<button type="button" class="mx-1 py-1 rounded">적용</button>
+					<h3 class="py-3 pl-2 filter_text">상세조건</h3>
+					<button type="button" class="ml-2 py-1 rounded">초기화</button>			
+					<button type="button" class="mr-2 py-1 rounded">적용</button>
 					<div style="clear:both;"></div>
 				</section>
 				
@@ -193,8 +193,6 @@
 					
 				</section>
 				<div style="claer:both;"></div>						
-										
-				
 				
 				<section class="slider-wrap" style="margin-bottom:80px;">
 					  <span class="pt-4 pl-1 filter_text">가격</span>

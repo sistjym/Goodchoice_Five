@@ -154,13 +154,14 @@
 	    top: 3px;
 	}
 	
-	.list-wrap { /* 방정보 wrap */
+	.list-wrap > ul > li{ /* 방정보 wrap */
 		width: 100%;
 		margin: 10px auto;
 		position: relative;
+		cursor: pointer;
 	}
-	
-	.list-wrap img{ /* 방정보 배경이미지 */
+		
+	.room-img img{ /* 방정보 배경이미지 */
 		width: 100%;
 		vertical-align: middle;
 		filter: brightness(60%);
@@ -175,6 +176,7 @@
 		font-size: 20pt;
 		text-align: left;
 		color:white;
+		line-height: 40px;
 	}
 	 
 
@@ -215,7 +217,7 @@
    		bottom:3px;
    }
    
-   .btn_wrap_width_3{
+   .btn_wrap_width_3{ /* 거리순, 낮은 가격순, 높은 가격순 */
    		margin-bottom:50px;
    		position: relative;
     	bottom: 7px;
