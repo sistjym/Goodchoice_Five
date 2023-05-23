@@ -26,17 +26,6 @@ public class IndexController {
 		return "tile_test.tiles1";
 	}
 	
-	@RequestMapping(value="/test/tiles_test_2.gc") 
-	public String tiles_test_2() {
-		return "product/content.tiles2";
-	}
-	
-	@RequestMapping(value="/test/tiles_test_3.gc") // tiles2 
-	public String tiles_test_3() {
-		return "test/test.tiles2";
-	}
-	
-
 	
 	
 
