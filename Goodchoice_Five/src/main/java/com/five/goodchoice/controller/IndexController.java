@@ -43,7 +43,7 @@ public class IndexController {
 		return "main/home.tiles1" ;
 		// /WEB-INF/views/tiles1/{1}/{2}.jsp
 	}
-	
+	 
 
 	
 	
