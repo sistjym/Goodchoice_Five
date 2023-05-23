@@ -58,6 +58,11 @@ public class IndexController {
 	public String hostRegister() {
 		return "host/accommodations_register.tiles3";
 	}
-
+	
+	// 관리자 페이지 승인 부분
+	@RequestMapping(value="/host_approve.gc") 
+	public String host_approve() {
+		return "admin/host_approve.tiles3";
+	}
 	
 }
