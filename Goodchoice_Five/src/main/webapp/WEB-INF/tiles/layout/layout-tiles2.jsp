@@ -29,7 +29,7 @@
   <link rel="stylesheet" type="text/css" href="<%=ctxPath %>/resources/css/common.css" />
   <link rel="stylesheet" type="text/css" href="<%=ctxPath %>/resources/css/gaeun.css" />
   
-  
+  <link rel="stylesheet" type="text/css" href="<%=ctxPath %>/resources/css/mypage.css" />
   
   <!-- Optional JavaScript -->
   <script type="text/javascript" src="<%= ctxPath%>/resources/js/jquery-3.6.4.min.js"></script>
