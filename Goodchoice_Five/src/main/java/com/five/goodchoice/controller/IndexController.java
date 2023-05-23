@@ -25,4 +25,26 @@ public class IndexController {
 		
 		return "tile_test.tiles1";
 	}
+	
+	@RequestMapping(value="/test/tiles_test_2.gc") 
+	public String tiles_test_2() {
+		return "product/content.tiles2";
+	}
+	
+	@RequestMapping(value="/test/tiles_test_3.gc") // tiles2 
+	public String tiles_test_3() {
+		return "test/test.tiles2";
+	}
+	
+	// 메인용 
+	@RequestMapping(value="/main/home.gc") // tiles test 입니다.
+	public String main() {
+		
+		return "main/home.tiles1" ;
+		// /WEB-INF/views/tiles1/{1}/{2}.jsp
+	}
+	
+	
+	
+	
 }
