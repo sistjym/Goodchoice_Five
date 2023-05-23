@@ -142,8 +142,8 @@
 				
 				<section class="btn-wrap">
 					<h3 class="py-3 pl-2 filter_text">상세조건</h3>
-					<button type="button" class="mx-1 py-1 rounded">초기화</button>			
-					<button type="button" class="mx-1 py-1 rounded">적용</button>
+					<button type="button" class="ml-2 py-1 rounded">초기화</button>			
+					<button type="button" class="mr-2 py-1 rounded">적용</button>
 					<div style="clear:both;"></div>
 				</section>
 				
@@ -193,8 +193,6 @@
 					
 				</section>
 				<div style="claer:both;"></div>						
-										
-				
 				
 				<section class="slider-wrap" style="margin-bottom:80px;">
 					  <span class="pt-4 pl-1 filter_text">가격</span>
