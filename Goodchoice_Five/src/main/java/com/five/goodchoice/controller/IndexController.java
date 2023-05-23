@@ -53,7 +53,11 @@ public class IndexController {
 		return "my/point.tiles2";
 	}
 	
-	
+	// 업소 등록
+	@RequestMapping(value="/hostRegister.gc") 
+	public String hostRegister() {
+		return "host/accommodations_register.tiles3";
+	}
 
 	
 }

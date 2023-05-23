@@ -1,0 +1,37 @@
+@charset "UTF-8";
+
+body {font-family: Arial, Helvetica, sans-serif, 돋움; }
+
+#mycontainer	/* { padding:20px; } */
+#mycontent		{ 
+	min-height: 1200px;
+    position: relative;
+    top: 60px;
+    padding-top: 40px;
+    background-color: #F5F5F5;
+    float: right;
+    width: 52%;
+    margin-right: 17.5%;
+    margin-bottom: 7%;
+}
+
+#mysubtop{ 
+	min-height: 140px;
+    background-color: #eee;
+}
+
+
+
+#mysideinfo	{ 
+	min-height: 600px;
+    position: relative;
+    top: 60px;
+    padding-top: 40px;
+    background-color: #F0FFFF;
+    float: left;
+    width: 12%;
+    margin-left: 15%;
+}
+
+ 
+#myheader a {text-decoration:none;}
