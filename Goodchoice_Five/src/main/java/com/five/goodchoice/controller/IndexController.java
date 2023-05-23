@@ -25,9 +25,5 @@ public class IndexController {
 		
 		return "tile_test.tiles1";
 	}
-	
-	
-	
 
-	
 }
