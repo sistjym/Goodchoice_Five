@@ -3,6 +3,14 @@
     
 <div id="content" class="sub_wrap my_wrap">
 
+	<!-- Nav -->
+	<!-- <nav>
+        <ul>
+            <li><a class="" href="/my/points">포인트</a></li>
+            <li><a class="" href="/my/reserveList">예약 내역</a></li>
+                        <li><a class="active" href="/my/mypage">내 정보 관리</a></li>
+        </ul>
+    </nav> -->
 	<div class="align_rt">
 		<div class="mypage">
 			<form name="form1" action="https://www.goodchoice.kr/my/mypageInfoUpdate" autocomplete="off" method="post" novalidate="novalidate" data-form="unick">

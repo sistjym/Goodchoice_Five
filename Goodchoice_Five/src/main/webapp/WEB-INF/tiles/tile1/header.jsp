@@ -9,7 +9,7 @@
 	String ctxPath = request.getContextPath();
 %>
     <header>
-        <section>
+        <section class="header_category">
             <h1>
                 <a class href="#">여기어때</a>
             </h1>
@@ -32,7 +32,7 @@
                     </ul>
                 </li> -->
 	
-				<c:if test="${sessionScope.loginuser != null}">
+				<c:if test="${sessionScope.loginuser == null}">
 					<li>
 			           <a href="#"><span>로그인</span></a>
 			        </li>

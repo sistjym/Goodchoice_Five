@@ -7,14 +7,14 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class IndexController {
 	
-	@	RequestMapping(value="/")
+	@	RequestMapping(value="/") //	http://localhost:9090/goodchoice/
 	public ModelAndView home ( ModelAndView mav) {
 		
 		mav.setViewName("redirect:/index.gc");		
 		return mav ;
 	}
 		
-	@RequestMapping(value="/index.gc")//   http://localhost:9090/index/      로 검색해보세요
+	@	RequestMapping(value="/index.gc")//   http://localhost:9090/goodchoice/index.gc  로 검색해보세요
 	public ModelAndView index ( ModelAndView mav) {
 		mav.setViewName("index");		
 		return mav ;
@@ -23,15 +23,14 @@ public class IndexController {
 	@RequestMapping(value="/test/tiles_test_1.gc") // tiles test 입니다.
 	public String tiles_test_1() {
 		
-		return "tile_test.tiles1" ;
+		return "tile_test.tiles1";
 	}
-
-	@RequestMapping(value="/test/tiles_test_2.gc") // tiles test 입니다.
+	
+	@RequestMapping(value="/test/tiles_test_2.gc") 
 	public String tiles_test_2() {
-		
-		return "product/content.tiles2" ;
+		return "product/content.tiles2";
 	}
-
+	
 	@RequestMapping(value="/test/tiles_test_3.gc") // tiles2 
 	public String tiles_test_3() {
 		return "test/test.tiles2";
@@ -53,22 +52,29 @@ public class IndexController {
 	public String my_page_2() {
 		return "my/point.tiles2";
 	}
-	@RequestMapping(value="/my/reservation.gc") 
-	public String my_page_3() {
-		return "my/reservation.tiles2";
+	
+	// 업소 등록
+	@RequestMapping(value="/hostRegister.gc") 
+	public String hostRegister() {
+		return "host/accommodations_register.tiles3";
 	}
 	
-	// 아래가 진짜
-	@RequestMapping(value="/my/reservation1.gc") 
-	public String my_page_4() {
-		return "my/reservation.tiles3";
+	// 관리자 페이지 승인 부분
+	@RequestMapping(value="/host_approve.gc") 
+	public String host_approve() {
+		return "admin/host_approve.tiles3";
 	}
-	@RequestMapping(value="/my/page1.gc") 
-	public String my_page_5() {
-		return "my/page.tiles3";
+	// 관리자 모든 숙소 보기
+	@RequestMapping(value="/showAllAcomm.gc") 
+	public String showAllAcomm() {
+		return "admin/showAllAcomm.tiles3";
 	}
-	@RequestMapping(value="/my/point1.gc") 
-	public String my_page_6() {
-		return "my/point.tiles3";
+	// 관리자 모든 회원 보기
+	@RequestMapping(value="/showAllMember.gc") 
+	public String showAllMember() {
+		return "admin/showAllMember.tiles3";
 	}
+	
+	
 }
+

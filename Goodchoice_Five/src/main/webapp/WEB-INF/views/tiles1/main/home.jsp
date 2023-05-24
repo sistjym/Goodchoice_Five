@@ -65,11 +65,11 @@
                                 </span>
                                 <div class="person-spinner">
                                     <div>
-                                        <span><i class="minus fa-solid fa-circle-minus fa-xl"
+                                        <span class="minus"><i class="fa-solid fa-circle-minus fa-xl"
                                                 style="color: #f7323f;"></i></span>
                                         <input class=" count iconBox_child" type=" number" name="qty" value="0"
                                             size=3 />
-                                        <span><i class="plus fa-solid fa-circle-plus fa-xl "
+                                        <span class="plus"><i class="fa-solid fa-circle-plus fa-xl "
                                                 style="color: #f7323f;"></i></span>
                                     </div>
                                     </div>

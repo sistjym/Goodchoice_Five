@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
+<%-- === #24. tiles 를 사용하는 레이아웃1 페이지 만들기 === --%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 
 <%
@@ -10,10 +11,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>게시판</title>
+<title>여행할때 여기어때</title>
   <!-- Required meta tags -->
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
   
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" type="text/css" href="<%= ctxPath%>/resources/bootstrap-4.6.0-dist/css/bootstrap.min.css" > 
@@ -22,12 +23,13 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   
   <!-- 직접 만든 CSS 1 -->
-  <link rel="stylesheet" type="text/css" href="<%=ctxPath %>/resources/css/common.css" />
+  <link rel="stylesheet" type="text/css" href="<%= ctxPath%>/resources/css/product_search.css" />
+  <link rel="stylesheet" type="text/css" href="<%=ctxPath %>/resources/css/style2.css" />
   
-  <link rel="stylesheet" type="text/css" href="<%=ctxPath %>/resources/css/style3.css" />
+  <link rel="stylesheet" type="text/css" href="<%=ctxPath %>/resources/css/common.css" />
   <link rel="stylesheet" type="text/css" href="<%=ctxPath %>/resources/css/gaeun.css" />
+  
   <link rel="stylesheet" type="text/css" href="<%=ctxPath %>/resources/css/mypage.css" />
-  <link rel="stylesheet" type="text/css" href="<%= ctxPath%>/resources/css/product_search.css" /> 
   
   <!-- Optional JavaScript -->
   <script type="text/javascript" src="<%= ctxPath%>/resources/js/jquery-3.6.4.min.js"></script>
@@ -62,16 +64,18 @@
 		
 		<div id="mysubtop">
 			<tiles:insertAttribute name="subtop" />
-		</div>		
-		
-		<div id="mycontent">
-			<tiles:insertAttribute name="content" />
+		</div>	
+			
+		<div id="mycon_side">
+			<div id="mycontent_rt">
+				<tiles:insertAttribute name="content" />
+			</div>
+			
+			<div id="mysideinfo_lt">
+				<tiles:insertAttribute name="sideinfo" />
+			</div>
 		</div>
-		
-		<div id="mysideinfo">
-			<tiles:insertAttribute name="sideinfo" />
-		</div>
-				
+			
 		<div id="myfooter">
 			<tiles:insertAttribute name="footer" />
 		</div>
