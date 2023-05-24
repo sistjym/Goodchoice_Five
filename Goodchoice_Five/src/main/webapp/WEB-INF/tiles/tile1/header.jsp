@@ -9,7 +9,7 @@
 	String ctxPath = request.getContextPath();
 %>
     <header>
-        <section>
+        <section class="header_category">
             <h1>
                 <a class href="#">여기어때</a>
             </h1>

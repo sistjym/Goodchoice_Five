@@ -22,13 +22,12 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   
   <!-- 직접 만든 CSS 1 -->
-  <link rel="stylesheet" type="text/css" href="<%= ctxPath%>/resources/css/product_search.css" />
-  <link rel="stylesheet" type="text/css" href="<%=ctxPath %>/resources/css/style3.css" />
-  
   <link rel="stylesheet" type="text/css" href="<%=ctxPath %>/resources/css/common.css" />
-  <link rel="stylesheet" type="text/css" href="<%=ctxPath %>/resources/css/gaeun.css" />
   
+  <link rel="stylesheet" type="text/css" href="<%=ctxPath %>/resources/css/style3.css" />
+  <link rel="stylesheet" type="text/css" href="<%=ctxPath %>/resources/css/gaeun.css" />
   <link rel="stylesheet" type="text/css" href="<%=ctxPath %>/resources/css/mypage.css" />
+  <link rel="stylesheet" type="text/css" href="<%= ctxPath%>/resources/css/product_search.css" /> 
   
   <!-- Optional JavaScript -->
   <script type="text/javascript" src="<%= ctxPath%>/resources/js/jquery-3.6.4.min.js"></script>
