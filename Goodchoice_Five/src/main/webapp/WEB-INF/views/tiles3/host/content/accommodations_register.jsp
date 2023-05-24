@@ -58,7 +58,7 @@
 	
 	div#backgroundImg {
 		background-image: url("<%= ctxPath%>/resources/images/주변정보.png");
-		 background-size: cover; /* 이미지를 컨테이너에 맞게 조정 */
+		background-size: cover; /* 이미지를 컨테이너에 맞게 조정 */
      	background-position: center; /* 이미지를 가운데로 정렬 */
 	}
 	span#infoExample {
@@ -66,11 +66,28 @@
 	    max-height: 260px;
 	    float: left;
 	    margin-top: 60px;
+	    margin-left: 7px;
 	    overflow-y: auto;
 	    color: #888;
 	    font-size: 14px;
 	    line-height: 20px;
 	}	
+	
+	textarea {
+		min-height: 190px !important;
+	}
+	
+	button.btn_save {
+		width: 177px;
+	    height: 48px;
+	    font-size: 18px;
+		background-color: #f2114c;
+	    color: #fff;
+	    font-weight: bold;	    
+	    padding: 6px 13px;
+	    border-radius: 4px;
+	    border:solid 1px #f2114c;
+		}
 	
 </style>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -136,7 +153,7 @@
 	
 </script>
 
-<div style="border:solid 1px gray;">
+<div>
 	<h2 style="margin-bottom: 20px;">숙소등록</h2>
 	<span style="display:inline-block; margin-bottom:20px; font-weight:bold; color:333333;">[필수 기입 정보]</span>
 	<form>
@@ -201,15 +218,30 @@
 	         	<br>
 	         	<input type="text" class="form-control col-md-12" placeholder="숙소 주변의 명소를 홍보하여 주세요.교통, 관광, 쇼핑 명소부터 게스트하우스까지의 소요시간을 예시 문구를 참고하여 작성해 주시면게스트들이 예약할 때 큰 도움이 됩니다."/>
 	         </div>
-	         <div id="backgroundImg" style="height: 350px;">
+	         <div id="backgroundImg" style="height: 315px;">
 	         	<div>
 	         		<span id="infoExample">명동 도보 5분<br>application/host/views/pages/guest/intro.php 남산공원 버스 15분<br>청계천 지하철 10분<br><br></span>
 	         	</div>
 	         </div>
          </td>
       </tr>
+      <tr>
+      	<th class="th_info" style="border:solid 1px #ddd;">주차장 정보</th>
+      	<td>
+      		<div>
+      			<textarea class="form-control row-6" placeholder="주차장 유/무료 정보 및 시간당 요금을 기재해주세요."></textarea>
+      		</div>
+      		<div style="height: 315px; background-image: url('<%= ctxPath%>/resources/images/주차정보.png'); background-size: cover; background-position: center;">
+      			<span id="infoExample">숙소 앞 공용 유료 주차장<br>(시간당 2,000원 / 22시 이후 무료)</span>
+      		</div>
+      	</td>
+      </tr>
     </tbody>
   </table>
+  <div class="text-center" style="padding: 20px 0px 20px 0px;">
+     <button type="button" class="btn_save">저장 후 다음 단계</button>
+  </div>
+  
 </div>
 	</form>
 </div>    
