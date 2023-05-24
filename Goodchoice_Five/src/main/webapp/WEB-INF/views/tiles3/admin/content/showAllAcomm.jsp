@@ -10,38 +10,33 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>업주 승인</title>
+<title>모든 숙소 보기</title>
 </head>
 <body>
 <div>
 <div>
+
+<span>모든 숙소들을 볼수있는 페이지</span>
 <table class="table table-hover">
   <thead>
     <tr>
       <th scope="col">번호</th>
-      <th scope="col">숙소 이름 </th>
-      <th scope="col">호스트</th>
-      <th scope="col">승인 여부</th>
+      <th scope="col">숙소 카테고리</th>
+      <th scope="col">숙소이름</th>
+      <th scope="col">호스트이름</th>
+      <th scope="col">숙소이미지</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th scope="row">1</th>
-      <td>호텔</td>
-      <td>김차차</td>
-      <td>보류</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
     </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>A모텔</td>
-      <td>이차차</td>
-      <td>승인</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td colspan="2">Larry the Bird</td>
-      <td>@twitter</td>
-    </tr>
+   
   </tbody>
 </table>
    
