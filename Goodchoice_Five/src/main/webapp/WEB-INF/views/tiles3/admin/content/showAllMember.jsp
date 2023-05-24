@@ -10,7 +10,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>업주 승인</title>
+<title>모든 회원보기 </title>
 </head>
 <body>
 <div>
@@ -19,29 +19,24 @@
   <thead>
     <tr>
       <th scope="col">번호</th>
-      <th scope="col">숙소 이름 </th>
-      <th scope="col">호스트</th>
-      <th scope="col">승인 여부</th>
+      <th scope="col">회원 이름 </th>
+      <th scope="col">회원아이디</th>
+      <th scope="col">포인트</th>
+      <th scope="col">탈퇴여부</th>
+      <th scope="col">휴먼여부</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th scope="row">1</th>
-      <td>호텔</td>
+      <td>1</td>
       <td>김차차</td>
-      <td>보류</td>
+      <td>chacha</td>
+      <td></td>
+      <td></td>
+      <td></td>
     </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>A모텔</td>
-      <td>이차차</td>
-      <td>승인</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td colspan="2">Larry the Bird</td>
-      <td>@twitter</td>
-    </tr>
+    
   </tbody>
 </table>
    
