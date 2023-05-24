@@ -53,7 +53,22 @@ public class IndexController {
 	public String my_page_2() {
 		return "my/point.tiles2";
 	}
-
+	@RequestMapping(value="/my/reservation.gc") 
+	public String my_page_3() {
+		return "my/reservation.tiles2";
+	}
 	
-	
+	// 아래가 진짜
+	@RequestMapping(value="/my/reservation1.gc") 
+	public String my_page_4() {
+		return "my/reservation.tiles3";
+	}
+	@RequestMapping(value="/my/page1.gc") 
+	public String my_page_5() {
+		return "my/page.tiles3";
+	}
+	@RequestMapping(value="/my/point1.gc") 
+	public String my_page_6() {
+		return "my/point.tiles3";
+	}
 }
