@@ -154,8 +154,7 @@
 </script>
 
 <div>
-	<h2 style="margin-bottom: 20px;">숙소등록</h2>
-	<span style="display:inline-block; margin-bottom:20px; font-weight:bold; color:333333;">[필수 기입 정보]</span>
+	<h2 style="margin-bottom: 20px;">숙소정보 수정</h2>
 	<form>
 		<div class="table">
   <table class="table align-middle">
@@ -164,7 +163,7 @@
       <tr>
         <th class="th_info" style="border:solid 1px #ddd;">게스트 하우스 <br> 기본정보</th>
      	<td >
-     		<div class="row text-center"><span class="col-md-2" style="display:inline-block; margin-top:14px; font-size: 14px; font-weight: bold;">업체명</span><input type="text" class="form-control col-md-6 input_info" placeholder="업체 명을 입력하세요."/></div>
+     		<div class="row text-center"><span class="col-md-2" style="display:inline-block; margin-top:14px; font-size: 14px; font-weight: bold;">업체명</span><input type="text" class="form-control col-md-6 input_info" placeholder="수정 할 업체 명을 입력하세요."/></div>
      		<div class="row text-center" style="margin-top:10px;"><span class="col-md-2"style="display:inline-block; margin-top:14px; font-size: 14px; font-weight: bold;">업체 주소</span><input type="text" id="postcode" class="form-control  col-md-6 input_info" name="postcode" placeholder="업체 주소를 입력하세요." readonly/><button type="button" id="find_address"class="col-md-2 btn_address">주소검색</button></div>
      		<div class="row" style="margin-top:10px;"><input name="address" id="address" class="form-control col-md-6 offset-md-3" style="height:50px; "placeholder="나머지 주소를 입력하세요."/></div>
      	</td>
