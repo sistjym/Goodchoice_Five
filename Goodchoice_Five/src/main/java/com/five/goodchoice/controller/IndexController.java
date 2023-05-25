@@ -54,10 +54,13 @@ public class IndexController {
 	}
 	
 	// 업소 등록
-	@RequestMapping(value="/hostRegister.gc") 
+/*	
+    @RequestMapping(value="/hostRegister.gc") 
 	public String hostRegister() {
 		return "host/accommodations_register.tiles3";
 	}
+	*/
+	
 	/*
 	 * // 관리자 페이지 승인 부분
 	 * 
@@ -70,11 +73,14 @@ public class IndexController {
 	 * @RequestMapping(value="/showAllMember.gc") public String showAllMember() {
 	 * return "admin/showAllMember.tiles3"; }
 	 */
+	
 	// 업소 정보 수정
+/*	
 	@RequestMapping(value="/hostEdit.gc") 
 	public String hostEdit() {
 		return "host/accommodations_edit.tiles3";
 	}
+*/	
 	
 }
 
