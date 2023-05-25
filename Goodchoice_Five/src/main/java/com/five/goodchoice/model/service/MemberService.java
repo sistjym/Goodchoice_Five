@@ -1,10 +1,10 @@
-package com.five.goodchoice.service;
+package com.five.goodchoice.model.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.five.goodchoice.model.InterMemberDAO;
-import com.five.goodchoice.model.MemberVO;
+import com.five.goodchoice.member.model.InterMemberDAO;
+import com.five.goodchoice.member.model.MemberVO;
 
 @Service
 public class MemberService implements InterMemberService{

@@ -1,11 +1,12 @@
-package com.five.goodchoice.controller;
+package com.five.goodchoice.member.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import com.five.goodchoice.model.MemberVO;
-import com.five.goodchoice.service.InterMemberService;
+
+import com.five.goodchoice.member.model.MemberVO;
+import com.five.goodchoice.model.service.InterMemberService;
 
 
 
