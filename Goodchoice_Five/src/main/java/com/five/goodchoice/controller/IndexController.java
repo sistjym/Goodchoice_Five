@@ -70,7 +70,11 @@ public class IndexController {
 	 * @RequestMapping(value="/showAllMember.gc") public String showAllMember() {
 	 * return "admin/showAllMember.tiles3"; }
 	 */
-	
+	// 업소 정보 수정
+	@RequestMapping(value="/hostEdit.gc") 
+	public String hostEdit() {
+		return "host/accommodations_edit.tiles3";
+	}
 	
 }
 
