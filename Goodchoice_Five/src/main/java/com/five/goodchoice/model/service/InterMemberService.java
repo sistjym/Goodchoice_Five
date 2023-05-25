@@ -1,6 +1,6 @@
-package com.five.goodchoice.service;
+package com.five.goodchoice.model.service;
 
-import com.five.goodchoice.model.MemberVO;
+import com.five.goodchoice.member.model.MemberVO;
 
 public interface InterMemberService {
 
