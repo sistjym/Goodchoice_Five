@@ -70,7 +70,13 @@
             </div>
         </section> 
 		<section>
-		<button>리뷰작성</button>
+			<div class="reservation-cancel">
+				<button type="button" class="base-button">예약취소</button>
+			</div>
+			<div class="reserve-review-write">
+				<button type="button" class="base-button">리뷰작성</button>
+			</div>
+
 		</section>
 	</div>
 </div>
