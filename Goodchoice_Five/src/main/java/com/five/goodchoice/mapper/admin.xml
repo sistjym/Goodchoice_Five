@@ -5,7 +5,7 @@
 
 <mapper namespace="admin">
 
-	<select id="test_select" resultType="com.five.goodchoice.model.MemberVO">
+	<select id="test_select" resultType="com.five.goodchoice.member.model.MemberVO">
 		select * from tbl_test
 	</select>
 
