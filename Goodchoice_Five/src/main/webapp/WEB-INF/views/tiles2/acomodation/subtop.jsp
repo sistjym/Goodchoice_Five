@@ -31,12 +31,7 @@
 			}	
 		});
 		
-		$(".city > li").mouseover(function(event){
-			console.log($(event.target));
-			$(event.target).find("a").addClass("on");
-		});
-		
-		
+
 	
 	});
 </script>
