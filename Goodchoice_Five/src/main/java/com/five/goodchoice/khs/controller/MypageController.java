@@ -18,4 +18,8 @@ public class MypageController {
 	public String my_page_3() {
 		return "my/point.tiles4";
 	}
+	@RequestMapping(value="/reservation-detail.gc") 
+	public String my_page_4() {
+		return "my/reservation-detail.tiles4";
+	}
 }

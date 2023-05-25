@@ -410,3 +410,124 @@ i.bg_w {
     background: rgb(235, 235, 235);
     color: rgba(0, 0, 0, 0.87);
 }
+
+/*reservation-detail*/
+div.reserve_detail {
+    background: #fff;
+}
+div.info {
+    border: none;
+    position: relative;
+    height: auto;
+    padding: 0 0 20px 0;
+    border-bottom: none;
+    background: none;
+    background-image: none !important;
+}
+i.bg_w {
+    display: inline-block;
+    margin-bottom: 9px;
+    padding: 2px;
+    font-size: 16px;
+    font-style: normal;
+    background: rgb(235, 235, 235);
+    color: rgba(0, 0, 0, 0.87);
+}
+strong.sec-str{
+	font-size: 18px;
+    display: inline-block;
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 150px;
+    font-weight: normal;
+    line-height: normal;
+    color: rgba(0, 0, 0, 0.56);
+}
+span.safety_txt_2 {
+    display: block;
+    overflow: hidden;
+    line-height: 1.5;
+    text-align: left;
+    margin-top: 5px;
+    padding: 0 0 0 20px;
+    border-radius: 0;
+    background: #fff url("https://image.goodchoice.kr/images/web_v3/ico_info.png") 0 3px no-repeat;
+    background-size: 15px auto;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.56);
+}
+div.total {
+    border: none;
+    margin-top: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    padding: 10px 0;
+}
+div.payment-info-pc {
+	border: none;
+    display: flex;
+    flex-direction: column;
+    padding: 0 0 15px;
+}
+div.payment-info-pc__top {
+    padding: 15px 0;
+    border: none;
+    display: flex;
+    align-items: center;
+}
+div.title-container {
+    padding: 15px 0;
+    border: none;
+    margin-right: 16px;
+}
+p.payment-info-pc__title {
+    position: relative;
+    font-size: 18px;
+    color: rgba(0, 0, 0, 0.87);
+    text-align: left;
+    margin: 0 16px 0 0;
+}
+p.payment-info-pc__caption {
+    position: relative;
+    margin: 0 0 13px 0;
+    color: rgba(0, 0, 0, 0.87);
+    text-align: left;
+    font-size: 12px;
+    font-weight: 400;
+    margin-top: 4px;
+    margin-bottom: 0;
+}  
+div.payment-info-pc__receipt{
+    border: none;
+    display: flex;
+    grid-gap: 8px;
+    gap: 8px;
+    padding: 0;
+}
+button.base-button {
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 400;
+    width: auto;
+    height: 40px;
+    padding: 0 12px;
+    border: 1px solid rgba(0,0,0,.08);
+    border-radius: 4px;
+    background: #fafafa;
+    color: rgba(0,0,0,.56);
+}
+div.payment-info-pc__bottom {
+    padding: 15px 0;
+    border: none;
+    display: flex;
+}
+p {
+    position: relative;
+    margin: 0 0 13px 0;
+    font-size: 18px;
+    color: rgba(0, 0, 0, 0.87);
+    text-align: left;
+}  
+    
