@@ -64,16 +64,18 @@
 		
 		<div id="mysubtop">
 			<tiles:insertAttribute name="subtop" />
-		</div>		
-		
-		<div id="mycontent">
-			<tiles:insertAttribute name="content" />
+		</div>	
+			
+		<div id="mycon_side">
+			<div id="mycontent_rt">
+				<tiles:insertAttribute name="content" />
+			</div>
+			
+			<div id="mysideinfo_lt">
+				<tiles:insertAttribute name="sideinfo" />
+			</div>
 		</div>
-		
-		<div id="mysideinfo">
-			<tiles:insertAttribute name="sideinfo" />
-		</div>
-				
+			
 		<div id="myfooter">
 			<tiles:insertAttribute name="footer" />
 		</div>

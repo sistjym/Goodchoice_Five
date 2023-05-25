@@ -1,4 +1,4 @@
-package com.five.goodchoice.model;
+package com.five.goodchoice.member.model;
 
 public interface InterMemberDAO {
 

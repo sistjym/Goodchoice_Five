@@ -26,47 +26,6 @@ button{
 button span{
     position: relative;
 }
-.dropbtn {
-    border: none;
-    padding: 0;
-    background: none;
-    font-size: 18px;
-    line-height: 1;
-    color: rgba(255,255,255,0.8);
-    letter-spacing: 0;
-}
-
-ul{
-    margin: 0;
-    padding: 0;
-    border: 0;
-    box-sizing: border-box
-}
-
-
-.gnb_pc li ul {
-    display: none;
-    position: absolute;
-    top: 50;
-    left: 0;
-    border-radius: 5px;
-    padding: 10px;
-    background: #c04141;
-    text-align: left;
-    box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.2);
-}
-.gnb_pc li a {
-    display: block;
-    font-size: 18px;
-    color: rgba(255,255,255,0.8);
-    letter-spacing: 0;
-   
-}
-
-ul.dropdown-content a {
-    font-size: 13px;
-    line-height: 30px;
-}
 
 
 html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video {
@@ -369,7 +328,11 @@ p {
   .dropdown:hover .dropdown-content {display: block;}
   
 
-
-
+/*admin css*/
+.admin_subject	{
+	margin-bottom: 20px;
+	margin-left:10px;
+	
+}
 
 
