@@ -1,4 +1,4 @@
-package com.five.goodchoice.controller;
+package com.five.goodchoice.member.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 

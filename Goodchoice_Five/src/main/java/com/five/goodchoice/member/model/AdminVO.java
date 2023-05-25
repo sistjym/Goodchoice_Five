@@ -1,4 +1,4 @@
-package com.five.goodchoice.model;
+package com.five.goodchoice.member.model;
 
 public class AdminVO {
 	 private int admin_no;           /* 관리자번호 */
