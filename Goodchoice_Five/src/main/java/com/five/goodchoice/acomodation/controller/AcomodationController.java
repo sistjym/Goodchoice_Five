@@ -8,6 +8,7 @@ public class AcomodationController {
 	
 	@RequestMapping(value="/acomodation/search/2/view.gc") 
 	public String acomodation_view_2() {
+		
 		return "acomodation/acom_content.tiles2";
 	}
 	
