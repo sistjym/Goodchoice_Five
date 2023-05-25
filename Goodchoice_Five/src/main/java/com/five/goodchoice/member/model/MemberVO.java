@@ -1,8 +1,6 @@
 package com.five.goodchoice.member.model;
 
-public class MemberVO {
-
-	
+public class MemberVO {	
 	public MemberVO() {}
 	public MemberVO(int no, String name) {
 		super();
