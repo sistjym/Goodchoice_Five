@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+<%
+	String ctxPath = request.getContextPath();
+%>
 <div class="align_rt">
 	<div class="reserve_list">
 		<section class="list_fst">
@@ -22,7 +24,7 @@
     					<p class="pic">
     						<img  loading="lazy" srcset="https://image.goodchoice.kr/resize_354x184/adimg_new/779/203463/71325338f503e141b7d061d0eeb01053.jpg, https://image.goodchoice.kr/resize_531x276/adimg_new/779/203463/71325338f503e141b7d061d0eeb01053.jpg 1.5x , https://image.goodchoice.kr/resize_708x368/adimg_new/779/203463/71325338f503e141b7d061d0eeb01053.jpg 2x" src="https://image.goodchoice.kr/resize_354x184/adimg_new/779/203463/71325338f503e141b7d061d0eeb01053.jpg" alt="신촌 라뉘호텔" class="align">
     					</p> 
-    					<a href="/my/reservation-detail/23052314010DCAYE1" class="product-title">
+    					<a href="<%= ctxPath%>/reservation-detail.gc" class="product-title">
     						<i class="bg_w">예약취소</i> 
     						<strong>신촌 라뉘호텔</strong> 
     						<span style="display: block; padding-left: 20px; font-size: 18px;">

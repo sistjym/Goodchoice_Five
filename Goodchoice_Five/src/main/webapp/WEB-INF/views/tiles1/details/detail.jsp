@@ -110,14 +110,7 @@ div#top_right > div#top_right_upper{
 
 }
 
-div#top_right_upper > div#top_title > p:first-child  {
 
-	font-size: 24px;
-	color: white;
-	font-weight: 500;
-	background-color:  #7171da;
-
-} 
 
 div#top_right_upper h2#top_title{
 
@@ -184,7 +177,8 @@ div#night{
 }
 
 div#item{
-	
+		
+		padding-top: 30px;
 	
 		margin: 60px auto 0px auto;
 	
@@ -193,18 +187,27 @@ div#item{
 
 }
 
-div#item p.item_surplus_price {
 
-	text-decoration: line-through;
+div#item img.item_image {
+
+	
+
+	height: 337px;
+
+
+}
+
+
+
+div#item p.in_roomtime,
+div#item p.out_roomtime {
+
+	margin-left: auto;
+	font-weight: bold;
 
 }
 
-div#item span.item_surplus_special{
 
-	border-radius: 2px; 
-	height:20px;
-
-}
 
 div#item a.btn_resv{
 
@@ -265,6 +268,8 @@ img.ci{
 	height: 80px;
 	
 }
+
+
 
 ul#badge span.badge{
 
@@ -365,8 +370,10 @@ div.resv_cancel_top > p{
 
 <script>
 $(document).ready(function() {
+		
 	
-
+	$('.subChange:first-child').trigger('click');
+	
 	<%-- 캐러셀 --%>
 
   $('.carousel .carousel-item').each(function(){
@@ -398,8 +405,8 @@ $(document).ready(function() {
   
   <%-- 캐러셀 끝 --%>
   
-  
-  
+
+
   
   <%-- 아코디언 --%>
   
@@ -533,7 +540,7 @@ function func_show_hide{
 				
 					<div id="top_right_upper">	
 						<div class="row" id="top_title">					
-							<p>4성급</p>	
+							<p style="font-size: 24px; color: white; font-weight: 500; background-color:  #7171da;">4성급</p>	
 						    <h2 id="top_title">구운동 파티즈 - 구 메이트</h2>	
 						</div>		
 			            
@@ -587,21 +594,41 @@ function func_show_hide{
 
 		
 	      <div id="item" class="row col-lg-8">
-				<div class="col-lg-5 col-md-10 col-sm-10">
-						<img src="<%= ctxPath%>/resources/images/강남캠퍼스.jpg" alt="thumbnail" class="img-thumbnail">
+				<div class="col-lg-6 col-md-10 col-sm-10">
+						<img src="<%= ctxPath%>/resources/images/강남캠퍼스.jpg" alt="thumbnail" class="img-thumbnail item_image">
 				</div>
-				<div class="row col-lg-7">
-							 <h5 class="card-title">슈페리어더블(오션뷰)</h5>
+				<div class="col-lg-6">
+					          <h5 class="col-sm-6 col-lg-12 mb-3 card-title" style="font-weight:600; ">슈페리어더블(오션뷰)</h5>
+							 
 							  <div class="col-sm-6 col-lg-12 mb-3 card-body">
-							    <h5 type="hidden" class="card-title"></h5>
-							    <p class="card-title">숙박빠른입실</p>
-							    <p class="item_surplus_price">129,900</p>
-							    <div class="row">
-							      <span class="badge badge-danger badge-pill item_surplus_special">예약특가</span>					    
-							      <h5 class="card-title">109,900원</h5>
+							  
+							  	<div  style="border: solid 1px yellow; height:80px;" >
+							  	
+								    <div style="display: flex;">
+									    <p style="margin-left: auto; font-weight: 700;" class="origin_price">가격</p>
+									    <p style="text-decoration: line-through;" class="item_origin_price">129,900</p>
+								    </div>
+								    
+								    <div style="display: flex; border-bottom: 1px solid rgba(128, 128, 128, 0.2); ">
+								      <span style="margin-left: auto; font-weight: 700; border-radius: 2px; height:20px;" class="badge badge-danger badge-pill special_price">예약특가</span>					    
+								      <h5 class="card-title item_special_price">109,900원</h5>
+								    </div>
+								    
 							    </div>
-							     	<p>입실시간&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;15시 부터 </p>
-							     	<p>퇴실시간&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;익일 11시 </p>
+							    <div style="display: flex;">
+							     	<p>입실시간</p>
+							     	<p class="in_roomtime">15시 부터 </p>
+							    </div> 	
+							    
+							    <div  style="display: flex; border-bottom: 1px solid rgba(128, 128, 128, 0.2); ">
+							     	<p>퇴실시간</p>
+							     	<p class="out_roomtime">익일 11시 </p>
+							    </div> 
+							   <div style="text-align:center; ">
+								  <button class="col-12" style="background-color: transparent; border: none; margin: 18px 0;">
+								    <p style="color:#ff3300; font-weight: 600;">객실 이용 안내</p>
+								  </button>
+								</div>                             
 							    <a href="#" class="btn btn-danger col-lg-12 btn_resv">숙박 예약</a>
 							  </div>
 				</div>
