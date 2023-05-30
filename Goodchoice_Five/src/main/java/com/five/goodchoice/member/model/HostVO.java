@@ -10,6 +10,26 @@ public class HostVO {
 	private String host_mobile;    /* 업주전화번호 */
 	private String cp_reg_no;      /* 사업자등록번호 */
 	private String cp_name;        /* 상호명 */
+	
+	
+	
+	public HostVO() {}
+	
+	
+	public HostVO(int host_no, int fk_admin_no, String host_email, String host_pwd, String host_name,
+			String host_mobile, String cp_reg_no, String cp_name) {
+		super();
+		this.host_no = host_no;
+		this.fk_admin_no = fk_admin_no;
+		this.host_email = host_email;
+		this.host_pwd = host_pwd;
+		this.host_name = host_name;
+		this.host_mobile = host_mobile;
+		this.cp_reg_no = cp_reg_no;
+		this.cp_name = cp_name;
+	}
+
+
 	public int getHost_no() {
 		return host_no;
 	}

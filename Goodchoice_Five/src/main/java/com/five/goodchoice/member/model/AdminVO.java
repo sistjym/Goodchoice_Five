@@ -6,6 +6,21 @@ public class AdminVO {
 	 private String admin_pwd;       /* 관리자비밀번호 */
 	 private String admin_name;     /* 관리자이름 */
 	 private String admin_reg_date; /* 관리자등록일 */
+	 
+	 
+	public AdminVO() {}
+	 
+	 
+	public AdminVO(int admin_no, String admin_email, String admin_pwd, String admin_name, String admin_reg_date) {
+		super();
+		this.admin_no = admin_no;
+		this.admin_email = admin_email;
+		this.admin_pwd = admin_pwd;
+		this.admin_name = admin_name;
+		this.admin_reg_date = admin_reg_date;
+	}
+
+
 	public int getAdmin_no() {
 		return admin_no;
 	}
