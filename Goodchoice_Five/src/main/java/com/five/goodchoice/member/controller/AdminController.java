@@ -17,11 +17,8 @@ public class AdminController {
 
     // 관리자 페이지 승인 부분
 	@RequestMapping(value="/host_approve.gc") 
-	public String host_approve() {
-		
+	public String host_approve() {	
 		List<String> hostList = service.HostList();
-		
-		
 		return "admin/host_approve.tiles3";
 	}
 	
