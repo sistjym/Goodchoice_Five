@@ -18,7 +18,7 @@
                     <a href="#">내주변</a>
                 </li>
                 <li>
-                    <a href="#">예약내역</a>
+                    <a href="<%= ctxPath%>/myreservation.gc">예약내역</a>
                 </li>
 
                 <!-- <li class="dropdown">

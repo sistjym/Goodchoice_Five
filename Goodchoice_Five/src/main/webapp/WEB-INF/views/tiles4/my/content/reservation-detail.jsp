@@ -11,7 +11,7 @@
 				<strong style="font-weight: normal; display: block; margin-bottom: 9px; font-size: 24px; color: rgba(0, 0, 0, 0.87);">종로 부티크 호텔K</strong> 
 				<span style="margin-bottom: 9px; display: block; font-size: 20px; color: rgba(0, 0, 0, 0.87);">
 					05.31 수
-                    -
+                    - 
                     06.01 목,
                     1박
                 </span>
@@ -70,9 +70,14 @@
             </div>
         </section> 
 		<section>
+			<!-- 예약내역 작성 시 추가 -->
 			<div class="reservation-cancel">
 				<button type="button" class="base-button">예약취소</button>
+			
 			</div>
+			<!--  -->
+			
+			<!-- 이용내역 작성 시 추가 -->
 			<div class="reserve-review-write">
 				<button type="button" class="base-button">리뷰작성</button>
 			</div>
