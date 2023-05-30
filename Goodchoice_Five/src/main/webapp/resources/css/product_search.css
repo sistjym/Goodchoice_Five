@@ -223,3 +223,11 @@
     	bottom: 7px;
    }
    
+   span.on {
+	    display: inline-block;
+	    background: url(//image.goodchoice.kr/images/web_v3/ico_chk_2.png) 0 50% no-repeat;
+	    background-size: 22px auto;
+	    color: rgb(242,7,76);
+	    padding: 0 0 0 24px;
+	}
+   
