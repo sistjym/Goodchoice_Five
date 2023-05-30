@@ -31,9 +31,21 @@
 			}	
 		});
 		
-
-	
+		
+		$(".city-a").mouseover( <%-- 서울 > 강남/역삼  에 mouseover --%>
+		function(event){
+			
+			<%-- 기존에 있던 모든 <a> 를 removeClass 하고 이벤트가 발생한 <a>에 addClass --%>
+			$(".city-a").removeClass("on");
+			
+			
+		});
+		
+		
+		
 	});
+	
+
 </script>
 
 <style type="text/css">
@@ -57,10 +69,10 @@
 		 		<div class="area_pop">
 		 			<div class="iscroll_01">
 		 				<ul class="city">
-		 					<li><a href="#" class="on">서울</a></li>
-		 					<li><a href="#">경기</a></li>
-		 					<li><a href="#">부산</a></li>
-		 					<li><a href="#">제주</a></li>
+		 					<li><a href="#" class="city-a on">서울</a></li>
+		 					<li><a href="#" class="city-a">경기</a></li>
+		 					<li><a href="#" class="city-a">부산</a></li>
+		 					<li><a href="#" class="city-a">제주</a></li>
 		 				</ul>
 		 			</div>
 		 			<div class="iscroll_02">

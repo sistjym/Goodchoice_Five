@@ -131,7 +131,6 @@
 	}
 	
 	.area_pop .city_child li a {
-	    box-sizing: border-box;
 	    word-break: keep-all;
 	    line-height: 24px;
 	    display: inline-block;
