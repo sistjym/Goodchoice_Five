@@ -34,7 +34,7 @@
 	
 				<c:if test="${sessionScope.loginuser == null}">
 					<li>
-			           <a href="#"><span>로그인</span></a>
+			           <a href="<%= ctxPath%>/memberLogin.gc"><span>로그인</span></a>
 			        </li>
 				</c:if>
                
