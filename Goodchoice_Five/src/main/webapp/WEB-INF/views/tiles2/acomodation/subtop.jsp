@@ -20,6 +20,7 @@
 			$(".area_pop").css("display",""); <%-- 지역 pop 보임 --%>
 		});
 		
+		
 		$(".area_pop").hover(
 		function(){
 			is_mouseover_area_pop = true; <%-- 지역 pop 내부에 mouseover 해야 mouseout 을 할 때 pop 을 hide 가능 --%>
@@ -32,12 +33,16 @@
 		});
 		
 		
-		$(".city-a").mouseover( <%-- 서울 > 강남/역삼  에 mouseover --%>
+		<%-- 서울 > 강남/역삼  에 mouseover --%>		
+		$(".city-a").mouseover( 
+
 		function(event){
-			
-			<%-- 기존에 있던 모든 <a> 를 removeClass 하고 이벤트가 발생한 <a>에 addClass --%>
+		
 			$(".city-a").removeClass("on");
+			$(event.target).addClass("on");
+			<%-- 기존에 있던 모든 <a> 를 removeClass 하고 이벤트가 발생한 <a>에 addClass --%>	
 			
+			<%-- ajax로 기존에 있던 city_child change --%> 
 			
 		});
 		

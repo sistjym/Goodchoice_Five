@@ -2,9 +2,9 @@
     pageEncoding="UTF-8"%>
 				
 		<section class="btn_wrap_width_3">
-			<button type="button" class="top_sort_btn btn btn-outline-none rounded my-2" onclick="">거리 순</button>
-			<button type="button" class="top_sort_btn btn btn-outline-none rounded my-2" onclick="">낮은 가격 순</button>
-			<button type="button" class="top_sort_btn btn btn-outline-none rounded my-2" onclick="">높은 가격 순</button>
+			<button type="button" id="distance" class="top_sort_btn btn btn-outline-none rounded my-2" onclick=""><span class="on">거리 순</span></button>
+			<button type="button" id="rowPrice" class="top_sort_btn btn btn-outline-none rounded my-2" onclick=""><span>낮은 가격 순</span></button>
+			<button type="button" id="highPrice" class="top_sort_btn btn btn-outline-none rounded my-2" onclick=""><span>높은 가격 순</span></button>
 		</section>
 					
 		<section id="list">			
@@ -23,7 +23,7 @@
 									<span>추천해요</span>
 									(2670)
 								</p>
-								<p class="h5 bold font-weight-bold">강남구 역삼동</p>
+								<p class="h5 bold font-weight-bold text-white">강남구 역삼동</p>
 							</div>
 							
 							<div class="price">
@@ -46,7 +46,7 @@
 									<span>추천해요</span>
 									(2670)
 								</p>
-								<p class="h5 bold font-weight-bold">강남구 역삼동</p>
+								<p class="h5 bold font-weight-bold text-white">강남구 역삼동</p>
 							</div>
 							
 							<div class="price">
@@ -69,7 +69,7 @@
 									<span>추천해요</span>
 									(2670)
 								</p>
-								<p class="h5 bold font-weight-bold">강남구 역삼동</p>
+								<p class="h5 bold font-weight-bold text-white">강남구 역삼동</p>
 							</div>
 							
 							<div class="price">
