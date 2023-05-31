@@ -1,12 +1,90 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>메인페이지입니다</title>
-</head>
-<body>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<%
+   String ctxPath = request.getContextPath();
+%>
+<script src="<%= ctxPath%>/resources/Highcharts-11.0.1/code/highcharts.js"></script>
+<script src="<%= ctxPath%>/resources/Highcharts-11.0.1/code/modules/wordcloud.js"></script>
+<script src="<%= ctxPath%>/resources/Highcharts-11.0.1/code/modules/exporting.js"></script>
+<script src="<%= ctxPath%>/resources/Highcharts-11.0.1/code/modules/export-data.js"></script>
+<script src="<%= ctxPath%>/resources/Highcharts-11.0.1/code/modules/accessibility.js"></script> 
+
+<script type="text/javascript">
+
+	
+	$(document).ready(function(){
+		const text =
+	        'Chapter 1. Down the Rabbit-Hole ' +
+	        'Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: ' +
+	        'once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations ' +
+	        'in it, \'and what is the use of a book,\' thought Alice \'without pictures or conversation?\'' +
+	        'So she was considering in her own mind (as well as she could, for the hot day made her feel very sleepy ' +
+	        'and stupid), whether the pleasure of making a daisy-chain would be worth the trouble of getting up and picking ' +
+	        'the daisies, when suddenly a White Rabbit with pink eyes ran close by her 랄라.',
+
+	    lines = text.replace(/[():'?0-9]+/g, '').split(/[,\. ]+/g),
+	    data = lines.reduce((arr, word) => {
+	        let obj = Highcharts.find(arr, obj => obj.name === word);
+	        if (obj) {
+	            obj.weight += 1;
+	        } else {
+	            obj = {
+	                name: word,
+	                weight: 1
+	            };
+	            arr.push(obj);
+	        }
+	        return arr;
+	    }, []);
+
+	    Highcharts.chart('container', {
+		    accessibility: {
+		        screenReaderSection: {
+		            beforeChartFormat: '<h2 style="font-weight:bold; font-size:30pt;">{chartTitle}</h2>' +
+		                '<div>{chartSubtitle}</div>' +
+		                '<div>{chartLongdesc}</div>' +
+		                '<div>{viewTableButton}</div>'
+		        }
+		    },
+		    series: [{
+		        type: 'wordcloud',
+		        data,
+		        name: 'Occurrences'
+		    }],
+		    title: {
+		        text: '',
+		        align: 'center'
+		    },
+		    subtitle: {
+		        text: '',
+		        align: 'left'
+		    },
+		    tooltip: {
+		        headerFormat: '<span style="font-size: 16px"><b>{point.key}</b></span><br>'
+		    }
+	 });
+	    
+	  /////////////////////////////////////////////////////////////////
+	  
+	   $("button#searchBtn").click(function(){
+		   
+		  alert("검색"); 
+	   });
+	    
+	    
+	
+	   
+   });// end of $(document).ready(function(){})-----------------------
+   
+   // Function declaration
+   
+
+
+</script>   
+
   <div id="contents">
                 <div class="main_link">
                     <ul>
@@ -67,8 +145,8 @@
                                     <div>
                                         <span class="minus"><i class="fa-solid fa-circle-minus fa-xl"
                                                 style="color: #f7323f;"></i></span>
-                                        <input class=" count iconBox_child" type=" number" name="qty" value="0"
-                                            size=3 />
+                                        <input class="count iconBox_child" type="number" name="qty" value="0"
+                                             />
                                         <span class="plus"><i class="fa-solid fa-circle-plus fa-xl "
                                                 style="color: #f7323f;"></i></span>
                                     </div>
@@ -87,10 +165,16 @@
                             </div>
                         </button>
                     </div>
-
-                    <div>
-                        <img class="banner"
-                            src="https://image.goodchoice.kr/images/cms/home_img/b5afd7ef8280a4e7c1acc9a818c341d7.jpg" />
+                    
+					<!-- 검색어 기반 워드 클라우드  -->
+                    <div class="wordCloud_wrapper">
+                    <h2 class="word_cloud_title">지금 핫한 키워드</h2>
+                       <figure class="highcharts-figure">
+						    <div id="container"></div>
+						    <p class="highcharts-description">
+						       
+						    </p>
+					   </figure>
                     </div>
 
                     <!-- 이벤트 -->
@@ -127,7 +211,6 @@
                                     <img class="destnationImg"
                                         src="https://pix6.agoda.net/geo/city/17172/1_17172_02.jpg?ca=6&ce=1&s=345x345&ar=1x1">
                                     <span class="destination_name">부산</span>
-
                                 </a>
                             </li>
                         </div>
@@ -139,59 +222,58 @@
                     <section class="center slider">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title" name="acomm_name" value="">숙소이름</h4>
-                                <p class="card-text" name="province" value="">지역</p>
-                                <p class="card-text" name="contents" value="">리뷰내용</p>
-                                <p class="card-text" name="uderid" value="">회원아이디</p>
+                                <h4 class="card-title">숙소이름</h4>
+                                <p class="card-text">지역</p>
+                                <p class="card-text">리뷰내용</p>
+                                <p class="card-text">회원아이디</p>
 
                             </div>
                         </div>
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title" name="acomm_name" value="">숙소이름</h4>
-                                <p class="card-text" name="province" value="">지역</p>
-                                <p class="card-text" name="contents" value="">리뷰내용</p>
-                                <p class="card-text" name="uderid" value="">회원아이디</p>
+                                <h4 class="card-title">숙소이름</h4>
+                                <p class="card-text">지역</p>
+                                <p class="card-text">리뷰내용</p>
+                                <p class="card-text">회원아이디</p>
 
                             </div>
                         </div>
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title" name="acomm_name" value="">숙소이름</h4>
-                                <p class="card-text" name="province" value="">지역</p>
-                                <p class="card-text" name="contents" value="">리뷰내용</p>
-                                <p class="card-text" name="uderid" value="">회원아이디</p>
+                                <h4 class="card-title">숙소이름</h4>
+                                <p class="card-text">지역</p>
+                                <p class="card-text">리뷰내용</p>
+                                <p class="card-text">회원아이디</p>
 
                             </div>
                         </div>
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title" name="acomm_name" value="">숙소이름</h4>
-                                <p class="card-text" name="province" value="">지역</p>
-                                <p class="card-text" name="contents" value="">리뷰내용</p>
-                                <p class="card-text" name="uderid" value="">회원아이디</p>
+                                <h4 class="card-title">숙소이름</h4>
+                                <p class="card-text">지역</p>
+                                <p class="card-text">리뷰내용</p>
+                                <p class="card-text">회원아이디</p>
 
                             </div>
                         </div>
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title" name="acomm_name" value="">숙소이름</h4>
-                                <p class="card-text" name="province" value="">지역</p>
-                                <p class="card-text" name="contents" value="">리뷰내용</p>
-                                <p class="card-text" name="uderid" value="">회원아이디</p>
+                                <h4 class="card-title">숙소이름</h4>
+                                <p class="card-text">지역</p>
+                                <p class="card-text">리뷰내용</p>
+                                <p class="card-text">회원아이디</p>
 
                             </div>
                         </div>
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title" name="acomm_name" value="">숙소이름</h4>
-                                <p class="card-text" name="province" value="">지역</p>
-                                <p class="card-text" name="contents" value="">리뷰내용</p>
-                                <p class="card-text" name="uderid" value="">회원아이디</p>
+                                <h4 class="card-title">숙소이름</h4>
+                                <p class="card-text">지역</p>
+                                <p class="card-text">리뷰내용</p>
+                                <p class="card-text">회원아이디</p>
 
                             </div>
                         </div>
-
                     </section>
                     
                     <script>
