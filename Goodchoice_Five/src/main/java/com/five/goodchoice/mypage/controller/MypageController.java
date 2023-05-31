@@ -1,4 +1,4 @@
-package com.five.goodchoice.khs.controller;
+package com.five.goodchoice.mypage.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
