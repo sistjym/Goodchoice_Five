@@ -335,4 +335,21 @@ p {
 	
 }
 
+/* 계시판 */
 
+.board_subject{
+	margin-bottom: 20px;
+	text-align: center;
+}
+
+.btn_box{
+	float: right;
+	
+}
+#btnSearch{
+	margin-top:10px;
+}
+
+#btnExcel{
+	margin-top:10px;
+}

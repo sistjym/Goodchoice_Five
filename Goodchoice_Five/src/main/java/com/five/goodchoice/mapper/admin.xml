@@ -4,38 +4,57 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="admin">
-	<resultMap type="HashMap" id="empDeptMap">
-		<result property="department_id" column="department_id" javaType="String"/>
-		<result property="department_name" column="department_name" javaType="String"/>
-		<result property="employee_id" column="employee_id" javaType="String"/>
-		<result property="fullname" column="fullname" javaType="String"/>
-		<result property="hire_date" column="hire_date" javaType="String"/>
-		<result property="monthsal" column="monthsal" javaType="String"/>
-		<result property="gender" column="gender" javaType="String"/>
-		<result property="age" column="age" javaType="String"/>
 
+	<!-- 카테고리 리스트 가져오기  -->
+	<select id ="categoryNameList" resultType="String">
+		select category_name 
+		from tbl_acom_category 
+	</select>
+	
+	<!-- 스펙 리스트 가져오기  -->
+	<select id ="specNameList" resultType="String">
+		select spec_name
+		from tbl_spec
+	</select>
+	
+	
+	 <!-- //테이블에에서 조건에 맞는 숙소 불러오기 -->
+	<resultMap type="HashMap" id="acom_Map">
+		<result property="FK_CATEGORY_NO"      column="FK_CATEGORY_NO"          javaType="String"/>
+		<result property="CATEGORY_NO"         column="CATEGORY_NO"             javaType="String"/>
+		<result property="CATEGORY_NAME"       column="CATEGORY_NAME"           javaType="String"/>
+		<result property="FK_SPEC_NO"          column="FK_SPEC_NO"              javaType="String"/>
+		<result property="SPEC_NO"             column="SPEC_NO"                 javaType="String"/>
+		<result property="SPEC_NAME"           column="SPEC_NAME"               javaType="String"/>
+		<result property="FK_HOST_NO"          column="FK_HOST_NO"              javaType="String"/>
+		<result property="HOST_NO"             column="HOST_NO"                 javaType="String"/>
+		<result property="HOST_NAME"           column="HOST_NAME"               javaType="String"/>
+		<result property="ACOM_NAME"           column="ACOM_NAME"               javaType="String"/>
+		<result property="ACOM_IMAGE"          column="ACOM_IMAGE"              javaType="String"/>
+		<result property="IS_ACOM_PERMISSION"  column="IS_ACOM_PERMISSION"      javaType="String"/>
 	</resultMap>
-	 <!-- //테이블에에서 조건에 맞는 사원 불러오기 -->
-	<select id="empList" resultMap="empDeptMap"> 
-		select E.department_id, D.department_name, E.employee_id,
-	        E.first_name || ' ' || E.last_name AS fullname,
-	        to_char(E.hire_date, 'yyyy-mm-dd') AS hire_date,
-	        nvl(E.salary + E.salary*E.commission_pct, E.salary) AS monthsal,
-	        func_gender(E.jubun) As gender,
-	        func_age(E.jubun) AS age
-		from employees E left join departments D
-		on E.department_id = D.department_id
-		where 1=1 
-		<if test="arr_DeptId != null">
-			and nvl(E.department_id, -9999) in 
-			<foreach collection="arr_DeptId" index="i" open="(" separator="," close=")">
-				'${arr_DeptId[i]}'
-			</foreach>
-		</if>
-		<if test="gender != null">
-			and func_gender(E.jubun) = #{gender}
-		</if>
-		order by E.department_id, E.employee_id
-		
+
+	<select id="getAcommList" resultMap="acom_Map"> 
+		select  AC.CATEGORY_NAME, S.SPEC_NAME, ACOM_NAME, H.HOST_NAME 
+		       ,DECODE(IS_ACOM_PERMISSION, '1', '승인 완료', '0', '승인 대기') AS IS_ACOM_PERMISSION
+				from tbl_spec S left join tbl_acomodation A 
+				ON S.SPEC_NO =  A.FK_SPEC_NO
+				join tbl_acom_category AC 
+				ON S.FK_CATEGORY_NO = AC.CATEGORY_NO
+				join tbl_host H
+				ON A.FK_HOST_NO = H.HOST_NO	
+				
+				<if test="arr_categoryName != null">
+				    and AC.CATEGORY_NAME in 
+					<foreach collection="arr_categoryName" index="i" open="(" separator="," close=")">
+						'${arr_categoryName[i]}'
+					</foreach>
+				</if>
+
+				<if test="permission != null">
+					and IS_ACOM_PERMISSION = #{permission}
+				</if>
+			
+	
 	</select>
 </mapper>
