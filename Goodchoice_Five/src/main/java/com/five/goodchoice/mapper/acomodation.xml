@@ -4,7 +4,252 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="acomodation">
+	
+	
+	<!-- 
+	<resultMap type="HashMap" id="acomodationBySearchCondition_Map">
+		<result property="acom_name" 	column="acom_name" 	  javaType="String"/>
+		<result property="acom_address" column="acom_address" javaType="String"/>
+		<result property="price" 		column="price" 	 	  javaType="String"/>
+		<result property="review_avg" 	column="review_avg"   javaType="String"/>
+		<result property="review_cnt" 	column="review_cnt"   javaType="String"/>	
+	</resultMap>
+	<select id="acomodationBySearchCondition" parameterType="HashMap" resultMap="acomodationBySearchCondition_Map">
+	
+		WITH ACOM_BY_CATEGORY_DISTRICT AS(
+		    
+		    select
+		        ACOM.acom_no,
+		        ACOM.acom_name,
+		        SP.spec_no    
+		    from
+		        tbl_acom_category CAT
+		        JOIN tbl_spec SP ON CAT.category_no = SP.fk_category_no
+		        JOIN tbl_acomodation ACOM ON SP.spec_no = ACOM.fk_spec_no
+		    where
+		        ACOM.is_acom_permission = 1
+		        AND CAT.category_no = #{category_no}
+		        AND ACOM.fk_district_no = #{district_no}
+		),
+		ROOM_BY_ACOM AS(
+		
+		     select ACOM.acom_no, ROOM.room_id, ROOM.fk_acom_no, ROOM.room_type, ROOM.price   
+		     
+		     from 
+		        tbl_acomodation ACOM 
+		        JOIN tbl_room ROOM on ACOM.acom_no = ROOM.fk_acom_no
+		     
+		),
+		FILTERED_DATA AS (
+		    select 
+		        ABCD.acom_name,
+		        min(RBA.price) as price
+		    from 
+		        ACOM_BY_CATEGORY_DISTRICT ABCD
+		        JOIN ROOM_BY_ACOM RBA on ABCD.acom_no = RBA.fk_acom_no
+		        LEFT JOIN tbl_reservation RES ON RBA.room_id = RES.fk_room_id
+		        AND (
+		                (#{check_in_date} BETWEEN RES.check_in_date AND (RES.check_out_date - 1))
+		                OR (#{check_out_date} BETWEEN (RES.check_in_date + 1) AND RES.check_out_date)
+		            )
+		        WHERE
+		            RES.fk_room_id IS NULL
+		        GROUP BY
+		            ABCD.acom_name   
+		),
+		AVG_REVIEW_SCORE_BY_ACOM AS(
+		    select acom_no, trunc(AVG(review_score),1) AS review_avg
+		          ,count(*) AS cnt
+		    from tbl_acomodation ACOM
+		    JOIN tbl_room ROOM on ACOM.acom_no = ROOM.fk_acom_no
+		    JOIN tbl_review REV on ROOM.room_id = REV.fk_room_id
+		    group by acom_no
+		)
+		SELECT
+		    AMD.acom_name,
+		    AMD.address || AMD.extra_address AS acom_address,
+		    FD.price,
+		    nvl(ASA.review_avg,'0') AS review_avg,
+		    nvl(ASA.cnt, '0')AS review_cnt
+		FROM
+		    tbl_acomodation AMD
+		    JOIN FILTERED_DATA FD ON AMD.acom_name = FD.acom_name
+		    LEFT JOIN AVG_REVIEW_SCORE_BY_ACOM ASA on AMD.acom_no = ASA.acom_no
+		   <if test="max_price eq -1"> 
+		    WHERE price >= 10000
+		   </if>
+		   <if test="max_price neq -1">
+		    WHERE price between #{min_price} and #{max_price}
+		   </if> 
+		    ORDER BY
+		    AMD.acom_name	
+	</select>
+	 -->
+	 
+	<select id="getAvailableRoomNo" parameterType="HashMap" resultType="String">
+		WITH SEARCH_ROOM AS(
+		    select ROOM.room_id
+		    from 
+		        tbl_acom_category CAT
+		        JOIN tbl_spec SP ON CAT.category_no = SP.fk_category_no
+		        JOIN tbl_acomodation ACOM ON SP.spec_no = ACOM.fk_spec_no
+		        JOIN tbl_room ROOM on ACOM.acom_no = ROOM.fk_acom_no
+		    where
+		        ACOM.is_acom_permission = 1
+		        AND CAT.category_no = #{category_no}
+		        AND ACOM.fk_district_no = #{district_no}
+		    order by 1
+		)
+		select SR.room_id
+		from SEARCH_ROOM SR
+		LEFT JOIN tbl_reservation RES ON RES.fk_room_id = SR.room_id
+		AND(
+		        (check_in_date BETWEEN RES.check_in_date AND (RES.check_out_date - 1))
+		        OR (check_out_date + 1 BETWEEN (RES.check_in_date + 1) AND RES.check_out_date)
+		    )
+		WHERE
+		    RES.fk_room_id IS NULL
+		order by 1			
+	</select>
+	
+		
+	<select id="getPriceFilterRoomNo" parameterType="HashMap" resultType="String">
+		select room_id
+		from 
+		    tbl_room
+		where 1=1 
+		<if test="availableRoomNoList != null">
+			and room_id in
+			<foreach collection="availableRoomNoList" index="i" open="(" separator="," close=")">
+				'${availableRoomNoList.get(i)}'
+			</foreach>
+		</if>
+		<if test="max_price eq -1"> 
+		and price >= 10000
+		</if>
+		
+		<if test="max_price neq -1">
+		and (price between to_number(#{min_price}) and to_number(#{max_price}))
+		</if>
+		
+	</select>
+	
+	
+	<resultMap type="HashMap" id="getAcomodationByLowPrice_Map">
+		<result property="acom_no" 	 	column="acom_no" 	  javaType="String"/>
+		<result property="acom_name" 	column="acom_name"    javaType="String"/>
+		<result property="full_address" column="full_address" javaType="String"/>
+		<result property="price" 		column="price" 		  javaType="String"/>
+	</resultMap>
+	
+	<select id="getAcomodationByLowPrice" parameterType="HashMap" resultMap="getAcomodationByLowPrice_Map">
+
+		WITH MIN_PRICE_ROOM_BY_ACOM AS(
+		    select acom_no,price
+		    from 
+		        tbl_acomodation ACOM
+		        JOIN 
+		        (
+		            select fk_acom_no, min(price)AS price
+		            from tbl_room
+		            where 1=1
+		            <if test="availableRoomNoList != null">
+						and room_id in
+						<foreach collection="availableRoomNoList" index="i" open="(" separator="," close=")">
+							'${availableRoomNoList.get(i)}'
+						</foreach>
+					</if>     
+		            group by fk_acom_no
+		        )ROOM
+		        on ACOM.acom_no = ROOM.fk_acom_no
+		)
+		select MRA.acom_no, acom_name
+		    , address || extra_address AS full_address
+		    , price
+		    from tbl_acomodation AMD
+		    JOIN MIN_PRICE_ROOM_BY_ACOM MRA on AMD.acom_no = MRA.acom_no		
+	
+	</select>
+	
+	
+	<resultMap type="HashMap" id="getRatingReviewCntByAcom_Map">
+		<result property="acom_no" 	 	column="acom_no" 	javaType="String"/>
+		<result property="rating_avg" 	column="rating_avg" javaType="String"/>
+		<result property="rating_cnt"   column="rating_cnt" javaType="String"/>
+	</resultMap>
+	
+	<select id="getRatingReviewCntByAcom" parameterType="java.util.List" resultMap="getRatingReviewCntByAcom_Map">
+
+	    select acom_no, nvl(avg(review_score),'0') AS rating_avg, count(review_score) rating_cnt
+	    from
+	    (
+	        select *
+	        from tbl_acomodation ACOM
+	        JOIN tbl_room ROOM on ACOM.acom_no = ROOM.fk_acom_no
+	        where	        
+				ROOM.fk_acom_no in 
+
+				<foreach collection="list" item="item" open="(" separator="," close=")">
+					#{item.acom_no}
+				</foreach>
+
+	        
+	    )ABR
+	    LEFT JOIN tbl_review REV on ABR.room_id = REV.fk_room_id
+	    group by acom_no	
+	
+	</select>
+	
+	<resultMap type="HashMap" id="getSortedListByDistance_Map">
+		<result property="acom_no" 	 	column="acom_no" 	javaType="String"/>
+		<result property="distance" 	column="distance" 	javaType="String"/>
+	</resultMap>
+	
+	<select id="getSortedListByDistance" parameterType="java.util.List" resultMap="getSortedListByDistance_Map">
+				
+		select acom_no
+		      , trunc( (6371*acos(cos(radians(to_number(district_latitude)))*cos(radians(to_number(acom_latitude)))*cos(radians(to_number(acom_longitude))
+		        -radians(to_number(district_longitude)))+sin(radians(to_number(district_latitude)))*sin(radians(to_number(acom_latitude))))) * 1000)
+		      AS distance
+		from 
+		    tbl_district DST
+		    JOIN tbl_acomodation ACOM on DST.district_no = ACOM.fk_district_no
+		where ACOM.acom_no in
+		<foreach collection="list" item="item" open="(" separator="," close=")">
+			#{item.acom_no}
+		</foreach>
+		order by distance		
+			
+	</select>
+	
+	
+	<resultMap type="HashMap" id="getSortedListByRowPrice_Map">
+		<result property="acom_no" 	 	column="acom_no" 	javaType="String"/>
+		<result property="price" 		column="price" 	javaType="String"/>
+	</resultMap>
+	
+	<select id="getSortedListByRowPrice" parameterType="java.util.List" resultMap="getSortedListByRowPrice_Map">
+				
+		select acom_no, to_number(min(price)) as price
+		    from 
+		        tbl_acomodation ACOM
+		        JOIN tbl_room ROOM on ACOM.acom_no = ROOM.fk_acom_no
+		        where ACOM.acom_no in 
+				<foreach collection="list" item="item" open="(" separator="," close=")">
+					#{item.acom_no}
+				</foreach>  
+		        group by ACOM.acom_no
+		order by price asc		
+			
+	</select>
+	
 
 	
+	
+	
+	
+	
+	
+
 
 </mapper>
