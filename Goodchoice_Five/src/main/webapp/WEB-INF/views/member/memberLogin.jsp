@@ -93,7 +93,7 @@
 		<button style="border-radius: 6px; width:100%;text-align: center; border: none; color:#fff; background-color:#c80449;height:56px;margin-bottom:30px;">로그인</button>
 		<div style="display: inline-block;float: left;width: 50%;"><a href="<%= ctxPath%>/memberEditEmailcheck.gc" class="btn_nologin"><span style="font-size:16px">비밀번호 재설정</span></a></div>
 		<div style="display: inline-block;float: left;width: 50%;"><a href="<%= ctxPath%>/memberRegister.gc" class="btn_nologin"><span style="font-size:16px">회원가입</span></a></div>
-	</div>memberEditEmailcheck.gc
+	</div>
 </div>	
 </body>
 </html>

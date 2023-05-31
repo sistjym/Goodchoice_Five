@@ -1,8 +1,10 @@
 package com.five.goodchoice.model.service;
 
-import com.five.goodchoice.member.model.MemberVO;
 
 public interface InterMemberService {
 
-	MemberVO test_select();
+
+	
+	// 이메일이 존재하는 이메일인지 확인하기
+	boolean checkDuplicateEmail(String email);
 }

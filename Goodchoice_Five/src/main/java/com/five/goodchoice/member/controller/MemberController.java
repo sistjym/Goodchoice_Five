@@ -1,9 +1,12 @@
 package com.five.goodchoice.member.controller;
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.five.goodchoice.member.model.MemberVO;
 import com.five.goodchoice.model.service.InterMemberService;
@@ -49,4 +52,21 @@ public class MemberController {
 		return "member/passwdEditforCheck";
 	}
 	
+	// 이메일 중복 유무 검사
+	@ResponseBody
+	@RequestMapping(value="/checkDuplicateEmail.gc", method = {RequestMethod.POST}) 
+	public String checkDuplicateEmail(HttpServletRequest request){
+		
+		
+		String email = request.getParameter("email");
+			boolean isExists = service.checkDuplicateEmail(email);
+			
+			JSONObject jsonObj = new JSONObject();
+			jsonObj.put("isExists", isExists);
+		
+		System.out.println(isExists);	
+			
+		return jsonObj.toString();
+		
+	}
 }

@@ -10,11 +10,15 @@ public class MemberDAO implements InterMemberDAO {
 
 	@Resource
 	private SqlSessionTemplate sqlsession;
+
 	
+	// 이메일이 존재하는 이메일인지 확인하기
 	@Override
-	public MemberVO test_select() {
-		MemberVO mvo = sqlsession.selectOne("member.test_select");
-		return mvo;
+	public boolean checkDuplicateEmail(String email) {
+		
+		//int result = sqlsession.selectOne("member.checkDuplicateEmail", email);
+		int result = sqlsession.selectOne("member.checkDuplicateEmail", email);
+		return (result == 1);
 	}
 
 }
