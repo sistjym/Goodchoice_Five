@@ -38,5 +38,21 @@
       
    <!-- ==== #17. jackson 과 관련된 기능을 사용하기 위해 빈을 등록한다. ==== -->
    <bean id="jacksonMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
-		
+    <!-- gmail설정 -->
+	<!--
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">  
+     	<property name="host" value="smtp.gmail.com" />
+  		<property name="port" value="465" />
+ 		<property name="username" value="jsi771234@gmail.com"/> 자신의 이메일 아이디
+	 	<property name="password" value="Tjddls_123"/> 자신의 비밀번호
+	 보안연결 TLS과 관련된 설정
+	     <property name="javaMailProperties">
+		    <props>
+		       <prop key="mail.smtp.starttls.enable">true</prop>
+		       <prop key="mail.smtp.auth">true</prop>
+		       <prop key="mail.transport.protocol">smtp</prop>
+		       <prop key="mail.debug">true</prop>
+		    </props>
+	     </property>
+	</bean>	 -->
 </beans>
