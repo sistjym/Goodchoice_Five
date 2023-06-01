@@ -88,18 +88,13 @@ div#top_left > div#top_left_lower{
 	
  	 
  	
- 	margin-top: 10px;
-
-}
-
-
-div#top_left > div#top_left_lower{
-	
- 	 
+ 	margin-top: 20px;
  	
- 	margin-top: 0px;
-
+ 	
+	margin-bottom: 20px;
 }
+
+
 
 
 
@@ -734,6 +729,7 @@ function myFunction_PrevLeftSpan(){
 						<div>
 							<p id="sajang">사장님 한마디</p>
 							<p id="sajang_annae">★안내사항</p>
+							
 						</div>
 					</div>
 							
