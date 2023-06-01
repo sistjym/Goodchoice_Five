@@ -1,4 +1,7 @@
 package com.five.goodchoice.member.controller;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.json.JSONObject;
@@ -7,7 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.five.goodchoice.common.AES256;
+import com.five.goodchoice.common.Sha256;
 import com.five.goodchoice.member.model.MemberVO;
 import com.five.goodchoice.model.service.InterMemberService;
 
@@ -69,4 +75,39 @@ public class MemberController {
 		return jsonObj.toString();
 		
 	}
+	
+	@RequestMapping(value="/memberRegister.gc", method = {RequestMethod.POST}) 
+	public ModelAndView memberRegister(ModelAndView mav, HttpServletRequest request){
+		
+		String email = request.getParameter("email");
+		String pwd = request.getParameter("pwd");
+		String nickname = request.getParameter("nickname");
+		
+		Map<String, String> paraMap = new HashMap<>();
+		paraMap.put("email", email);
+		paraMap.put("pwd", Sha256.encrypt(pwd));
+		paraMap.put("nickname", nickname);
+		
+		String message ="";
+		String loc = "";
+		
+		if(service.registerMember(paraMap)) {
+			 message = "회원가입에 성공 했습니다.";
+			 loc = request.getContextPath() + "/main/home.gc";
+		}
+		
+		else {
+			message = "회원가입에 실패 했습니다.";
+			loc = "javascript:history.back()";
+		}
+		
+		mav.addObject("message", message);
+		mav.addObject("loc", loc);
+		
+		mav.setViewName("msg");
+		
+		
+		return mav;
+	}
+	
 }

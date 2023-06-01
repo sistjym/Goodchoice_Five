@@ -2,6 +2,7 @@ package com.five.goodchoice.model.service;
 
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,23 @@ public class MemberService implements InterMemberService{
 		}
 		
 		boolean result = dao.checkDuplicateEmail(email);
+		
+		
+		return result;
+	}
+
+
+	@Override
+	public boolean registerMember(Map<String, String> paraMap) {
+		
+		String email = paraMap.get("email");
+		try {
+			email = aes.encrypt(email);
+			paraMap.put("email", email);
+		} catch (UnsupportedEncodingException | GeneralSecurityException e) {
+			e.printStackTrace();
+		} 
+		boolean result = dao.registerMember(paraMap);
 		
 		
 		return result;

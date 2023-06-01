@@ -485,7 +485,7 @@
 		  
 		  <div class="form-group">
 		    <label for=inputPwd1 style="color:#0000008F; font-weight: bold;">비밀번호</label>
-		    <input type="password" style="height:50px;"class="form-control" id="inputPwd1" placeholder="6 ~ 16자 영문,숫자,특수문자 1개 이상씩 혼용">
+		    <input type="password" style="height:50px;"class="form-control" id="inputPwd1" name="pwd" placeholder="6 ~ 16자 영문,숫자,특수문자 1개 이상씩 혼용">
 			  <div><span id="error_pwd" style="color:red;"></span></div>
 		    <br>
 		    <label for="inputPwd2" style="color:#0000008F; font-weight: bold;">비밀번호&nbsp;확인</label>
@@ -495,7 +495,7 @@
 		 
 		  <label class="nickname" for="nickname" style="color:#0000008F; font-weight: bold;">닉네임</label>
 		  <div class="form-group row nickname"  style="width:100%; display:flex;  margin-left: 3px;">
-		    <input type="text" style="height: 50px;" class="form-control col-sm-7" id="nickname" placeholder="닉네임 입력">
+		    <input type="text" style="height: 50px;" class="form-control col-sm-7" id="nickname" name="nickname" placeholder="닉네임 입력">
 		  	<button type="button" id="btn_random" class="btn col-sm-4 offset-sm-1" style="background-color: #EBEBEB; color:#0000008F; height: 50px;border-radius: 6px;font-weight: bold;" onclick="getRandomItem()" >딴거할래요</button>
 		  	<div><span id="error_nickname" style="color:red;"></span></div>
 		  </div>

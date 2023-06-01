@@ -12,6 +12,10 @@
 </select>
 
 
+<insert id="registerMember" parameterType="HashMap">
+
+</insert>
+
 
 
 
