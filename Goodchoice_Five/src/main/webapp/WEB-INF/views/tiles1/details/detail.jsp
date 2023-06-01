@@ -53,30 +53,36 @@ div#container{
 
 div#top{
 
-	border:solid 10px purple;
+/* 	border:solid 10px purple; */
 	margin: 0 auto;
 }
 
 
   div#top_left{ 
 	
- 	border:solid 5px gray; 
+/*  	border:solid 5px gray;  */
  } 
 
 
 div#top_right{
 
-	border:solid 5px magenta;
+/* 	border:solid 5px magenta; */
+	
+}
+
+
+div#top_right{
+
+/* 	border:solid 5px magenta; */
 	
 }
 
 
 
 
-
 div#top_left > div#top_left_upper > img{
 	
-/* 	 	border:solid 5px blue;  */
+ 	 	border:solid 5px white;  
 	
 	 	
 	
@@ -102,7 +108,7 @@ div#top_left > div#top_left_lower{
 
 div#top_right > div#top_right_upper{
 
-		border:solid 10px red;
+/* 		border:solid 10px red; */
 	
 
 }
@@ -126,9 +132,9 @@ div#top_right_upper p#top_address{
 
 div#top_right > div#top_right_lower{
 
-		border:solid 5px skyblue;
+/* 		border:solid 5px skyblue; */
 
-		margin-top: 70px;
+		margin-top: 10px;
 }
 
 
@@ -356,6 +362,24 @@ div.resv_cancel_top > p{
 
 
 
+.content {
+        
+        white-space: normal;
+            overflow: visible;
+            text-overflow: unset;
+    }
+
+    .btn {
+        cursor: pointer;
+        color: #00855d;
+    }
+    
+    .btn:hover {
+    
+    	color: #00855d;
+    }
+  
+
 
 
 
@@ -370,7 +394,7 @@ div.resv_cancel_top > p{
 $(document).ready(function() {
 		
 		
-	  
+	  <%-- div#top_right 캐러셀 및 캐러셀 위 배경부분  시작--%>
 	  	
 	 
 	 // 초기 로드 시 첫 번째 이미지 설정
@@ -422,6 +446,14 @@ $(document).ready(function() {
 	
 	myFunction_PrevRightSpan(); 
 	
+	  <%-- div#top_right 캐러셀 및 캐러셀 위 배경부분 끝--%>
+
+	  <%-- 더보기 접기 토글 시작 --%>
+	  
+	  myFunction_FoldMore();
+	
+	  <%-- 더보기 접기 토글 끝 --%>
+
 	
 	
   
@@ -625,7 +657,51 @@ function myFunction_PrevLeftSpan(){
 
 	<%-- 화살표버튼눌러서 이미지 슬라이드 할떄 이미지 바뀌게 하기 끝 --%>
 
+	
+	<%-- 더보기 접기 토글버튼 시작 --%>
+	
+	function myFunction_FoldMore(){
+		
+		
+		var content = $("p#myContent");
+        var toggleBtn = $("#toggleBtn");
 
+        var contentText = content.text();
+        var truncatedText = contentText.substring(0, 15);
+        var remainingText = contentText.substring(15);
+        
+        console.log('truncatedText' + truncatedText);
+        console.log('remainingText' + remainingText);
+
+
+        if (remainingText.length > 0) {
+        	content.html(truncatedText + '<span class="dots">...</span>');
+            toggleBtn.text("더보기");
+        } else {
+            content.text(contentText);
+            toggleBtn.hide();
+        }
+
+        toggleBtn.click(function() {
+            content.toggleClass("expanded");
+            toggleBtn.toggleClass("expanded");
+
+            if (toggleBtn.text() === "더보기") {
+                content.text(contentText);
+                toggleBtn.text("접기");
+            } else {
+            	content.html(truncatedText + '<span class="dots">...</span>');
+                toggleBtn.text("더보기");
+            }
+        });
+        
+        
+		
+	}
+
+	<%-- 더보기 접기 토글버튼 끝 --%>
+
+	
 
 </script>
 
@@ -681,16 +757,16 @@ function myFunction_PrevLeftSpan(){
 						               
 			            			
 									    <span class="carousel-control-prev prev-left" style="border: none; background: none; width:15px;">
-										   <a href="#recipeCarousel" class="prev_anchor" role="button" data-slide="prev" style="border: solid 1px blue; ">
-										      <span class="carousel-control-prev-icon" aria-hidden="true" style="border: solid 1px red;"></span>
+										   <a href="#recipeCarousel" class="prev_anchor" role="button" data-slide="prev">
+										      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
 										      <span class="sr-only">Previous</span>
 										   </a>
 										</span>
 									  
 						             	
 						                <span class="carousel-control-next prev-right" style="border: none; background: none; width:15px;">
-										   <a href="#recipeCarousel" class="next_anchor" role="button" data-slide="next" style="border: solid 1px blue; ">
-										      <span class="carousel-control-next-icon" aria-hidden="true" style="border: solid 1px red;"></span>
+										   <a href="#recipeCarousel" class="next_anchor" role="button" data-slide="next">
+										      <span class="carousel-control-next-icon" aria-hidden="true"></span>
 										      <span class="sr-only">Next</span>
 										   </a>
 										</span>
@@ -701,7 +777,7 @@ function myFunction_PrevLeftSpan(){
 			
 			</div>
 
-			<div class="col-md-5" id="top_right">
+			<div class="col-lg-5 col-md-5" id="top_right">
 				
 					<div id="top_right_upper">	
 						<div class="row" id="top_title">					
@@ -727,8 +803,13 @@ function myFunction_PrevLeftSpan(){
 							
 					<div id="top_right_lower">
 						<div>
-							<p id="sajang">사장님 한마디</p>
-							<p id="sajang_annae">★안내사항</p>
+							<div class="row">
+								<p id="sajang">사장님 한마디</p>
+								<div id="toggleBtn" class="btn">더보기</div>
+							</div>
+							<p id="sajang_annae">★안내사항</p>							
+							<p id="myContent" class="col-lg-12 content">COEX 전시장, 도심공항터미널, 종합무역센터, 올림픽 메인스타디움에 인접해 있어 비즈니스,관광 등 다양한 목적의 여행객들에게 이상적입니다 </p>
+				    
 							
 						</div>
 					</div>
