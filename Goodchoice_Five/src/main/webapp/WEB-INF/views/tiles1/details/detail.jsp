@@ -36,6 +36,12 @@ v<%@ page language="java" contentType="text/html; charset=UTF-8"
 <script type="text/javascript" src="<%= ctxPath%>/resources/jquery-ui-1.13.1.custom/jquery-ui.min.js"></script>
 
 
+<!-- RangeDatePicker JS -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+
 <style type="text/css">
 
 div#container{
@@ -70,7 +76,7 @@ div#top_right{
 
 div#top_left > div#top_left_upper > img{
 	
-	 	border:solid 5px blue; 
+/* 	 	border:solid 5px blue;  */
 	
 	 	
 	
@@ -80,26 +86,16 @@ div#top_left > div#top_left_upper > img{
 
 div#top_left > div#top_left_lower{
 	
- 	border:solid 3px skyblue; 
+ 	 
  	
  	margin-top: 10px;
 
 }
 
 
-div.carousel-inner {
-	
 
-	
-	border: solid 3px black;
-}
 
-div.carousel-inner > div.carousel-item > img {
 
-	
-	height: 95px;
-
-}
 
 
 
@@ -183,7 +179,7 @@ div#item{
 		margin: 60px auto 0px auto;
 	
 		margin-top:20px; 
-		border:1px solid  #e0ebeb;
+		border: solid 1px #e0ebeb;
 
 }
 
@@ -217,7 +213,7 @@ div#item a.btn_resv{
 
 
 
-       .carousel-inner .carousel-item.active,
+		.carousel-inner .carousel-item.active,
        .carousel-inner .carousel-item-next, 
        .carousel-inner .carousel-item-prev { 
          display: flex; 
@@ -249,23 +245,14 @@ div#item a.btn_resv{
   filter: invert(100%);
 }
 
-a.prev-left{
 
-	margin-left: -23px;
-
-}
-
-a.prev-right{
-
-	margin-right: -23px;
-
-}
 
 
 
 img.ci{
 
 	height: 80px;
+	
 	
 }
 
@@ -359,7 +346,17 @@ div.resv_cancel_top > p{
 		  margin-left: 5px;
 		}
 
-     
+  div#image-container {
+
+/*   border: solid 1px red; */
+  padding: 0;
+  margin: 0;
+}
+
+
+
+
+
 
 
 </style>
@@ -371,35 +368,83 @@ div.resv_cancel_top > p{
 <script>
 $(document).ready(function() {
 		
+		
+	  
+	  	
+	 
+	 // 초기 로드 시 첫 번째 이미지 설정
+	  var firstImage = $('div.active > img.ci').attr('src');
+	  $('div#top_left_upper > img').attr('src', firstImage);
 	
-	$('.subChange:first-child').trigger('click');
-	
-	<%-- 캐러셀 --%>
 
-  $('.carousel .carousel-item').each(function(){
-	  
-	 	
-	  
-      var next = $(this).next();
-      if (!next.length) {
-          next = $(this).siblings(':first');
-      }
-      next.children(':first-child').clone().appendTo($(this));
-      
-      for (var i=0;i<2;i++) {
-          next=next.next();
-          if (!next.length) {
-             next = $(this).siblings(':first');
-           }
-          
-          next.children(':first-child').clone().appendTo($(this));
-        }
-      
-      
-    
-  });
+
+	$('.carousel .carousel-item').each(function(){
+		
   
+		
+	      var next = $(this).next();
+	      if (!next.length) {
+	          next = $(this).siblings(':first');
+	      }
+			
+	      var nextImg = next.children(':first-child').clone();
+	      
+			
+	      nextImg.appendTo($(this));	      
+	      
+	      
+	      for (var i=0;i<3;i++) {
+	          next=next.next();
+	          if (!next.length) {
+	             next = $(this).siblings(':first');
+	           }
+	          nextImg = next.children(':first-child').clone();
+	          nextImg.appendTo($(this));
+	          
+	        }
+	     
+		  
+	      
+	      myFunction_ChangeImage() // 어떤 이미지를 클릭해도 그냥 제일 처음 active 클래스를 가졌던 div 태그의 자식 img 태그가 앞으로 와버린다.
+	      
+	      
+	      
+	      
+
+		  myFunction_ClickImage();
+	      
+	      
+	    
+	  });
+	  
+	myFunction_PrevLeftSpan();  
+	
+	myFunction_PrevRightSpan(); 
+	
+	
+	
+  
+		<%-- 캘린더 시작 --%>
+	
+    $("#daterange").daterangepicker({
+        locale: {
+            "applyLabel": "확인",
+             "cancelLabel": "취소",
+            "daysOfWeek": ["일", "월", "화", "수", "목", "금", "토"],
+            "monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
+            },
+        startDate: '05/20/2023',
+        endDate: '05/21/2023'
+       
+    });
+	
+	<%-- 캘린더 끝 --%>
+
  
+
+
+  
+  
   
 
   
@@ -432,6 +477,9 @@ $(document).ready(function() {
 
   
 	  
+	  
+	  
+	  
 	
 	  
 	  
@@ -440,36 +488,141 @@ $(document).ready(function() {
   
 });
 
+<%-- 캐러셀 사진 클릭하면 바뀌기 시작 --%>
+
+function myFunction_ClickImage() {
+	  var currentImageSrc = ''; // 현재 이미지의 src를 저장할 변수
+
+	  $('img.ci').click(function() {
+	    var clickImage = $(this).attr('src');
+	    
+	    if (currentImageSrc !== clickImage) { // 클릭한 이미지가 현재 이미지와 다를 경우에만 처리
+	      $('div#top_left_upper > img').fadeOut(200, function() {
+	        $(this).attr('src', clickImage).fadeIn(200);
+	      });
+	      
+	      currentImageSrc = clickImage; // 현재 이미지의 src 업데이트
+	    }
+	  });
+	}
+
+
+<%-- 캐러셀 사진 클릭하면 바뀌기 끝 --%>
 
 
 
 
 
-/*
-function func_show_hide{
-	
-	$('.tab_1').click(function() {
-		
-		  var clickedId = $(this).attr('class');
+
+<%-- 클릭한 이미지를 캐러셀 가장 앞으로 이동 시작 --%>
+<%-- active 클래스를 추가해주면 그 추가가 된 img태그부터 시작이 된다.--%>
+
+function myFunction_ChangeImage() {
+	  $('img.ci').click(function() {
+	    var clickedImage = $(this).attr('src');  <%-- 이거 넣고 다시해보기. addclass removeclass 다시하기 --%>
+	    
+	    
+	    
+
+		$('div.carousel-item').each(function() {
+	    	
+	    	$(this).removeClass('active'); // 모든 carousel-item에서 active 클래스 제거
+
+	    	
+
+	       //  console.log("active 는 " + "삭제됨" + $(".active").attr("id")); // 삭제돼서 undefined 뜸
+
+		 });
+
+	    
+	    
+	    
+	    
+	    $('div.carousel-item').each(function() {  // 이렇게 하면 된다.! div태그를 반복문을 돌려야 했다.
+	    	
+	    	
+	    	
+	      if ($(this).children().attr('src') === clickedImage) {
+	        $(this).addClass('active'); // 클릭한 이미지의 부모 carousel-item에 active 클래스 추가
+	        
+	      	
+            
+           
+            
+	        
+	      //  console.log("active 는 " + $(".active").attr("id"))
+	        return false; // 반복문 종료
+	      }
+	    
+	      
+	      
+	      
+	    });
+	    
+	  });
 	  
-		  $('.box_text p.'+ clickedId ).css('display','block');
-		  
-		  
-		  
-		  $('.box_text p').not('.' + clickedId).each(function() {
+	  
+	  
+	}
+
+
+<%-- 클릭한 이미지를 캐러셀 가장 앞으로 이동 끝 --%>
+
+
+
+
+<%-- 화살표버튼눌러서 이미지 슬라이드 할떄 이미지 바뀌게 하기 시작 --%>
+
+function myFunction_PrevLeftSpan(){ 
+	
+
+
+	  
+	$('span.prev-left').click(function() {
+			  var activeIndex = $('div.carousel-item.active').index();
+			  var totalItems = $('div.carousel-item').length;
+			  var prevIndex = activeIndex - 1;
+	
+			  if (prevIndex < 0) {
+			    prevIndex = totalItems - 1;
+			  }
+	
+			  var prevImg = $('div.carousel-item').eq(prevIndex).find('img.ci');
+			  var src_csImage = prevImg.attr('src');
+	
 			  
-			 var nonclickedId = $(this).attr('class');
-			 $('.box_text p.'+nonclickedId).css('display','none');
-
-		  });
-
+			  $('div#top_left_upper > img').fadeOut(200, function() {
+			      // 이미지가 사라진 후, 새로운 이미지로 src 변경
+			      $(this).attr('src', src_csImage).fadeIn(200);
+			    });
+			  
+			  
+		  
 		});
+	} 
+	
+	
+	function myFunction_PrevRightSpan(){
+		
 
-}
 
-*/
+	
+	$('span.prev-right').click(function() {
+		  var activeDiv = $('.carousel-item.active');
+		  var secondImg = activeDiv.find('img.ci:nth-child(2)');
+		  var src_csImage = secondImg.attr('src');
+		  
+		  $('div#top_left_upper > img').fadeOut(200, function() {
+		      // 이미지가 사라진 후, 새로운 이미지로 src 변경
+		      $(this).attr('src', src_csImage).fadeIn(200);
+		    });
+		  
+		  
+		});
+	}
 
 
+	<%-- 화살표버튼눌러서 이미지 슬라이드 할떄 이미지 바뀌게 하기 끝 --%>
 
 
 
@@ -486,13 +639,13 @@ function func_show_hide{
 	<div  id="container">
 	
 		
-		<div class="row custom-topcontents col-md-8" id="top">
+		<div class="row custom-topcontents col-md-9" id="top">
 		
 			<div class="col-md-7" id="top_left">
 			
 					<div id="top_left_upper">
 					
-						  <img src="<%= ctxPath%>/resources/images/강남캠퍼스.jpg" alt="이미지">
+						  <img src="">
 					
 					</div>
 				
@@ -500,35 +653,46 @@ function func_show_hide{
 				
 						   <%-- ////////////////////////// 추가이미지 캐러셀로 보여주기 시작 //////////////////////////// --%>
 						           <div id="recipeCarousel" class="carousel slide w-100" data-ride="carousel" data-interval="false">
+						           <!--  -->
 						               <div class="carousel-inner w-100 col-12" role="listbox">
-						                         <div class="carousel-item active">
-						                             <img class="d-block col-lg-3 col-md-4 col-sm-6 img-fluid ci" src="<%= ctxPath%>/resources/images/강남캠퍼스.jpg">
+						                         <div class="carousel-item active" id="img_init">
+						                             <img class="col-lg-3 col-md-4 col-sm-6 ci" style="cursor:pointer; " src="<%= ctxPath%>/resources/images/강남캠퍼스.jpg">
 						                         </div>
-						                         <div class="carousel-item">
-						                             <img class="d-block col-lg-3 col-md-4 col-sm-6 img-fluid ci" src="<%= ctxPath%>/resources/images/동원.png">
+						                         <div class="carousel-item" id="1">
+						                             <img class="col-lg-3 col-md-4 col-sm-6 ci" style="cursor:pointer;" src="<%= ctxPath%>/resources/images/강남클릭_일반실_추가1.jpg">
 						                         </div>
-						                           <div class="carousel-item">
-						                             <img  class="d-block col-lg-3 col-md-4 col-sm-6 img-fluid ci" src="<%= ctxPath%>/resources/images/레노보.png">
+						                           <div class="carousel-item" id="2">
+						                             <img  class="col-lg-3 col-md-4 col-sm-6 ci" style="cursor:pointer;" src="<%= ctxPath%>/resources/images/강남클릭_일반실_추가2.jpg">
 						                         </div>
-						                           <div class="carousel-item">
-						                             <img  class="d-block col-lg-3 col-md-4 col-sm-6 img-fluid ci" src="<%= ctxPath%>/resources/images/미샤.png">
+						                           <div class="carousel-item" id="3">
+						                             <img  class="col-lg-3 col-md-4 col-sm-6 ci" style="cursor:pointer;" src="<%= ctxPath%>/resources/images/강남클릭_일반실_추가3.jpg">
 						                         </div>
-						                           <div class="carousel-item">
-						                             <img  class="d-block col-lg-3 col-md-4 col-sm-6 img-fluid ci" src="<%= ctxPath%>/resources/images/원더플레이스.png">
+						                           <div class="carousel-item" id="4">
+						                             <img  class="col-lg-3 col-md-4 col-sm-6 ci" style="cursor:pointer;" src="<%= ctxPath%>/resources/images/강남클릭_일반실_추가4.jpg">
 						                         </div>
-						                           <div class="carousel-item">
-						                             <img  class="d-block col-lg-3 col-md-4 col-sm-6 img-fluid ci" src="<%= ctxPath%>/resources/images/sist_logo.png">
+						                           <div class="carousel-item" id="5">
+						                             <img  class="col-lg-3 col-md-4 col-sm-6 ci" style="cursor:pointer;" src="<%= ctxPath%>/resources/images/강남클릭_일반실.jpg">
 						                         </div>
+						                         
 						               </div>
-			            			  <a class="carousel-control-prev prev-left" href="#recipeCarousel" role="button" data-slide="prev">
-						                   <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-						                   <span class="sr-only">Previous</span>
-									  </a>
+						               <!--  -->
+						               
+						               
+			            			
+									    <span class="carousel-control-prev prev-left" style="border: none; background: none; width:15px;">
+										   <a href="#recipeCarousel" class="prev_anchor" role="button" data-slide="prev" style="border: solid 1px blue; ">
+										      <span class="carousel-control-prev-icon" aria-hidden="true" style="border: solid 1px red;"></span>
+										      <span class="sr-only">Previous</span>
+										   </a>
+										</span>
+									  
 						             	
-						                <a class="carousel-control-next prev-right" href="#recipeCarousel" role="button" data-slide="next">
-						                   <span class="carousel-control-next-icon" aria-hidden="true"></span>
-						                   <span class="sr-only">Next</span>
-						               </a>	
+						                <span class="carousel-control-next prev-right" style="border: none; background: none; width:15px;">
+										   <a href="#recipeCarousel" class="next_anchor" role="button" data-slide="next" style="border: solid 1px blue; ">
+										      <span class="carousel-control-next-icon" aria-hidden="true" style="border: solid 1px red;"></span>
+										      <span class="sr-only">Next</span>
+										   </a>
+										</span>
 						           </div>
       					 <%-- ////////////////////////// 추가이미지 캐러셀로 보여주기 끝 //////////////////////////// --%>
 									
@@ -572,7 +736,7 @@ function func_show_hide{
 		   
 		</div>
 		
-		<div class="col-lg-8 col-md-6 col-sm-8" id="tab">
+		<div class="col-lg-9 col-md-6 col-sm-8" id="tab">
 		
 				<nav class="navbar navbar-expand-sm bg-white navbar-white sticky-top mx-3">
 				  <a style="font-size: 12pt;" class="navbar-brand tab_1 " onclick="function_show_hide">객실안내/예약</a>
@@ -588,12 +752,14 @@ function func_show_hide{
 		
 		</div>
 		
-		  <div class="col-lg-8 calendar" id="night">
+		  <div class="col-lg-9 calendar" id="night">
+		  
+		  		<input type="text" id="daterange" readonly/>
 		  
 		  </div>
 
 		
-	      <div id="item" class="row col-lg-8">
+	      <div id="item" class="row col-lg-9">
 				<div class="col-lg-6 col-md-10 col-sm-10">
 						<img src="<%= ctxPath%>/resources/images/강남캠퍼스.jpg" alt="thumbnail" class="img-thumbnail item_image">
 				</div>
@@ -635,7 +801,7 @@ function func_show_hide{
 	        </div>
 	        
 	        
-	      	<div class="accordion_wrap col-lg-8" >
+	      	<div class="accordion_wrap col-lg-9" >
 				<div class="accordion1">                        	
 					<section id="nutrients">
 						<p id="nutrients"><a href="#nutrients">영양정보</a></p>
