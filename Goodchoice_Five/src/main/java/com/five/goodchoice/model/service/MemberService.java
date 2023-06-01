@@ -36,7 +36,7 @@ public class MemberService implements InterMemberService{
 		return result;
 	}
 
-
+	// 회원가입
 	@Override
 	public boolean registerMember(Map<String, String> paraMap) {
 		
