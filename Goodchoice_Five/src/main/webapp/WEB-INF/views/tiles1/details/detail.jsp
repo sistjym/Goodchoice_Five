@@ -93,7 +93,13 @@ div#top_left > div#top_left_lower{
 }
 
 
+div#top_left > div#top_left_lower{
+	
+ 	 
+ 	
+ 	margin-top: 0px;
 
+}
 
 
 
