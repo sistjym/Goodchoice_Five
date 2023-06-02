@@ -65,18 +65,16 @@ public class MemberController {
 		
 		
 		String email = request.getParameter("email");
-			boolean isExists = service.checkDuplicateEmail(email);
-			
-			JSONObject jsonObj = new JSONObject();
-			jsonObj.put("isExists", isExists);
+		boolean isExists = service.checkDuplicateEmail(email);
 		
-		System.out.println(isExists);	
-			
+		JSONObject jsonObj = new JSONObject();
+		jsonObj.put("isExists", isExists);
+		
 		return jsonObj.toString();
 		
 	}
 	
-	@RequestMapping(value="/memberRegister.gc", method = {RequestMethod.POST}) 
+	@RequestMapping(value="/hostRegister.gc", method = {RequestMethod.POST}) 
 	public ModelAndView memberRegister(ModelAndView mav, HttpServletRequest request){
 		
 		String email = request.getParameter("email");
