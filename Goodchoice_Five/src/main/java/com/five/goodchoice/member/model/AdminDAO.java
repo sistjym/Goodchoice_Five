@@ -45,10 +45,17 @@ public class AdminDAO implements InterAdminDAO {
 		return hostList;
 	}
 	
-	//
+	// 호스트 권한 업데이트 하기 
 	@Override
 	public int updatePermission(Map<String, String> paraMap) {
 		int n = sqlsession.update("admin.updatePermission", paraMap);
+		return n;
+	}
+
+	// 숙소 등록 허용하기 
+	@Override
+	public int updatePermissionAcomm(Map<String, String> paraMap) {
+		int n = sqlsession.update("admin.updatePermissionAcomm", paraMap);
 		return n;
 	}
 	

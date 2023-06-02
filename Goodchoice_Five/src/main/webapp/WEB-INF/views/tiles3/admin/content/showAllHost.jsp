@@ -52,14 +52,29 @@
 	    
 	      });// end of allow permission
 	      
-	      
-	      
-	      
-	      
-	      
 	      // ======== 권한 업데이트   끝========//
+	      $("button#btnSearch").click(function(){
+	    	  const frm = document.searchFrm;
+	    	  
+		       frm.method = "get";
+		       frm.action = "showAllHost.gc";
+		       frm.submit();
+	    	  
+	    	  
+	      }); // end of $("button#btnSearch").click(function()
 	      
 	      
+	      // ====== Excel 파일로 다운받기 시작 ====== //
+	      $("button#btnExcel").click(function() {
+		
+	   	       const frm = document.searchFrm;
+	   	       
+	   	       frm.method = "post";
+	   	       frm.action = "<%= request.getContextPath()%>/excel/downloadExcelFile.gc";
+	   	       frm.submit();
+	    	  
+		  });
+	      // ====== Excel 파일로 다운받기 끝 ====== //
 	    
 
    });// end of $(document).ready(function(){})-----------------------

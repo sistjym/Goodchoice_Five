@@ -23,4 +23,7 @@ public interface InterAdminService {
 	//권한 업데이트 하기 
 	int updatePermission(Map<String, String> paraMap);
 
+	// 숙소 등록 승인하기
+	int updatePermissionAcomm(Map<String, String> paraMap);
+
 }

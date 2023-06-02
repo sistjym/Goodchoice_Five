@@ -56,5 +56,13 @@ public class AdminService implements InterAdminService {
 		int n = dao.updatePermission(paraMap);
 		return n;
 	}
+
+	// 숙소 등록 권한 업데이트 하기 
+	@Override
+	public int updatePermissionAcomm(Map<String, String> paraMap) {
+		int n = dao.updatePermissionAcomm(paraMap);
+		return n;
+		
+	}
  
 }
