@@ -44,21 +44,17 @@ public class AdminService implements InterAdminService {
 		return specList;
 	}
 
-	// 관리자 모든 업주보기 
 	@Override
 	public List<Map<String, String>> getHostList(Map<String, Object> paraMap) {
 		List<Map<String, String>> hostList = dao.getHostList(paraMap);
-		
-		
-		
+          
 		return hostList;
 	}
 
-	// 권한 업데이트 하기 
 	@Override
 	public int updatePermission(Map<String, String> paraMap) {
 		int n = dao.updatePermission(paraMap);
 		return n;
 	}
-
+ 
 }

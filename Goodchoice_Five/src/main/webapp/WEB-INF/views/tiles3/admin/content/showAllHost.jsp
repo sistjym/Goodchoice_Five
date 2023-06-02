@@ -95,7 +95,6 @@
   <thead>
     <tr>
       <th scope="col" style="text-align:center;">호스트 이름</th>
-      <th scope="col" style="text-align:center;">이메일</th>
       <th scope="col" style="text-align:center;">가입일자</th>
       <th scope="col" style="text-align:center;">사업자 등록 번호</th>
       <th scope="col" style="text-align:center;">권한</th>
@@ -108,7 +107,6 @@
 	 	  <c:forEach var="map" items="${requestScope.hostList}">
 		 	  <tr id="test" style="text-align:center;">	
 		 	     <td>${map.host_name}</td> 	  	
-				 <td>${map.host_email}</td>		 	  	
 				 <td>${map.HOST_REG_DATE}</td>
 				 <td>${map.cp_reg_no}</td>				 	  		 	  	
 				 <td>${map.IS_HOST_PERMISSION}</td>	
