@@ -22,13 +22,13 @@
 	      $("button.btn_permission").click(function(){
 	    	  let permission = $(this).val();
 	    	  let currentRow = $(this).closest('tr');
-	    	  let host_no = currentRow.find('td:eq(6) input').val();
+	    	  let acom_no = currentRow.find('td:eq(7) input').val();
 
 	    	  //console.log(typeof(host_no));
 	    	   $.ajax({
 				  url:"<%= ctxPath%>/updatePermissionAcomm.gc",
 				  data:{"permission" : permission,
-					    "host_no" : host_no},
+					    "acom_no" : acom_no},
 				  dataType:"json",
 				  success:function(json){
 					
@@ -47,7 +47,17 @@
 	              } 
 				  
 			   }); 
-	    	
+	    	   // 승인 여부에 따른 sorting 
+	    	   $("button#btnSearch").click(function(){
+	 	    	  const frm = document.searchFrm;
+	 	    	  
+	 		       frm.method = "get";
+	 		       frm.action = "acomm_approve.gc";
+	 		       frm.submit();
+	 	    	  
+	 	    	  
+	 	      }); // end of $("button#btnSearch").click(function()
+	 	      
 	    
 	      });// end of allow permission
 	      
@@ -101,7 +111,7 @@
 				 <c:if test="${map.IS_ACOM_PERMISSION eq '승인 완료'}">
 				 	<td><button type="button" class="btn btn-outline-danger btn-sm btn_permission" value="1">해제</button></td>		 
 				 </c:if>
-				  <td><input type="hidden" name="host_no" value="${map.host_no}"/></td>		 	  	
+				  <td><input type="hidden" name="acom_no" value="${map.acom_no}"/></td>		 	  	
 		 	  </tr>
 	 	  </c:forEach>
 	</c:if>      
