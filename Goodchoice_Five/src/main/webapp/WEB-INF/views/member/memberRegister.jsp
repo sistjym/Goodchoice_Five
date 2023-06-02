@@ -71,6 +71,7 @@
 	let email_flag = false ; // 중복확인을 통과하면 true
 	let pwd_flag = false ;
 	let host_flag = false;	// 업주로 가입인지 일반회원가입인지 
+ 	let bsNum_flag = false;
 	
 	$(document).ready(function(){		
 
@@ -87,7 +88,7 @@
 		
 		$('input#business_id').on('change',businessNumCheck);
 		
-		
+		$('button.bsNumcheck').click(bsNumDuplicateCheck);
 		$('button.emailcheck').click(emailDuplicateCheck);
 		
 		// PWD 유효성 검사 및 비밀번호 일치 검사
@@ -152,6 +153,7 @@
 	function emailDuplicateCheck(){
 		if ($('span#error_email').text() != "" || $("input#inputEmail1").val() == ""){
 			alert('이메일을 정확하게 입력해주세요.');
+			$("input#inputEmail1").focus();
 			return ;
 		}
 		
@@ -233,10 +235,10 @@
 	}
 	  	
 	function businessNumCheck(e) {
-		const registrationNumber = $(this).val();
+		const registrationNumber = $("input#business_id").val();
 		
-		if (registrationNumber.length !== 12) {
-		      $('span#error_business_id').text('사업자등록번호는 12자리여야 합니다.').css('color','red');
+		if (registrationNumber.length !== 11) {
+		      $('span#error_business_id').text('사업자등록번호는 11자리여야 합니다.').css('color','red');
 		      return;
 	} 	
 		const pattern = /^\d+$/;
@@ -246,7 +248,38 @@
 	    }
 	    
 	    $('span#error_business_id').text('사용가능한 사업자등록번호입니다.').css('color','green');
-	}
+	} // end of businessNumCheck(e) ------------------
+	
+	function bsNumDuplicateCheck(){
+		const business_id = $("input#business_id").val();
+		
+		if ($('span#error_business_id').text() != "사용가능한 사업자등록번호입니다." || $("input#business_id").val() == ""){
+			alert('사업자등록번호를 정확하게 입력해주세요.');
+			$("input#business_id").focus();
+			return ;
+		}
+		
+		$.ajax({
+	      	url:"<%= ctxPath%>/checkDuplicateBusinessNum.gc",
+	      	data:{"business_id":business_id},
+	      	type:"post", // 생략시 get
+	      	dataType:"json",
+	      	async:false,
+	      	success:function(json) {
+	      		
+	      		if(json["isExists"]) {
+	      			alert("이미 존재하는 사업자등록번호입니다.\n다른 사업자등록번호를 입력해주세요.");
+	      		} else {
+	      			bsNum_flag = true ;
+	      			btnFlag(bsNum_flag,'bsNumcheck');
+	      			
+	      		}
+	      	},
+	      	error: function(request, status, error){
+	              alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
+	            }
+	      }); 
+	}// END OF EMAILDUPLICATECHECK
 	
 	
 	function onerNameCheck(e) {
@@ -330,7 +363,7 @@
 	
 	
 	function goRegister(){
-		
+		console.log("host_flag : " + host_flag);
 		if(!host_flag){
 			
 			// 이메일 	
@@ -435,7 +468,7 @@
 				myfrm.email.value = inputEmail + emailSelected;
 			}
 			
-			myfrm.action = "<%= ctxPath%>/hostRegister.gc"
+			myfrm.action = "<%= ctxPath%>/gohostRegister.gc"
 			myfrm.method = "post";
 			myfrm.submit();	
 			
@@ -501,27 +534,29 @@
 		  </div>
 		  	
 			  <div id="host_register">
-				 	<div class="form-group" style="margin:10px 0px 0px 3px;">
+				 	<div class="form-group row" style="margin:10px 0px 0px 3px; ">
 					    <label for=business_id style="color:#0000008F; font-weight: bold;">사업자등록번호&nbsp;<span style="font-size: 10pt;">[-제외하고 입력하세요]</span></label>
-					    <input type="text" style="height:50px;"class="form-control" id="business_id" placeholder="사업자번호" maxlength="12">
+					    <input type="text" style="height:50px;"class="form-control col-sm-8" id="business_id" name="business_id" placeholder="사업자번호" maxlength="11">
+				  		<button type="button" class="btn bsNumcheck check col-sm-3 offset-sm-1" style="height: 50.22222px !important;background-color:#EBEBEB; 
+    														width: 106px  !important;">중복확인</button>
 				  	</div>
 				  <div><span id="error_business_id" style="color:red;"></span></div>
 				  
 				  <div class="form-group" style="margin:10px 0px 0px 3px;">
 				 	  <label for=onerName style="color:#0000008F; font-weight: bold;">대표자명</label>
-				 	  <input type="text" style="height:50px;" id="onerName" class="form-control" placeholder="대표자명" />
+				 	  <input type="text" style="height:50px;" id="onerName" name="onerName" class="form-control" placeholder="대표자명" />
 				  </div>
 				  <div><span id="error_onerName" style="color:red;"></span></div>
 				  
 				  <div class="form-group" style="margin:10px 0px 0px 3px;">
 				 	  <label for=companyName style="color:#0000008F; font-weight: bold;">상호명</label>
-				 	  <input type="text" style="height:50px;" id="companyName" class="form-control" placeholder="상호명" />
+				 	  <input type="text" style="height:50px;" id="companyName" name="companyName" class="form-control" placeholder="상호명" />
 				  </div>
 				  <div><span id="error_companyName" style="color:red;"></span></div>
 			 </div>
 		 <div class="row my-5">
 		 	<div class="col-md-12 text-center">
-		 		<button type="button" class="btn" style="margin-bottm: 50px;width: 100%;height: 56px; background-color: #fafafa;; color: #00000029;" onclick="goRegister()">가입하기</button>
+		 		<button type="button" class="btn" style="margin-bottm: 50px;width: 100%;height: 56px; background-color: #f2114c; color: #fff;" onclick="goRegister()">가입하기</button>
 			</div>
 		</div>
 		
