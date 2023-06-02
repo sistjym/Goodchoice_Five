@@ -15,4 +15,10 @@ public interface InterAdminDAO {
 	// 분류 리스트 가져오기
 	List<String> specNameList();
 
+	// 모든 호스트 가져오기 
+	List<Map<String, String>> getHostList(Map<String, Object> paraMap);
+
+	// 호스트 권한 업데이트 하기
+	int updatePermission(Map<String, String> paraMap);
+
 }
