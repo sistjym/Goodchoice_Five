@@ -82,11 +82,11 @@ div#top_right{
 
 div#top_left > div#top_left_upper > img{
 	
- 	 	border:solid 5px white;  
+/*  	 	border:solid 5px red;   */
 	
 	 	
 	
-		max-width: 100%;
+/* 		max-width: 500px; */
     	height: 380px;
 }
 
@@ -132,35 +132,34 @@ div#top_right_upper p#top_address{
 
 div#top_right > div#top_right_lower{
 
-/* 		border:solid 5px skyblue; */
+/*   		border:solid 5px skyblue;   */
 
-		margin-top: 10px;
+		margin-top: 40px;
+}
+
+div#top_right > div#top_right_lower  div.more_fold_btn {
+
+
+	margin-left: auto;
+
+
 }
 
 
 
+div#top_right > div#top_right_lower  p.more_fold_content{
+		
+		margin-top: 30px;
+		margin-left: -14px;
+		color: #8c8c8c;
 
-div#top_right_lower p#sajang, 
-div#top_right_lower p#sajang_annae {
-
- margin-left: 26px; 
- margin-top: 13px;
-
-} 
-
-div#top_right_lower p#sajang_annae {
-
-
-	color:   #a6a6a6;
-
-		font-weight: 500;
-	
 }
 
-	
+div#top_right > div#top_right_lower  p#sajang{
 
+	font-weight: bold;
 
-
+}
 
 
 div#tab{
@@ -353,31 +352,29 @@ div.resv_cancel_top > p{
 		  margin-left: 5px;
 		}
 
-  div#image-container {
-
-/*   border: solid 1px red; */
-  padding: 0;
-  margin: 0;
-}
 
 
 
-.content {
+
+.more_fold_content {
         
         white-space: normal;
             overflow: visible;
             text-overflow: unset;
     }
 
-    .btn {
+    .more_fold_btn {
         cursor: pointer;
         color: #00855d;
+        
     }
     
-    .btn:hover {
+    .more_fold_btn:hover {
     
     	color: #00855d;
     }
+    
+    
   
 
 
@@ -396,16 +393,15 @@ $(document).ready(function() {
 		
 	  <%-- div#top_right 캐러셀 및 캐러셀 위 배경부분  시작--%>
 	  	
-	 
+	  myFunction_TriggerImage();
 	 // 초기 로드 시 첫 번째 이미지 설정
-	  var firstImage = $('div.active > img.ci').attr('src');
-	  $('div#top_left_upper > img').attr('src', firstImage);
+	  $('div.active img.ci:first-child').trigger('click');
+	 
+	  
 	
-
 
 	$('.carousel .carousel-item').each(function(){
 		
-  
 		
 	      var next = $(this).next();
 	      if (!next.length) {
@@ -441,6 +437,8 @@ $(document).ready(function() {
 	      
 	    
 	  });
+	
+
 	  
 	myFunction_PrevLeftSpan();  
 	
@@ -480,8 +478,6 @@ $(document).ready(function() {
   
   
 
-  
-  <%-- 캐러셀 끝 --%>
   
 
 
@@ -524,18 +520,23 @@ $(document).ready(function() {
 <%-- 캐러셀 사진 클릭하면 바뀌기 시작 --%>
 
 function myFunction_ClickImage() {
-	  var currentImageSrc = ''; // 현재 이미지의 src를 저장할 변수
-
+	
+	
+	   
 	  $('img.ci').click(function() {
-	    var clickImage = $(this).attr('src');
-	    
-	    if (currentImageSrc !== clickImage) { // 클릭한 이미지가 현재 이미지와 다를 경우에만 처리
+	      
+			 
+
+		  
+		  var clickImage = $(this).attr('src');
+	    	
+	      
+	  
 	      $('div#top_left_upper > img').fadeOut(200, function() {
 	        $(this).attr('src', clickImage).fadeIn(200);
 	      });
 	      
-	      currentImageSrc = clickImage; // 현재 이미지의 src 업데이트
-	    }
+	    
 	  });
 	}
 
@@ -543,7 +544,36 @@ function myFunction_ClickImage() {
 <%-- 캐러셀 사진 클릭하면 바뀌기 끝 --%>
 
 
+<%-- 로딩화면 트리거를 위한 별도의 배경화면 바꾸는 함수 시작 --%>
 
+function myFunction_TriggerImage() {
+	
+	
+	 
+	
+	
+	  $('img.ci').click(function() {
+	      
+		 
+		  
+		  var clickImage = $(this).attr('src');
+	    	
+	      
+	  
+	      $('div#top_left_upper > img').attr('src', clickImage);
+	     
+	      $('div.active img.ci:first-child').css({"border":"solid 0.5px #999999","border-radius": "5px","padding-left": "8px","padding-right": "8px","padding-top": "4px","padding-bottom": "4px"});
+	      
+	      
+	    
+	  });
+	  
+      
+
+	  	  
+	}
+
+<%-- 로딩화면 트리거를 위한 별도의 배경화면 바꾸는 함수 시작 --%>
 
 
 
@@ -551,10 +581,13 @@ function myFunction_ClickImage() {
 <%-- active 클래스를 추가해주면 그 추가가 된 img태그부터 시작이 된다.--%>
 
 function myFunction_ChangeImage() {
+	
+	 
+	
 	  $('img.ci').click(function() {
-	    var clickedImage = $(this).attr('src');  <%-- 이거 넣고 다시해보기. addclass removeclass 다시하기 --%>
+	    var clickedImage = $(this).attr('src');  
 	    
-	    
+
 	    
 
 		$('div.carousel-item').each(function() {
@@ -568,7 +601,7 @@ function myFunction_ChangeImage() {
 		 });
 
 	    
-	    
+		
 	    
 	    
 	    $('div.carousel-item').each(function() {  // 이렇게 하면 된다.! div태그를 반복문을 돌려야 했다.
@@ -578,7 +611,8 @@ function myFunction_ChangeImage() {
 	      if ($(this).children().attr('src') === clickedImage) {
 	        $(this).addClass('active'); // 클릭한 이미지의 부모 carousel-item에 active 클래스 추가
 	        
-	      	
+	        
+	      	$('div.active').children('img.ci').first().css({"border":"solid 0.5px #999999","border-radius": "5px","padding-left": "8px","padding-right": "8px","padding-top": "4px","padding-bottom": "4px"});
             
            
             
@@ -612,6 +646,10 @@ function myFunction_PrevLeftSpan(){
 
 	  
 	$('span.prev-left').click(function() {
+		
+		 $('img.ci').css('border','none');
+
+		
 			  var activeIndex = $('div.carousel-item.active').index();
 			  var totalItems = $('div.carousel-item').length;
 			  var prevIndex = activeIndex - 1;
@@ -622,7 +660,9 @@ function myFunction_PrevLeftSpan(){
 	
 			  var prevImg = $('div.carousel-item').eq(prevIndex).find('img.ci');
 			  var src_csImage = prevImg.attr('src');
-	
+			  
+			  
+			  prevImg.first().css({"border":"solid 0.5px #999999","border-radius": "5px","padding-left": "8px","padding-right": "8px","padding-top": "4px","padding-bottom": "4px"});
 			  
 			  $('div#top_left_upper > img').fadeOut(200, function() {
 			      // 이미지가 사라진 후, 새로운 이미지로 src 변경
@@ -635,23 +675,30 @@ function myFunction_PrevLeftSpan(){
 	} 
 	
 	
-	function myFunction_PrevRightSpan(){
-		
+function myFunction_PrevRightSpan() {
+	  $('span.prev-right').click(function() {
+		  
+			 $('img.ci').css('border','none');
+		  
+		  
+	    var activeDiv = $('.carousel-item.active');
+	    var activeIndex = activeDiv.index();
+	    var totalItems = $('.carousel-item').length;
+	    var nextIndex = activeIndex + 1;
 
+	    if (nextIndex >= totalItems) {
+	      nextIndex = 0;
+	    }
 
-	
-	$('span.prev-right').click(function() {
-		  var activeDiv = $('.carousel-item.active');
-		  var secondImg = activeDiv.find('img.ci:nth-child(2)');
-		  var src_csImage = secondImg.attr('src');
-		  
-		  $('div#top_left_upper > img').fadeOut(200, function() {
-		      // 이미지가 사라진 후, 새로운 이미지로 src 변경
-		      $(this).attr('src', src_csImage).fadeIn(200);
-		    });
-		  
-		  
-		});
+	    var nextImg = $('.carousel-item').eq(nextIndex).find('img.ci');
+	    var src_csImage = nextImg.attr('src');
+
+	    nextImg.first().css({"border":"solid 0.5px #999999","border-radius": "5px","padding-left": "8px","padding-right": "8px","padding-top": "4px","padding-bottom": "4px"});
+
+	    $('div#top_left_upper > img').fadeOut(200, function() {
+	      $(this).attr('src', src_csImage).fadeIn(200);
+	    });
+	  });
 	}
 
 
@@ -663,19 +710,19 @@ function myFunction_PrevLeftSpan(){
 	function myFunction_FoldMore(){
 		
 		
-		var content = $("p#myContent");
-        var toggleBtn = $("#toggleBtn");
+		var content = $("p#more_fold_myContent");
+        var toggleBtn = $("#more_fold_toggleBtn");
 
         var contentText = content.text();
-        var truncatedText = contentText.substring(0, 15);
-        var remainingText = contentText.substring(15);
+        var truncatedText = contentText.substring(0, 22);
+        var remainingText = contentText.substring(22);
         
-        console.log('truncatedText' + truncatedText);
-        console.log('remainingText' + remainingText);
+    //    console.log('truncatedText' + truncatedText);
+    //    console.log('remainingText' + remainingText);
 
 
         if (remainingText.length > 0) {
-        	content.html(truncatedText + '<span class="dots">...</span>');
+        	content.html(truncatedText + '<span class="more_fold_dots">...</span>');
             toggleBtn.text("더보기");
         } else {
             content.text(contentText);
@@ -690,7 +737,7 @@ function myFunction_PrevLeftSpan(){
                 content.text(contentText);
                 toggleBtn.text("접기");
             } else {
-            	content.html(truncatedText + '<span class="dots">...</span>');
+            	content.html(truncatedText + '<span class="more_fold_dots">...</span>');
                 toggleBtn.text("더보기");
             }
         });
@@ -700,6 +747,8 @@ function myFunction_PrevLeftSpan(){
 	}
 
 	<%-- 더보기 접기 토글버튼 끝 --%>
+	
+	
 
 	
 
@@ -722,7 +771,7 @@ function myFunction_PrevLeftSpan(){
 			
 					<div id="top_left_upper">
 					
-						  <img src="">
+						  <img class="col-12" src="">
 					
 					</div>
 				
@@ -748,7 +797,25 @@ function myFunction_PrevLeftSpan(){
 						                             <img  class="col-lg-3 col-md-4 col-sm-6 ci" style="cursor:pointer;" src="<%= ctxPath%>/resources/images/강남클릭_일반실_추가4.jpg">
 						                         </div>
 						                           <div class="carousel-item" id="5">
-						                             <img  class="col-lg-3 col-md-4 col-sm-6 ci" style="cursor:pointer;" src="<%= ctxPath%>/resources/images/강남클릭_일반실.jpg">
+						                             <img  class="col-lg-3 col-md-4 col-sm-6 ci" style="cursor:pointer;" src="<%= ctxPath%>/resources/images/강남데미안_추가1.jpg">
+						                         </div>
+						                         <div class="carousel-item" id="5">
+						                             <img  class="col-lg-3 col-md-4 col-sm-6 ci" style="cursor:pointer;" src="<%= ctxPath%>/resources/images/강남데미안_추가2.jpg">
+						                         </div>
+						                         <div class="carousel-item" id="5">
+						                             <img  class="col-lg-3 col-md-4 col-sm-6 ci" style="cursor:pointer;" src="<%= ctxPath%>/resources/images/강남제리스플래닛_JerryRoom_추가1.jpg">
+						                         </div>
+						                         <div class="carousel-item" id="5">
+						                             <img  class="col-lg-3 col-md-4 col-sm-6 ci" style="cursor:pointer;" src="<%= ctxPath%>/resources/images/강남제리스플래닛_JerryRoom_추가2.jpg">
+						                         </div>
+						                         <div class="carousel-item" id="5">
+						                             <img  class="col-lg-3 col-md-4 col-sm-6 ci" style="cursor:pointer;" src="<%= ctxPath%>/resources/images/강남제리스플래닛_JerryRoom_추가3.jpg">
+						                         </div>
+						                         <div class="carousel-item" id="5">
+						                             <img  class="col-lg-3 col-md-4 col-sm-6 ci" style="cursor:pointer;" src="<%= ctxPath%>/resources/images/강남제리스플래닛_JerryRoom_추가4.jpg">
+						                         </div>
+						                         <div class="carousel-item" id="5">
+						                             <img  class="col-lg-3 col-md-4 col-sm-6 ci" style="cursor:pointer;" src="<%= ctxPath%>/resources/images/강남제리스플래닛_JerryRoom_추가5.jpg">
 						                         </div>
 						                         
 						               </div>
@@ -802,14 +869,18 @@ function myFunction_PrevLeftSpan(){
 					</div>
 							
 					<div id="top_right_lower">
-						<div>
+						<div class="col">
 							<div class="row">
-								<p id="sajang">사장님 한마디</p>
-								<div id="toggleBtn" class="btn">더보기</div>
+
+									<p id="sajang">사장님 한마디</p>
+									<div id="more_fold_toggleBtn" class="more_fold_btn">더보기</div>
 							</div>
-							<p id="sajang_annae">★안내사항</p>							
-							<p id="myContent" class="col-lg-12 content">COEX 전시장, 도심공항터미널, 종합무역센터, 올림픽 메인스타디움에 인접해 있어 비즈니스,관광 등 다양한 목적의 여행객들에게 이상적입니다 </p>
-				    
+						
+							<div class="more_fold_inner">
+							
+								<p id="more_fold_myContent" class="more_fold_content">COEX 전시장, 도심공항터미널, 종합무역센터, 올림픽 메인스타디움에 인접해 있어 비즈니스,관광 등 다양한 목적의 여행객들에게 이상적입니다 </p>
+			    			
+							</div>
 							
 						</div>
 					</div>
@@ -886,25 +957,32 @@ function myFunction_PrevLeftSpan(){
 	        
 	      	<div class="accordion_wrap col-lg-9" >
 				<div class="accordion1">                        	
-					<section id="nutrients">
-						<p id="nutrients"><a href="#nutrients">영양정보</a></p>
+					<section id="normal_info">
+						<p id="normal_info"><a href="#normal_info">기본 정보</a></p>
 						<div>
 							<P>sadfasdfd</P>
 						</div>
 					</section>			
-					<section id="allergy">
-						<p id="allergy"><a href="#allergy">알레르기 정보</a></p>
+					<section id="convi_service">
+						<p id="convi_service"><a href="#convi_service">편의시설 및 서비스</a></p>
 						<div>
 							<p>알레르기 유발 가능 식재료</p> 
 						</div>
 					</section>
 			
-					<section id="origin">
-						<p id="origin"><a href="#origin">원산지 정보</a></p>
+					<section id="seller_info">
+						<p id="seller_info"><a href="#seller_info">판매자 정보</a></p>
 						<div>
 							<p>sdfdsfsdf</p>
 						</div>
-					</section>                          
+					</section>  
+					
+					<section id="cost_info">
+						<p id="cost_info"><a href="#cost_info">요금정보</a></p>
+						<div>
+							<p>sdfdsfsdf</p>
+						</div>
+					</section>                        
 				</div>
 			</div>
 	        
