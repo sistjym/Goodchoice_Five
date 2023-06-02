@@ -38,5 +38,19 @@ public class AdminDAO implements InterAdminDAO {
 		return specList;
 	}
 	
+	// 모든 호스트 가져오기 
+	@Override
+	public List<Map<String, String>> getHostList(Map<String, Object> paraMap) {
+		List<Map<String, String>> hostList = sqlsession.selectList("admin.getHostList",paraMap);
+		return hostList;
+	}
+	
+	//
+	@Override
+	public int updatePermission(Map<String, String> paraMap) {
+		int n = sqlsession.update("admin.updatePermission", paraMap);
+		return n;
+	}
+	
 	
 }

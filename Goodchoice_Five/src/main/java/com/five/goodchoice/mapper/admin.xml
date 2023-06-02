@@ -37,12 +37,12 @@
 	<select id="getAcommList" resultMap="acom_Map"> 
 		select  AC.CATEGORY_NAME, S.SPEC_NAME, ACOM_NAME, H.HOST_NAME 
 		       ,DECODE(IS_ACOM_PERMISSION, '1', '승인 완료', '0', '승인 대기') AS IS_ACOM_PERMISSION
-				from tbl_spec S left join tbl_acomodation A 
-				ON S.SPEC_NO =  A.FK_SPEC_NO
-				join tbl_acom_category AC 
-				ON S.FK_CATEGORY_NO = AC.CATEGORY_NO
-				join tbl_host H
-				ON A.FK_HOST_NO = H.HOST_NO	
+		from tbl_spec S left join tbl_acomodation A 
+		ON S.SPEC_NO =  A.FK_SPEC_NO
+		join tbl_acom_category AC 
+		ON S.FK_CATEGORY_NO = AC.CATEGORY_NO
+		join tbl_host H
+		ON A.FK_HOST_NO = H.HOST_NO	
 				
 				<if test="arr_categoryName != null">
 				    and AC.CATEGORY_NAME in 
@@ -54,7 +54,41 @@
 				<if test="permission != null">
 					and IS_ACOM_PERMISSION = #{permission}
 				</if>
-			
-	
+		order by S.SPEC_NAME asc
+
 	</select>
+	
+	 <!-- //테이블에에서 조건에 맞는 숙소 불러오기 -->
+	<resultMap type="HashMap" id="host_Map">
+	    <result property="host_no"               column="host_no"             javaType="String"/>
+		<result property="host_email"            column="host_email"             javaType="String"/>
+		<result property="host_name"             column="host_name"              javaType="String"/>
+		<result property="cp_reg_no"             column="cp_reg_no"              javaType="String"/>
+		<result property="IS_HOST_PERMISSION"    column="IS_HOST_PERMISSION"     javaType="String"/>
+	</resultMap>
+
+	<select id="getHostList" resultMap="host_Map"> 
+		select  host_no, host_email, host_name, cp_reg_no , HOST_REG_DATE
+			   ,DECODE(IS_HOST_PERMISSION, '1', '승인 완료', '0', '승인 대기') AS IS_HOST_PERMISSION
+		from tbl_host
+		<if test="permission != null">
+			and IS_HOST_PERMISSION = #{permission}
+		</if>
+		order by IS_HOST_PERMISSION asc
+
+	</select>
+	
+	<!-- 호스트 권한 업데이트 하기  -->
+	<update id="updatePermission" parameterType="HashMap">
+		<if test='permission == "0"'>
+			update tbl_host set is_host_permission = 1
+			where host_no = #{host_no}
+		</if> 
+		
+		<if test='permission == "1"'>
+			update tbl_host set is_host_permission = 0
+			where host_no = #{host_no}
+		</if> 
+		
+	</update>
 </mapper>

@@ -15,24 +15,24 @@
 	    // 검색하기 버튼 클릭시
 	    $("button#btnSearch").click(function(){
 	      
-	       const arr_categoryName = new Array();
+	       const arrCategoryName = new Array();
 	       
 	       $("input:checkbox[name='category_name']").each(function(index, item){
 	         const bool = $(item).prop("checked"); // 체크박스의 체크유무 검사 
 	         
 	         if(bool == true) {
 	            // 체크박스에 체크가 되었으면
-	            arr_categoryName.push($(item).val());
+	            arrCategoryName.push($(item).val());
 	         }
 	       });
 	       
-	       const str_categoryName = arr_categoryName.join();
+	       const str_categoryName = arrCategoryName.join();
 	       
-	       console.log("~~~ 확인용 str_categoryName => " + str_categoryName);
+	       console.log("~~~ 확인용 str_categoryName => " + str_categoryName.value);
 	       
 	       const frm = document.searchFrm;
-	       frm.category_name.value = str_categoryName;
 	       
+	       frm.str_categoryName.value = str_categoryName;
 	       frm.method = "get";
 	       frm.action = "showAllAcomm.gc";
 	       frm.submit();
@@ -60,12 +60,12 @@
       // ======== 체크박스 유지시키기 끝 ======== //
       
       
-      // ======== 성별 유지시키기 시작 ======== //
+      // ======== 권한  유지시키기 시작 ======== //
       const permission = "${requestScope.permission}";
       if(permission != "") {
     	  $("select#permission").val(permission);
       }
-      // ======== 성별 유지시키기 끝 ======== //
+      // ======== 권한 유지시키기 끝 ======== //
       
          // ====== Excel 파일로 다운받기 시작 ====== //
       $("button#btnExcel").click(function() {
@@ -113,16 +113,9 @@
 	       	</label>	
        		<input type="checkbox" name="category_name" id="${status.index}" value="${category_name}"/>&nbsp;&nbsp;
        	</c:forEach>
-<%--        	
-       	<c:forEach var="spec_name" items="${requestScope.specList}" varStatus="status">
-       		<label for="${status.index}">		   
-	  			${spec_name}
-	       	</label>	
-       		<input type="checkbox" name="spec_name" id="${status.index}" value="${spec_name}"/>&nbsp;&nbsp;
-       	</c:forEach> --%>
 	       	
 
-       <input type="hidden" name="categoryName" />
+       <input type="hidden" name="str_categoryName" />
        
        <select name="permission" id="permission" style="height: 30px; width: 120px; margin: 10px 30px 0 0;">
           <option value="">모두보기</option>
