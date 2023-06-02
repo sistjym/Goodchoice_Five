@@ -408,7 +408,7 @@
 			}
 			
 			
-			myfrm.action = "<%= ctxPath%>/memberRegister.gc"
+			myfrm.action = "<%= ctxPath%>/gomemberRegister.gc"
 			myfrm.method = "post";
 			myfrm.submit();	
 		
