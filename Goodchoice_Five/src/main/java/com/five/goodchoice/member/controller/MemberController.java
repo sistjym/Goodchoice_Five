@@ -74,7 +74,7 @@ public class MemberController {
 		
 	}
 	
-	@RequestMapping(value="/hostRegister.gc", method = {RequestMethod.POST}) 
+	@RequestMapping(value="/gomemberRegister.gc", method = {RequestMethod.POST}) 
 	public ModelAndView memberRegister(ModelAndView mav, HttpServletRequest request){
 		
 		String email = request.getParameter("email");
