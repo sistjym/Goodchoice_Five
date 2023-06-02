@@ -34,10 +34,14 @@ public class HostService implements InterHostService {
 	@Override
 	public boolean gohostRegister(Map<String, String> paraMap) {
 		
+		String business_id = paraMap.get("business_id");
+		business_id = business_id.substring(0, 3)+"-"+business_id.substring(3, 7)+"-"+business_id.substring(7);
+		
 		String email = paraMap.get("email");
 		try {
 			email = aes.encrypt(email);
 			paraMap.put("email", email);
+			paraMap.put("business_id", business_id);
 		} catch (UnsupportedEncodingException | GeneralSecurityException e) {
 			e.printStackTrace();
 		}

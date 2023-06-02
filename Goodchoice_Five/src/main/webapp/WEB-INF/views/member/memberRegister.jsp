@@ -235,6 +235,10 @@
 	}
 	  	
 	function businessNumCheck(e) {
+		bsNum_flag = false ;
+		btnFlag(bsNum_flag,'bsNumcheck');
+		
+		
 		const registrationNumber = $("input#business_id").val();
 		
 		if (registrationNumber.length !== 11) {
@@ -316,6 +320,12 @@
 	
 	function goHostRegister() {
 			
+			$('button.bsNumcheck').removeClass("check_success");
+			$('button.bsNumcheck').addClass("check");
+			$('button.bsNumcheck').text("중복확인");
+			$('button.emailcheck').removeClass("check_success");
+			$('button.emailcheck').addClass("check");
+			$('button.emailcheck').text("중복확인");
 			host_flag = true;
 			$("div#host_register").show();
 			$(".nickname").hide();
@@ -332,6 +342,13 @@
 	
 	function goMemberRegister() {
 		
+		
+		$('button.bsNumcheck').removeClass("check_success");
+		$('button.bsNumcheck').addClass("check");
+		$('button.bsNumcheck').text("중복확인");
+		$('button.emailcheck').removeClass("check_success");
+		$('button.emailcheck').addClass("check");
+		$('button.emailcheck').text("중복확인");
 		host_flag = false;
 		$("div#host_register").hide();
 		$(".nickname").show();
@@ -390,8 +407,8 @@
 				return ;
 			}
 			
-			if( $('input#nickname').val().trim() == "") {
-				alert('닉네임을 입력해주세요.');
+			if( $('input#nickname').val().trim() == "" || $("span#error_nickname").text() != "") {
+				alert('닉네임을 올바르게 입력해주세요.');
 				$('input#nickname').focus();
 				return;
 			}
@@ -439,20 +456,25 @@
 				return ;
 			}
 			
+			if( !bsNum_flag ){
+				alert('사업자번호 중복확인을 클릭해주세요');
+				return ;	
+			}
+			
 			if( $('input#business_id').val().trim() == "") {
 				alert('사업자등록번호는 필수 입력사항입니다.');
 				$('input#business_id').focus();
 				return;
 			}
 			
-			if( $('input#onerName').val().trim() == "") {
-				alert('대표자명을 입력해주세요.');
+			if( $('input#onerName').val().trim() == "" || $("span#error_onerName").text() != "") {
+				alert('대표자명을 입력하지 않았거나 올바르지 않습니다.');
 				$('input#onerName').focus();
 				return;
 			}
 			
-			if( $('input#companyName').val().trim() == "") {
-				alert('상호명을 입력해주세요.');
+			if( $('input#companyName').val().trim() == "" || $('span#error_companyName').text() != "") {
+				alert('상호명을 올바르게 입력해주세요.');
 				$('input#companyName').focus();
 				return;
 			}
@@ -544,13 +566,13 @@
 				  
 				  <div class="form-group" style="margin:10px 0px 0px 3px;">
 				 	  <label for=onerName style="color:#0000008F; font-weight: bold;">대표자명</label>
-				 	  <input type="text" style="height:50px;" id="onerName" name="onerName" class="form-control" placeholder="대표자명" />
+				 	  <input type="text" style="height:50px;" id="onerName" name="onerName" class="form-control" maxlength="15" placeholder="대표자명" />
 				  </div>
 				  <div><span id="error_onerName" style="color:red;"></span></div>
 				  
 				  <div class="form-group" style="margin:10px 0px 0px 3px;">
 				 	  <label for=companyName style="color:#0000008F; font-weight: bold;">상호명</label>
-				 	  <input type="text" style="height:50px;" id="companyName" name="companyName" class="form-control" placeholder="상호명" />
+				 	  <input type="text" style="height:50px;" id="companyName" name="companyName" class="form-control" maxlength="15" placeholder="상호명" />
 				  </div>
 				  <div><span id="error_companyName" style="color:red;"></span></div>
 			 </div>

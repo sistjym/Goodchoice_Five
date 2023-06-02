@@ -6,9 +6,14 @@
 <mapper namespace="member">
 
 <select id="checkDuplicateEmail" resultType="int" parameterType="String">
-	select count(*)
-	from tbl_member 
-	where member_email = #{email}
+SELECT
+    CASE
+        WHEN h.count > 0 OR m.count > 0 THEN 1
+        ELSE 0
+    END AS result
+FROM
+    (SELECT COUNT(*) as count FROM tbl_host WHERE host_email = #{email}) h
+    CROSS JOIN (SELECT COUNT(*) as count FROM tbl_member WHERE member_email = #{email}) m
 </select>
 
 
