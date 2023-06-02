@@ -363,7 +363,7 @@
 	
 	
 	function goRegister(){
-		console.log("host_flag : " + host_flag);
+		// console.log("host_flag : " + host_flag);
 		if(!host_flag){
 			
 			// 이메일 	
@@ -415,7 +415,7 @@
 		}
 		
 		else {	// 호스트로 가입할때
-			console.log("host_flag : " + host_flag);
+			// console.log("host_flag : " + host_flag);
 			// 이메일 	
 			if( $('input#inputEmail1').val() == "" ) {
 				alert('이메일은 필수 입력사항입니다.');	
