@@ -63,6 +63,15 @@ public class AcomodationDAO implements InterAcomodationDAO {
 			List<Map<String, String>> nameAddressListbyAcom = sqlsession.selectList("acomodation.getNameAddressbyAcom", acomSearchList);
 			return nameAddressListbyAcom;
 		}
+
+	// -------------------------------------------------------------------------------------------------------------------------------	
+		
+		// 카테고리별  시설 목록을 불러온다.
+		@Override
+		public List<Map<String, String>> getFacilityListByAcomCategory(String category_no) {
+			List<Map<String, String>> facilityListByAcomCategory = sqlsession.selectList("acomodation.getFacilityListByAcomCategory", category_no);
+			return facilityListByAcomCategory;
+		}
 		
 		
 		

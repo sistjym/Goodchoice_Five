@@ -147,7 +147,7 @@
 	    color: rgba(0,0,0,0.56);
 	}
 	
-	input[name='fac_cnk'], input[name='item_cnk']{ /* 시설 checkbox css */
+	input[name='fac_no']{ /* 시설 checkbox css */
 		zoom: 1.8;
 	    position: relative;
 	    accent-color:#ff334b;

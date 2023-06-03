@@ -40,6 +40,12 @@ public class AcomodationController {
 		String max_price = request.getParameter("max_price");
 		String[] arr_fac_no = request.getParameterValues("fac_no");
 		
+		/*
+		  category 별 district_no 가 존재하는 지 확인하는 작업이 필요할 것 같다.
+		  URL 에 누가 장난을 칠수도 있기 때문
+		  
+		  */
+		
 		
 		if(Myutil.check_Invalid_String(min_price) || Myutil.check_Invalid_String(max_price)){
 			min_price = "10000"; // min_price 가 공백이나 null 이 오는 경우에는 10000 으로 설정
@@ -80,9 +86,60 @@ public class AcomodationController {
 		
 		}
 		*/
+
+		// 카테고리별  시설 목록을 불러온다.
+		List<Map<String, String>> facilityListByAcomCategory = service.getFacilityListByAcomCategory(category_no);   
+
+		/*
+		for(Map<String, String> map : facilityListByAcomCategory) {
+			
+			System.out.println("category_fac_name : " + map.get("category_fac_name"));
+			System.out.println("category_fac_no : " + map.get("category_fac_no"));
+			System.out.println("fac_type : " + map.get("fac_type"));
+			System.out.println("----------------------------------------------------");
+			
+		}
 		
 		
+		category_fac_name : 야외테라스
+		category_fac_no : 18
+		fac_type : 0
+		----------------------------------------------------
+		category_fac_name : 스파
+		category_fac_no : 19
+		fac_type : 0
+		----------------------------------------------------
+		category_fac_name : 미니바
+		category_fac_no : 20
+		fac_type : 0
+		----------------------------------------------------
+		category_fac_name : 욕실TV
+		category_fac_no : 21
+		fac_type : 1
+		----------------------------------------------------
+		category_fac_name : 빔프로젝터
+		category_fac_no : 22
+		fac_type : 1
+		----------------------------------------------------
+		category_fac_name : 당구대
+		category_fac_no : 23
+		fac_type : 1
+		----------------------------------------------------
+		category_fac_name : 노래방
+		category_fac_no : 24
+		fac_type : 1
+		----------------------------------------------------
+		category_fac_name : 사우나
+		category_fac_no : 17
+		fac_type : 0
+		----------------------------------------------------
+		
+		*/
+		request.setAttribute("facilityListByAcomCategory", facilityListByAcomCategory);
 		request.setAttribute("acomSearchList", acomSearchList);
+		request.setAttribute("filter_condition_Map", filter_condition_Map);
+		
+		
 		
 		
 		return "acomodation/acom_content.tiles2";

@@ -75,8 +75,6 @@
 	</select>
 
 	
-
-	
 	<select id="getAcomListByfacilties" parameterType="HashMap" resultType="String">	
 		select fk_acom_no as acom_no
 			from 
@@ -159,13 +157,29 @@
 	
 	<select id="getNameAddressbyAcom" parameterType="java.util.List" resultMap="getNameAddressbyAcom_Map">
 
-	   	select acom_no, acom_name, address || extra_address as address
+		select acom_no, acom_name, address || ' ' || substr(extra_address, 0, INSTR(extra_address, ' ')) as address <!-- INSTR(extra_address, ' ') 은 첫번째 공백이 몇번째 인덱스에 있는지 알아오는 구문이라 한다. -->
 			from tbl_acomodation
 			where acom_no in 
 			<foreach collection="list" item="item" open="(" separator="," close=")">
 					#{item.acom_no}
-			</foreach>				
+			</foreach>			
 				
+	</select>
+	
+	<resultMap type="HashMap" id="getFacilityListByAcomCategory_Map">
+		<result property="category_fac_name" column="category_fac_name" 	javaType="String"/>
+		<result property="category_fac_no" 	 column="category_fac_no" 		javaType="String"/>
+		<result property="fac_type"  		 column="fac_type"   			javaType="String"/>
+	</resultMap>
+		
+	<select id="getFacilityListByAcomCategory" parameterType="String" resultMap="getFacilityListByAcomCategory_Map">
+	
+		select category_fac_name, category_fac_no, fac_type     
+		    from tbl_acom_category AC
+		    JOIN tbl_category_facilities CF on AC.category_no = CF.fk_category_no
+		where category_no = #{category_no}
+		order by fac_type
+		
 	</select>
 	
 	

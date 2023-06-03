@@ -1,5 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+    
+<script type="text/javascript">
+
+	$(document).ready(function(){
+		
+	});
+
+</script>    
 				
 		<section class="btn_wrap_width_3">
 			<button type="button" id="distance" class="top_sort_btn btn btn-outline-none rounded my-2" onclick=""><span class="on">거리 순</span></button>
@@ -11,74 +22,50 @@
 			<section class="list-wrap">
 			
 				<ul>
-					<li onclick="javascript:location.href='#'">
-						<div class="room-img">
-							<img src="<%= request.getContextPath()%>/resources/images/강남캠퍼스.jpg" alt=""/>
-						</div>
-						<div class="room-info">
-							<div class="name p-4">
-								<strong>강남 캠퍼스</strong>
-								<p class="score">
-									<strong class="badge badge-warning" style="color:#faeae3; position:relative; bottom:2px;">9.5</strong>
-									<span>추천해요</span>
-									(2670)
-								</p>
-								<p class="h5 bold font-weight-bold text-white">강남구 역삼동</p>
+				
+					<c:forEach var="acom" items="${requestScope.acomSearchList}">
+						<li onclick="javascript:location.href='#'">
+							<div class="room-img">
+								
+								<img src="<%= request.getContextPath()%>/resources/images/논현올인.jpg" alt="" height="400"/>
+								<!-- TODO. 숙소 이름을 공백을 제거한 다음 .jpg 를 붙여 이미지를 완성해야 한다. -->
 							</div>
-							
-							<div class="price">
-								<small>숙박</small>
-								<span class="sale_badge badge badge-secondary">예약특가</span>
-								<b>140,000원</b>
+							<div class="room-info">
+								<div class="name p-4">
+									<strong>${acom.acom_name}</strong>
+									<p class="score">
+										<strong class="badge badge-warning" style="color:#faeae3; position:relative; bottom:2px;">${acom.rating_avg}</strong>
+										<span>
+											<c:choose>
+												<c:when test="${acom.rating_avg >= 9.0}">
+													추천해요
+												</c:when>
+												<c:when test="${acom.rating_avg < 9.0 && acom.rating_avg >= 8.0}">
+													훌륭해요
+												</c:when>
+												<c:when test="${acom.rating_avg < 8.0 && acom.rating_avg >= 7.0}">
+													좋아요
+												</c:when>
+												<c:otherwise>
+													글쎄요
+												</c:otherwise>												
+											</c:choose> 										
+										</span>
+										(${acom.rating_cnt})
+									</p>
+									<p class="h5 bold font-weight-bold text-white">${acom.address}</p>
+								</div>
+								
+								<div class="price">
+									<small>숙박</small>
+									<span class="sale_badge badge badge-secondary">예약특가</span>
+									<b><fmt:formatNumber value="${acom.price}" pattern="#,###"/>원</b>
+								</div>
+								
 							</div>
-							
-						</div>
-					</li>
-					<li onclick="javascript:location.href='#'">
-						<div class="room-img">
-							<img src="<%= request.getContextPath()%>/resources/images/강남캠퍼스.jpg" alt=""/>
-						</div>
-						<div class="room-info">
-							<div class="name p-4">
-								<strong>강남 캠퍼스</strong>
-								<p class="score">
-									<strong class="badge badge-warning" style="color:#faeae3; position:relative; bottom:2px;">9.5</strong>
-									<span>추천해요</span>
-									(2670)
-								</p>
-								<p class="h5 bold font-weight-bold text-white">강남구 역삼동</p>
-							</div>
-							
-							<div class="price">
-								<small>숙박</small>
-								<span class="sale_badge badge badge-secondary">예약특가</span>
-								<b>140,000원</b>
-							</div>
-							
-						</div>
-					</li>
-					<li onclick="javascript:location.href='#'">
-						<div class="room-img">
-							<img src="<%= request.getContextPath()%>/resources/images/강남캠퍼스.jpg" alt=""/>
-						</div>
-						<div class="room-info">
-							<div class="name p-4">
-								<strong>강남 캠퍼스</strong>
-								<p class="score">
-									<strong class="badge badge-warning" style="color:#faeae3; position:relative; bottom:2px;">9.5</strong>
-									<span>추천해요</span>
-									(2670)
-								</p>
-								<p class="h5 bold font-weight-bold text-white">강남구 역삼동</p>
-							</div>
-							
-							<div class="price">
-								<small>숙박</small>
-								<span class="sale_badge badge badge-secondary">예약특가</span>
-								<b>140,000원</b>
-							</div>
-						</div>
-					</li>	
+						</li>
+					</c:forEach>
+				
 				</ul>
 
 			</section>

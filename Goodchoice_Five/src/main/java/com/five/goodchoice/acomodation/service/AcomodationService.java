@@ -179,6 +179,15 @@ public class AcomodationService implements InterAcomodationService {
 	}
 
 	
+	// 카테고리별  시설 목록을 불러온다.
+	@Override
+	public List<Map<String, String>> getFacilityListByAcomCategory(String category_no) {
+		List<Map<String, String>> facilityListByAcomCategory = dao.getFacilityListByAcomCategory(category_no);
+
+		return facilityListByAcomCategory;
+	}
+
+	
  	
 
 	

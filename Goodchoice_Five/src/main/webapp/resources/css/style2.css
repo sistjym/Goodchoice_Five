@@ -8,7 +8,7 @@ body {font-family: Arial, Helvetica, sans-serif, 돋움; }
     position: relative;
     top: 60px;
     padding-top: 40px;
-    background-color: #F5F5F5;
+    
     float: right;
     width: 45%;
     margin-right: 17.5%;
@@ -17,7 +17,7 @@ body {font-family: Arial, Helvetica, sans-serif, 돋움; }
 
 #mysubtop{ 
 	min-height: 140px;
-    background-color: #eee;
+    
 }
 
 
@@ -27,7 +27,7 @@ body {font-family: Arial, Helvetica, sans-serif, 돋움; }
     position: relative;
     top: 60px;
     padding-top: 40px;
-    background-color: #F0FFFF;
+    
     float: left;
     width: 20%;
     margin-left: 15%;

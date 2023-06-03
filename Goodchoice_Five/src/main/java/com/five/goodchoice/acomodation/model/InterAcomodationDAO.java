@@ -26,6 +26,11 @@ public interface InterAcomodationDAO {
 
 	// 숙소별 이름과 주소를 가져온다.
 	List<Map<String, String>> getNameAddressbyAcom(List<Map<String, String>> acomSearchList);
+
+	// -----------------------------------------------------------------------------------------------------------
+	
+	// 카테고리별  시설 목록을 불러온다.
+	List<Map<String, String>> getFacilityListByAcomCategory(String category_no);
 	
 	
 
