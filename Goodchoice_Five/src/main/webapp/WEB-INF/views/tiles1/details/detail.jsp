@@ -1721,14 +1721,14 @@ function myFunction_PrevRightSpan() {
 			
 			<div class="review_top">
 				
-				<p>엄준식</p>
+				<p>ㅎㅎ</p>
 				
 				<div class="col-lg-12" style="border: solid 1px gray"></div>
 			</div>
 			
 			<div class="review_content">
 				
-				<p>엄준식</p>
+				<p>ㅎㅎ</p>
 				
 				<div class="col-lg-12" style="border: solid 1px gray"></div>
 			</div>
