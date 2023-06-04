@@ -1,11 +1,21 @@
 package com.five.goodchoice.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.five.goodchoice.model.service.InterAdminService;
+
 @Controller
 public class IndexController {
+
 	
 	@	RequestMapping(value="/") //	http://localhost:9090/goodchoice/
 	public ModelAndView home ( ModelAndView mav) {
@@ -37,13 +47,20 @@ public class IndexController {
 	}
 	
 	// 메인용 
-	@RequestMapping(value="/main/home.gc") // tiles test 입니다.
-	public String main() {
-		
-		return "main/home.tiles1" ;
-		// /WEB-INF/views/tiles1/{1}/{2}.jsp
-	}
 	
+	
+	
+	/*
+	 * @RequestMapping(value="/main/home.gc") // tiles test 입니다. public String
+	 * main(HttpServletRequest request) {
+	 * 
+	 * return "main/home.tiles1" ; // /WEB-INF/views/tiles1/{1}/{2}.jsp }
+	 * 
+	 * }
+	 */
+	 
+	  
+	  
 	@RequestMapping(value="/my/page.gc") 
 	public String my_page_1() {
 		return "my/page.tiles2";

@@ -47,20 +47,17 @@
 	              } 
 				  
 			   }); 
-	    	   // 승인 여부에 따른 sorting 
-	    	   $("button#btnSearch").click(function(){
-	 	    	  const frm = document.searchFrm;
-	 	    	  
-	 		       frm.method = "get";
-	 		       frm.action = "acomm_approve.gc";
-	 		       frm.submit();
-	 	    	  
-	 	    	  
-	 	      }); // end of $("button#btnSearch").click(function()
-	 	      
-	    
+
 	      });// end of allow permission
-	      
+	      // 승인 여부에 따른 sorting 
+   	     $("button#btnSearch").click(function(){
+	    	  const frm = document.searchFrm;
+		       frm.method = "get";
+		       frm.action = "acomm_approve.gc";
+		       frm.submit();
+	    	  
+	    	  
+	      }); // end of $("button#btnSearch").click(function()
     	  
 	  });
     
@@ -111,7 +108,7 @@
 				 <c:if test="${map.IS_ACOM_PERMISSION eq '승인 완료'}">
 				 	<td><button type="button" class="btn btn-outline-danger btn-sm btn_permission" value="1">해제</button></td>		 
 				 </c:if>
-				  <td><input type="hidden" name="acom_no" value="${map.acom_no}"/></td>		 	  	
+				 <td><input type="hidden" name="host_no" value="${map.ACOM_NO}"/></td>		 	  	
 		 	  </tr>
 	 	  </c:forEach>
 	</c:if>      
