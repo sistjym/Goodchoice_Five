@@ -17,6 +17,11 @@
 		from tbl_spec
 	</select>
 	
+	<!-- 스펙 리스트 가져오기  -->
+	<select id ="districtNameList" resultType="String">
+		select district_name
+		from tbl_district
+	</select>
 	
 	 <!-- //테이블에에서 조건에 맞는 숙소 불러오기 -->
 	<resultMap type="HashMap" id="acom_Map">
@@ -33,28 +38,38 @@
 		<result property="ACOM_NO"             column="ACOM_NO"                 javaType="String"/>
 		<result property="ACOM_IMAGE"          column="ACOM_IMAGE"              javaType="String"/>
 		<result property="IS_ACOM_PERMISSION"  column="IS_ACOM_PERMISSION"      javaType="String"/>
+		<result property="district_name"       column="district_name"           javaType="String"/>
 	</resultMap>
 
 	<select id="getAcommList" resultMap="acom_Map"> 
-		select  ACOM_NO, AC.CATEGORY_NAME, S.SPEC_NAME, ACOM_NAME, H.HOST_NAME 
+		select  ACOM_NO, AC.CATEGORY_NAME AS CATEGORY_NAME, S.SPEC_NAME AS SPEC_NAME, ACOM_NAME, H.HOST_NAME AS HOST_NAME
 		       ,DECODE(IS_ACOM_PERMISSION, '1', '승인 완료', '0', '승인 대기') AS IS_ACOM_PERMISSION
+		       ,D.district_name AS district_name
 		from tbl_spec S left join tbl_acomodation A 
 		ON S.SPEC_NO =  A.FK_SPEC_NO
 		join tbl_acom_category AC 
 		ON S.FK_CATEGORY_NO = AC.CATEGORY_NO
 		join tbl_host H
 		ON A.FK_HOST_NO = H.HOST_NO	
-				
+		join tbl_district D
+		ON A.fk_district_no = D.district_no
+				<if test="permission != null">
+					where IS_HOST_PERMISSION = #{permission}
+				</if>
 				<if test="arr_categoryName != null">
 				    and AC.CATEGORY_NAME in 
 					<foreach collection="arr_categoryName" index="i" open="(" separator="," close=")">
 						'${arr_categoryName[i]}'
 					</foreach>
 				</if>
-
-				<if test="permission != null">
-					and IS_ACOM_PERMISSION = #{permission}
+				
+				<if test="arr_districtName != null">
+				    and D.district_name in 
+					<foreach collection="arr_districtName" index="i" open="(" separator="," close=")">
+						'${arr_districtName[i]}'
+					</foreach>
 				</if>
+
 		order by S.SPEC_NAME asc
 
 	</select>

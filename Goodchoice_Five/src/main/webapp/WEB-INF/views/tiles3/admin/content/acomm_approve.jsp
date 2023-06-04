@@ -22,9 +22,9 @@
 	      $("button.btn_permission").click(function(){
 	    	  let permission = $(this).val();
 	    	  let currentRow = $(this).closest('tr');
-	    	  let acom_no = currentRow.find('td:eq(7) input').val();
+	    	  let acom_no = currentRow.find('td:eq(6) input').val();
 
-	    	  //console.log(typeof(host_no));
+	    	  console.log(acom_no);
 	    	   $.ajax({
 				  url:"<%= ctxPath%>/updatePermissionAcomm.gc",
 				  data:{"permission" : permission,

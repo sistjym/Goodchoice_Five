@@ -61,8 +61,16 @@ public class AdminService implements InterAdminService {
 	@Override
 	public int updatePermissionAcomm(Map<String, String> paraMap) {
 		int n = dao.updatePermissionAcomm(paraMap);
+		System.out.println(n);
 		return n;
 		
+	}
+
+	// 지역 리스트 불러오기 
+	@Override
+	public List<String> districtNameList() {
+		List<String> districtList = dao.districtNameList();
+		return districtList;
 	}
  
 }

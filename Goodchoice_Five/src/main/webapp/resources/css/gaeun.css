@@ -412,10 +412,52 @@ p {
     font-weight: bold;
 }
 
+.sorting_wrapper{
+	margin-top:20px;
+}
 
+fieldset{
+	padding:10px;
+	 border: 0.2rem outset #f7323f; 
+}
 
+legend{
+	text-align:center;
+	width:20%;
+}
 
+.sorting{
+	display: block;
+	font-size: 14pt;
+	font-weight:bold;
+	margin-top: 15px;
+	
+}
 
+.category{
+	margin-left:5px;
+	margin-top: 10px;
+}
 
+.acom_btn_box{
+	text-align:center;
+}
+
+/* #btnSearch{
+	background-color:grey; 
+	border:none;
+}
+#btnSearch:hover{
+	background-color:#f7323f; 
+}
+
+#btnExcel{
+	background-color:grey; 
+	border:none;
+}
+#btnExcel:hover{
+	background-color:#f7323f; 
+	
+} */
 
 

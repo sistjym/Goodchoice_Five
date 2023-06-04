@@ -58,6 +58,13 @@ public class AdminDAO implements InterAdminDAO {
 		int n = sqlsession.update("admin.updatePermissionAcomm", paraMap);
 		return n;
 	}
+
+	// 지역 리스트 불러오기 
+	@Override
+	public List<String> districtNameList() {
+		List<String> districtList = sqlsession.selectList("admin.districtNameList");
+		return districtList;
+	}
 	
 	
 }

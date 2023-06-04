@@ -24,4 +24,7 @@ public interface InterAdminDAO {
 	// 숙소 등록 권한 업데이트 하기 
 	int updatePermissionAcomm(Map<String, String> paraMap);
 
+	// 지역 리스트 불러오기 
+	List<String> districtNameList();
+
 }
