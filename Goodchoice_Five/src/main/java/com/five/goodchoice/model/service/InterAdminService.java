@@ -28,6 +28,18 @@ public interface InterAdminService {
 
 	// 숙소 등록 승인하기
 	int updatePermissionAcomm(Map<String, String> paraMap);
+
+	// 스펙별 숙소 갯수 구하기 
+	List<Map<String, String>> totalAcommByspec();
+
+	// 지역별 숙소 갯수
+	List<Map<String, String>> acommCntByDistrict();
+
+	// 지역별  도시별 숙소 통계 
+	List<Map<String, String>> acommCntByCity(String district);
+
+	// 리뷰리스트 불러오기 
+	List<Map<String, String>> getReviewList();
 	
 	
 }

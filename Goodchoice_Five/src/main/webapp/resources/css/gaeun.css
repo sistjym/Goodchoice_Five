@@ -258,21 +258,27 @@ p {
     margin: 0 auto;
 
 }
+.best_district{
+	 list-style:none;
+}
 .destination_1{
     padding-right: 0px;
     padding-left: 0px;
     width: 410px;
     align-items: stretch;
-    display: flex;
+    display: flex; 
+    
     
 }
 
+
+
 .destnationImg{
     border-radius: 50%;
-
     border-width: 1px;
     height: 150px;
     position: relative;
+   
 }
 .destination_name{
     margin-top: 10px;

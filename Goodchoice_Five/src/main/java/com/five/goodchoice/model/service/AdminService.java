@@ -72,5 +72,35 @@ public class AdminService implements InterAdminService {
 		List<String> districtList = dao.districtNameList();
 		return districtList;
 	}
- 
+
+	// 스펙별 숙소 갯수 구하기 
+	@Override
+	public List<Map<String, String>> totalAcommByspec() {
+		 List<Map<String, String>> acomListBySpec = dao.totalAcommByspec(); 
+		return acomListBySpec;
+	}
+
+
+	// 지역별 숙소 갯수
+	@Override
+	public List<Map<String, String>> acommCntByDistrict() {
+		List<Map<String, String>> acomListByDistrict = dao.acommCntByDistrict(); 
+		return acomListByDistrict;
+	}
+
+	// 지역별  도시별 숙소 통계 
+	@Override
+	public List<Map<String, String>> acommCntByCity(String district) {
+		List<Map<String, String>> acommCntByCity = dao.acommCntByCity(district); 
+		return acommCntByCity;
+	}
+
+	// 리뷰 리스트 불러오기
+	@Override
+	public List<Map<String, String>> getReviewList() {
+		List<Map<String, String>> reviewList = dao.getReviewList(); 
+		return reviewList;
+	}
+
+	
 }

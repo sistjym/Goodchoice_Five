@@ -178,102 +178,65 @@
                     </div>
 
                     <!-- 이벤트 -->
-                    <section class="review_part">
+                    <section class="top_district">
                         <h2 class="display_top_destination"> 대한민국 내 인기 여행지 </h2>
                         <div class="top_wrapper slide-track">
-                            <li class="destination_1">
-                                <a class="province">
-                                    <img class="destnationImg"
-                                        src="https://pix6.agoda.net/geo/city/16901/1_16901_02.jpg?ca=6&ce=1&s=345x345&ar=1x1">
-                                    <span class="destination_name">제주도</span>
-
-                                </a>
-                            </li>
-                            <li class="destination_1">
-                                <a class="province">
-                                    <img class="destnationImg"
-                                        src="https://pix6.agoda.net/geo/city/14690/1_14690_02.jpg?ca=6&ce=1&s=345x345&ar=1x1">
-                                    <span class="destination_name">서울</span>
-
-                                </a>
-                            </li>
-                            <li class="destination_1">
-                                <a class="province">
-                                    <img class="destnationImg"
-                                        src="https://pix6.agoda.net/geo/city/17234/1_17234_02.jpg?ca=6&ce=1&s=345x345&ar=1x1">
-                                    <span class="destination_name">경기도</span>
-
-                                </a>
-                            </li>
-
-                            <li class="destination_1">
-                                <a class="province">
-                                    <img class="destnationImg"
-                                        src="https://pix6.agoda.net/geo/city/17172/1_17172_02.jpg?ca=6&ce=1&s=345x345&ar=1x1">
-                                    <span class="destination_name">부산</span>
-                                </a>
-                            </li>
+	                       
+	                        	 <p class="destination_1">
+	                                <a class="province">
+	                                    <img class="destnationImg"
+	                                        src="https://pix6.agoda.net/geo/city/16901/1_16901_02.jpg?ca=6&ce=1&s=345x345&ar=1x1">
+	                                    <span class="destination_name">제주도</span>
+	
+	                                </a>
+	                            </p>
+	                            
+	                              <p class="destination_1">
+	                                <a class="province">
+	                                    <img class="destnationImg"
+	                                        src="https://pix6.agoda.net/geo/city/14690/1_14690_02.jpg?ca=6&ce=1&s=345x345&ar=1x1">
+	                                    <span class="destination_name">서울</span>
+	
+	                                </a>
+	                            </p>
+	                            <p class="destination_1">
+	                                <a class="province">
+	                                    <img class="destnationImg"
+	                                        src="https://pix6.agoda.net/geo/city/17234/1_17234_02.jpg?ca=6&ce=1&s=345x345&ar=1x1">
+	                                    <span class="destination_name">경기도</span>
+	
+	                                </a>
+	                            </p>
+	
+	                            <p class="destination_1">
+	                                <a class="province">
+	                                    <img class="destnationImg"
+	                                        src="https://pix6.agoda.net/geo/city/17172/1_17172_02.jpg?ca=6&ce=1&s=345x345&ar=1x1">
+	                                    <span class="destination_name">부산</span>
+	                                </a>
+	                            </p>
+	                      
                         </div>
-
-
                     </section>
+                    
+                    
                     <!-- 추후에 for문으로 데이터 뿌릴것 -->
                     <h2 class="sort_category"> 여행객의 생생 이용후기 </h2>
                     <section class="center slider">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">숙소이름</h4>
-                                <p class="card-text">지역</p>
-                                <p class="card-text">리뷰내용</p>
-                                <p class="card-text">회원아이디</p>
-
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">숙소이름</h4>
-                                <p class="card-text">지역</p>
-                                <p class="card-text">리뷰내용</p>
-                                <p class="card-text">회원아이디</p>
-
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">숙소이름</h4>
-                                <p class="card-text">지역</p>
-                                <p class="card-text">리뷰내용</p>
-                                <p class="card-text">회원아이디</p>
-
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">숙소이름</h4>
-                                <p class="card-text">지역</p>
-                                <p class="card-text">리뷰내용</p>
-                                <p class="card-text">회원아이디</p>
-
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">숙소이름</h4>
-                                <p class="card-text">지역</p>
-                                <p class="card-text">리뷰내용</p>
-                                <p class="card-text">회원아이디</p>
-
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">숙소이름</h4>
-                                <p class="card-text">지역</p>
-                                <p class="card-text">리뷰내용</p>
-                                <p class="card-text">회원아이디</p>
-
-                            </div>
-                        </div>
+                      <c:if test="${not empty requestScope.reviewList}">
+                       <c:forEach var="map" items="${requestScope.reviewList}">
+	                        <div class="card">
+	                            <div class="card-body">
+	                                <p class="card-title">숙소이름: ${map.name}</p>    
+	                                <p class="card-text">리뷰내용: ${map.review_content}</p>
+	                                <p class="card-text">평점: ${map.score}</p>
+	
+	                            </div>
+	                        </div>
+					 	  </c:forEach>
+					</c:if>      
+	
+                
                     </section>
                     
                     <script>

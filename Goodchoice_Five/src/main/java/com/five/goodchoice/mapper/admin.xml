@@ -42,7 +42,7 @@
 	</resultMap>
 
 	<select id="getAcommList" resultMap="acom_Map"> 
-		select  ACOM_NO, AC.CATEGORY_NAME AS CATEGORY_NAME, S.SPEC_NAME AS SPEC_NAME, ACOM_NAME, H.HOST_NAME AS HOST_NAME
+		select  A.ACOM_NO AS ACOM_NO,AC.CATEGORY_NAME AS CATEGORY_NAME, S.SPEC_NAME AS SPEC_NAME, ACOM_NAME, H.HOST_NAME AS HOST_NAME
 		       ,DECODE(IS_ACOM_PERMISSION, '1', '승인 완료', '0', '승인 대기') AS IS_ACOM_PERMISSION
 		       ,D.district_name AS district_name
 		from tbl_spec S left join tbl_acomodation A 
@@ -54,7 +54,7 @@
 		join tbl_district D
 		ON A.fk_district_no = D.district_no
 				<if test="permission != null">
-					where IS_HOST_PERMISSION = #{permission}
+					where IS_ACOM_PERMISSION = #{permission}
 				</if>
 				<if test="arr_categoryName != null">
 				    and AC.CATEGORY_NAME in 
@@ -74,7 +74,7 @@
 
 	</select>
 	
-	 <!-- //테이블에에서 조건에 맞는 숙소 불러오기 -->
+	 <!-- //테이블에에서 조건에 맞는 호스트 불러오기 -->
 	<resultMap type="HashMap" id="host_Map">
 	    <result property="host_no"               column="host_no"             javaType="String"/>
 		<result property="host_email"            column="host_email"             javaType="String"/>
@@ -109,7 +109,6 @@
 	</update>
 	
 	<!--  숙소 등록 허용하기 -->
-	
 	<update id="updatePermissionAcomm" parameterType="HashMap">
 		<if test='permission == "0"'>
 			update tbl_acomodation set IS_ACOM_PERMISSION = 1
@@ -120,6 +119,87 @@
 			update tbl_acomodation set IS_ACOM_PERMISSION = 0
 			where acom_no = #{acom_no}
 		</if> 
-		
 	</update>
+	
+	<!-- // 차트그리기(ajax) 스펙별 숙소 수 가져오기  -->
+	<resultMap type="HashMap" id="spec_Map">
+		<result property="spec"             column="spec"              javaType="String"/>
+		<result property="cnt"                column="cnt"                 javaType="String"/>
+		<result property="percentage"         column="percentage"          javaType="String"/>
+	</resultMap>
+	
+	<select id="totalAcommByspec" resultMap="spec_Map">
+		select  S.spec_name AS spec, count(*) AS cnt ,round(count(*) /(select count(*) from tbl_acomodation)*100 , 2) AS percentage
+		from tbl_acomodation A inner join tbl_spec S 
+		on A.fk_spec_no = S.spec_no 
+		group by  S.spec_name
+		order by S.spec_name asc
+	</select>
+	
+	<!-- // 차트그리기(ajax) 지역별 숙소 수 가져오기  -->
+	<resultMap type="HashMap" id="district_Map">
+		<result property="district"           column="district"            javaType="String"/>
+		<result property="cnt"                column="cnt"                 javaType="String"/>
+		<result property="percentage"         column="percentage"          javaType="String"/>
+		<result property="city"               column="city"                javaType="String"/>
+	</resultMap>
+	
+	<select id="acommCntByDistrict" resultMap="district_Map">
+		select  D.district_name AS district, count(*) AS cnt ,round(count(*) /(select count(*) from tbl_acomodation)*100 , 1) AS percentage
+		from tbl_acomodation A inner join tbl_district D
+		on A.fk_district_no = D.district_no
+		group by  D.district_name
+		order by D.district_name asc
+	</select>
+	
+	<!--  시티 가져오기 -->
+	<select id="acommCntByCity" parameterType="String" resultMap="district_Map">
+		select  D.sub_city_name AS city, count(*) AS cnt ,round(count(*) /(select count(*) from tbl_acomodation)*100 , 1) AS percentage
+		from tbl_acomodation A inner join tbl_district D
+		on A.fk_district_no = D.district_no
+        where D.district_name = #{district}
+		group by  D.sub_city_name 
+		order by D.sub_city_name asc
+
+	</select>
+	
+	<!-- 리뷰 리스트 불러오기 -->
+	
+	<resultMap type="HashMap" id="review_Map">
+		<result property="subject"          column="subject"       javaType="String"/>
+		<result property="score"            column="score"               javaType="String"/>
+		<result property="name"             column="name"                javaType="String"/>
+		<result property="review_content"   column="review_content"      javaType="String"/>
+	</resultMap>
+	
+	<select id="getReviewList" resultMap="review_Map">
+		select R.review_subject AS subject,R.review_content as review_content, R.review_score AS score, A.acom_name AS name
+		from tbl_review R join tbl_room O
+		on R.fk_room_id = O.room_id
+		join tbl_acomodation A
+		on O.fk_acom_no = A.acom_no
+		WHERE R.review_score = (SELECT MAX( R.review_score) from tbl_review R)
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 </mapper>

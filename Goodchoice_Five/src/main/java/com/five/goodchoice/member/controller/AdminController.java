@@ -34,12 +34,25 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.five.goodchoice.common.AES256;
 import com.five.goodchoice.model.service.InterAdminService;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 @Controller
 public class AdminController {
 	
 	@Autowired
 	private InterAdminService service;
+	
+	@RequestMapping(value="/main/home.gc") // tiles test 입니다. public String
+	public String main(HttpServletRequest request) {
+	  
+	  List<Map<String, String>> reviewList = service.getReviewList();
+	  
+	  request.setAttribute("reviewList", reviewList);
+	  
+	 return "main/home.tiles1"; // /WEB-INF/views/tiles1/{1}/{2}.jsp }
+	}
 
 	// 관리자 페이지 승인 부분
 	@RequestMapping(value = "/acomm_approve.gc")
@@ -47,13 +60,12 @@ public class AdminController {
 
 		String permission = request.getParameter("permission"); // 사용자가 선책한 승인여부
 	
-		Map<String, Object> paraMap = new HashedMap<>();
+		Map<String, Object> paraMap = new HashMap<>();
 		
 		if (permission != null && !"".equals(permission)) {
-			 paraMap.put("permission", permission);
+			paraMap.put("permission", permission);
 
 			request.setAttribute("permission", permission);
-			
 		}
 
 		List<Map<String, String>> acommList = service.getAcommList(paraMap);
@@ -526,6 +538,85 @@ public class AdminController {
         		
 	}
 	
+	// 관리자 페이지 승인 부분
+	@RequestMapping(value = "/viewChart.gc")
+	public String viewChart(HttpServletRequest request) {
 
+		return "admin/viewChart.tiles3";
+	}
+
+	// 스펙별 숙소의 개수 파이차트
+	@ResponseBody
+	@RequestMapping(value = "/totalAcommByspec.gc")
+	public String totalAcommByspec(HttpServletRequest request) {
+
+		List<Map<String,String>> acomListBySpec = service.totalAcommByspec();
+		
+		JsonArray jsonArr = new JsonArray();
+		
+		if(acomListBySpec != null && acomListBySpec.size() > 0) {
+			for(Map<String, String> map:acomListBySpec ) {
+				JsonObject jsonObj = new JsonObject(); // 구글이 만든 json
+				jsonObj.addProperty("spec", map.get("spec"));
+				jsonObj.addProperty("cnt", map.get("cnt"));
+				jsonObj.addProperty("percentage", map.get("percentage"));
+				
+				jsonArr.add(jsonObj);
+			}// end of for 
+		}//end of if
+		
+		return new Gson().toJson(jsonArr);
+	}
+	
+	// 지역별 숙소 갯수
+	@ResponseBody
+	@RequestMapping(value = "/acommCntByDistrict.gc")
+	public String acommCntByDistrict(HttpServletRequest request) {
+
+		List<Map<String,String>> acomListByDistrict = service.acommCntByDistrict();
+		
+		JsonArray jsonArr = new JsonArray();
+		
+		if(acomListByDistrict != null && acomListByDistrict.size() > 0) {
+			for(Map<String, String> map:acomListByDistrict ) {
+				JsonObject jsonObj = new JsonObject(); // 구글이 만든 json
+				jsonObj.addProperty("district", map.get("district"));
+				jsonObj.addProperty("cnt", map.get("cnt"));
+				jsonObj.addProperty("percentage", map.get("percentage"));
+				
+				jsonArr.add(jsonObj);
+			}// end of for 
+		}//end of if
+		
+		return new Gson().toJson(jsonArr);
+	}
+
+	
+	 
+	// 지역별  도시별 숙소 통계 
+	@ResponseBody
+	@RequestMapping(value="/acommTotalByCity.gc",produces="text/plain;charset=UTF-8" )
+	public String acommTotalByCity(HttpServletRequest request) {
+		
+		String district = request.getParameter("district");
+		
+		JsonArray jsonArr = new JsonArray();
+		List<Map<String, String>> acommListByCity = service.acommCntByCity(district);
+		
+		if(acommListByCity != null && acommListByCity.size() > 0) {
+			for( Map<String, String> map: acommListByCity) {
+				JsonObject jsonobj = new JsonObject();
+				jsonobj.addProperty("city", map.get("city"));
+				jsonobj.addProperty("cnt", map.get("cnt"));
+				jsonobj.addProperty("percentage", map.get("percentage"));
+				
+				jsonArr.add(jsonobj);
+			}
+		}
+		return new Gson().toJson(jsonArr);
+	}
+	
+	
+	
 
 }

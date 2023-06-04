@@ -65,6 +65,34 @@ public class AdminDAO implements InterAdminDAO {
 		List<String> districtList = sqlsession.selectList("admin.districtNameList");
 		return districtList;
 	}
+
+	// 스펙별 숙소 갯수 구하기 
+	@Override
+	public List<Map<String, String>> totalAcommByspec() {
+		 List<Map<String, String>> acomListBySpec = sqlsession.selectList("admin.totalAcommByspec");
+		 return acomListBySpec;
+	}
+	
+	// 지역별 숙소 갯수
+	@Override
+	public List<Map<String, String>> acommCntByDistrict() {
+		 List<Map<String, String>> acomListByDistrict = sqlsession.selectList("admin.acommCntByDistrict");
+		 return acomListByDistrict;
+	}
+
+	// 지역별  도시별 숙소 통계 
+	@Override
+	public List<Map<String, String>> acommCntByCity(String district) {
+		 List<Map<String, String>> acommListByCity = sqlsession.selectList("admin.acommCntByCity",district);
+		 return acommListByCity;
+	}
+
+	// 리뷰 리스트 불러오기
+	@Override
+	public List<Map<String, String>> getReviewList() {
+		List<Map<String, String>> reviewList = sqlsession.selectList("admin.getReviewList");
+		 return reviewList;
+	}
 	
 	
 }
