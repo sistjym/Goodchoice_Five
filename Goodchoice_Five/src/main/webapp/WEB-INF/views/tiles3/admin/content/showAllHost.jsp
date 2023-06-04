@@ -23,7 +23,7 @@
 	      $("button.btn_permission").click(function(){
 	    	  let permission = $(this).val();
 	    	  let currentRow = $(this).closest('tr');
-	    	  let host_no = currentRow.find('td:eq(6) input').val();
+	    	  let host_no = currentRow.find('td:eq(5) input').val();
 
 	    	  //console.log(typeof(host_no));
 	    	   $.ajax({

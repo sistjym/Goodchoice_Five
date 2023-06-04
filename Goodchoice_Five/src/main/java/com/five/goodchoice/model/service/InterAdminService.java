@@ -16,6 +16,9 @@ public interface InterAdminService {
 
 	// 분류 리스트 불러오기 
 	List<String> specNameList();
+	
+	// 지역 리스트 불러오기 
+	List<String> districtNameList();
 
 	// 관리자 모든 업주보기 + 권한 승인 기능
 	List<Map<String, String>> getHostList(Map<String, Object> paraMap);
@@ -25,5 +28,6 @@ public interface InterAdminService {
 
 	// 숙소 등록 승인하기
 	int updatePermissionAcomm(Map<String, String> paraMap);
-
+	
+	
 }
