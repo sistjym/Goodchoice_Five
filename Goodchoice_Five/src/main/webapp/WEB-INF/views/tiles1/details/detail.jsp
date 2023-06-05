@@ -23,7 +23,6 @@ v<%@ page language="java" contentType="text/html; charset=UTF-8"
 
 <!-- Font Awesome 6 Icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
-  <script src="https://kit.fontawesome.com/b7b1b05ad5.js" crossorigin="anonymous"></script>
 <!-- 직접 만든 CSS -->
 
 
@@ -284,7 +283,7 @@ div#tab .tab_1,
 div#tab .tab_2,
 div#tab .tab_3 {
 
-	color: #d9d9d9;
+	color: #b3b3b3;
 	font-weight: 300;
 	
 } 
@@ -321,6 +320,7 @@ div#night{
 div#night > input#daterange {
 
 	border: solid 1px rgba(128, 128, 128, 0.2);
+	border-radius: 5px;
 	
 	 cursor: pointer;
 	 
@@ -560,6 +560,12 @@ div#item_2 a.btn_resv_2 {
 
 
 
+div#item_2 ul.disc-list li::before {
+  content: "•";
+  margin-right: 5px;
+}
+
+
 /* div#item 룸넘버 102 끝 */
 
 
@@ -574,7 +580,7 @@ div#item_2 a.btn_resv_2 {
 
 
 
-.accordion_wrap {
+ .accordion_wrap {
 	
 	
 	width: 80%;
@@ -585,49 +591,73 @@ div#item_2 a.btn_resv_2 {
 	}
 	
 	
+	div.accordion_wrap > div.accordion1 > section {
+	
+	border-bottom: 1px solid rgba(128, 128, 128, 0.2);	
+	
+	
+	}
 	
 
-	.accordion1 p a {
+	
+	
+	
+
+	.accordion1 section > p > a {
 		padding:15px 30px 10px 20px;  
 		line-height:26px; 
 		color:black;
 		font-weight: bold;
-		font-size: 10pt;
+		font-size: 12pt;
 		display:block;
 		position:relative;
 		outline:0;
 		text-decoration:none;
 		background-position:30px center;
-		box-sizing:border-box;}
+		box-sizing:border-box;
+		}
+		
 	
-	.accordion1 div {
+	.accordion1 section > div {
 		width:50%;
 		padding:5px 20px 25px 20px; 
 		line-height:20px; 
 		position:relative;
-		height:auto;display:none;
+		height:auto;
+		display:none;
 		line-height:20px;
-		color:black;
+		
 		}
 		
+		
 	
-		.accordion1 p a:after {
+		.accordion1 section > p > a:after {
 		  font-family: "Font Awesome 5 Free"; /* Font Awesome의 폰트 패밀리 */
- 		  content: "\f0d7"; /* 원하는 아이콘의 유니코드 값 */ 
+ 		  content: "\f078"; /* 원하는 아이콘의 유니코드 값 */ 
 		  font-size: 25px;
 		  color: #777;
 		  float: right;
 		  margin-left: 5px;
 		}
 
-		.accordion1 p.active1 a:after {
+		.accordion1 section > p.active1 a:after {
  		  font-family: "Font Awesome 5 Free"; /* Font Awesome의 폰트 패밀리 */
- 		  content: "\f0d8"; /* 원하는 아이콘의 유니코드 값 */ 		 
+ 		  content: "\f077"; /* 원하는 아이콘의 유니코드 값 */ 		 
  		  font-size: 25px;
 		  color: #777;		 
 		  float: right;
 		  margin-left: 5px;
 		}
+		
+		
+		
+		
+		div.accordion_wrap ul.accordion_disc li::before {
+		  content: "•";
+		  margin-right: 5px;
+		}
+
+
 
 
   
@@ -810,9 +840,9 @@ $(document).ready(function() {
 
   
   <%-- 아코디언 --%>
-  
-	
-  var accordion_tab = $('.accordion1 p'), accordion_content = $('.accordion1 div');
+  		
+  	
+  var accordion_tab = $('.accordion1 p'), accordion_content = $('.accordion1 div.first_section');
 	//accordion p tag click
 	accordion_tab.on('click', function(e){
 		//tab link 비활성화
@@ -844,7 +874,7 @@ $(document).ready(function() {
 	      $('.nav-link').removeClass('current'); 
 	      $(this).addClass('current'); 
 
-	      $('div.accordion_wrap, .review_top, .review_content').hide(); 
+	      $('.accordion_wrap, .review_top, .review_content').hide(); 
 	      $('#item, #item_2, .calendar').show(); 
 	    });
 
@@ -854,7 +884,7 @@ $(document).ready(function() {
       $(this).addClass('current');
 
       $('#item, #item_2, .calendar, .review_top, .review_content').hide();
-      $('div.accordion_wrap').show();
+      $('.accordion_wrap').show();
     });
 
     // Click event for 리뷰
@@ -862,7 +892,7 @@ $(document).ready(function() {
       $('.nav-link').removeClass('current');
       $(this).addClass('current');
 
-      $('#item, #item_2, .calendar, div.accordion_wrap').hide();
+      $('#item, #item_2, .calendar, .accordion_wrap').hide();
       $('.review_top, .review_content').show();
     });
 
@@ -1234,7 +1264,7 @@ function myFunction_PrevRightSpan() {
 	<div id="container">
 	
 		
-		<div class="row custom-topcontents col-md-10" id="top">
+		<div class="row custom-topcontents col-md-9" id="top">
 		
 			<div class="col-md-7" id="top_left">
 			
@@ -1347,7 +1377,7 @@ function myFunction_PrevRightSpan() {
 						
 							<div class="more_fold_inner">
 							
-								<p id="more_fold_myContent" class="more_fold_content">COEX 전시장, 도심공항터미널, 종합무역센터, 올림픽 메인스타디움에 인접해 있어 비즈니스,관광 등 다양한 목적의 여행객들에게 이상적입니다 </p>
+								<p id="more_fold_myContent" class="more_fold_content">COEX 전시장, 도심공항터미널, 종합무역센터, 올림픽 메인스타디움에 인접해 있어 비즈니스,관광 등 다양한 목적의 여행객들에게 이상적입니다 COEX 전시장, 도심공항터미널, 종합무역센터, 올림픽 메인스타디움에 인접해 있어 비즈니스,관광 등 다양한 목적의 여행객들에게 이상적입니다 </p>
 			    			
 							</div>
 							
@@ -1359,7 +1389,7 @@ function myFunction_PrevRightSpan() {
 		   
 		</div>
 		
-		<div class="col-lg-9 col-md-6 col-sm-8" id="tab">
+		<div class="col-lg-8 col-md-6 col-sm-8" id="tab">
 		
 				<nav class="navbar navbar-expand-sm bg-white navbar-white sticky-top mx-3">
 				  <ul class="navbar-nav col-lg-12">
@@ -1377,7 +1407,7 @@ function myFunction_PrevRightSpan() {
 		
 		</div>
 		
-		  <div class="col-lg-9 calendar" id="night">
+		  <div class="col-lg-8 calendar" id="night">
 		  	    <i class="fas fa-chevron-down"></i>
 		  		<input  type="text" id="daterange" readonly/>
 		  		
@@ -1387,7 +1417,7 @@ function myFunction_PrevRightSpan() {
 
 
 		
-	      <div id="item" class="col-lg-9">
+	      <div id="item" class="col-lg-8">
 		      	 <div style="display:flex;">
 						<div class="col-lg-6 col-md-6 col-sm-6" >
 								<img src="<%= ctxPath%>/resources/images/강남캠퍼스.jpg" alt="thumbnail" class="img-thumbnail item_image">
@@ -1535,7 +1565,7 @@ function myFunction_PrevRightSpan() {
 			        
 			 
 			 
-			  <div id="item_2" class="col-lg-9">
+			  <div id="item_2" class="col-lg-8">
 		      	 <div style="display:flex;">
 						<div class="col-lg-6 col-md-6 col-sm-6" >
 								<img src="<%= ctxPath%>/resources/images/강남캠퍼스.jpg" alt="thumbnail" class="img-thumbnail item_image_2">
@@ -1675,40 +1705,93 @@ function myFunction_PrevRightSpan() {
 	     
 	        
 	        <%-- 아코디언 시작 =================================================================================================== --%>	
-	    					
-	        
-	        
-	      	<div class="accordion_wrap col-lg-9" >
+	    				
+	        	<div class="accordion_wrap col-lg-8">
 				<div class="accordion1">                        	
 					<section id="normal_info">
 						<p id="normal_info"><a href="#normal_info">기본 정보</a></p>
-						<div>
-							<P>엄</P>
+						<div class="first_section" style="margin-left: 32px; margin-top: 30px; margin-bottom: 30px;">
+							
+							
+					 					        
+							<p style="font-size: 10pt; color: #737373; text-align:left; font-weight:bold;">주변정보</p>
+					        <ul class="accordion_disc" style="list-style-type: disc;">
+					        	
+					        	<li style="font-size: 10pt; font-weight:600; color: #8c8c8c; text-align:left; font-weight:300;">제주국제공항 차량 10분/제주 이호테우 해변 차량 15분/한라생태숲 차량 25분</li>
+					        	
+					        </ul>
+					        <p style="font-size: 10pt; color: #737373; text-align:left; font-weight:bold;">주차정보</p>
+					        <ul class="accordion_disc" style="list-style-type: disc;">
+					        	
+					        	<li style="font-size: 10pt; font-weight:600; color: #8c8c8c; text-align:left; font-weight:300;">* 1객실 1주차 가능 미리주차불가(전화문의사절)/1객실에 차량두대불가,퇴실후 주차불가/총 17대 주차시설 보유</li>
+					        	
+					        </ul>
+					        <div style="border: solid 2px gray; margin-top: 30px;"><p>지도 들어 갈 곳 입니다.</p></div>
 						</div>
 					</section>			
-					<section id="convi_service">
-						<p id="convi_service"><a href="#convi_service">편의시설 및 서비스</a></p>
-						<div>
-							<p>알레르기 유발 가능 식재료</p> 
-						</div>
-					</section>
-			
-					<section id="seller_info">
-						<p id="seller_info"><a href="#seller_info">판매자 정보</a></p>
-						<div>
-							<p>ㅎㅎㅎㅎ</p>
-						</div>
-					</section>  
-					
 					<section id="cost_info">
 						<p id="cost_info"><a href="#cost_info">요금정보</a></p>
-						<div>
-							<p>sdfdsfsdf</p>
+						<div class="first_section" style="margin-left:200px; margin-top: 30px;">
+  								<table style="width: 500px; height: 300px; text-align:center; border-radius: 5px 5px 0 0; border:1px solid #bfbfbf; margin-bottom: 30px;">
+  								  <tr style="height:45px;">
+									<th style="border-bottom:1px solid #bfbfbf; background-color:#8c8c8c; color:white; font-weight:300; font-size:10pt; width:250px;">객실 등급</th>
+									<th style="border-bottom:1px solid #bfbfbf; border-left:1px solid #bfbfbf; background-color:#8c8c8c; color:white; font-weight:300; font-size:10pt;">월,화,수,목,금,토,일</th>
+								  </tr>	
+									<tr><!-- 첫번째 줄 시작 -->
+									    <td style="border-left:1px solid #bfbfbf; border-right:1px solid #bfbfbf; border-bottom:1px solid #bfbfbf; font-weight:400;">디럭스(주차불가)</td>
+									    <td style="border-bottom:1px solid #bfbfbf; font-weight:400;">150000</td>
+									</tr><!-- 첫번째 줄 끝 -->
+									<tr><!-- 두번째 줄 시작 -->
+									    <td style="border-bottom:1px solid #bfbfbf; border-right:1px solid #bfbfbf; font-weight:400;">스위트(넷플리스 시청가능)</td>
+									    <td style="border-right:1px solid #bfbfbf; border-bottom:1px solid #bfbfbf; font-weight:400;">150000</td>
+									</tr><!-- 두번째 줄 끝 -->
+							    </table>
+  				   </div>
+					</section>    
+					<section id="seller_info">
+						<p id="seller_info"><a href="#seller_info">판매자 정보</a></p>
+						<div class="first_section" style="margin-left: 32px; margin-top: 30px; margin-bottom: 30px;">
+							<p style="font-size: 12pt; color: #737373; text-align:left; font-weight:bold;">상호</p>
+					        <ul class="accordion_disc" style="list-style-type: disc;">
+					        	
+					        	<li style="font-size: 12pt; font-weight:600; color: #8c8c8c; text-align:left; font-weight:300;">포레스타</li>
+					        	
+					        </ul>
+					        <p style="font-size: 12pt; color: #737373; text-align:left; font-weight:bold;">대표자명</p>
+					        <ul class="accordion_disc" style="list-style-type: disc;">
+					        	
+					        	<li style="font-size: 12pt; font-weight:600; color: #8c8c8c; text-align:left; font-weight:300;">ㅇㅇㅇ</li>
+					        	
+					        </ul>
+					        <p style="font-size: 12pt; color: #737373; text-align:left; font-weight:bold;">주소</p>
+					        <ul class="accordion_disc" style="list-style-type: disc;">
+					        	
+					        	<li style="font-size: 12pt; font-weight:600; color: #8c8c8c; text-align:left; font-weight:300;">서울특별시 서대문구 연세로4길 16</li>
+					        	
+					        </ul>
+					        <p style="font-size: 12pt; color: #737373; text-align:left; font-weight:bold;">전화번호</p>
+					        <ul class="accordion_disc" style="list-style-type: disc;">
+					        	
+					        	<li style="font-size: 12pt; font-weight:600; color: #8c8c8c; text-align:left; font-weight:300;">11111111111</li>
+					        	
+					        </ul>
+					        <p style="font-size: 12pt; color: #737373; text-align:left; font-weight:bold;">이메일</p>
+					        <ul class="accordion_disc" style="list-style-type: disc;">
+					        	
+					        	<li style="font-size: 12pt; font-weight:600; color: #8c8c8c; text-align:left; font-weight:300;">SSangyoung@sist.com</li>
+					        	
+					        </ul>
+					        <p style="font-size: 12pt; color: #737373; text-align:left; font-weight:bold;">사업자번호</p>
+					        <ul class="accordion_disc" style="list-style-type: disc;">
+					        	
+					        	<li style="font-size: 12pt; font-weight:600; color: #8c8c8c; text-align:left; font-weight:300;">12341234</li>
+					        	
+					        </ul>
 						</div>
-					</section>                        
+					</section>                      
 				</div>
 			</div>
-			
+		
 			
 		       <%-- 아코디언 끝 =================================================================================================== --%>	
 			
