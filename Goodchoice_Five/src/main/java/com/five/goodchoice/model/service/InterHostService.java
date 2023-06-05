@@ -2,6 +2,7 @@ package com.five.goodchoice.model.service;
 
 import java.util.Map;
 
+
 public interface InterHostService {
 	
 	
@@ -10,5 +11,7 @@ public interface InterHostService {
 	
 	// 업주회원가입 
 	boolean gohostRegister(Map<String, String> paraMap);
+	
+	
 
 }

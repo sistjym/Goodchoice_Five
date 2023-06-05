@@ -416,12 +416,12 @@
 			//////////////////////////////////////
 			const myfrm = document.myfrm;
 			
-			const inputEmail = $("input#inputEmail1").val();
-			const emailSelected = $("select#emailSelector").val();
+			const inputEmail = $("input#inputEmail1").val().trim();
+			const emailSelected = $("select#emailSelector").val().trim();
 			if(emailSelected == "other") {
 				myfrm.email.value = inputEmail;	
 			} else {
-				myfrm.email.value = inputEmail + emailSelected;
+				myfrm.email.value = inputEmail+emailSelected;
 			}
 			
 			
@@ -482,12 +482,12 @@
 			//////////////////////////////////////
 			const myfrm = document.myfrm;
 			
-			const inputEmail = $("input#inputEmail1").val();
-			const emailSelected = $("select#emailSelector").val();
+			const inputEmail = $("input#inputEmail1").val().trim();
+			const emailSelected = $("select#emailSelector").val().trim();
 			if(emailSelected == "other") {
 				myfrm.email.value = inputEmail;	
 			} else {
-				myfrm.email.value = inputEmail + emailSelected;
+				myfrm.email.value = inputEmail+emailSelected;
 			}
 			
 			myfrm.action = "<%= ctxPath%>/gohostRegister.gc"
@@ -525,11 +525,11 @@
 		  	<div class="form-group mx-6 col-sm-5" style="margin-bottom: 0px;">
 		      <select class="form-control email_sel" id="emailSelector" style="height:50px;" onchange="EmailCheck()">
 		        <option value="other" selected>직접입력</option>
-		        <option value="1">naver.com</option>
-		        <option value="2">hanmail.com</option>
-		        <option value="3">daum.net</option>
-		        <option value="4">google.com</option>
-		        <option value="5">gamil.com</option>
+		        <option value="@naver.com">naver.com</option>
+		        <option value="@hanmail.com">hanmail.com</option>
+		        <option value="@daum.net">daum.net</option>
+		        <option value="@google.com">google.com</option>
+		        <option value="@gamil.com">gamil.com</option>
 		      </select>
 		      
 		    </div>
@@ -566,13 +566,13 @@
 				  
 				  <div class="form-group" style="margin:10px 0px 0px 3px;">
 				 	  <label for=onerName style="color:#0000008F; font-weight: bold;">대표자명</label>
-				 	  <input type="text" style="height:50px;" id="onerName" name="onerName" class="form-control" maxlength="15" placeholder="대표자명" />
+				 	  <input type="text" style="height:50px;" id="onerName" name="onerName" class="form-control" maxlength="5" placeholder="대표자명" />
 				  </div>
 				  <div><span id="error_onerName" style="color:red;"></span></div>
 				  
 				  <div class="form-group" style="margin:10px 0px 0px 3px;">
 				 	  <label for=companyName style="color:#0000008F; font-weight: bold;">상호명</label>
-				 	  <input type="text" style="height:50px;" id="companyName" name="companyName" class="form-control" maxlength="15" placeholder="상호명" />
+				 	  <input type="text" style="height:50px;" id="companyName" name="companyName" class="form-control"maxlength="15"  placeholder="상호명" />
 				  </div>
 				  <div><span id="error_companyName" style="color:red;"></span></div>
 			 </div>
