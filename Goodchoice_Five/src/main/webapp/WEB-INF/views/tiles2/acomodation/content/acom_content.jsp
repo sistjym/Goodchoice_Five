@@ -21,51 +21,56 @@
 		<section id="list">			
 			<section class="list-wrap">
 			
-				<ul>
-				
-					<c:forEach var="acom" items="${requestScope.acomSearchList}">
-						<li onclick="javascript:location.href='#'">
-							<div class="room-img">
-								
-								<img src="<%= request.getContextPath()%>/resources/images/논현올인.jpg" alt="" height="400"/>
-								<!-- TODO. 숙소 이름을 공백을 제거한 다음 .jpg 를 붙여 이미지를 완성해야 한다. -->
-							</div>
-							<div class="room-info">
-								<div class="name p-4">
-									<strong>${acom.acom_name}</strong>
-									<p class="score">
-										<strong class="badge badge-warning" style="color:#faeae3; position:relative; bottom:2px;">${acom.rating_avg}</strong>
-										<span>
-											<c:choose>
-												<c:when test="${acom.rating_avg >= 9.0}">
-													추천해요
-												</c:when>
-												<c:when test="${acom.rating_avg < 9.0 && acom.rating_avg >= 8.0}">
-													훌륭해요
-												</c:when>
-												<c:when test="${acom.rating_avg < 8.0 && acom.rating_avg >= 7.0}">
-													좋아요
-												</c:when>
-												<c:otherwise>
-													글쎄요
-												</c:otherwise>												
-											</c:choose> 										
-										</span>
-										(${acom.rating_cnt})
-									</p>
-									<p class="h5 bold font-weight-bold text-white">${acom.address}</p>
+				<c:if test="${empty requestScope.acomSearchList}">
+					<div style="text-align: left; margin-top: 70px ;">검색조건에 맞는 숙소가 없습니다.</div>
+				</c:if>
+				<ul>					
+					<c:if test="${!empty requestScope.acomSearchList}">
+						
+					
+						<c:forEach var="acom" items="${requestScope.acomSearchList}">
+							<li onclick="javascript:location.href='#'">
+								<div class="room-img">
+									
+									<img src="<%= request.getContextPath()%>/resources/images/논현올인.jpg" alt="" height="400"/>
+									<!-- TODO. 숙소 이름을 공백을 제거한 다음 .jpg 를 붙여 이미지를 완성해야 한다. -->
 								</div>
-								
-								<div class="price">
-									<small>숙박</small>
-									<span class="sale_badge badge badge-secondary">예약특가</span>
-									<b><fmt:formatNumber value="${acom.price}" pattern="#,###"/>원</b>
+								<div class="room-info">
+									<div class="name p-4">
+										<strong>${acom.acom_name}</strong>
+										<p class="score">
+											<strong class="badge badge-warning" style="color:#faeae3; position:relative; bottom:2px;">${acom.rating_avg}</strong>
+											<span>
+												<c:choose>
+													<c:when test="${acom.rating_avg >= 9.0}">
+														추천해요
+													</c:when>
+													<c:when test="${acom.rating_avg < 9.0 && acom.rating_avg >= 8.0}">
+														훌륭해요
+													</c:when>
+													<c:when test="${acom.rating_avg < 8.0 && acom.rating_avg >= 7.0}">
+														좋아요
+													</c:when>
+													<c:otherwise>
+														글쎄요
+													</c:otherwise>												
+												</c:choose> 										
+											</span>
+											(${acom.rating_cnt})
+										</p>
+										<p class="h5 bold font-weight-bold text-white">${acom.address}</p>
+									</div>
+									
+									<div class="price">
+										<small>숙박</small>
+										<span class="sale_badge badge badge-secondary">예약특가</span>
+										<b><fmt:formatNumber value="${acom.price}" pattern="#,###"/>원</b>
+									</div>
+									
 								</div>
-								
-							</div>
-						</li>
-					</c:forEach>
-				
+							</li>
+						</c:forEach>
+					</c:if>
 				</ul>
 
 			</section>

@@ -23,19 +23,28 @@ public class AcomodationService implements InterAcomodationService {
 	@Override
 	public List<Map<String, String>> getAcomSearchList(Map<String, Object> filter_condition_Map) {
 		
+		List<Map<String, String>> acomSearchList = new ArrayList<>();
+		
 		// 1. 입력된 날짜에 대해 예약이 가능한 객실번호를 가져온다.
-		List<String> availableRoomIdList = dao.getAvailableRoomId(filter_condition_Map);		
+		List<String> availableRoomIdList = dao.getAvailableRoomId(filter_condition_Map);
+		
+		if(availableRoomIdList == null || availableRoomIdList.size() == 0) {
+			return new ArrayList<>();
+		}
+		
 		filter_condition_Map.put("availableRoomIdList", availableRoomIdList);
-		
-		
 		
 		// 2. 예약이 가능한 객실번호 중에서 가격 조건을 적용한 방들의 리스트
 		availableRoomIdList = dao.getPriceFilterRoomId(filter_condition_Map);
+		if(availableRoomIdList == null || availableRoomIdList.size() == 0) {
+			return new ArrayList<>();
+		}
+		
 		filter_condition_Map.put("availableRoomIdList", availableRoomIdList); // 기존의 availableRoomIdList 에 덮어 씌우기
 
 		
 		// 3. 가장 저렴한 객실의 가격을 기준으로 하는 숙소번호와 가격을 가져오는 메소드
-		List<Map<String, String>> acomSearchList = dao.getAcomListByRowPrice(filter_condition_Map);		
+		acomSearchList = dao.getAcomListByRowPrice(filter_condition_Map);		
 		filter_condition_Map.put("acomSearchList", acomSearchList);
 		
 		// 4. 입력받은 시설 정보를 필터링하여 숙소번호를 구해오는 메소드(조건부)
@@ -64,6 +73,10 @@ public class AcomodationService implements InterAcomodationService {
 					}
 				}
 				
+			}
+			
+			if(tempList == null || tempList.size() == 0) {
+				return new ArrayList<>();
 			}
 			
 			acomSearchList = tempList;
@@ -185,6 +198,14 @@ public class AcomodationService implements InterAcomodationService {
 		List<Map<String, String>> facilityListByAcomCategory = dao.getFacilityListByAcomCategory(category_no);
 
 		return facilityListByAcomCategory;
+	}
+
+	
+	// isExistCategory_no 는 입력받은 category_no 가 DB 내부에 존재하는 확인하는 메소드이다.
+	@Override
+	public boolean isExistCategory_no(String category_no) {
+		boolean boolExistCategoryNo = dao.isExistCategory_no(category_no);
+		return boolExistCategoryNo;
 	}
 
 	

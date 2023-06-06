@@ -1,8 +1,12 @@
 package com.five.goodchoice.util;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Map;
+
+import org.apache.poi.ss.formula.functions.T;
 
 public class Myutil {
 
@@ -79,5 +83,21 @@ public class Myutil {
 		
 		return resultStr;
 	}// end of public static String deleteSpaceByString(String str) -----------
+	
+	public static boolean isNumericalStr(String data) {
+		
+		boolean bool = true;
+		
+		try {
+			Integer.parseInt(data);
+		}
+		catch(NumberFormatException e) { // 숫자가 아닌 데이터가 들어왔을 경우
+			return false;
+		}
+		
+		return bool;
+	}
+	
+	
 	
 }

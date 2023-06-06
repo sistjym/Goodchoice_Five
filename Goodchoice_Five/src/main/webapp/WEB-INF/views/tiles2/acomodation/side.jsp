@@ -11,52 +11,12 @@
 
   $(document).ready(function(){
 	
-	  <%-- slider 구현부 시작--%>
-	  
-	  let minPrice = 0;
-	  let maxPrice = 0;
-	  
-	  $(function() { 
-		    $( "#slider-range" ).slider({
-		      range: true,
-		      min: 1,
-		      max: 30,
-		      values: [ 1, 30 ],
-		      slide: function( event, ui ) {
-		        $( "#amount" ).val(  ui.values[ 0 ] + "만원 ~ " + ui.values[ 1 ] +"만원");
-		        
-		        minPrice = ui.values[ 0 ];
-		        $("#min_price").val( Number(minPrice) * 10000 );
-		        //console.log("minPrice : " + $("#min_price").val()); 
-		        
-		        maxPrice = ui.values[ 1 ];
-		        $("#max_price").val( Number(maxPrice) * 10000 );
-		        //console.log("maxPrice : " + $("#max_price").val());
-		        
-		      }
-		    });
-		    $( "#amount" ).val( $( "#slider-range" ).slider( "values", 0 ) + "만원" +
-		      " ~ " + $( "#slider-range" ).slider( "values", 1 ) + "만원" );
-		    
-		     minPrice = $( "#slider-range" ).slider( "values", 0 );
-		     $("#min_price").val( Number(minPrice) * 10000 );
-		     //console.log("minPrice : " + $("#min_price").val()); 
-		     
-		    
-		     maxPrice = $( "#slider-range" ).slider( "values", 1 );
-		     $("#max_price").val( Number(maxPrice) * 10000 );
-		     //console.log("maxPrice : " + $("#max_price").val());
-		     
-   
-		  });
-	  
-	  <%-- slider 구현부 끝--%>	  	
-	  
+	  <%-- slider 구현부--%>
+	  view_slider(1, 30);
 
-	  <%-- 체크인, 체크아웃 날짜 기본 세팅 --%>
 	  
-	  
-	  
+	  <%-- daterangepicker 구현부 시작--%>
+	  <%-- 체크인, 체크아웃 날짜 기본 세팅 --%>  
 	  let check_in_date =  '${requestScope.filter_condition_Map.check_in_date}'; <%-- yyyy-MM-dd 가 넘어올 예정 --%>
 	  check_in_date = formatUsdate(check_in_date) // 날짜 포맷
 	  let before_check_in_date = check_in_date // 초기치는 오늘 날짜 이다.
@@ -65,8 +25,7 @@
 	  check_out_date = formatUsdate(check_out_date)
 	  let before_check_out_date = check_out_date; // 초기치는 내일 날짜 이다.
 
-	  <%-- daterangepicker 구현부 시작--%>
-   
+	  
 	  viewDateRangePicker(check_in_date, check_out_date);
 	  
 	  let date = $("#daterange").val(); // default date 오늘날짜 - 내일날짜
@@ -91,13 +50,63 @@
 	  });
 	
 	  <%-- daterangepicker 구현부 끝--%>
-	  
-	  
-	  
-	  
+	    
 	  
   });
 
+  function view_slider(minVal, maxVal){
+	  
+	  $( "#amount" ).val(minVal + "만원 이상");
+	  $("#min_price").val( Number(minVal) * 10000 );
+	  $("#max_price").val( Number(maxVal) * 10000 );
+	   
+	  $( "#slider-range" ).slider({
+	      range: true,
+	      min: minVal,
+	      max: maxVal,
+	      values: [ minVal, maxVal ],
+	      slide: function( event, ui ) {
+	    	
+	    	if(ui.values[ 0 ] == 1 && ui.values[ 1 ] == 30)
+	    		$( "#amount" ).val(ui.values[ 0 ] + "만원 이상");
+	    	
+	    	else
+	    		$( "#amount" ).val(  ui.values[ 0 ] + "만원 ~ " + ui.values[ 1 ] +"만원");	
+	    	
+	          
+	        minPrice = ui.values[ 0 ];
+	        $("#min_price").val( Number(minPrice) * 10000 );
+	        //console.log("minPrice : " + $("#min_price").val()); 
+	        
+	        maxPrice = ui.values[ 1 ];
+	        $("#max_price").val( Number(maxPrice) * 10000 );
+	        //console.log("maxPrice : " + $("#max_price").val());
+	        	        
+	      }
+	  
+	    });
+	  
+	  
+  }
+  
+  
+  function dateRangePickerDefaultSet(){
+	  
+	  <%-- 체크인, 체크아웃 날짜 기본 세팅 --%>  
+	  let check_in_date =  '${requestScope.filter_condition_Map.check_in_date}'; <%-- yyyy-MM-dd 가 넘어올 예정 --%>
+	  check_in_date = formatUsdate(check_in_date) // 날짜 포맷
+	  let before_check_in_date = check_in_date // 초기치는 오늘 날짜 이다.
+
+	  let check_out_date =  '${requestScope.filter_condition_Map.check_out_date}'; <%-- yyyy-MM-dd 가 넘어올 예정 --%>
+	  check_out_date = formatUsdate(check_out_date)
+	  let before_check_out_date = check_out_date; // 초기치는 내일 날짜 이다.
+
+	  <%-- daterangepicker 구현부 시작--%>
+   
+	  viewDateRangePicker(check_in_date, check_out_date);
+	  
+  }
+  
   function viewDateRangePicker(check_in_date, check_out_date){
 	  
 	  $("#daterange").daterangepicker({
@@ -142,8 +151,7 @@
     }
   	
   	
-  	
-	  
+   
   }
   
   <%-- input#daterange 에 날짜 삽입 --%>
@@ -193,6 +201,34 @@
 	  //console.log($("#check_out_date").val());
 	  
   }
+  
+  function goSearch(){ <%-- 검색하러가는 역할 --%>
+	  
+  	
+  	const searchFrm = document.product_filter_form;
+  	searchFrm.method = "get";
+  	searchFrm.action = "<%=request.getContextPath()%>/acomodation/search/" + "${requestScope.filter_condition_Map.category_no}/" + "${requestScope.filter_condition_Map.district_no}";
+  	
+  	// input text에 값을 직접입력하는 것이 아니기 때문에 이곳에서는 따로 유효성 검사할 필요는 없어 보인다.
+
+  	
+  	searchFrm.submit();
+  
+  }
+  
+  function formReset(){
+	  
+	  <%-- slider 초기화 --%>
+	  view_slider(1, 30);
+ 	   	  
+	  <%-- datePicker 초기화 --%>
+	  dateRangePickerDefaultSet();
+	  
+	  $("input[name='fac_no']").prop("checked", false);
+	  
+	  
+
+  }
 
   </script>
 </head>
@@ -211,8 +247,8 @@
 				
 				<section class="btn-wrap">
 					<h3 class="py-3 pl-2 filter_text">상세조건</h3>
-					<button type="button" class="ml-2 py-1 rounded">초기화</button>			
-					<button type="button" class="mr-2 py-1 rounded">적용</button>
+					<button type="button" class="ml-2 py-1 rounded" onclick="formReset()">초기화</button>			
+					<button type="button" class="mr-2 py-1 rounded" onclick='goSearch()'>적용</button>
 					<div style="clear:both;"></div>
 				</section>
 			

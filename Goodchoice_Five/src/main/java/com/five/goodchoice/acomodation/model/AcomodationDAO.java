@@ -72,6 +72,19 @@ public class AcomodationDAO implements InterAcomodationDAO {
 			List<Map<String, String>> facilityListByAcomCategory = sqlsession.selectList("acomodation.getFacilityListByAcomCategory", category_no);
 			return facilityListByAcomCategory;
 		}
+
+		// isExistCategory_no 는 입력받은 category_no 가 DB 내부에 존재하는 확인하는 메소드이다.
+		@Override
+		public boolean isExistCategory_no(String category_no) {
+			boolean boolExistCategoryNo = false; 
+			String n = sqlsession.selectOne("acomodation.isExistCategory_no", category_no);
+			
+			if(Integer.parseInt(n) > 0) { // category_no exist
+				boolExistCategoryNo = true;
+			}
+			
+			return boolExistCategoryNo;
+		}
 		
 		
 		

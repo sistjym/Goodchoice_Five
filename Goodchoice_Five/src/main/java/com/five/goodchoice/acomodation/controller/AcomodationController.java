@@ -1,6 +1,11 @@
 package com.five.goodchoice.acomodation.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -35,28 +40,10 @@ public class AcomodationController {
 		// DISTANCE 는 거리순을 의미한다.
 		
 		String check_in_date = request.getParameter("check_in_date"); 
-		String check_out_date = request.getParameter("check_in_date");
+		String check_out_date = request.getParameter("check_out_date");
 		String min_price = request.getParameter("min_price"); 
 		String max_price = request.getParameter("max_price");
 		String[] arr_fac_no = request.getParameterValues("fac_no");
-		
-		/*
-		  category 별 district_no 가 존재하는 지 확인하는 작업이 필요할 것 같다.
-		  URL 에 누가 장난을 칠수도 있기 때문
-		  
-		  */
-		
-		
-		if(Myutil.check_Invalid_String(min_price) || Myutil.check_Invalid_String(max_price)){
-			min_price = "10000"; // min_price 가 공백이나 null 이 오는 경우에는 10000 으로 설정
-			max_price = "-1";	 // max_price 가 공백이나 null 이 오는 경우에는 -1 으로 설정		
-		}
-		
-		if(Myutil.check_Invalid_String(check_in_date) || Myutil.check_Invalid_String(check_out_date)) {
-			check_in_date = Myutil.getDefaultCheckInDate(); // 체크인 날짜가 null 이거나 공백으로 오면 오늘 날짜를 가져온다.
-			check_out_date = Myutil.getDefaultCheckOutDate(); // 체크아웃 날짜가 null 이거나 공백으로 오면 내일 날짜를 가져온다.
-		}
-				 	
 		
 		Map<String, Object> filter_condition_Map = new HashMap<>();
 		
@@ -68,6 +55,20 @@ public class AcomodationController {
 		filter_condition_Map.put("max_price", max_price); // 객실 최대값
 		filter_condition_Map.put("arr_fac_no", arr_fac_no);
 		filter_condition_Map.put("sort", sort);
+		
+		filter_condition_Map = filterConditionDefaultSet(filter_condition_Map); // 값이 넘어오지 않는 경우 default 값을 세팅하는 메소드
+
+		
+		Map<String, String> parametersValidityMap = getParametersValidity(filter_condition_Map); // 파라미터가 유효한 value 인지 확인하는 메소드
+		
+		if(Boolean.parseBoolean(parametersValidityMap.get("bool"))) {
+			
+			request.setAttribute("message", parametersValidityMap.get("message"));
+			request.setAttribute("loc", parametersValidityMap.get("loc"));
+			return "msg";
+			
+		}
+
 
 		// 검색조건의 결과물의 숙소리스트를 가져온다.
 		List<Map<String, String>> acomSearchList = service.getAcomSearchList(filter_condition_Map);
@@ -88,7 +89,7 @@ public class AcomodationController {
 		*/
 
 		// 카테고리별  시설 목록을 불러온다.
-		List<Map<String, String>> facilityListByAcomCategory = service.getFacilityListByAcomCategory(category_no);   
+		List<Map<String, String>> facilityListByAcomCategory = service.getFacilityListByAcomCategory((String)filter_condition_Map.get("category_no"));   
 
 		/*
 		for(Map<String, String> map : facilityListByAcomCategory) {
@@ -99,8 +100,7 @@ public class AcomodationController {
 			System.out.println("----------------------------------------------------");
 			
 		}
-		
-		
+				
 		category_fac_name : 야외테라스
 		category_fac_no : 18
 		fac_type : 0
@@ -143,6 +143,206 @@ public class AcomodationController {
 		
 		
 		return "acomodation/acom_content.tiles2";
+	}
+	
+	
+	private Map<String, String> getParametersValidity(Map<String, Object> filter_condition_Map) {
+		
+		Map<String, String> parametersValidityMap = new HashMap<>();
+		
+		String bool = "false"; // 초기치 false
+		String message = "";
+		String loc = "";
+		String regex = "";
+		Pattern pattern = null;
+		Matcher matcher = null;
+		
+	
+		String check_in_date = (String)filter_condition_Map.get("check_in_date");
+		String check_out_date = (String)filter_condition_Map.get("check_out_date");
+				
+		
+		regex = "^[1-9]\\d{3}-\\d{2}-\\d{2}$"; // 년도의 맨 앞 숫자는 0을 허용하지 않는다.
+		pattern = Pattern.compile(regex);
+				
+		if(!pattern.matcher(check_in_date).matches() || !pattern.matcher(check_out_date).matches()) { // 둘 중 하나라도 유효성 검사에 맞지 않는 경우 
+
+			bool = "true";
+			message = "체크인 날짜와 체크아웃 날짜가 형식에 맞지 않습니다.";
+			loc = "javascript:history.back()";
+			
+			parametersValidityMap.put("bool", bool); // 초기치 false
+			parametersValidityMap.put("message", message);
+			parametersValidityMap.put("loc", loc);
+			
+			return parametersValidityMap;
+
+			
+		}
+	
+		// 두 날짜의 일수의 차이는 7 이상이 될 수 없음
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // 2023-06-05
+		long diffInDays = 0; // 두날짜의 차이
+		try {
+			
+			Date date1 = dateFormat.parse(check_in_date);
+			Date date2 = dateFormat.parse(check_out_date);
+			
+			long diffInMilliseconds = date2.getTime() - date1.getTime();
+			diffInDays = TimeUnit.DAYS.convert(diffInMilliseconds, TimeUnit.MILLISECONDS);
+			
+			// Ms 를 Day로 convert
+			
+		}
+		catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		if(diffInDays >= 7) {			
+			bool = "true";
+			message = "예약 가능한 일수는 최대 7일입니다.";
+		}
+		else if(diffInDays == 0){
+			bool = "true";
+			message = "체크인 날짜와 체크아웃날짜는 동일할 수 없습니다.";
+		}
+		else if(diffInDays < 0) {
+			bool = "true";
+			message = "체크인 날짜는 체크아웃 날짜보다 이전이어야 합니다.";
+		}
+		
+				
+		// min_price, max_price
+		
+		String min_price = (String)filter_condition_Map.get("min_price");
+		String max_price = (String)filter_condition_Map.get("max_price");
+		
+		regex = "^[1-9]\\d{0,3}0{4}$"; // 1만 부터 9999만 까지 올 수 있음
+		pattern = Pattern.compile(regex);
+		
+		if(!Myutil.isNumericalStr(min_price) || !Myutil.isNumericalStr(max_price)) {
+			bool = "true";
+			message = "숫자가 아닌 값은 가격으로 올 수 없습니다.";
+		}
+		else if(Integer.parseInt(min_price) < 0 || Integer.parseInt(max_price) < 0) {
+			bool = "true";
+			message = "가격은 음수가 올 수 없습니다.";
+		}
+		else if(!pattern.matcher(min_price).matches() || !pattern.matcher(max_price).matches()) {
+			bool = "true";
+			message = "금액의 단위는 1만 ~ 9999만까지 가능합니다.";
+		}
+		else if(Integer.parseInt(min_price) - Integer.parseInt(max_price) > 0) {
+			bool = "true";
+			message = "최소금액이 최대금액보다 클 수 없습니다.";
+		}
+		
+		
+		/*		 
+		 fac_no : null 이 아닐때만 실행하며 Integer 이다. 음수인지 확인 각각의 fac_no 에 대해서 입력받은 category_id 에 존재하는 fac_no 인지 사실확인이 필요하다.
+		 sort : DISTANCE, ROWPRICE, HIGHPRICE 이외에는 올 수 없으며 그 이외가 오면 default는 DISTANCE이다.
+		 */
+
+		
+		
+		
+		
+		
+		
+		
+		
+		if(Boolean.parseBoolean(bool)) {
+			loc = "javascript:history.back()";
+		}
+		
+		parametersValidityMap.put("bool", bool); // 초기치 false
+		parametersValidityMap.put("message", message);
+		parametersValidityMap.put("loc", loc);
+		
+		return parametersValidityMap;
+	}
+
+
+	private Map<String, Object> filterConditionDefaultSet(Map<String, Object> filter_condition_Map) {
+
+
+		
+		Map<String, Object> resultMap = filter_condition_Map;
+		/*
+		  
+		  현재 URL 을 통하여 넘어오는 데이터는 다음과 같다.
+		 category_no, district_no, check_in_date, check_out_date, min_price
+		 , max_price, fac_no, sort
+		 
+		 category_no : Integer인지 확인이 필요하며 음수인지 확인이 필요 DB내부에 존재하는지 확인이 필요하다.(부합할 경우  default 는 1)
+		 district_no : Integer이고 음수인지 확인 category_no 별 DB내부에 존재하는지 확인이 필요하다. (부합할 경우 default 는 2)
+		 
+		 check_in_date : date 타입이어야 한다. 2022-06-05 형식으로 정규표현식을 적용할 것 (정규표현식에 부합할 경우 default 오늘 날짜)
+		 check_out_date : date 타입이어야 한다. 2022-06-08 형식으로 정규표현식을 적용할 것 (정규표현식에 부합할 경우 default 내일 날짜)
+		  두 날짜의 차이의 일수가 7 이상이면 default 로 오늘과 내일의 날짜를 세팅할 것
+		 check_in_date 가 check_out_date 보다 이후 날짜인 경우에도 오늘과 내일 날짜로 세팅할 것
+		 check_in_date 와 check_out_date 가 동일한 경우에도 처리할 것
+
+		 min_price : Integer.parseInt 음수인지 확인(default 10000) 
+		 max_price : Integer.parseInt -1을 제외한 음수인지 확인(default -1)
+		 
+		 fac_no : null 이 아닐때만 실행하며 Integer 이다. 음수인지 확인 각각의 fac_no 에 대해서 입력받은 category_id 에 존재하는 fac_no 인지 사실확인이 필요하다.
+		 sort : DISTANCE, ROWPRICE, HIGHPRICE 이외에는 올 수 없으며 그 이외가 오면 default는 DISTANCE이다.
+		 
+		 */
+		
+		// category_no
+		String category_no = (String)filter_condition_Map.get("category_no");
+		
+		if(Myutil.checkIsNull(category_no)) {
+			category_no = "1";
+		}
+		
+		// district_no
+		String district_no = (String)filter_condition_Map.get("district_no");
+		
+		if(Myutil.checkIsNull(district_no)) {
+			district_no = "2";
+		}
+		
+		// 위의 것은 QueryString 이 아닌데 처리해야하는 것인지 의문이다.
+		
+		// check_in_date, check_out_date
+		String check_in_date = (String)filter_condition_Map.get("check_in_date");
+		String check_out_date = (String)filter_condition_Map.get("check_out_date");
+		
+		if(Myutil.check_Invalid_String(check_in_date) || Myutil.check_Invalid_String(check_out_date)) {
+			check_in_date = Myutil.getDefaultCheckInDate(); // 체크인 날짜가 null 이거나 공백으로 오면 오늘 날짜를 가져온다.
+			check_out_date = Myutil.getDefaultCheckOutDate(); // 체크아웃 날짜가 null 이거나 공백으로 오면 내일 날짜를 가져온다.
+		}
+				 
+		// min_price, max_price
+		String min_price = (String)filter_condition_Map.get("min_price");
+		String max_price = (String)filter_condition_Map.get("max_price");	
+		
+		if(Myutil.check_Invalid_String(min_price) || Myutil.check_Invalid_String(max_price)){
+			min_price = "10000"; // min_price 가 공백이나 null 이 오는 경우에는 10000 으로 설정
+			max_price = "-1";	 // max_price 가 공백이나 null 이 오는 경우에는 -1 으로 설정		
+		}
+		else if("10000".equals(min_price) && "300000".equals(min_price)){ // null은 아니지만 10000 ~ 300000 은 만원 이상으로 간주한다.
+			min_price = "10000"; 
+			max_price = "-1";	 
+		}
+		
+		
+		// fac_no 는 null 일 때를 처리하지 않는다.
+		// Service 단에서 (arr_fac_no != null && arr_fac_no.length > 0) 조건을 붙여 처리하기 때문
+		// sort는 RequestParam 으로 default를 DISTANCE 로 정의하고 있다.
+				 	
+		resultMap.put("category_no", category_no);
+		resultMap.put("district_no", district_no);
+		resultMap.put("check_in_date", check_in_date);
+		resultMap.put("check_out_date", check_out_date);
+		resultMap.put("min_price", min_price);
+		resultMap.put("max_price", max_price);
+		
+		
+		return resultMap;
 	}
 	
 	
@@ -631,8 +831,496 @@ public class AcomodationController {
 	
 	
 	
-	
-	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	// 업소 등록
 	@RequestMapping(value="/hostRegister.gc") 
 	public String hostRegister() {

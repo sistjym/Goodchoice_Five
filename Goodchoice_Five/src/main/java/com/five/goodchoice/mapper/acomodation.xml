@@ -182,7 +182,11 @@
 		
 	</select>
 	
-	
+	<select id="isExistCategory_no" parameterType="String" resultType="String">
+		select count(*)
+		   from tbl_acom_category
+		   where category_no = #{category_no}
+	</select>
 	
 	
 
