@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,6 +11,29 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
+		
+		<%-- Ajax 로 district_no 입력해서 prov_name 과 sub_city_name 을 알아오자 --%>
+		$.ajax({
+			url:"<%= request.getContextPath()%>/getSubtopBtnData.gc",
+			data:{'district_no':'${requestScope.filter_condition_Map.district_no}'},
+			type:"get",
+			dataType:"json",
+			//async:true, 비동기식
+			success:function(json){
+				
+				// console.log(JSON.stringify(json));
+				// {"prov_name":"서울","sub_city_name":"삼성/압구정/청담/논현"}
+				$(".btn-area > span").text(json.prov_name);
+				$(".sub_city").text(json.sub_city_name);
+				
+				
+			},
+			error: function(request, status, error){
+	            alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
+	        }
+			
+		});
+		
 		
 		let is_mouseover_area_pop = false; <%-- 지역 pop 내부에 mouseover 여부 --%>
 		
@@ -65,11 +89,23 @@
 <body>
 	<section class="subtop_wrap">	
 		<section class="subtop">
-		 	<h2>모텔</h2>
+		 	<h2>
+		 	<c:choose>
+					<c:when test="${requestScope.filter_condition_Map.category_no eq 1}">
+						호텔
+					</c:when>
+					<c:when test="${requestScope.filter_condition_Map.category_no eq 2}">
+						모텔
+					</c:when>
+					<c:when test="${requestScope.filter_condition_Map.category_no eq 3}">
+						펜션
+					</c:when>
+			</c:choose>
+		 	</h2>
 		 	<div class="area">
 		 		<div class="btn-area">
-		 			<span>서울</span>
-		 			강남/역삼/삼성/논현
+		 			<span></span>
+		 			<strong class="sub_city">강남/역삼/삼성/논현</strong>
 		 		</div>
 		 		<div class="area_pop">
 		 			<div class="iscroll_01">

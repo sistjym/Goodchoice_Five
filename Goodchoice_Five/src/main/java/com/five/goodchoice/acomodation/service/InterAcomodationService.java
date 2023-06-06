@@ -20,4 +20,7 @@ public interface InterAcomodationService {
 	// category_id 별 존재하는  fac_no 인지 확인하는 메소드
 	String isExistFacNo(Map<String, String> paraMap);
 
+	// district_no 입력해서 prov_name 과 sub_city_name 을 알아오는 메소드
+	Map<String, String> getSubtopBtnData(String district_no);
+
 }

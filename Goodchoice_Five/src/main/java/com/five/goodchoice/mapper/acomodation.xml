@@ -209,6 +209,20 @@
 		    where category_no = #{category_no} and category_fac_no = #{fac_no}		
 	</select>
 	
+	
+	
+	<resultMap type="HashMap" id="getSubtopBtnData_Map">
+		<result property="prov_name" 		 column="prov_name" 			javaType="String"/>
+		<result property="sub_city_name" 	 column="sub_city_name" 		javaType="String"/>
+	</resultMap>
+	
+	<select id="getSubtopBtnData" parameterType="String" resultMap="getSubtopBtnData_Map">
+			select prov_name, sub_city_name
+			    from tbl_province PRO
+			    JOIN tbl_district DIS on PRO.prov_no = DIS.fk_prov_no
+			    where district_no = #{district_no}
+	</select>
+	
 
 
 </mapper>

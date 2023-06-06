@@ -10,12 +10,14 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.poi.hpsf.Array;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.five.goodchoice.acomodation.service.AcomodationService;
 import com.five.goodchoice.acomodation.service.InterAcomodationService;
@@ -417,7 +419,22 @@ public class AcomodationController {
 		return parametersValidityMap;
 	}
 
-	
+	// district_no 입력해서 prov_name 과 sub_city_name 을 알아오는 메소드
+	@ResponseBody
+	@GetMapping("/getSubtopBtnData.gc")
+	public String getSubtopBtnData(HttpServletRequest request) {
+		
+		String district_no = request.getParameter("district_no");
+		
+		Map<String, String> subTopBtnDataMap = service.getSubtopBtnData(district_no);
+		
+		JSONObject jsonObj = new JSONObject();
+		jsonObj.put("prov_name", subTopBtnDataMap.get("prov_name"));
+		jsonObj.put("sub_city_name", subTopBtnDataMap.get("sub_city_name"));
+		
+		return jsonObj.toString();
+		
+	}
 	
 	
 	

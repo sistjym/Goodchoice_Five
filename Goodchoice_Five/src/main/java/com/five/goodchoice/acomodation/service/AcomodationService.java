@@ -224,6 +224,15 @@ public class AcomodationService implements InterAcomodationService {
 		return isExist;
 	}
 
+	// district_no 입력해서 prov_name 과 sub_city_name 을 알아오는 메소드
+	@Override
+	public Map<String, String> getSubtopBtnData(String district_no) {
+		
+		Map<String, String> subTopBtnDataMap = dao.getSubtopBtnData(district_no);
+		
+		return subTopBtnDataMap;
+	}
+
 	
  	
 
