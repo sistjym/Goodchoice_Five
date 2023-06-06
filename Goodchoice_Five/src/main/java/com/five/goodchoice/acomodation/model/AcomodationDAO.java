@@ -85,6 +85,21 @@ public class AcomodationDAO implements InterAcomodationDAO {
 			
 			return boolExistCategoryNo;
 		}
+
+		// 카테고리에 따른 지역번호가 존재하는지 확인하는 메소드
+		@Override
+		public String isDistrictNoByCategoryNo(Map<String, String> paraMap) {
+			String isExist = sqlsession.selectOne("acomodation.isDistrictNoByCategoryNo", paraMap);
+			return isExist;
+		}
+
+		// category_id 별 존재하는  fac_no 인지 확인하는 메소드
+		@Override
+		public String isExistFacNo(Map<String, String> paraMap) {
+			String isExist = sqlsession.selectOne("acomodation.isExistFacNo", paraMap);
+			return isExist;
+		}
+		
 		
 		
 		

@@ -146,6 +146,8 @@ public class AcomodationController {
 	}
 	
 	
+	
+	
 	private Map<String, String> getParametersValidity(Map<String, Object> filter_condition_Map) {
 		
 		Map<String, String> parametersValidityMap = new HashMap<>();
@@ -155,9 +157,35 @@ public class AcomodationController {
 		String loc = "";
 		String regex = "";
 		Pattern pattern = null;
-		Matcher matcher = null;
 		
-	
+		Map<String, String> paraMap = new HashMap<>(); // Mapper 에 데이터를 전달하기 위한 Map 
+		
+		// 입력받은 category_no 에 해당하는 district_no 가 있는지 확인해야한다.
+		String category_no = (String)filter_condition_Map.get("category_no");
+		String district_no = (String)filter_condition_Map.get("district_no");
+				
+		paraMap.put("category_no", category_no);
+		paraMap.put("district_no", district_no);
+		
+		
+		// category_no, district_no
+		if("0".equals(service.isDistrictNoByCategoryNo(paraMap))) { // 카테고리에 따른 지역번호가 존재하는지 확인하는 메소드
+			
+			bool = "true";
+			message = "유효하지 않은 페이지입니다. (지역번호가 존재하지 않음)";
+			loc = "javascript:history.back()";
+			
+			parametersValidityMap.put("bool", bool); // 초기치 false
+			parametersValidityMap.put("message", message);
+			parametersValidityMap.put("loc", loc);
+			
+			return parametersValidityMap;
+			
+		}
+		
+		///////////////////////////////////////////////////////////////////////////////////
+	 	
+		// check_in_date, check_out_date
 		String check_in_date = (String)filter_condition_Map.get("check_in_date");
 		String check_out_date = (String)filter_condition_Map.get("check_out_date");
 				
@@ -211,7 +239,9 @@ public class AcomodationController {
 			message = "체크인 날짜는 체크아웃 날짜보다 이전이어야 합니다.";
 		}
 		
-				
+		///////////////////////////////////////////////////////////////////////////////////
+		
+		
 		// min_price, max_price
 		
 		String min_price = (String)filter_condition_Map.get("min_price");
@@ -224,31 +254,73 @@ public class AcomodationController {
 			bool = "true";
 			message = "숫자가 아닌 값은 가격으로 올 수 없습니다.";
 		}
-		else if(Integer.parseInt(min_price) < 0 || Integer.parseInt(max_price) < 0) {
+		else if(Integer.parseInt(min_price) < 0 || ( Integer.parseInt(max_price) != -1  && Integer.parseInt(max_price) < 0)) {
 			bool = "true";
 			message = "가격은 음수가 올 수 없습니다.";
 		}
-		else if(!pattern.matcher(min_price).matches() || !pattern.matcher(max_price).matches()) {
+		else if(!pattern.matcher(min_price).matches() || (Integer.parseInt(max_price) != -1  && !pattern.matcher(max_price).matches())) {
 			bool = "true";
 			message = "금액의 단위는 1만 ~ 9999만까지 가능합니다.";
 		}
-		else if(Integer.parseInt(min_price) - Integer.parseInt(max_price) > 0) {
+		else if(Integer.parseInt(max_price) != -1  && (Integer.parseInt(min_price) - Integer.parseInt(max_price) > 0)) {
 			bool = "true";
 			message = "최소금액이 최대금액보다 클 수 없습니다.";
 		}
 		
 		
-		/*		 
-		 fac_no : null 이 아닐때만 실행하며 Integer 이다. 음수인지 확인 각각의 fac_no 에 대해서 입력받은 category_id 에 존재하는 fac_no 인지 사실확인이 필요하다.
-		 sort : DISTANCE, ROWPRICE, HIGHPRICE 이외에는 올 수 없으며 그 이외가 오면 default는 DISTANCE이다.
-		 */
+		///////////////////////////////////////////////////////////////////////////////////
+		
+		// arr_fac_no
+		if(filter_condition_Map.get("arr_fac_no") != null) {
+			
+			String[] arr_fac_no = (String[])filter_condition_Map.get("arr_fac_no");
+		 
+			boolean isAvailableFacNoBool = false; // 유효한 시설번호인지 판별하는 boolean			
+			for(String fac_no : arr_fac_no) {
+				
+				paraMap.put("fac_no", fac_no);
+					
+				if(!Myutil.isNumericalStr(fac_no)) {
+					//System.out.println("1");
+					isAvailableFacNoBool = true;
+					break;
+				}
+				
+				String isExistFacNo = service.isExistFacNo(paraMap); // category_id 별 존재하는  fac_no 인지 확인하는 메소드
+				
+				if(Integer.parseInt(fac_no) < 0) {
+					//System.out.println("2");
+					isAvailableFacNoBool = true;
+					break;
+				}
+				else if("0".equals(isExistFacNo)) {
+					//System.out.println("3");
+					isAvailableFacNoBool = true;
+					break;
+				}	
+				
+			}// end of for(String fac_no : arr_fac_no){}--------------------------------
+			
+			
+			if(isAvailableFacNoBool) {
+				bool = "true";
+				message = "존재하지 않는 시설입니다.";
+			}
+			
+			
+		}// end of if(filter_condition_Map.get("arr_fac_no") != null) ---------------------
+		
+		///////////////////////////////////////////////////////////////////////////////////
+		
+		// sort
+		String sort = (String)filter_condition_Map.get("sort");
+		if( !( sort.equals("DISTANCE") || sort.equals("ROWPRICE") || sort.equals("HIGHPRICE") )) { // 오직 "DISTANCE", "ROWPRICE", "HIGHPRICE" 만 올 수 있음
+			bool = "true";
+			message = "유효하지 않은 정렬 방식입니다.";
+		}
 
 		
-		
-		
-		
-		
-		
+		///////////////////////////////////////////////////////////////////////////////////
 		
 		
 		if(Boolean.parseBoolean(bool)) {
@@ -340,8 +412,7 @@ public class AcomodationController {
 		resultMap.put("check_out_date", check_out_date);
 		resultMap.put("min_price", min_price);
 		resultMap.put("max_price", max_price);
-		
-		
+			
 		return resultMap;
 	}
 	

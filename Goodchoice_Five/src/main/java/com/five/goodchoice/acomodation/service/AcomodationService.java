@@ -208,6 +208,22 @@ public class AcomodationService implements InterAcomodationService {
 		return boolExistCategoryNo;
 	}
 
+
+	// 카테고리에 따른 지역번호가 존재하는지 확인하는 메소드
+	@Override
+	public String isDistrictNoByCategoryNo(Map<String, String> paraMap) {
+		String isExist = dao.isDistrictNoByCategoryNo(paraMap); 
+		return isExist;
+	}
+
+
+	// category_id 별 존재하는  fac_no 인지 확인하는 메소드
+	@Override
+	public String isExistFacNo(Map<String, String> paraMap) {
+		String isExist = dao.isExistFacNo(paraMap); 
+		return isExist;
+	}
+
 	
  	
 

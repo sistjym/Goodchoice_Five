@@ -84,12 +84,12 @@ public class Myutil {
 		return resultStr;
 	}// end of public static String deleteSpaceByString(String str) -----------
 	
-	public static boolean isNumericalStr(String data) {
+	public static boolean isNumericalStr(String str) {
 		
 		boolean bool = true;
 		
 		try {
-			Integer.parseInt(data);
+			Integer.parseInt(str);
 		}
 		catch(NumberFormatException e) { // 숫자가 아닌 데이터가 들어왔을 경우
 			return false;

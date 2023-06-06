@@ -34,6 +34,12 @@ public interface InterAcomodationDAO {
 
 	// isExistCategory_no 는 입력받은 category_no 가 DB 내부에 존재하는 확인하는 메소드이다.
 	boolean isExistCategory_no(String category_no);
+
+	// 카테고리에 따른 지역번호가 존재하는지 확인하는 메소드
+	String isDistrictNoByCategoryNo(Map<String, String> paraMap);
+
+	// category_id 별 존재하는  fac_no 인지 확인하는 메소드
+	String isExistFacNo(Map<String, String> paraMap);
 	
 	
 

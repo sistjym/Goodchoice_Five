@@ -188,6 +188,26 @@
 		   where category_no = #{category_no}
 	</select>
 	
+	<select id="isDistrictNoByCategoryNo" parameterType="HashMap" resultType="String">
+		select count(*)   
+		from (  
+		
+			select fk_district_no
+			        from tbl_acom_category ACT
+			        JOIN tbl_spec SPEC on ACT.category_no = SPEC.fk_category_no
+			        JOIN tbl_acomodation ACOM on SPEC.spec_no = ACOM.fk_spec_no
+			        where category_no = #{category_no} and fk_district_no = #{district_no}
+			group by category_no, fk_district_no
+			
+		)
+	</select>
+	
+	<select id="isExistFacNo" parameterType="HashMap" resultType="String">
+		select count(*)
+		    from tbl_acom_category ACT
+		    JOIN tbl_category_facilities CF on ACT.category_no = CF.fk_category_no
+		    where category_no = #{category_no} and category_fac_no = #{fac_no}		
+	</select>
 	
 
 
