@@ -10,19 +10,15 @@
 <script type="text/javascript">
 
   $(document).ready(function(){
-	
-	  <%-- slider 구현부--%>
-	  view_slider(1, 30);
-
-	  
+		  
 	  <%-- daterangepicker 구현부 시작--%>
 	  <%-- 체크인, 체크아웃 날짜 기본 세팅 --%>  
 	  let check_in_date =  '${requestScope.filter_condition_Map.check_in_date}'; <%-- yyyy-MM-dd 가 넘어올 예정 --%>
-	  check_in_date = formatUsdate(check_in_date) // 날짜 포맷
-	  let before_check_in_date = check_in_date // 초기치는 오늘 날짜 이다.
+	  check_in_date = formatUsdate(check_in_date); // 날짜 포맷
+	  let before_check_in_date = check_in_date; // 초기치는 오늘 날짜 이다.
 
 	  let check_out_date =  '${requestScope.filter_condition_Map.check_out_date}'; <%-- yyyy-MM-dd 가 넘어올 예정 --%>
-	  check_out_date = formatUsdate(check_out_date)
+	  check_out_date = formatUsdate(check_out_date);
 	  let before_check_out_date = check_out_date; // 초기치는 내일 날짜 이다.
 
 	  
@@ -50,55 +46,54 @@
 	  });
 	
 	  <%-- daterangepicker 구현부 끝--%>
+	
+	  <%-- 최소금액 최대금액 비곤 세팅 --%>
+	  const min_price = Number(${requestScope.filter_condition_Map.min_price})/10000; // price의 단위는 10000
+	  let max_price = ${requestScope.filter_condition_Map.max_price}; 
+	  max_price = max_price == '-1' ? 30 : Number(max_price)/10000; // -1 이면 30 이 default
+
+	  
+	  
+	  // arr_fac_no 이 null 이 아닐 경우 체크박스를 체크해야한다.
+	  
+	  if('${requestScope.filter_condition_Map.str_fac_no}' != ''){
+		  
+	      const str_fac_no = '${requestScope.filter_condition_Map.str_fac_no}'; // arr_fac_no 를 ,로 결합시킨 String 
+	      const arr_fac_no = str_fac_no.split(',');
+
+	      $("input[name='fac_no']").each(function(i, elmt) {
+	    	  let inputFacNo = elmt.value;
+	    	  
+	    	  $.each(arr_fac_no, function(idx, arrFacNo) {
+	    		  
+	    	    if (inputFacNo === arrFacNo) {
+	    	      $(elmt).prop("checked", true);
+	    	      return false;
+	    	    }
+	    	    
+	    	  });
+	    	  
+	      });
 	    
+	  }
+	  
+	  	  
+	  <%-- slider 구현부--%>
+	  view_slider(min_price, max_price);
+
 	  
   });
 
-  function view_slider(minVal, maxVal){
-	  
-	  $( "#amount" ).val(minVal + "만원 이상");
-	  $("#min_price").val( Number(minVal) * 10000 );
-	  $("#max_price").val( Number(maxVal) * 10000 );
-	   
-	  $( "#slider-range" ).slider({
-	      range: true,
-	      min: minVal,
-	      max: maxVal,
-	      values: [ minVal, maxVal ],
-	      slide: function( event, ui ) {
-	    	
-	    	if(ui.values[ 0 ] == 1 && ui.values[ 1 ] == 30)
-	    		$( "#amount" ).val(ui.values[ 0 ] + "만원 이상");
-	    	
-	    	else
-	    		$( "#amount" ).val(  ui.values[ 0 ] + "만원 ~ " + ui.values[ 1 ] +"만원");	
-	    	
-	          
-	        minPrice = ui.values[ 0 ];
-	        $("#min_price").val( Number(minPrice) * 10000 );
-	        //console.log("minPrice : " + $("#min_price").val()); 
-	        
-	        maxPrice = ui.values[ 1 ];
-	        $("#max_price").val( Number(maxPrice) * 10000 );
-	        //console.log("maxPrice : " + $("#max_price").val());
-	        	        
-	      }
-	  
-	    });
-	  
-	  
-  }
-  
   
   function dateRangePickerDefaultSet(){
 	  
 	  <%-- 체크인, 체크아웃 날짜 기본 세팅 --%>  
 	  let check_in_date =  '${requestScope.filter_condition_Map.check_in_date}'; <%-- yyyy-MM-dd 가 넘어올 예정 --%>
-	  check_in_date = formatUsdate(check_in_date) // 날짜 포맷
-	  let before_check_in_date = check_in_date // 초기치는 오늘 날짜 이다.
+	  check_in_date = formatUsdate(check_in_date); // 날짜 포맷
+	  let before_check_in_date = check_in_date; // 초기치는 오늘 날짜 이다.
 
 	  let check_out_date =  '${requestScope.filter_condition_Map.check_out_date}'; <%-- yyyy-MM-dd 가 넘어올 예정 --%>
-	  check_out_date = formatUsdate(check_out_date)
+	  check_out_date = formatUsdate(check_out_date);
 	  let before_check_out_date = check_out_date; // 초기치는 내일 날짜 이다.
 
 	  <%-- daterangepicker 구현부 시작--%>
@@ -202,6 +197,49 @@
 	  
   }
   
+  function view_slider(minVal, maxVal){
+	  
+	  if(minVal == 1 && maxVal == 30){
+		  $( "#amount" ).val(minVal + "만원 이상");  
+	  }
+	  else{
+		  $( "#amount" ).val(  minVal + "만원 ~ " + maxVal +"만원");
+	  }
+	  
+	  $("#min_price").val( Number(minVal) * 10000 );
+	  $("#max_price").val( Number(maxVal) * 10000 );
+	   
+	  $( "#slider-range" ).slider({
+	      range: true,
+	      min: 1,
+	      max: 30,
+	      values: [ minVal, maxVal ],
+	      slide: function( event, ui ) {
+	    	
+	    	if(ui.values[ 0 ] == 1 && ui.values[ 1 ] == 30)
+	    		$( "#amount" ).val(ui.values[ 0 ] + "만원 이상");
+	    	
+	    	else
+	    		$( "#amount" ).val(  ui.values[ 0 ] + "만원 ~ " + ui.values[ 1 ] +"만원");	
+	    	
+	          
+	        minPrice = ui.values[ 0 ];
+	        $("#min_price").val( Number(minPrice) * 10000 );
+	        //console.log("minPrice : " + $("#min_price").val()); 
+	        
+	        maxPrice = ui.values[ 1 ];
+	        $("#max_price").val( Number(maxPrice) * 10000 );
+	        //console.log("maxPrice : " + $("#max_price").val());
+	        	        
+	      }
+	  
+	    });
+	  
+	  
+  }
+  
+
+  
   function goSearch(){ <%-- 검색하러가는 역할 --%>
 	  
   	
@@ -211,7 +249,6 @@
   	
   	// input text에 값을 직접입력하는 것이 아니기 때문에 이곳에서는 따로 유효성 검사할 필요는 없어 보인다.
 
-  	
   	searchFrm.submit();
   
   }
