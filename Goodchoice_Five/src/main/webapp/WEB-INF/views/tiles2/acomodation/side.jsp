@@ -47,7 +47,8 @@
 	
 	  <%-- daterangepicker 구현부 끝--%>
 	
-	  <%-- 최소금액 최대금액 비곤 세팅 --%>
+	  <%-- 최소금액 최대금액  세팅 --%>
+	  
 	  const min_price = Number(${requestScope.filter_condition_Map.min_price})/10000; // price의 단위는 10000
 	  let max_price = ${requestScope.filter_condition_Map.max_price}; 
 	  max_price = max_price == '-1' ? 30 : Number(max_price)/10000; // -1 이면 30 이 default
@@ -80,7 +81,17 @@
 	  	  
 	  <%-- slider 구현부--%>
 	  view_slider(min_price, max_price);
+	  
+	  $("input[name='sort']").val('${requestScope.filter_condition_Map.sort}');
 
+	  
+	  <%-- 거리순, 가격 낮은 순, 가격 높은순 눌렀을때 on 이라는 class가 추가되어야 한다. --%>
+	  const sort = '${requestScope.filter_condition_Map.sort}';
+	  $("button#"+sort).find("span").addClass("on");
+		  
+	   
+	  
+	 
 	  
   });
 
@@ -237,11 +248,11 @@
 	  
 	  
   }
-  
 
-  
-  function goSearch(){ <%-- 검색하러가는 역할 --%>
+  function goSearch(sort){ <%-- 검색하러가는 역할 --%>
 	  
+  	$("input[name='sort']").val(sort); // sort 방식을 바꿔주어야 한다.
+  	
   	
   	const searchFrm = document.product_filter_form;
   	searchFrm.method = "get";
@@ -253,6 +264,7 @@
   
   }
   
+    
   function formReset(){
 	  
 	  <%-- slider 초기화 --%>
@@ -262,8 +274,7 @@
 	  dateRangePickerDefaultSet();
 	  
 	  $("input[name='fac_no']").prop("checked", false);
-	  
-	  
+	   
 
   }
 
@@ -273,6 +284,7 @@
 
 		<section id="filter" class="mx-4">
 			<form name="product_filter_form">
+				<input type="hidden" id="sort" name="sort" value=""/>
 				<section class="date-wrap">
 					<h3 class="py-3 pl-2 filter_text">날짜</h3>						
 					<input type="text" id="daterange" class="p-3 mr-4" style="background-image: url(<%=request.getContextPath()%>/resources/images/cal_icon.png);" readonly/>
@@ -285,7 +297,7 @@
 				<section class="btn-wrap">
 					<h3 class="py-3 pl-2 filter_text">상세조건</h3>
 					<button type="button" class="ml-2 py-1 rounded" onclick="formReset()">초기화</button>			
-					<button type="button" class="mr-2 py-1 rounded" onclick='goSearch()'>적용</button>
+					<button type="button" class="mr-2 py-1 rounded" onclick='javascript:goSearch(document.getElementById("sort").value)'>적용</button>
 					<div style="clear:both;"></div>
 				</section>
 			
@@ -338,6 +350,8 @@
 					  <input type="hidden" id="max_price" name="max_price" value=""/>
 					  <div id="slider-range" class="mt-4"></div>
 				</section>
+				
+				
 			</form>
 		</section>
 
