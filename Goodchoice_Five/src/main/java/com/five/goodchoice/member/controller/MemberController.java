@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -56,8 +57,9 @@ public class MemberController {
 	
 	// 비밀번호 재설정
 	@RequestMapping(value="/passwdEdit.gc") 
-	public String passwdEdit() {
-		
+	public String passwdEdit(HttpServletRequest request) {
+		String email = request.getParameter("email");
+		request.setAttribute("email", email);
 		return "member/passwdEdit";
 	}
 	
@@ -246,7 +248,7 @@ public class MemberController {
 				}
 				
 				else {
-					mav.setViewName("redirect:/main/home.gc");  // 시작페이지로 이동
+					mav.setViewName("redirect:/main/hosthome.gc");  // 시작페이지로 이동
 				}
 				
 			}
@@ -341,10 +343,30 @@ public class MemberController {
 		
 	@RequestMapping(value="/pwUpdate.gc", method = {RequestMethod.POST})
 	public ModelAndView pwUpdate(ModelAndView mav, HttpServletRequest request) {
-	
-		String email = request.getParameter("email");
-		System.out.println("email : " + email);
 		
+		
+		String member_pwd = request.getParameter("passwd");
+		String email = request.getParameter("email");
+		
+		
+		Map<String, String> paraMap = new HashMap<>();
+		paraMap.put("member_pwd", Sha256.encrypt(member_pwd));
+		paraMap.put("email", email);
+		
+		int n = service.pwUpdate(paraMap);
+		System.out.println("n : " +n);
+		String message = "";
+		String loc = "";
+		if(n==1) {
+			message = "비밀번호가 성공적으로 변경되었습니다 !";
+			loc = request.getContextPath()+"/memberLogin.gc";
+		}
+		
+		
+		mav.addObject("message", message);
+		mav.addObject("loc", loc);
+		
+		mav.setViewName("msg");
 		return mav;
 	}	
 	

@@ -40,17 +40,67 @@
 <script type="text/javascript">
 
 	$(document).ready(function(){
+		$("input#email").val('${requestScope.email}') ;
+		
+		// PWD 유효성 검사 및 비밀번호 일치 검사
+		$('input#passwd').on('input',pwdCheck);
+		$('input#passwd_check').on('input',pwdSame);
 		
 	});
-
+	
+	function pwdCheck(e){
+  		const regExp= /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*])[a-zA-Z\d!@#$%^&*]{6,16}$/;
+  		// console.log($('input#inputPwd1').val().length);
+  		// console.log($(e.target).val().length);
+  		const target_val = $(e.target).val();
+  		const bool = regExp.test(target_val);
+  		
+  		if ( target_val.length < 6 || target_val.length > 16  ){
+  			// $(e.target).parent().find("span#error_pwd").text("6 ~ 16자 영문,숫자,특수문자 1개 이상씩 혼용 필수");
+  			$('span#error_pwd').text("6 ~ 16자 사이이어야 합니다.");
+  		}
+  		else if ( !bool ){ // 정규표현식 조건에 맞지 않는 경우
+  			$('span#error_pwd').text("6 ~ 16자 영문,숫자,특수문자 1개 이상씩 혼용 필수");
+  		}
+  		else{
+  			$('span#error_pwd').text("");
+  		}
+  	
+  	} // END OF FUNCTION PWDCHECK()
+  	function pwdSame(e){
+  		const pwd1 = $('input#passwd').val(); // 비밀번호
+  		const pwd2 = $(this).val(); // 비밀번호 확인 
+  		
+  		if ( pwd1 == pwd2 ){
+  			$('span#error_pwd_check').text("");
+  		}
+  		else{
+  			$('span#error_pwd_check').text("비밀번호가 일치하지 않습니다.");
+  		}
+  		
+  		
+  	}// END OF FUNCTION PWDSAME()
+	
 	function gopwUpdate() {
-		const email = $("input#email").val();
-		console.log("email : " +email);
 		
-		const frm = document.myfrm;
-		frm.action ="<%= ctxPath%>/pwUpdate.gc";
-		frm.method ="post";
-		frm.submit();
+		// 비밀번호 
+		if( $('input#passwd').val() == "" || $('input#passwd_check').val() == ""){
+			alert('비밀번호와 비밀번호 확인은 필수 입력사항입니다.');
+			$('input#passwd').focus();
+			return ;
+		}
+		
+		if ( $('span#error_pwd').text() != "" || $('span#error_pwd_check').text() != ""  ){
+			alert('비밀번호와 비밀번호확인은 조건에 따라 입력하셔야 합니다.');
+			return ;
+		}
+  			
+  		
+			const frm = document.myfrm;
+			frm.action ="<%= ctxPath%>/pwUpdate.gc";
+			frm.method ="post";
+			frm.submit();
+		
 	}
 	
 </script>
@@ -67,9 +117,9 @@
 		    <div style="border: solid 1px #ebebe0;margin-bottom:20px;">
 			<i class="fa-solid fa-lock col-sm-2" style="font-size:16pt; color:#00000061;"></i><input type="password" style="height:50px; font-size:16pt; border:none;"class="col-sm-10" id="passwd" name="passwd" placeholder="새 비밀번호(최소 8자 이상)">
 			</div>
+			<input  type="hidden" name="email" id="email" />
 			  <div><span id="error_pwd" style="color:red;"></span></div>
 		    <br>
-		    <input type="hidden" id="email" name="email" value="${requestScope.Email}" />
 		    <div style="border: solid 1px #ebebe0;margin-bottom:20px;">
 			<i class="fa-solid fa-lock col-sm-2" style="font-size:16pt; color:#00000061;"></i><input type="password" style="height:50px; font-size:16pt; border:none;"class="col-sm-10" id="passwd_check" name="passwd_check" placeholder="새 비밀번호 확인">
 			</div>

@@ -25,13 +25,13 @@ FROM
 
 <select id="loginMember" parameterType="HashMap" resultType="com.five.goodchoice.member.model.MemberVO">
 	SELECT member_id, member_email, member_nickname, member_reg_date
-		     , point, is_deactivate, is_dormanant  
+		     , point, is_deactivate, is_dormanant , is_admin  
 		     , pwdchangegap 
 		     , NVL(lastlogingap, trunc(months_between(sysdate, member_reg_date), 0) ) AS lastlogingap 
         FROM 
         ( 
            select member_id, member_email, member_nickname, to_char(member_reg_date, 'yyyy-mm-dd') AS member_reg_date  
-                , point, is_deactivate, is_dormanant   
+                , point, is_deactivate, is_dormanant, is_admin  
                 , trunc(months_between(sysdate, lastpwd_change_date), 0) AS pwdchangegap 
            from tbl_member 
            where is_deactivate = 0 and member_email = #{Email} and member_pwd = #{passwd}
@@ -68,8 +68,10 @@ FROM
 	where is_deactivate = 0 and member_email = #{Email}
 </select>
 
-
-
+<update id="pwUpdate" parameterType="HashMap" >
+	update tbl_member set member_pwd = #{member_pwd}, lastpwd_change_date = sysdate
+	where member_email = #{email}
+</update>
 
 
 

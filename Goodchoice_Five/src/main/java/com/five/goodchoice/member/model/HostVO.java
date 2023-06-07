@@ -3,7 +3,6 @@ package com.five.goodchoice.member.model;
 public class HostVO {
 
 	private int host_no;           /* 업주번호 */
-	private int fk_admin_no;       /* 관리자번호 */
 	private String host_email;     /* 업주이메일 */
 	private String host_pwd;       /* 업주비밀번호 */
 	private String host_name;      /* 대표자명 */
@@ -15,11 +14,10 @@ public class HostVO {
 	public HostVO() {}
 	
 	
-	public HostVO(int host_no, int fk_admin_no, String host_email, String host_pwd, String host_name,
+	public HostVO(int host_no, String host_email, String host_pwd, String host_name,
 			String is_host_permission, String cp_reg_no, String cp_name) {
 		super();
 		this.host_no = host_no;
-		this.fk_admin_no = fk_admin_no;
 		this.host_email = host_email;
 		this.host_pwd = host_pwd;
 		this.host_name = host_name;
@@ -34,12 +32,6 @@ public class HostVO {
 	}
 	public void setHost_no(int host_no) {
 		this.host_no = host_no;
-	}
-	public int getFk_admin_no() {
-		return fk_admin_no;
-	}
-	public void setFk_admin_no(int fk_admin_no) {
-		this.fk_admin_no = fk_admin_no;
 	}
 	public String getHost_email() {
 		return host_email;

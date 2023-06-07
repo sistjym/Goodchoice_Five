@@ -12,8 +12,8 @@
 </select>
 
 <insert id="gohostRegister" parameterType="HashMap">
-	insert into tbl_host(host_no, fk_admin_no, host_email, host_pwd, host_name, cp_reg_no, cp_name)  
-	values(SEQ_HOST.nextval, 1, #{email}, #{pwd}, #{onerName}, #{business_id}, #{companyName})
+	insert into tbl_host(host_no, host_email, host_pwd, host_name, cp_reg_no, cp_name)  
+	values(SEQ_HOST.nextval, #{email}, #{pwd}, #{onerName}, #{business_id}, #{companyName})
 </insert>
 
 

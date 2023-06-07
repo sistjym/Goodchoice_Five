@@ -100,6 +100,22 @@
       <put-attribute name="content" value="/WEB-INF/views/tiles5/{1}/{2}/{3}.jsp"/>
    </definition>
    
+   <definition name="layout-tiles6"  template="/WEB-INF/tiles/layout/layout-tiles6.jsp"> 
+      <put-attribute name="header"  value="/WEB-INF/tiles/tile6/header.jsp" />
+      <put-attribute name="content" value="" />
+      <put-attribute name="footer"  value="/WEB-INF/tiles/tile6/footer.jsp" />
+   </definition>
+   
+   <definition name="*.tiles6" extends="layout-tiles6">
+      <put-attribute name="content" value="/WEB-INF/views/tiles6/{1}.jsp"/>
+   </definition>
+   <definition name="*/*.tiles6" extends="layout-tiles6">
+      <put-attribute name="content" value="/WEB-INF/views/tiles6/{1}/{2}.jsp"/>
+   </definition>
+   <definition name="*/*/*.tiles6" extends="layout-tiles6">
+      <put-attribute name="content" value="/WEB-INF/views/tiles6/{1}/{2}/{3}.jsp"/>
+   </definition>
+   
    
 
 </tiles-definitions> 
