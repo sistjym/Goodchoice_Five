@@ -68,8 +68,14 @@ public class MemberDAO implements InterMemberDAO {
 	public boolean isEmailExist(String Email) {
 		
 		int isEmailExist = sqlsession.selectOne("member.isEmailExist", Email);
-		System.out.println("isEmailExist : " +isEmailExist);
 		return (isEmailExist == 1);
+	}
+	
+	// 비밀번호 업데이트
+	@Override
+	public int pwUpdate(Map<String, String> paraMap) {
+		int n = sqlsession.update("member.pwUpdate", paraMap);
+		return n;
 	}
 	
 	

@@ -11,6 +11,8 @@ public class MemberVO {
 	private String is_deactivate;      
 	private int is_dormanant;       
 	private String lastpwd_change_date; 
+	private String is_admin;
+	
 	
 	private int pwdchangegap;          // select 용. 지금으로 부터 마지막으로 암호를 변경한지가 몇개월인지 알려주는 개월수(3개월 동안 암호를 변경 안 했을시 암호를 변경하라는 메시지를 보여주기 위함)  
 	private int lastlogingap;          // select 용. 지금으로 부터 마지막으로 로그인한지가 몇개월인지 알려주는 개월수(12개월 동안 로그인을 안 했을 경우 해당 로그인 계정을 비활성화 시키려고 함) 
@@ -24,7 +26,7 @@ public class MemberVO {
 
 
 	public MemberVO(String member_id, String member_email, String member_pwd, String member_nickname,
-			String member_reg_date, String point, String is_deactivate, int is_dormanant,
+			String member_reg_date, String point, String is_deactivate, int is_dormanant, String is_admin,
 			String lastpwd_change_date) {
 		super();
 		this.member_id = member_id;
@@ -35,6 +37,7 @@ public class MemberVO {
 		this.point = point;
 		this.is_deactivate = is_deactivate;
 		this.is_dormanant = is_dormanant;
+		this.is_admin = is_admin;
 		this.lastpwd_change_date = lastpwd_change_date;
 	}
 
@@ -156,6 +159,16 @@ public class MemberVO {
 
 	public void setRequirePwdChange(boolean requirePwdChange) {
 		this.requirePwdChange = requirePwdChange;
+	}
+
+
+	public String getIs_admin() {
+		return is_admin;
+	}
+
+
+	public void setIs_admin(String is_admin) {
+		this.is_admin = is_admin;
 	}
 	
 	

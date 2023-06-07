@@ -125,6 +125,14 @@ public class MemberService implements InterMemberService{
 	}
 	
 	
+	// 비밀번호 업데이트
+	@Override
+	public int pwUpdate(Map<String, String> paraMap) {
+		int n = dao.pwUpdate(paraMap);
+		return n;
+	}
+	
+	
 	
 	
 	

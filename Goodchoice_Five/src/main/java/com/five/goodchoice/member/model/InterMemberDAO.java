@@ -27,6 +27,10 @@ public interface InterMemberDAO {
 	// 이메일 있는 지없는지 유무확인
 	boolean isEmailExist(String Email);
 	
+	// 비밀번호 업데이트
+	int pwUpdate(Map<String, String> paraMap);
+
+	
 
 
 }
