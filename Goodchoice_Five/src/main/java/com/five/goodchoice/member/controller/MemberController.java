@@ -1,6 +1,9 @@
 package com.five.goodchoice.member.controller;
+import java.io.UnsupportedEncodingException;
+import java.security.GeneralSecurityException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -11,8 +14,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.five.goodchoice.common.AES256;
+import com.five.goodchoice.common.GoogleMail;
 import com.five.goodchoice.common.Sha256;
 import com.five.goodchoice.member.model.HostVO;
 import com.five.goodchoice.member.model.MemberVO;
@@ -22,7 +28,10 @@ import com.five.goodchoice.model.service.InterMemberService;
 
 @Controller
 public class MemberController {
-
+	
+	@Autowired
+	private AES256 aes;
+	
 	@Autowired  //  TYPE 에 따라서 , SPRING 에서 알아서 BEAN 을 주입 해준다.
 	private InterMemberService service ;
 	@Autowired
@@ -43,6 +52,13 @@ public class MemberController {
 	public String memberLogin() {
 		
 		return "member/memberLogin";
+	}
+	
+	// 비밀번호 재설정
+	@RequestMapping(value="/passwdEdit.gc") 
+	public String passwdEdit() {
+		
+		return "member/passwdEdit";
 	}
 	
 	// 회원가입
@@ -98,11 +114,6 @@ public class MemberController {
 			
 			message = "회원가입에 성공 했습니다.";
 			loc = request.getContextPath() + "/main/home.gc";
-			
-			MemberVO loginuser = service.loginMember(paraMap);
-			HttpSession session = request.getSession();
-            
-        	session.setAttribute("loginuser", loginuser);
 		}
 		
 		else {
@@ -197,7 +208,7 @@ public class MemberController {
 		String Email = request.getParameter("Email");
 		String passwd = request.getParameter("passwd");
 		
-		System.out.println("Email : " +Email);
+		
 		
 		Map<String, String> paraMap = new HashMap<>();
 		paraMap.put("Email", Email);
@@ -205,7 +216,7 @@ public class MemberController {
 		
 		HostVO loginuser = service.loginHost(paraMap);
 		
-		// System.out.println("loginuser: " +loginuser);
+		 System.out.println("loginuser: " +loginuser);
 		
 		if(loginuser == null) {	// 로그인 실패시 [존재하지않은 아이디 비번을 입력했을시]
 			String message = "아이디 또는 암호가 틀립니다.";
@@ -267,4 +278,75 @@ public class MemberController {
 	}
 	
 	
+	
+	@Autowired	// Type에 따라 알아서 Bean을 주입해준다.
+	private GoogleMail mail;
+	
+	
+	@RequestMapping(value="/mailSend.gc", method = {RequestMethod.POST})
+	public ModelAndView mailSend(ModelAndView mav, HttpServletRequest request) {
+		
+		String Email = request.getParameter("Email");
+		
+		System.out.println("Email : " + Email);
+		
+		boolean isEmailExist = service.isEmailExist(Email);
+		
+		boolean sendMailSuccess = false;// 메일이 정상적으로 전송되었는지 유무를 알아오기 위한 용도
+		
+		
+		
+		String message = "";
+		String loc ="";
+		if(isEmailExist) {
+			// 회원으로 존재하는 경우
+			
+			String enEmail = "";
+			try {
+				enEmail = aes.encrypt(Email);
+			} catch (UnsupportedEncodingException | GeneralSecurityException e1) {
+				e1.printStackTrace();
+			}
+			
+		GoogleMail mail = new GoogleMail();
+		
+		try {
+			mail.sendmail(Email, enEmail);
+			sendMailSuccess = true; // 메일 전송이 성공했음을 기록한다.
+			
+			 message = "메일로 인증번호를 발송하였습니다 !";
+			 loc = request.getContextPath() + "/main/home.gc";
+			
+			
+		} catch (Exception e) {	// 메일 전송이 실패한 경우
+			System.out.println("~~~ 메일 전송에 실패함 ㅜㅜ ~~~");
+			 message = "메일 전송에 실패하였습니다.";
+			 loc = "javascript:history.back()";
+			e.printStackTrace();
+			sendMailSuccess = false; // 메일 전송에 실패했음을 기록한다.
+		}	
+			
+			
+		}// end of if(isUserExist) ----------------------------------------
+	
+		
+		
+		mav.addObject("message", message);
+		mav.addObject("loc", loc);
+		
+		mav.setViewName("msg");
+		return mav;
+		
+	}
+		
+	@RequestMapping(value="/pwUpdate.gc", method = {RequestMethod.POST})
+	public ModelAndView pwUpdate(ModelAndView mav, HttpServletRequest request) {
+	
+		String email = request.getParameter("email");
+		System.out.println("email : " + email);
+		
+		return mav;
+	}	
+	
 }
+	
