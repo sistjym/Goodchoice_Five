@@ -57,9 +57,80 @@
 
 	$(document).ready(function(){		
 		
+		$("button#btnLOGIN").click(function(){
+			func_Login();
+		});
+		
+		$("input#passwd").keydown(function(e){
+			if(e.keyCode == 13) { // 엔터를 했을 경우
+				func_Login();	
+			}
+		});
 	    
-	});
-
+	}); //end of $(document).ready(function(){ ---------------------------
+	
+	////////////////////////////////////////////////////////////////////////////////
+	
+ 	function func_Login() {
+ 		$('button#btnLOGIN').click(function(){
+ 			 const loginType = $('input[name="loginType"]:checked').val();
+ 			 
+ 			 
+ 			 if(loginType == 'owner') {
+ 				 
+ 				 const Email = $("input#Email").val();
+ 				 const passwd = $("input#passwd").val(); 
+ 				 
+ 				if(Email.trim()=="") {
+ 			        alert("이메일을 입력하세요!!");
+ 			       $("input#Email").val(""); 
+ 			       $("input#Email").focus();
+ 			       return; // 종료 
+ 			     }
+ 			   
+ 			     if(passwd.trim()=="") {
+ 			       alert("비밀번호를 입력하세요!!");
+ 			       $("input#passwd").val(""); 
+ 			       $("input#passwd").focus();
+ 			       return; // 종료 
+ 			     }
+ 			     
+ 			    const frm = document.loginFrm;
+ 				frm.action = "<%= ctxPath%>/loginHost.gc";
+ 				frm.method = "post";
+ 				frm.submit();
+ 			 }
+ 			 
+ 			 else {
+ 				 
+ 				 const Email = $("input#Email").val();
+				 const passwd = $("input#passwd").val(); 
+				 
+				if(Email.trim()=="") {
+			        alert("이메일을 입력하세요!!");
+			       $("input#Email").val(""); 
+			       $("input#Email").focus();
+			       return; // 종료 
+			     }
+			   
+			     if(passwd.trim()=="") {
+			       alert("비밀번호를 입력하세요!!");
+			       $("input#passwd").val(""); 
+			       $("input#passwd").focus();
+			       return; // 종료 
+			     }
+			     
+			    const frm = document.loginFrm;
+				frm.action = "<%= ctxPath%>/loginMember.gc";
+				frm.method = "post";
+				frm.submit();
+ 			 }
+ 			 
+ 			 
+ 		});
+ 	}
+	
+	
 	
 	
 </script>
@@ -76,24 +147,25 @@
 		</div>
 		<p><span style= "height:56px; width:60px; font-size:16pt; line-height:56px; color:#00000061">또는</span></p>
 		<hr style="margin-bottom:20px">
-		
+	  <form name="loginFrm">	
 		<div style="margin-bottom:20px">
-			<input type="radio" value="" style="margin-right: 5px;"/><span style="margin-right: 25px;">회원 로그인</span>
-			<input type="radio" value="" style="margin-right: 5px;"/><span>업주 로그인</span>
+			<input type="radio" name="loginType" value="memebr" checked style="margin-right: 5px;"/><span style="margin-right: 25px;">회원 로그인</span>
+			<input type="radio" name="loginType" value="owner" style="margin-right: 5px;"/><span>업주 로그인</span>
 		</div>
 		
 		<div style="border: solid 1px #ebebe0;margin-bottom:10px;">
-			<i class="fa-solid fa-envelope col-sm-2" style="font-size:16pt; color:#00000061;"></i><input type="text" style="height: 50px; font-size:16pt; border:none;" class="col-sm-10" id="Email"  placeholder="이메일 주소" >
+			<i class="fa-solid fa-envelope col-sm-2" style="font-size:16pt; color:#00000061;"></i><input type="text" style="height: 50px; font-size:16pt; border:none;" class="col-sm-10" id="Email" name="Email" placeholder="이메일 주소" >
 		</div>
 		<div><span id="error_email" style="color:red;"></span></div>
 		<div style="border: solid 1px #ebebe0;margin-bottom:20px;">
-			<i class="fa-solid fa-lock col-sm-2" style="font-size:16pt; color:#00000061;"></i><input type="password" style="height:50px; font-size:16pt; border:none;"class="col-sm-10" id="passwd" placeholder="비밀번호">
+			<i class="fa-solid fa-lock col-sm-2" style="font-size:16pt; color:#00000061;"></i><input type="password" style="height:50px; font-size:16pt; border:none;"class="col-sm-10" id="passwd" name="passwd" placeholder="비밀번호">
 		</div>
 		<div><span id="error_password" style="color:red;"></span></div>
-		<button style="border-radius: 6px; width:100%;text-align: center; border: none; color:#fff; background-color:#c80449;height:56px;margin-bottom:30px;">로그인</button>
+		<button type="button" id="btnLOGIN" style="border-radius: 6px; width:100%;text-align: center; border: none; color:#fff; background-color:#c80449;height:56px;margin-bottom:30px;">로그인</button>
 		<div style="display: inline-block;float: left;width: 50%;"><a href="<%= ctxPath%>/memberEditEmailcheck.gc" class="btn_nologin"><span style="font-size:16px">비밀번호 재설정</span></a></div>
 		<div style="display: inline-block;float: left;width: 50%;"><a href="<%= ctxPath%>/memberRegister.gc" class="btn_nologin"><span style="font-size:16px">회원가입</span></a></div>
-	</div>memberEditEmailcheck.gc
+	  </form>
+	</div>
 </div>	
 </body>
 </html>

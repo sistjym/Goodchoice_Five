@@ -40,7 +40,7 @@
                
                 <c:if test="${sessionScope.loginuser != null}">
 	                <li>
-	                    <a href="#"><span>로그아웃</span></a>
+	                    <a href="<%= ctxPath%>/memberLogout.gc"><span>로그아웃</span></a>
 	                </li>
 	            </c:if>
             </ul>

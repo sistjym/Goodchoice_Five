@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ==== #29. mapper 기본설정 ==== -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="host">
+
+<select id="checkDuplicateBusinessNum" resultType="int" parameterType="String">
+	select count(*)
+	from tbl_host 
+	where cp_reg_no = #{business_id}
+</select>
+
+<insert id="gohostRegister" parameterType="HashMap">
+	insert into tbl_host(host_no, fk_admin_no, host_email, host_pwd, host_name, cp_reg_no, cp_name)  
+	values(SEQ_HOST.nextval, 1, #{email}, #{pwd}, #{onerName}, #{business_id}, #{companyName})
+</insert>
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>

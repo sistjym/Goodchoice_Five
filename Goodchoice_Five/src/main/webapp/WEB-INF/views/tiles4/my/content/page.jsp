@@ -3,29 +3,10 @@
     
 <div id="content" class="sub_wrap my_wrap">
 
-	<!-- Nav -->
-	<!-- <nav>
-        <ul>
-            <li><a class="" href="/my/points">포인트</a></li>
-            <li><a class="" href="/my/reserveList">예약 내역</a></li>
-                        <li><a class="active" href="/my/mypage">내 정보 관리</a></li>
-        </ul>
-    </nav> -->
 	<div class="align_rt">
 		<div class="mypage">
 			<form name="form1" action="https://www.goodchoice.kr/my/mypageInfoUpdate" autocomplete="off" method="post" novalidate="novalidate" data-form="unick">
-				<!-- 폼전송시 전달되는 data target element 
-				<div class="mypageForm__form-inputs-wrap" aria-hidden="true">
-					<input type="hidden" name="uno" value="20570882">
-					<input type="text" name="unick" id="test1" aria-hidden="true" value="Blackcase7">
-					<input type="text" name="uname" aria-hidden="true" value="">
-					<input type="tel" name="uphone" aria-hidden="true" value="01041703074">
-				</div>
-
-				<input type="hidden" name="yeogi_token" value="20d346eba15424e310bdde6e095841b0">
-				<input type="hidden" id="utype" name="utype" value="1">
-				<input type="hidden" name="utype" value="1">
-				 폼전송시 전달되는 data target element -->
+				
 				<section class="top_area">
 					<strong>내 정보 수정</strong>
 					<div class="login_info">

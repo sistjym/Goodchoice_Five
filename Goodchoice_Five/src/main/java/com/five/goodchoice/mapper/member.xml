@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ==== #29. mapper 기본설정 ==== -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="member">
+
+<select id="checkDuplicateEmail" resultType="int" parameterType="String">
+SELECT
+    CASE
+        WHEN h.count > 0 OR m.count > 0 THEN 1
+        ELSE 0
+    END AS result
+FROM
+    (SELECT COUNT(*) as count FROM tbl_host WHERE host_email = #{email}) h
+    CROSS JOIN (SELECT COUNT(*) as count FROM tbl_member WHERE member_email = #{email}) m
+</select>
+
+
+<insert id="registerMember" parameterType="HashMap">
+	insert into tbl_member(member_id, member_email, member_pwd, member_nickname)
+	values(SEQ_MEMBER.nextval, #{email}, #{pwd}, #{nickname})
+</insert>
+
+
+<select id="loginMember" parameterType="HashMap" resultType="com.five.goodchoice.member.model.MemberVO">
+	SELECT member_id, member_email, member_nickname, member_reg_date
+		     , point, is_deactivate, is_dormanant  
+		     , pwdchangegap 
+		     , NVL(lastlogingap, trunc(months_between(sysdate, member_reg_date), 0) ) AS lastlogingap 
+        FROM 
+        ( 
+           select member_id, member_email, member_nickname, to_char(member_reg_date, 'yyyy-mm-dd') AS member_reg_date  
+                , point, is_deactivate, is_dormanant   
+                , trunc(months_between(sysdate, lastpwd_change_date), 0) AS pwdchangegap 
+           from tbl_member 
+           where is_deactivate = 0 and member_email = #{Email} and member_pwd = #{passwd}
+        ) M 
+        CROSS JOIN 
+        ( 
+           select trunc(months_between(sysdate, max(logindate)), 0) AS lastlogingap 
+           from tbl_loginhistory 
+           where fk_member_email = #{Email} 
+        ) H
+</select>
+
+<!-- 휴먼계정 1로 업데이트하기 -->
+<update id="updateis_dormanant" parameterType="String">
+		update tbl_member set is_dormanant = 1
+		where member_email = #{email}
+</update>
+
+<!-- tbl_loginhitory 테이블에 insert하기 -->
+<insert id="insertloginhistory" parameterType="HashMap">
+	insert into tbl_loginhistory(fk_member_email)
+	values(#{Email})
+</insert>
+
+<select id="loginHost" resultType="com.five.goodchoice.member.model.HostVO" parameterType="HashMap">
+	select host_no, host_email, host_name, host_reg_date, cp_reg_no, is_host_permission, cp_name    
+	from tbl_host
+	where host_email = #{Email} and host_pwd = #{passwd}
+</select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>  
