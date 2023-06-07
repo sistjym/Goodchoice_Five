@@ -1,11 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ page import="java.util.List" %>
+
+
 
 <%
    String ctxPath = request.getContextPath();
 %>
+
+
+
 <script src="<%= ctxPath%>/resources/Highcharts-11.0.1/code/highcharts.js"></script>
 <script src="<%= ctxPath%>/resources/Highcharts-11.0.1/code/modules/wordcloud.js"></script>
 <script src="<%= ctxPath%>/resources/Highcharts-11.0.1/code/modules/exporting.js"></script>
@@ -26,7 +32,58 @@
 	        'the daisies, when suddenly a White Rabbit with pink eyes ran close by her 랄라.',
 
 	    lines = text.replace(/[():'?0-9]+/g, '').split(/[,\. ]+/g),
-	    data = lines.reduce((arr, word) => {
+	    data = [{
+	        name: "서울호텔",
+	        weight:16
+	    }, {
+	        name: "강남",
+	        weight: 7
+	    }, {
+	        name: "호텔",
+	        weight: 16
+	    }, {
+	        name: "휴양지",
+	        weight: 14
+	    }, {
+	        name: "여름휴가",
+	        weight: 11
+	    }, {
+	        name: "제주도숙소",
+	        weight: 6
+	    
+	    }, {
+	        name: "강남숙소",
+	        weight: 7
+	    
+	    }, {
+	        name: "글램핑",
+	        weight: 18
+	    
+	    }, {
+	        name: "마포구호텔",
+	        weight: 17
+	    
+	    }, {
+	        name: "제주도펜션",
+	        weight: 19
+	    
+	    }, {
+	        name: "제주신라호텔",
+	        weight: 6
+	    
+	    }, {
+	        name: "하얏트",
+	        weight: 20
+	    
+	    }, {
+	        name: "캠핑",
+	        weight: 9
+	    
+	    }
+	    ];
+	    	
+	    	
+	    	/* lines.reduce((arr, word) => {
 	        let obj = Highcharts.find(arr, obj => obj.name === word);
 	        if (obj) {
 	            obj.weight += 1;
@@ -38,7 +95,7 @@
 	            arr.push(obj);
 	        }
 	        return arr;
-	    }, []);
+	    }, []);  */
 
 	    Highcharts.chart('container', {
 		    accessibility: {
@@ -74,8 +131,78 @@
 		  alert("검색"); 
 	   });
 	    
-	    
-	
+	 ////////////////////////////////////////////////////////////////////
+	 
+	   $('input[name="daterange"]').daterangepicker({
+           autoUpdateInput: false,
+           locale: {
+               cancelLabel: 'Clear'
+           }
+       });
+
+       $('input[name="daterange"]').on('apply.daterangepicker', function (ev, picker) {
+           $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+       });
+
+       $('input[name="daterange"]').on('cancel.daterangepicker', function (ev, picker) {
+           $(this).val('');
+       });
+
+       
+       ///////////////////////////////////////////////////////
+       // 리뷰 slick-slider 시작
+
+       $('.center').slick({
+           centerMode: true,
+           slidesToScroll: 1,
+           centerPadding: '30px',
+           infinite: true,
+           prevArrow: false,
+           nextArrow: false,
+           slidesToShow: 3,
+           autoplay : true,			// 자동 스크롤 사용 여부
+			autoplaySpeed : 3000,
+			pauseOnHover : true,	
+
+           responsive: [
+               {
+                   breakpoint: 768,
+                   settings: {
+                       arrows: false,
+                       centerMode: true,
+                       centerPadding: '40px',
+                       slidesToShow: 1
+
+
+                   }
+               },
+               {
+                   breakpoint: 480,
+                   settings: {
+                       arrows: false,
+                       centerMode: true,
+                       centerPadding: '40px',
+                       slidesToShow: 1
+
+                   }
+               }
+           ]
+       });
+  
+
+       $('.count').prop('disabled', true);
+       $(document).on('click', '.plus', function () {
+           $('.count').val(parseInt($('.count').val()) + 1);
+           if ($('.count').val() >= 100) {
+               $('.count').val(100);
+           }
+       });
+       $(document).on('click', '.minus', function () {
+           $('.count').val(parseInt($('.count').val()) - 1);
+           if ($('.count').val() <= 0) {
+               $('.count').val(0);
+           }
+       });
 	   
    });// end of $(document).ready(function(){})-----------------------
    
@@ -225,18 +352,18 @@
                     <section class="center slider">
                       <c:if test="${not empty requestScope.reviewList}">
                        <c:forEach var="map" items="${requestScope.reviewList}">
-	                        <div class="card">
+	                         <div class="card">
 	                            <div class="card-body">
-	                                <p class="card-title">숙소이름: ${map.name}</p>    
-	                                <p class="card-text">리뷰내용: ${map.review_content}</p>
-	                                <p class="card-text">평점: ${map.score}</p>
+	                                <p class="card-title" style="font-size:10pt;">${map.name}</p>    
+	                                <p class="card-text"> ${map.subject}</p>
+	                                <p class="card-score">평점: ${map.score}</p>
 	
 	                            </div>
-	                        </div>
-					 	  </c:forEach>
-					</c:if>      
-	
-                
+	                        </div> 
+
+					 	 </c:forEach>
+					  </c:if>       
+
                     </section>
                     
                     <script>

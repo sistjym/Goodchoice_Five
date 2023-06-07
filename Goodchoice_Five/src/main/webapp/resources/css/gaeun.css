@@ -264,14 +264,14 @@ p {
 .destination_1{
     padding-right: 0px;
     padding-left: 0px;
-    width: 410px;
+    width: 430px;
     align-items: stretch;
     display: flex; 
+    text-align: center;
+    margin-left: 30px;
     
     
 }
-
-
 
 .destnationImg{
     border-radius: 50%;
@@ -295,13 +295,17 @@ p {
 }
 
 .card{
-    font-size: 12pt;
+    font-size: 8pt;
     text-align: center;
     display: flex;
     float: left;
     margin: 1%;
-    outline: 1px solid;
-    padding: 10px 20px;   
+    outline: 2px solid #f7323f;
+    
+}
+.card-score{
+	margin-top: 10px;
+	font-weight: bold;
 }
 .center{
     width: 1024px;
@@ -311,9 +315,11 @@ p {
 }
 
 .slick-center {
-    transform: scale(1.6);
-    transition: transform 500ms ease-in-out;
-    transition-delay: 300ms;
+    transform: scale(1.7);
+    transition: transform 600ms ease-in-out;
+    transition-delay: 700ms;
+    background-color: #f7323f;
+    color:white;
 }
 
 /* The container <div> - needed to position the dropdown content
