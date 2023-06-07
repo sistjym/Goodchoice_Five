@@ -61,5 +61,17 @@ public class MemberDAO implements InterMemberDAO {
 		HostVO loginuser = sqlsession.selectOne("member.loginHost", paraMap);
 		return loginuser;
 	}
-
+	
+	
+	// 이메일 있는 지없는지 유무확인
+	@Override
+	public boolean isEmailExist(String Email) {
+		
+		int isEmailExist = sqlsession.selectOne("member.isEmailExist", Email);
+		System.out.println("isEmailExist : " +isEmailExist);
+		return (isEmailExist == 1);
+	}
+	
+	
+	
 }

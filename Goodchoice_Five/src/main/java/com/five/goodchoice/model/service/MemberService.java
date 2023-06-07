@@ -112,6 +112,17 @@ public class MemberService implements InterMemberService{
 		
 		return loginuser;
 	}
+
+	@Override
+	public boolean isEmailExist(String Email) {
+		try {
+			Email = aes.encrypt(Email);
+		} catch (UnsupportedEncodingException | GeneralSecurityException e) {
+			e.printStackTrace();
+		}
+		boolean isEmailExist = dao.isEmailExist(Email);
+		return isEmailExist;
+	}
 	
 	
 	

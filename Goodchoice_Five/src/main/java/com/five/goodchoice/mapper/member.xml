@@ -62,7 +62,11 @@ FROM
 	where host_email = #{Email} and host_pwd = #{passwd}
 </select>
 
-
+<select id="isEmailExist" parameterType="String" resultType="int">
+	select count(*) 
+	from tbl_member
+	where is_deactivate = 0 and member_email = #{Email}
+</select>
 
 
 

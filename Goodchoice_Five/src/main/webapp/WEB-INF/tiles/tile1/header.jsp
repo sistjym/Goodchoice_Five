@@ -28,7 +28,7 @@
                         <a href="<%= ctxPath%>/showAllHost.gc">호스트 관리</a>
                         <a href="<%= ctxPath%>/acomm_approve.gc">숙소 등록 승인 하기</a>
                         <a href="<%= ctxPath%>/main/home.gc">숙소 데이터 차트</a>
-                        <a href="<%= ctxPath%>/main/home.gc">모든 회원보기</a>
+                        <a href="<%= ctxPath%>/main/home.gc">모든 회원보기1</a>
                     </ul>
                 </li> 
 	

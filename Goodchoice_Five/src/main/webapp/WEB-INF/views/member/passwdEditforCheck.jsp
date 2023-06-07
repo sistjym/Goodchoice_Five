@@ -20,7 +20,6 @@
 	font-family: 'Pretendard', 'Apple SD Gothic Neo', '맑은 고딕', '맑은고딕', 'Malgun Gothic', sans-serif;
 	}
 	#container > div > form > button {
-		 color:#00000029;
 		 border: none;
 	} 
 	
@@ -47,11 +46,39 @@
 
 <script type="text/javascript">
 
-	(document).ready(function(){
-		
+	$(document).ready(function(){
+		Buttonabled();
 	});
 	
+	function EmailCheck(Email) {
+		  const regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+		  const bool = regExp.test(Email);
+
+		  if (!bool) {
+		    $('span#error_email').text("이메일이 적합한 형식이 아닙니다.");
+		    return false;
+		  } else {
+		    $('span#error_email').text("");
+		    return true;
+		  }
+		}
+
+		function Buttonabled() {
+		  $("#findmail").prop("disabled", true).css("background-color", "#FAFAFA");
+
+		  $("input#Email").on("input", function() {
+		    const Email = $(this).val().trim();
+		    if (EmailCheck(Email)) {
+		    	$("#findmail").prop("disabled", false).css({"background-color": "#f2114c", "color": "#fff"});
+		    } else {
+		      $("#findmail").prop("disabled", true).css("background-color", "#FAFAFA");
+		    }
+		  });
+		}
+	
 	function goMail() {
+		
+		const Email = $("input#Email").val();
 		
 		const frm = document.myfrm;
 		frm.action ="<%= ctxPath%>/mailSend.gc";
@@ -70,10 +97,10 @@
 		<h6 style="margin-top: 30px; text-align: center;color:#0000008F" >회원가입 시 등록한 이메일 주소를 입력해 주세요.</h6>
 		<form name="myfrm" style="margin-top: 30px;">
 			  <div style="border: solid 1px #ebebe0;margin-bottom:10px;">
-				 <i class="fa-solid fa-envelope col-sm-2" style="font-size:16pt; color:#00000061;"></i><input type="text" style="height: 50px; font-size:16pt; border:none;" class="col-sm-10" id="Email"  placeholder="이메일 주소" >
+				 <i class="fa-solid fa-envelope col-sm-2" style="font-size:16pt; color:#00000061;"></i><input type="text" style="height: 50px; font-size:16pt; border:none;" class="col-sm-10" id="Email"name="Email"  placeholder="이메일 주소" >
 			  </div>
 			  <div><span id="error_email" style="color:red;"></span></div>
-			  <button type="button" style="height: 56px; background-color: #FAFAFA; width:100%; font-size:16px;" class="btn_check text-center" onclick="goMail()">확인</button>
+			  <button type="button" id="findmail"style="height: 56px;  width:100%; font-size:16px;" class="text-center" onclick="goMail()">확인</button>
 		</form>  
 	</div>
 </div>

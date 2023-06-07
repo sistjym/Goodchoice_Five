@@ -20,4 +20,7 @@ public interface InterMemberService {
 	
 	// 업주로 로그인
 	HostVO loginHost(Map<String, String> paraMap);
+	
+	// 이메일 있는 지없는지 유무확인
+	boolean isEmailExist(String Email);
 }

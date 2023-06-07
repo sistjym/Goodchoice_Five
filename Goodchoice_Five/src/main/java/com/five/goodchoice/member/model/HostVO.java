@@ -7,24 +7,23 @@ public class HostVO {
 	private String host_email;     /* 업주이메일 */
 	private String host_pwd;       /* 업주비밀번호 */
 	private String host_name;      /* 대표자명 */
-	private String host_mobile;    /* 업주전화번호 */
 	private String cp_reg_no;      /* 사업자등록번호 */
 	private String cp_name;        /* 상호명 */
-	
+	private String is_host_permission;
 	
 	
 	public HostVO() {}
 	
 	
 	public HostVO(int host_no, int fk_admin_no, String host_email, String host_pwd, String host_name,
-			String host_mobile, String cp_reg_no, String cp_name) {
+			String is_host_permission, String cp_reg_no, String cp_name) {
 		super();
 		this.host_no = host_no;
 		this.fk_admin_no = fk_admin_no;
 		this.host_email = host_email;
 		this.host_pwd = host_pwd;
 		this.host_name = host_name;
-		this.host_mobile = host_mobile;
+		this.is_host_permission = is_host_permission;
 		this.cp_reg_no = cp_reg_no;
 		this.cp_name = cp_name;
 	}
@@ -60,12 +59,6 @@ public class HostVO {
 	public void setHost_name(String host_name) {
 		this.host_name = host_name;
 	}
-	public String getHost_mobile() {
-		return host_mobile;
-	}
-	public void setHost_mobile(String host_mobile) {
-		this.host_mobile = host_mobile;
-	}
 	public String getCp_reg_no() {
 		return cp_reg_no;
 	}
@@ -77,6 +70,14 @@ public class HostVO {
 	}
 	public void setCp_name(String cp_name) {
 		this.cp_name = cp_name;
+	}
+
+	public String getIs_host_permission() {
+		return is_host_permission;
+	}
+
+	public void setIs_host_permission(String is_host_permission) {
+		this.is_host_permission = is_host_permission;
 	}
 	
 	
