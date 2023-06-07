@@ -139,9 +139,9 @@
 	  <fieldset>
         <legend> 분류 </legend>
 			<span class="sorting">카테고리별 :</span>
-	       	<c:forEach var="category_name" items="${requestScope.categoryList}" varStatus="status">	
-	       		<input class="category" type="checkbox" name="category_name" id="${status.index}" value="${category_name}"/>
-	       		<label for="${status.index}">		   
+	       	<c:forEach var="category_name"  items="${requestScope.categoryList}" varStatus="status">	
+	       		<input class="category" type="checkbox" name="category_name" id="'c'+${status.index}" value="${category_name}"/>
+	       		<label for="'c'+${status.index}">		   
 		  			${category_name}
 		       	</label>
 	       	</c:forEach>
@@ -168,7 +168,8 @@
   
    
    <br/>
-
+  
+   
 
 
 <table class="table table-hover">
@@ -195,8 +196,12 @@
 	</c:if>      
   </tbody>
 </table>
-   
+   <%-- === #122. 페이지바 보여주기 === --%>  
+   <div align="center" style="border: solid 0px gray; width: 70%; margin: 20px auto; ">
+      ${requestScope.pageBar}
    </div>
+
+  </div>
 </div>
 </body>
 </html>
