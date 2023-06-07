@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.poi.hpsf.Array;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -429,10 +430,65 @@ public class AcomodationController {
 		Map<String, String> subTopBtnDataMap = service.getSubtopBtnData(district_no);
 		
 		JSONObject jsonObj = new JSONObject();
+		jsonObj.put("prov_no", subTopBtnDataMap.get("prov_no"));
 		jsonObj.put("prov_name", subTopBtnDataMap.get("prov_name"));
 		jsonObj.put("sub_city_name", subTopBtnDataMap.get("sub_city_name"));
 		
 		return jsonObj.toString();
+		
+	}
+	
+	// category_no를 입력받아서 그에 해당하는 prov_no 를 가져오는 메소드
+	@ResponseBody
+	@GetMapping("/getCityListByCategory.gc")
+	public String getCityListByCategory(HttpServletRequest request) {
+		
+		String category_no = request.getParameter("category_no");
+		
+		List<Map<String, String>> cityListByCategoryMap = service.getCityListByCategory(category_no);
+		
+		JSONArray jsonArr = new JSONArray();
+		
+		for(Map<String, String> cityMap : cityListByCategoryMap) {
+			JSONObject jsonObj = new JSONObject();
+			jsonObj.put("prov_no", cityMap.get("prov_no"));
+			jsonObj.put("prov_name", cityMap.get("prov_name"));
+			
+			jsonArr.put(jsonObj);
+		}
+		
+		return jsonArr.toString();
+		
+	}
+	
+	// category_no 와 prov_no 를 입력받아서 지역별 어느 지역구가 있는지 조회
+	@ResponseBody
+	@GetMapping("/showCityListByProvNo.gc")
+	public String showCityListByProvNo(HttpServletRequest request) {
+		
+		String category_no = request.getParameter("category_no");
+		String prov_no = request.getParameter("prov_no");
+		
+		Map<String, String> paraMap = new HashMap<>();
+		
+		paraMap.put("category_no", category_no);
+		paraMap.put("prov_no", prov_no);
+		
+	
+		List<Map<String, String>> districtListByProvNoMap = service.getDistrictListByProvNo(paraMap);
+		
+		JSONArray jsonArr = new JSONArray();
+		
+		for(Map<String, String> districtMap : districtListByProvNoMap) {
+			JSONObject jsonObj = new JSONObject();
+			jsonObj.put("category_no", districtMap.get("category_no"));
+			jsonObj.put("district_no", districtMap.get("district_no"));
+			jsonObj.put("sub_city_name", districtMap.get("sub_city_name"));
+			
+			jsonArr.put(jsonObj);
+		}
+		
+		return jsonArr.toString();
 		
 	}
 	

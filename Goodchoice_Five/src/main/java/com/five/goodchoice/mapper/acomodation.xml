@@ -212,17 +212,73 @@
 	
 	
 	<resultMap type="HashMap" id="getSubtopBtnData_Map">
+		<result property="prov_no" 		 	 column="prov_no" 				javaType="String"/>
 		<result property="prov_name" 		 column="prov_name" 			javaType="String"/>
 		<result property="sub_city_name" 	 column="sub_city_name" 		javaType="String"/>
 	</resultMap>
 	
 	<select id="getSubtopBtnData" parameterType="String" resultMap="getSubtopBtnData_Map">
-			select prov_name, sub_city_name
+			select prov_no, prov_name, sub_city_name
 			    from tbl_province PRO
 			    JOIN tbl_district DIS on PRO.prov_no = DIS.fk_prov_no
 			    where district_no = #{district_no}
 	</select>
+
+
+	<resultMap type="HashMap" id="getCityListByCategory_Map">
+		<result property="prov_no" 		 	 column="prov_no" 				javaType="String"/>
+		<result property="prov_name" 		 column="prov_name" 			javaType="String"/>
+	</resultMap>
+		
+	<select id="getCityListByCategory" parameterType="String" resultMap="getCityListByCategory_Map">
+		
+		select prov_no, prov_name
+		    from tbl_acom_category ACT
+		    JOIN tbl_spec SPEC on ACT.category_no = SPEC.fk_category_no
+		    JOIN 
+		    (
+		        select prov_no, prov_name, fk_spec_no 
+		            from tbl_province PRO
+		            JOIN tbl_district DIS on PRO.prov_no = DIS.fk_prov_no
+		            JOIN tbl_acomodation ACOM on DIS.district_no = ACOM.fk_district_no
+		    ) CTP
+		    on SPEC.spec_no = CTP.fk_spec_no
+		    where category_no = #{category_no}
+		    group by prov_no, prov_name
+		    order by prov_no			
+	</select>
+
+
+	<resultMap type="HashMap" id="getDistrictListByProvNo_Map">
+		<result property="category_no" 		 column="category_no" 		javaType="String"/>
+		<result property="district_no" 		 column="district_no" 		javaType="String"/>
+		<result property="sub_city_name" 	 column="sub_city_name" 	javaType="String"/>
+	</resultMap>
+
+	<select id="getDistrictListByProvNo" parameterType="HashMap" resultMap="getDistrictListByProvNo_Map">
+		    
+		WITH DISTRICT_NO_BY_PROV_NO AS(
+		    select category_no, prov_no, district_no
+		        from tbl_acom_category ACT
+		        JOIN tbl_spec SPEC on ACT.category_no = SPEC.fk_category_no
+		        JOIN 
+		        (
+		            select prov_no, district_no, fk_spec_no
+		                from tbl_province PRO
+		                JOIN tbl_district DIS on PRO.prov_no = DIS.fk_prov_no
+		                JOIN tbl_acomodation ACOM on DIS.district_no = ACOM.fk_district_no
+		        ) CTP
+		        on SPEC.spec_no = CTP.fk_spec_no
+		        where category_no = #{category_no}
+		        group by category_no, prov_no, district_no
+		)
+		select category_no, DNP.district_no, sub_city_name
+		    from DISTRICT_NO_BY_PROV_NO DNP
+		    JOIN tbl_district DIS on DNP.district_no = DIS.district_no
+		    where prov_no = #{prov_no}
+		    order by district_no	
 	
+	</select>
 
 
 </mapper>

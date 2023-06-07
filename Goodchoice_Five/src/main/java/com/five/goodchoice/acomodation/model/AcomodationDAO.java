@@ -107,6 +107,21 @@ public class AcomodationDAO implements InterAcomodationDAO {
 			
 			return subTopBtnDataMap;
 		}
+
+		// category_no를 입력받아서 그에 해당하는 prov_no 를 가져오는 메소드
+		@Override
+		public List<Map<String, String>> getCityListByCategory(String category_no) {
+			List<Map<String, String>> cityListByCategoryMap = sqlsession.selectList("acomodation.getCityListByCategory", category_no);
+			
+			return cityListByCategoryMap;
+		}
+
+		// category_no 와 prov_no 를 입력받아서 지역별 어느 지역구가 있는지 조회
+		@Override
+		public List<Map<String, String>> getDistrictListByProvNo(Map<String, String> paraMap) {
+			List<Map<String, String>> districtListByProvNoMap = sqlsession.selectList("acomodation.getDistrictListByProvNo", paraMap);
+			return districtListByProvNoMap;
+		}
 		
 		
 		

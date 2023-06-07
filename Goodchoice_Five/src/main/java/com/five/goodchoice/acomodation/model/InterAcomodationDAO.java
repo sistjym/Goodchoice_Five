@@ -43,6 +43,12 @@ public interface InterAcomodationDAO {
 
 	// district_no 입력해서 prov_name 과 sub_city_name 을 알아오는 메소드
 	Map<String, String> getSubtopBtnData(String district_no);
+
+	// category_no를 입력받아서 그에 해당하는 prov_no 를 가져오는 메소드
+	List<Map<String, String>> getCityListByCategory(String category_no);
+
+	// category_no 와 prov_no 를 입력받아서 지역별 어느 지역구가 있는지 조회
+	List<Map<String, String>> getDistrictListByProvNo(Map<String, String> paraMap);
 	
 	
 
