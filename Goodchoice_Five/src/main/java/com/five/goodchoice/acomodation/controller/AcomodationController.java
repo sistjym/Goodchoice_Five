@@ -71,7 +71,6 @@ public class AcomodationController {
 			
 		}
 
-
 		// 검색조건의 결과물의 숙소리스트를 가져온다.
 		List<Map<String, String>> acomSearchList = service.getAcomSearchList(filter_condition_Map);
 		
@@ -214,9 +213,9 @@ public class AcomodationController {
 			min_price = "10000"; // min_price 가 공백이나 null 이 오는 경우에는 10000 으로 설정
 			max_price = "-1";	 // max_price 가 공백이나 null 이 오는 경우에는 -1 으로 설정		
 		}
-		else if("10000".equals(min_price) && "300000".equals(min_price)){ // null은 아니지만 10000 ~ 300000 은 만원 이상으로 간주한다.
+		else if("10000".equals(min_price) && "300000".equals(max_price)){ // null은 아니지만 10000 ~ 300000 은 만원 이상으로 간주한다.
 			min_price = "10000"; 
-			max_price = "-1";	 
+			max_price = "-1";
 		}
 		
 		
@@ -492,8 +491,38 @@ public class AcomodationController {
 		
 	}
 	
+	// 인기 숙소 구현
 	
-	
+	@GetMapping("/acomodation/home/{prov_no}")
+	public String acomodation_search_view(HttpServletRequest request, @PathVariable String prov_no) {
+
+		// https://www.goodchoice.kr/product/home/1
+
+		if(!Myutil.isNumericalStr(prov_no)) { // 여기에 DB에 존재하는 지역번호인지 판별하는 메소드가 추가되어야 한다.
+		
+			request.setAttribute("message", "유효하지 않은 페이지 입니다.(존재하지 않는 지역번호)");
+			request.setAttribute("loc", "javascript:history.back()");
+			return "msg";
+			
+		}
+		
+
+		String check_in_date = Myutil.getDefaultCheckInDate();
+		String check_out_date =  Myutil.getDefaultCheckOutDate();
+		
+		Map<String, Object> filter_condition_Map = new HashMap<>();
+		
+		filter_condition_Map.put("prov_no", prov_no);
+		filter_condition_Map.put("check_in_date", check_in_date);
+		filter_condition_Map.put("check_out_date", check_out_date);
+		
+		List<Map<String, String>> acomListByProvNo = service.getAcomListByProvNo(filter_condition_Map); // 인기숙소 리스트를 가져온다.
+		
+		request.setAttribute("acomListByProvNo", acomListByProvNo);
+		request.setAttribute("filter_condition_Map", filter_condition_Map);
+		
+		return "acomodation/acom_content.tiles5";
+	}	
 	
 	
 	

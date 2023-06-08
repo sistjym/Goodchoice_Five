@@ -29,4 +29,7 @@ public interface InterAcomodationService {
 	// category_no 와 prov_no 를 입력받아서 지역별 어느 지역구가 있는지 조회
 	List<Map<String, String>> getDistrictListByProvNo(Map<String, String> paraMap);
 
+	// 지역번호별 숙소리스트를 가져온다.
+	List<Map<String, String>> getAcomListByProvNo(Map<String, Object> filter_condition_Map);
+
 }

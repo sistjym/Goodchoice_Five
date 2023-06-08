@@ -122,6 +122,13 @@ public class AcomodationDAO implements InterAcomodationDAO {
 			List<Map<String, String>> districtListByProvNoMap = sqlsession.selectList("acomodation.getDistrictListByProvNo", paraMap);
 			return districtListByProvNoMap;
 		}
+
+		//  입력된 날짜에 대해 예약이 가능한 지역번호별 객실번호를 가져온다.
+		@Override
+		public List<String> getAvailableRoomIdByProvNo(Map<String, Object> filter_condition_Map) {
+			List<String> availableRoomIdList = sqlsession.selectList("acomodation.getAvailableRoomIdByProvNo", filter_condition_Map);
+			return availableRoomIdList;
+		}
 		
 		
 		

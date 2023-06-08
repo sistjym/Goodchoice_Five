@@ -248,6 +248,128 @@ public class AcomodationService implements InterAcomodationService {
 		return districtListByProvNoMap;
 	}
 
+
+	// 지역번호별 숙소리스트를 가져온다.
+	@Override
+	public List<Map<String, String>> getAcomListByProvNo(Map<String, Object> filter_condition_Map) {
+		
+		List<Map<String, String>> acomListByProvNo = new ArrayList<>();
+		
+		// 1. 입력된 날짜에 대해 예약이 가능한 지역번호별 객실번호를 가져온다.
+		List<String> availableRoomIdList = dao.getAvailableRoomIdByProvNo(filter_condition_Map);
+		
+		if(availableRoomIdList == null || availableRoomIdList.size() == 0) {
+			return new ArrayList<>();
+		}
+		/*
+		for(String roomId : availableRoomIdList) {
+			System.out.println(roomId);
+		}
+		*/
+		filter_condition_Map.put("availableRoomIdList", availableRoomIdList);
+		
+		// 2. 가장 저렴한 객실의 가격을 기준으로 하는 숙소번호와 가격을 가져오는 메소드
+		acomListByProvNo = dao.getAcomListByRowPrice(filter_condition_Map);		
+		filter_condition_Map.put("acomListByProvNo", acomListByProvNo);
+		/*
+		for(Map<String, String> map : AcomListByProvNo) {
+			System.out.println("acom_no : " + map.get("acom_no"));
+			System.out.println("price : " + map.get("price"));
+			System.out.println("------------------------------------");
+		}
+		*/
+		
+		// 3. 숙소 데이터별 평점과 리뷰 갯수를 얻어온다.
+		List<Map<String, String>> tempList = new ArrayList<>();
+		tempList = dao.getRatingReviewCntByAcom(acomListByProvNo); 
+			
+		for(Map<String, String> acomMap : acomListByProvNo) {
+			
+			for(Map<String, String> tempMap : tempList) {
+				
+				if(acomMap.get("acom_no").equals(tempMap.get("acom_no"))) {
+					
+					acomMap.put("rating_avg", tempMap.get("rating_avg"));
+					acomMap.put("rating_cnt", tempMap.get("rating_cnt"));
+					break;
+				}
+				
+			}
+		}
+		/*
+		for(Map<String, String> acomMap : acomListByProvNo) {
+			
+			System.out.println("acom_no : " + acomMap.get("acom_no"));
+			System.out.println("rating_avg : " + acomMap.get("rating_avg"));
+			System.out.println("rating_cnt : " + acomMap.get("rating_cnt"));
+			
+		}
+		*/
+		
+		// 4. 평점의 평균으로 내림차순 정렬한다.
+		Comparator<Map<String, String>> priceComparator = null;
+		
+		priceComparator = new Comparator<Map<String, String>>(){
+			@Override
+			public int compare(Map<String, String> acomMap1, Map<String, String> acomMap2) {
+				String rating_avg1 = acomMap1.get("rating_avg");
+                String rating_avg2 = acomMap2.get("rating_avg");
+                
+                float floatRating_avg1 = Float.parseFloat(rating_avg1);
+                float floatRating_avg2 = Float.parseFloat(rating_avg2);
+
+                // 내림차순으로 정렬합니다.
+                return Float.compare(floatRating_avg2, floatRating_avg1);
+
+			}
+		};
+		
+		Collections.sort(acomListByProvNo, priceComparator);
+
+		/*
+		for(Map<String, String> acomMap : acomListByProvNo) {
+			
+			System.out.println("acom_no : " + acomMap.get("acom_no"));
+			System.out.println("rating_avg : " + acomMap.get("rating_avg"));
+			System.out.println("rating_cnt : " + acomMap.get("rating_cnt"));
+			
+		}
+		*/
+		
+		// 5. 마지막으로 숙소별 이름과 주소를 더하고 종료
+		
+		tempList = dao.getNameAddressbyAcom(acomListByProvNo);
+		
+		for(Map<String, String> acomMap : acomListByProvNo) {
+			
+			for(Map<String, String> tempMap : tempList) {
+				
+				if(acomMap.get("acom_no").equals(tempMap.get("acom_no"))) {
+					
+					acomMap.put("acom_name", tempMap.get("acom_name"));
+					acomMap.put("address", tempMap.get("address"));
+					break;
+				}
+				
+			}
+		}
+		/*
+		for(Map<String, String> acomMap : acomListByProvNo) {
+			
+			System.out.println("acom_no : " + acomMap.get("acom_no"));
+			System.out.println("price : " + acomMap.get("price"));
+			System.out.println("rating_avg : " + acomMap.get("rating_avg"));
+			System.out.println("rating_cnt : " + acomMap.get("rating_cnt"));
+			System.out.println("acom_name : " + acomMap.get("acom_name"));
+			System.out.println("address : " + acomMap.get("address"));
+			
+		}
+		*/
+		
+		return acomListByProvNo;
+		
+	}
+
 	
  	
 
