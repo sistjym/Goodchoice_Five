@@ -12,6 +12,8 @@ public class MemberVO {
 	private int is_dormanant;       
 	private String lastpwd_change_date; 
 	private String is_admin;
+	private String is_kakao_user;
+	private String kakao_id;
 	
 	
 	private int pwdchangegap;          // select 용. 지금으로 부터 마지막으로 암호를 변경한지가 몇개월인지 알려주는 개월수(3개월 동안 암호를 변경 안 했을시 암호를 변경하라는 메시지를 보여주기 위함)  
@@ -26,7 +28,7 @@ public class MemberVO {
 
 
 	public MemberVO(String member_id, String member_email, String member_pwd, String member_nickname,
-			String member_reg_date, String point, String is_deactivate, int is_dormanant, String is_admin,
+			String member_reg_date, String point, String is_deactivate, int is_dormanant, String is_admin, String is_kakao_user, String kakao_id,
 			String lastpwd_change_date) {
 		super();
 		this.member_id = member_id;
@@ -38,6 +40,8 @@ public class MemberVO {
 		this.is_deactivate = is_deactivate;
 		this.is_dormanant = is_dormanant;
 		this.is_admin = is_admin;
+		this.is_kakao_user = is_kakao_user;
+		this.kakao_id = kakao_id;
 		this.lastpwd_change_date = lastpwd_change_date;
 	}
 
@@ -169,6 +173,26 @@ public class MemberVO {
 
 	public void setIs_admin(String is_admin) {
 		this.is_admin = is_admin;
+	}
+
+
+	public String getIs_kakao_user() {
+		return is_kakao_user;
+	}
+
+
+	public void setIs_kakao_user(String is_kakao_user) {
+		this.is_kakao_user = is_kakao_user;
+	}
+
+
+	public String getKakao_id() {
+		return kakao_id;
+	}
+
+
+	public void setKakao_id(String kakao_id) {
+		this.kakao_id = kakao_id;
 	}
 	
 	

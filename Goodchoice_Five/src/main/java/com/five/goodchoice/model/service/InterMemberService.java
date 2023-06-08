@@ -26,4 +26,14 @@ public interface InterMemberService {
 	
 	// 비밀번호 업데이트
 	int pwUpdate(Map<String, String> paraMap);
+	
+	// 카카오 계정이 저장되어있는지 확인
+	boolean isKakaoExist(String id);
+	
+	// 카카오 계정으로 로그인하기
+	MemberVO loginMemberforKakao(Map<String, String> paraMap);
+	
+	// 카카오 계정으로 가입
+	boolean registerMemberforKakao(Map<String, String> paraMap);
+
 }

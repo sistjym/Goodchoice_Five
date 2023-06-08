@@ -59,11 +59,11 @@ public class MemberService implements InterMemberService{
 	// 멤버로 로그인
 	@Override
 	public MemberVO loginMember(Map<String, String> paraMap) {
-		String Email = paraMap.get("Email");
+		String email = paraMap.get("email");
 		
 		try {
-			Email = aes.encrypt(Email);
-			paraMap.put("Email", Email);
+			email = aes.encrypt(email);
+			paraMap.put("email", email);
 		} catch (UnsupportedEncodingException | GeneralSecurityException e) {
 			e.printStackTrace();
 		}
@@ -86,7 +86,7 @@ public class MemberService implements InterMemberService{
 			loginuser.setIs_dormanant(1);
 			
 			// === tbl_member 테이블의 is_dormanant 컬럼의 값을 1로 변경하기 === //
-			int n = dao.is_dormanant(paraMap.get("Email"));
+			int n = dao.is_dormanant(paraMap.get("email"));
 		}
 		
 		
@@ -129,6 +129,49 @@ public class MemberService implements InterMemberService{
 	@Override
 	public int pwUpdate(Map<String, String> paraMap) {
 		int n = dao.pwUpdate(paraMap);
+		return n;
+	}
+	
+	
+	// 카카오 계정이 저장되어있는지 확인
+	@Override
+	public boolean isKakaoExist(String id) {
+		boolean result = dao.isKakaoExist(id);
+		return result;
+	}
+	
+	
+	// 카카오 계정으로 로그인하기
+	@Override
+	public MemberVO loginMemberforKakao(Map<String, String> paraMap) {
+		MemberVO loginuser = dao.loginMemberforKakao(paraMap);
+		
+		
+		if(loginuser != null && loginuser.getIs_dormanant() != 1) {
+			int result = dao.insertloginhistory(paraMap);
+		}
+		
+		if(loginuser != null && loginuser.getPwdchangegap() >= 3) {
+			// 마지막으로 암호를 변경한 날짜가 현재시각으로부터 3개월이 지났으면
+			loginuser.setRequirePwdChange(true);  // 로그인시 암호를 변경하라는 alert를 띄우도록 한다.
+ 		}
+		
+		if(loginuser != null && loginuser.getIs_dormanant() == 0 && loginuser.getLastlogingap() >= 12) {
+			// 마지막으로 로그인  한 날짜가 현재시각으로부터 1년이 지났으면 휴면으로 지정 해야함
+			loginuser.setIs_dormanant(1);
+			
+			// === tbl_member 테이블의 is_dormanant 컬럼의 값을 1로 변경하기 === //
+			int n = dao.is_dormanant(paraMap.get("eamil"));
+		}
+		
+		return loginuser;
+	}
+	
+	
+	// 카카오 계정으로 가입
+	@Override
+	public boolean registerMemberforKakao(Map<String, String> paraMap) {
+		boolean n = dao.registerMemberforKakao(paraMap);
 		return n;
 	}
 	

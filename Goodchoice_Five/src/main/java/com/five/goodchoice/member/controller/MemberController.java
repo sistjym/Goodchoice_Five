@@ -3,7 +3,6 @@ import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -115,7 +114,7 @@ public class MemberController {
 			request.setAttribute("pwd", pwd);
 			
 			message = "회원가입에 성공 했습니다.";
-			loc = request.getContextPath() + "/main/home.gc";
+			loc = request.getContextPath() + "/memberLogin.gc";
 		}
 		
 		else {
@@ -142,12 +141,12 @@ public class MemberController {
 		// System.out.println("Email : " +Email);
 		
 		Map<String, String> paraMap = new HashMap<>();
-		paraMap.put("Email", Email);
+		paraMap.put("email", Email);
 		paraMap.put("passwd", Sha256.encrypt(passwd));
 		
 		MemberVO loginuser = service.loginMember(paraMap);
 		
-		// System.out.println("loginuser: " +loginuser);
+		System.out.println("loginuser: " +loginuser);
 		
 		if(loginuser == null) {	// 로그인 실패시 [존재하지않은 아이디 비번을 입력했을시]
 			String message = "아이디 또는 암호가 틀립니다.";
@@ -370,5 +369,110 @@ public class MemberController {
 		return mav;
 	}	
 	
+	@RequestMapping(value="/kakao/kakaocontroller.gc", method = {RequestMethod.POST})
+	public ModelAndView kakaocontroller(ModelAndView mav, HttpServletRequest request) {
+		
+		String id = request.getParameter("id");
+		String name = request.getParameter("name");
+		String email = request.getParameter("email");
+		
+		Map<String, String> paraMap = new HashMap<>();
+		
+		paraMap.put("id", Sha256.encrypt(id));
+		paraMap.put("name", name);
+		try {
+			paraMap.put("email", aes.encrypt(email));
+		} catch (UnsupportedEncodingException | GeneralSecurityException e) {
+			e.printStackTrace();
+		}
+		
+		
+		boolean result = service.isKakaoExist(Sha256.encrypt(id));
+		
+		if(result) {
+			
+			
+			MemberVO loginuser = service.loginMemberforKakao(paraMap);
+			
+			System.out.println("loginuser: " +loginuser);
+			
+			if(loginuser == null) {	// 로그인 실패시 [존재하지않은 아이디 비번을 입력했을시]
+				String message = "아이디 또는 암호가 틀립니다.";
+				String loc = "javascript:history.back()";
+				
+				mav.addObject("message", message);
+				mav.addObject("loc", loc);
+				
+				mav.setViewName("msg");
+				// /WEB-INF/views/[접두어]	msg	.jsp[접미어] 해서 /WEB-INF/views/msg.jsp 가된다.
+			}
+			else {	// 로그인 한지 1년 이내인 경우
+				
+				HttpSession session = request.getSession();
+				// 메모리에 생성되어져 있는 session 을 불러오는 것이다.
+				
+				session.setAttribute("loginuser", loginuser);
+				// session(세션)에 로그인 되어진 사용자 정보인 loginuser 을 키이름을 "loginuser" 으로 저장시켜두는 것이다.
+					String goBackURL = (String)session.getAttribute("goBackURL");
+					
+					if(goBackURL != null) {
+						mav.setViewName("redirect:"+goBackURL);
+						session.removeAttribute("goBackURL"); // 세션에서 반드시 제거해 주어야 한다.
+					}
+					
+					else {
+						mav.setViewName("redirect:/main/home.gc");  // 시작페이지로 이동
+					}
+					
+				}
+		}
+		else {
+			if(service.registerMemberforKakao(paraMap)) {
+				request.setAttribute("email", email);
+				request.setAttribute("id", id);
+				request.setAttribute("name", name);
+				
+				
+				
+				MemberVO loginuser = service.loginMemberforKakao(paraMap);
+				
+				
+				// System.out.println("loginuser : " +loginuser);
+				
+				
+				if(loginuser == null) {	// 로그인 실패시 [존재하지않은 아이디 비번을 입력했을시]
+					String message = "아이디 또는 암호가 틀립니다.";
+					String loc = "javascript:history.back()";
+					
+					mav.addObject("message", message);
+					mav.addObject("loc", loc);
+					
+					mav.setViewName("msg");
+					// /WEB-INF/views/[접두어]	msg	.jsp[접미어] 해서 /WEB-INF/views/msg.jsp 가된다.
+				}
+				else {	// 로그인 한지 1년 이내인 경우
+					
+					HttpSession session = request.getSession();
+					// 메모리에 생성되어져 있는 session 을 불러오는 것이다.
+					
+					session.setAttribute("loginuser", loginuser);
+					// session(세션)에 로그인 되어진 사용자 정보인 loginuser 을 키이름을 "loginuser" 으로 저장시켜두는 것이다.
+						String goBackURL = (String)session.getAttribute("goBackURL");
+						
+					if(goBackURL != null) {
+						mav.setViewName("redirect:"+goBackURL);
+						session.removeAttribute("goBackURL"); // 세션에서 반드시 제거해 주어야 한다.
+					}
+					
+					else {
+						mav.setViewName("redirect:/main/home.gc");  // 시작페이지로 이동
+					}
+					
+				}
+			}
+		}
+		
+		return mav;
+	}
 }
 	
