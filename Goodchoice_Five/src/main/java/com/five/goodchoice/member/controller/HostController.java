@@ -64,8 +64,8 @@ public class HostController {
 		String loc = "";
 		
 		if(service.gohostRegister(paraMap)) {
-			 message = "업주로 회원가입에 성공 했습니다.";
-			 loc = request.getContextPath() + "/main/home.gc";
+			 message = "호스트로 회원가입에 성공 했습니다.";
+			 loc = request.getContextPath() + "/memberLogin.gc";
 		}
 		
 		else {

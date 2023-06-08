@@ -49,11 +49,63 @@
   <script type="text/javascript" src="<%= ctxPath%>/resources/js/jquery-3.6.4.min.js"></script>
   <script type="text/javascript" src="<%= ctxPath%>/resources/bootstrap-4.6.0-dist/js/bootstrap.bundle.min.js" ></script> 
   <script type="text/javascript" src="<%= ctxPath%>/resources/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script> 
-
+  
+  <!-- kakao 로그인 -->
+  <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <script type="text/javascript">
+
+window.Kakao.init("aa9e3a8df8aa72d93190dd5dc4ebafb1");
+
+function gokakaoLogin() {
+	window.Kakao.Auth.loginForm({
+		scope:'profile_nickname, account_email',
+		success: function(authObj) {
+			console.log(authObj);
+			window.Kakao.API.request({
+				url:'/v2/user/me',
+				success: res => {
+					// console.log(res);
+					const kakao_account = res.kakao_account;
+					const id = res.id;	// 데이터베이스 primary key
+					const name = res.properties.nickname;
+					const email = kakao_account.email; // 카카오에서 얻은 이메일 정보
+					
+					// 폼생성
+					const form = $('<form></form>').attr({
+					    method: 'POST',
+					    action: '<%= ctxPath%>/kakao/kakaocontroller.gc'
+					});
+					
+					$('<input>').attr({
+                        type: 'hidden',
+                        name: 'id',
+                        value: id
+                    }).appendTo(form);
+
+                    $('<input>').attr({
+                        type: 'hidden',
+                        name: 'name',
+                        value: name
+                    }).appendTo(form);
+
+                    $('<input>').attr({
+                        type: 'hidden',
+                        name: 'email',
+                        value: email
+                    }).appendTo(form);
+
+                    // 폼 제출
+                    $('body').append(form);
+                    form.submit();
+                }
+			});
+		}
+	});
+}
+
 
 	$(document).ready(function(){		
 		
@@ -143,7 +195,7 @@
 			<a href="<%= ctxPath%>/main/home.gc" ><img src="<%= ctxPath%>/resources/images/여기어때로고.png" style="height: 35px; width:112px; margin:80px 0 50px 0;"/></a>
 		</div>
 		<div style="line-height: 56px; ">
-			<button class="col-md-12 btn_kakao" style="background-color: #FCE51E; font-size:16px;" ><span style="color:#3B1D14;"><i class="fa-solid fa-comment-dots"></i>&nbsp;카카오톡으로 로그인</span></button>
+			<button class="col-md-12 btn_kakao" style="background-color: #FCE51E; font-size:16px;" onclick="gokakaoLogin()"><span style="color:#3B1D14;"><i class="fa-solid fa-comment-dots"></i>&nbsp;카카오톡으로 로그인</span></button>
 		</div>
 		<p><span style= "height:56px; width:60px; font-size:16pt; line-height:56px; color:#00000061">또는</span></p>
 		<hr style="margin-bottom:20px">
