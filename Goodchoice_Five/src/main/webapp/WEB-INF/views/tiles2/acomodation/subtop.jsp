@@ -79,7 +79,7 @@
 		
 		$(".btn-area").mouseenter( <%-- 서울 > 강남/역삼  에 mouseenter --%>
 		function(event){
-			showCityListByProvNo(category_no, prov_no);
+			showCityListByCategoryProvNo(category_no, prov_no);
 		});
 		
 		
@@ -108,7 +108,7 @@
 			//console.log($(event.target).attr("id").slice(-1));
 			// 1 2 4 5
 			prov_no = $(event.target).attr("id").slice(-1);
-			showCityListByProvNo(category_no, prov_no);
+			showCityListByCategoryProvNo(category_no, prov_no);
 			
 		});
 		
@@ -125,10 +125,10 @@
 	});
 	
 	<%-- category_no 와 prov_no 를 입력받아서 지역별 어느 지역구가 있는지 구해야함 --%>
-	function showCityListByProvNo(category_no, prov_no){
+	function showCityListByCategoryProvNo(category_no, prov_no){
 	
 		$.ajax({
-			url:"<%= request.getContextPath()%>/showCityListByProvNo.gc",
+			url:"<%= request.getContextPath()%>/showCityListByCategoryProvNo.gc",
 			data:{'category_no' : category_no, 'prov_no': prov_no},
 			type:"get",
 			dataType:"json",
@@ -143,7 +143,7 @@
 				if(jsonArr.length > 0){
 					
 					$(".city_child").empty(); // 이전의 것을 지운다.
-					$(".city_child").append("<li><a href=''>"+$("#city_" + prov_no).text() +" 인기숙소</a></li>");
+					$(".city_child").append("<li><a href='<%=request.getContextPath()%>/acomodation/home/"+prov_no+"'>"+$("#city_" + prov_no).text() +" 인기숙소</a></li>");
 					
 					$.each(jsonArr, function(i, elmt){
 						// elmt -> json

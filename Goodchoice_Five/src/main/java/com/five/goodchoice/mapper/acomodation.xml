@@ -225,12 +225,12 @@
 	</select>
 
 
-	<resultMap type="HashMap" id="getCityListByCategory_Map">
+	<resultMap type="HashMap" id="getProvList_Map">
 		<result property="prov_no" 		 	 column="prov_no" 				javaType="String"/>
 		<result property="prov_name" 		 column="prov_name" 			javaType="String"/>
 	</resultMap>
 		
-	<select id="getCityListByCategory" parameterType="String" resultMap="getCityListByCategory_Map">
+	<select id="getCityListByCategory" parameterType="String" resultMap="getProvList_Map">
 		
 		select prov_no, prov_name
 		    from tbl_acom_category ACT
@@ -249,13 +249,13 @@
 	</select>
 
 
-	<resultMap type="HashMap" id="getDistrictListByProvNo_Map">
+	<resultMap type="HashMap" id="getDistrictListByCategoryProvNo_Map">
 		<result property="category_no" 		 column="category_no" 		javaType="String"/>
 		<result property="district_no" 		 column="district_no" 		javaType="String"/>
 		<result property="sub_city_name" 	 column="sub_city_name" 	javaType="String"/>
 	</resultMap>
 
-	<select id="getDistrictListByProvNo" parameterType="HashMap" resultMap="getDistrictListByProvNo_Map">
+	<select id="getDistrictListByCategoryProvNo" parameterType="HashMap" resultMap="getDistrictListByCategoryProvNo_Map">
 		    
 		WITH DISTRICT_NO_BY_PROV_NO AS(
 		    select category_no, prov_no, district_no
@@ -284,15 +284,27 @@
 	<select id="getAvailableRoomIdByProvNo" parameterType="HashMap" resultType="String">
 		WITH SEARCH_ROOM AS(
 		    select room_id
-		    from 
-		        tbl_province PRO
-		        JOIN tbl_district DIS ON PRO.prov_no = DIS.fk_prov_no
-		        JOIN tbl_acomodation ACOM ON DIS.district_no = ACOM.fk_district_no
-		        JOIN tbl_room ROOM on ACOM.acom_no = ROOM.fk_acom_no
-		    where
-		        ACOM.is_acom_permission = 1
-		        AND PRO.prov_no = #{prov_no}
-		    order by 1
+		    from
+		        (
+		        select acom_no
+		        from tbl_acomodation
+		        where fk_district_no in (
+		                                   select district_no 
+		                                      from tbl_district 
+		                                      where fk_prov_no in ( 
+		                                                        select prov_no 
+		                                                               from tbl_province 
+		                                                               where prov_no = #{prov_no}))
+		        and fk_spec_no in ( select spec_no 
+		                            from tbl_spec
+		                            where fk_category_no in (
+		                                                    select category_no
+		                                                        from tbl_acom_category
+		                                                        where category_no = ( select category_no
+		                                                                                from tbl_acom_category
+		                                                                                where category_name = '모텔')))                                                           
+		        )ACOM
+		    JOIN tbl_room ROOM on ACOM.acom_no = ROOM.fk_acom_no
 		)
 		select SR.room_id
 		from SEARCH_ROOM SR
@@ -303,7 +315,59 @@
 		    )
 		WHERE
 		    RES.fk_room_id IS NULL
-		order by 1			
+		order by 1
+	</select>
+	
+	<select id="getcityListByMotel" resultMap="getProvList_Map">
+
+		select prov_no, prov_name
+		    from tbl_province PRO
+		    JOIN tbl_district DIS on PRO.prov_no = fk_prov_no
+		    JOIN 
+		    (
+		        select acom_no, fk_district_no
+		        from tbl_acomodation
+		        where fk_spec_no in (select spec_no from tbl_spec where fk_category_no in
+		                                                                            (select category_no
+		                                                                                from tbl_acom_category
+		                                                                                where category_name = '모텔'))
+		    )ABM
+		    on DIS.district_no = ABM.fk_district_no
+		    group by prov_no, prov_name
+		    order by 1	
+		
+		
+	</select>	
+	
+	
+	<resultMap type="HashMap" id="getDistrictListByProvNo_Map">
+		<result property="district_no" 		 column="district_no" 		javaType="String"/>
+		<result property="sub_city_name" 	 column="sub_city_name" 	javaType="String"/>
+	</resultMap>
+
+	<select id="getDistrictListByProvNo" parameterType="String" resultMap="getDistrictListByProvNo_Map">
+		    
+		WITH DISTRICT_NO_BY_PROV_NO AS(
+		    select prov_no, district_no
+		        from tbl_acom_category ACT
+		        JOIN tbl_spec SPEC on ACT.category_no = SPEC.fk_category_no
+		        JOIN 
+		        (
+		            select prov_no, district_no, fk_spec_no
+		                from tbl_province PRO
+		                JOIN tbl_district DIS on PRO.prov_no = DIS.fk_prov_no
+		                JOIN tbl_acomodation ACOM on DIS.district_no = ACOM.fk_district_no
+		        ) CTP
+		        on SPEC.spec_no = CTP.fk_spec_no
+		        where category_name = '모텔'
+		        group by prov_no, district_no
+		)
+		select DNP.district_no, sub_city_name
+		    from DISTRICT_NO_BY_PROV_NO DNP
+		    JOIN tbl_district DIS on DNP.district_no = DIS.district_no
+		    where prov_no = #{prov_no}
+		    order by district_no	
+	
 	</select>
 	
 	

@@ -13,35 +13,9 @@
 	$(document).ready(function(){
 		
 		let prov_no = '${requestScope.filter_condition_Map.prov_no}';
-	
-		<%-- 모든 지역구번호와 지역구 이름의 리스트를 가져온다. --%>
-		$.ajax({
-			url:"<%= request.getContextPath()%>/getCityListBy.gc",
-			type:"get",
-			dataType:"json",
-			//async:false, 
-			success:function(jsonArr){
-				
-			//	console.log(JSON.stringify(json));
-			// [{"prov_no":"1","prov_name":"서울"},{"prov_no":"2","prov_name":"경기"},{"prov_no":"4","prov_name":"제주"},{"prov_no":"5","prov_name":"부산"}]	
-				
-				if(jsonArr.length > 0){
-					
-					$.each(jsonArr, function(i, elmt){
-						// elmt -> json
-						$(".city").append("<li id='city_"+elmt.prov_no+"' class='city-a'>"+elmt.prov_name+"</li>");						
-					});
-					
-				}
-				
-			},
-			error: function(request, status, error){
-	            alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
-	        }
-			
-		});
+
+		<%-- 숙소중 모텔을 가진 prov_no 의 리스트를 가져와서 .city 에 입력해야한다. --%>
 		
-		*/
 		let is_mouseover_area_pop = false; <%-- 지역 pop 내부에 mouseover 여부 --%>
 		$(".area_pop").css("display","none"); <%-- 초기에는 지역 pop 보이지 않음 --%>
 		
@@ -54,7 +28,7 @@
 		
 		$(".btn-area").mouseenter( <%-- 서울 > 강남/역삼  에 mouseenter --%>
 		function(event){
-			//showCityListByProvNo(prov_no);
+			showCityListByProvNo(prov_no);
 		});
 		
 		
@@ -80,10 +54,10 @@
 			$(event.target).css("cursor","pointer");
 			<%-- 기존에 있던 모든 <a> 를 removeClass 하고 이벤트가 발생한 <a>에 addClass --%>		
 			
-			//console.log($(event.target).attr("id").slice(-1));
+			// console.log($(event.target).attr("id").slice(-1));
 			// 1 2 4 5
 			prov_no = $(event.target).attr("id").slice(-1);
-			//showCityListByProvNo(prov_no);
+			showCityListByProvNo(prov_no);
 			
 		});
 		
@@ -110,13 +84,13 @@
 			async:false, 
 			success:function(jsonArr){
 				
-				console.log(JSON.stringify(jsonArr));
+				//console.log(JSON.stringify(jsonArr));
 				
 				
 				if(jsonArr.length > 0){
 					
 					$(".city_child").empty(); // 이전의 것을 지운다.
-					$(".city_child").append("<li><a href=''>"+$("#city_" + prov_no).text() +" 인기숙소</a></li>");
+					$(".city_child").append("<li><a href='<%=request.getContextPath()%>/acomodation/home/"+prov_no+"'>"+$("#city_" + prov_no).text() +" 인기숙소</a></li>");
 					
 					$.each(jsonArr, function(i, elmt){
 						// elmt -> json
@@ -164,32 +138,34 @@
 		 	<h2>
 		 	<c:choose>
 					<c:when test="${prov_no eq 1}">
-						서울
+						<c:set var="city" value="서울"></c:set>
 					</c:when>
 					<c:when test="${prov_no eq 2}">
-						경기
+						<c:set var="city" value="경기"></c:set>
 					</c:when>
 					<c:when test="${prov_no eq 3}">
-						강원
+						<c:set var="city" value="강원"></c:set>
 					</c:when>
 					<c:when test="${prov_no eq 4}">
-						제주
+						<c:set var="city" value="제주"></c:set>
 					</c:when>
 					<c:when test="${prov_no eq 5}">
-						부산
+						<c:set var="city" value="부산"></c:set>
 					</c:when>
 			</c:choose>
-				지역편
+				${city}지역편
 		 	</h2>
 		 	<div class="area">
 		 		<div class="btn-area">
-		 			<span></span>
-		 			<strong class="sub_city"></strong>
+		 			<span>${city}</span>
+		 			<strong class="sub_city">${city} 인기숙소</strong>
 		 		</div>
 		 		<div class="area_pop">
 		 			<div class="iscroll_01">
 		 				<ul class="city">
-		 				
+		 					<c:forEach var="city" items="${requestScope.cityListByMotel}">
+		 						<li id='city_${city.prov_no}' class='city-a'>${city.prov_name}</li>
+		 					</c:forEach>
 		 				</ul>
 		 			</div>
 		 			<div class="iscroll_02">

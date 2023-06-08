@@ -243,9 +243,9 @@ public class AcomodationService implements InterAcomodationService {
 
 	// category_no 와 prov_no 를 입력받아서 지역별 어느 지역구가 있는지 조회
 	@Override
-	public List<Map<String, String>> getDistrictListByProvNo(Map<String, String> paraMap) {
-		List<Map<String, String>> districtListByProvNoMap = dao.getDistrictListByProvNo(paraMap);
-		return districtListByProvNoMap;
+	public List<Map<String, String>> getDistrictListByCategoryProvNo(Map<String, String> paraMap) {
+		List<Map<String, String>> districtListByCategoryProvNoMap = dao.getDistrictListByCategoryProvNo(paraMap);
+		return districtListByCategoryProvNoMap;
 	}
 
 
@@ -255,7 +255,7 @@ public class AcomodationService implements InterAcomodationService {
 		
 		List<Map<String, String>> acomListByProvNo = new ArrayList<>();
 		
-		// 1. 입력된 날짜에 대해 예약이 가능한 지역번호별 객실번호를 가져온다.
+		// 1. 입력된 날짜에 대해 예약이 가능한 지역번호별 객실번호를 가져오되 모텔만 가져온다.
 		List<String> availableRoomIdList = dao.getAvailableRoomIdByProvNo(filter_condition_Map);
 		
 		if(availableRoomIdList == null || availableRoomIdList.size() == 0) {
@@ -368,6 +368,21 @@ public class AcomodationService implements InterAcomodationService {
 		
 		return acomListByProvNo;
 		
+	}
+
+
+	// 모텔이 존재하는 지역번호와 지역명을 가져와야 한다.
+	@Override
+	public List<Map<String, String>> getcityListByMotel() {
+		List<Map<String, String>> cityListByMotel = dao.getcityListByMotel(); // 모텔이 존재하는 지역번호와 지역명을 가져와야 한다.
+		return cityListByMotel;
+	}
+
+
+	@Override
+	public List<Map<String, String>> getDistrictListByProvNo(String prov_no) {
+		List<Map<String, String>> districtListByProvNoMap = dao.getDistrictListByProvNo(prov_no);
+		return districtListByProvNoMap;
 	}
 
 	

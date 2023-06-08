@@ -48,10 +48,15 @@ public interface InterAcomodationDAO {
 	List<Map<String, String>> getCityListByCategory(String category_no);
 
 	// category_no 와 prov_no 를 입력받아서 지역별 어느 지역구가 있는지 조회
-	List<Map<String, String>> getDistrictListByProvNo(Map<String, String> paraMap);
+	List<Map<String, String>> getDistrictListByCategoryProvNo(Map<String, String> paraMap);
 
 	// 입력된 날짜에 대해 예약이 가능한 지역번호별 객실번호를 가져온다.
 	List<String> getAvailableRoomIdByProvNo(Map<String, Object> filter_condition_Map);
+
+	// 모텔이 존재하는 지역번호와 지역명을 가져와야 한다.
+	List<Map<String, String>> getcityListByMotel();
+
+	List<Map<String, String>> getDistrictListByProvNo(String prov_no);
 	
 	
 

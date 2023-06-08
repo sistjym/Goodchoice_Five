@@ -460,10 +460,10 @@ public class AcomodationController {
 		
 	}
 	
-	// category_no 와 prov_no 를 입력받아서 지역별 어느 지역구가 있는지 조회
+	// category_no 와 prov_no 를 입력받아서 카테고리별 지역별 어느 지역구가 있는지 조회
 	@ResponseBody
-	@GetMapping("/showCityListByProvNo.gc")
-	public String showCityListByProvNo(HttpServletRequest request) {
+	@GetMapping("/showCityListByCategoryProvNo.gc")
+	public String showCityListByCategoryProvNo(HttpServletRequest request) {
 		
 		String category_no = request.getParameter("category_no");
 		String prov_no = request.getParameter("prov_no");
@@ -474,11 +474,11 @@ public class AcomodationController {
 		paraMap.put("prov_no", prov_no);
 		
 	
-		List<Map<String, String>> districtListByProvNoMap = service.getDistrictListByProvNo(paraMap);
+		List<Map<String, String>> districtListByCategoryProvNoMap = service.getDistrictListByCategoryProvNo(paraMap);
 		
 		JSONArray jsonArr = new JSONArray();
 		
-		for(Map<String, String> districtMap : districtListByProvNoMap) {
+		for(Map<String, String> districtMap : districtListByCategoryProvNoMap) {
 			JSONObject jsonObj = new JSONObject();
 			jsonObj.put("category_no", districtMap.get("category_no"));
 			jsonObj.put("district_no", districtMap.get("district_no"));
@@ -493,12 +493,12 @@ public class AcomodationController {
 	
 	// 인기 숙소 구현
 	
-	@GetMapping("/acomodation/home/{prov_no}")
+	@GetMapping("/acomodation/home/{prov_no}") // 지역별 모텔의 인기숙소를 보여준다.
 	public String acomodation_search_view(HttpServletRequest request, @PathVariable String prov_no) {
 
 		// https://www.goodchoice.kr/product/home/1
 
-		if(!Myutil.isNumericalStr(prov_no)) { // 여기에 DB에 존재하는 지역번호인지 판별하는 메소드가 추가되어야 한다.
+		if(!Myutil.isNumericalStr(prov_no)) { // 여기에 DB에 모텔 카테고리에 존재하는 지역번호인지 판별하는 메소드가 추가되어야 한다.
 		
 			request.setAttribute("message", "유효하지 않은 페이지 입니다.(존재하지 않는 지역번호)");
 			request.setAttribute("loc", "javascript:history.back()");
@@ -506,7 +506,6 @@ public class AcomodationController {
 			
 		}
 		
-
 		String check_in_date = Myutil.getDefaultCheckInDate();
 		String check_out_date =  Myutil.getDefaultCheckOutDate();
 		
@@ -518,6 +517,17 @@ public class AcomodationController {
 		
 		List<Map<String, String>> acomListByProvNo = service.getAcomListByProvNo(filter_condition_Map); // 인기숙소 리스트를 가져온다.
 		
+		List<Map<String, String>> cityListByMotel = service.getcityListByMotel(); // 모텔이 존재하는 지역번호와 지역명을 가져와야 한다.
+		
+		/*
+		for(Map<String, String> provMap : cityListByMotel) {
+			System.out.println("prov_no : " + provMap.get("prov_no"));
+			System.out.println("prov_name : " + provMap.get("prov_name"));
+			System.out.println("-------------------------------------------");
+		}
+		*/
+		
+		request.setAttribute("cityListByMotel", cityListByMotel);
 		request.setAttribute("acomListByProvNo", acomListByProvNo);
 		request.setAttribute("filter_condition_Map", filter_condition_Map);
 		
@@ -525,6 +535,31 @@ public class AcomodationController {
 	}	
 	
 	
+	// category_no 와 prov_no 를 입력받아서 카테고리별 지역별 어느 지역구가 있는지 조회
+		@ResponseBody
+		@GetMapping("/showCityListByProvNo.gc")
+		public String showCityListByProvNo(HttpServletRequest request) {
+			
+
+			String prov_no = request.getParameter("prov_no");
+						
+		
+			List<Map<String, String>> districtListByProvNoMap = service.getDistrictListByProvNo(prov_no);
+			
+			JSONArray jsonArr = new JSONArray();
+			
+			for(Map<String, String> districtMap : districtListByProvNoMap) {
+				JSONObject jsonObj = new JSONObject();
+				jsonObj.put("district_no", districtMap.get("district_no"));
+				jsonObj.put("sub_city_name", districtMap.get("sub_city_name"));
+			
+				jsonArr.put(jsonObj);
+			}
+			
+			return jsonArr.toString();
+			
+		}
+
 	
 	
 	
