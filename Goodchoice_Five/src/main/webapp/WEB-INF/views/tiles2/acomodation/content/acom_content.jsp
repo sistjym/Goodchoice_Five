@@ -29,7 +29,7 @@
 						
 					
 						<c:forEach var="acom" items="${requestScope.acomSearchList}">
-							<li onclick="javascript:location.href='#'">
+							<li onclick="javascript:location.href='<%=request.getContextPath()%>/details/detail.gc?acom_no=${acom.acom_no}&category_no=${filter_condition_Map.category_no}&check_in_date=${filter_condition_Map.check_in_date}&check_out_date=${filter_condition_Map.check_out_date}'">
 								<div class="room-img">
 									
 									<img src="<%= request.getContextPath()%>/resources/images/논현올인.jpg" alt="" height="400"/>
