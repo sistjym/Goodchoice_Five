@@ -1,10 +1,8 @@
-v<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
 <%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%-- === #24. tiles 를 사용하는 레이아웃1 페이지 만들기 === --%>
-<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
     
 <%
     String ctxPath = request.getContextPath();
@@ -13,61 +11,26 @@ v<%@ page language="java" contentType="text/html; charset=UTF-8"
     
 <html>
 <head>
-
 <!-- Required meta tags -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" type="text/css" href="<%= ctxPath%>/resources/bootstrap-4.6.0-dist/css/bootstrap.min.css" > 
-
-<!-- Font Awesome 6 Icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
-
-<!-- 직접 만든 CSS -->
-
-
-<!-- Optional JavaScript -->
-<script type="text/javascript" src="<%= ctxPath%>/resources/js/jquery-3.6.4.min.js" type="text/javascript"></script>
-<script type="text/javascript" src="<%= ctxPath%>/resources/bootstrap-4.6.0-dist/js/bootstrap.bundle.min.js" ></script> 
-
-
-<!-- jQueryUI css 및 JS -->
-<link rel="stylesheet" type="text/css" href="<%= ctxPath%>/resources/jquery-ui-1.13.1.custom/jquery-ui.min.css" />
-<script type="text/javascript" src="<%= ctxPath%>/resources/jquery-ui-1.13.1.custom/jquery-ui.min.js"></script>
-
-  <!-- slick-slider -->
-  <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
-  <link rel="stylesheet" href="http://cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
-  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-  <script type="text/javascript" src="http://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-
-
-<!-- RangeDatePicker JS -->
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-  
-  
- <!-- 카카오 맵 src --> 
- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5615f8a58c5a93ad0db89da8700e5dfa"></script> 
-
-
-
 
 <style type="text/css">
 
 div#container{
 
-	border:solid 1px ;
+/*	border:solid 1px ;*/
 	
 	padding-bottom: 180px;
 }
 
 div#top{
-
+	
+	
  	border:solid 10px white; 
-	margin: 0 auto;
+	margin-top: 40px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 
@@ -807,7 +770,45 @@ div.review_content {
 </style>
 
 
-<title>안녕하세요</title>
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" type="text/css" href="<%= ctxPath%>/resources/bootstrap-4.6.0-dist/css/bootstrap.min.css" > 
+
+<!-- Font Awesome 6 Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+
+<!-- 직접 만든 CSS -->
+
+
+<!-- Optional JavaScript -->
+<script type="text/javascript" src="<%= ctxPath%>/resources/js/jquery-3.6.4.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="<%= ctxPath%>/resources/bootstrap-4.6.0-dist/js/bootstrap.bundle.min.js" ></script> 
+
+
+<!-- jQueryUI css 및 JS -->
+<link rel="stylesheet" type="text/css" href="<%= ctxPath%>/resources/jquery-ui-1.13.1.custom/jquery-ui.min.css" />
+<script type="text/javascript" src="<%= ctxPath%>/resources/jquery-ui-1.13.1.custom/jquery-ui.min.js"></script>
+
+  <!-- slick-slider -->
+  <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+  <link rel="stylesheet" href="http://cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script type="text/javascript" src="http://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+
+<!-- RangeDatePicker JS -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+  
+  
+ <!-- 카카오 맵 src --> 
+ <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5615f8a58c5a93ad0db89da8700e5dfa"></script> 
+
+
+
+
+
+
 
 
 <script>
@@ -815,6 +816,7 @@ div.review_content {
 
 
 $(document).ready(function() {
+	
 		
 		
 	  <%-- div#top_right 캐러셀 및 캐러셀 위 배경부분  시작--%>
@@ -893,20 +895,21 @@ $(document).ready(function() {
 		
 		  var previousStartDate = null;  // 이전에 선택한 값을 저장할 변수
 	       var previousEndDate = null;
-	
-    $("#daterange").daterangepicker({
-        locale: {
-        	"format": 'MM월 DD일',
-            "applyLabel": "확인",
-             "cancelLabel": "취소",
-            "daysOfWeek": ["일", "월", "화", "수", "목", "금", "토"],
-            "monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
-            },
-        startDate: '05/20/2023',
-        endDate: '05/21/2023',
-        linkedCalendars: false, // 시작일과 종료일을 개별적으로 선택하도록 설정합니다.
-        autoUpdateInput: false // 입력란 값을 자동으로 업데이트하지 않도록 설정합니다.
-    });
+		   
+		  
+	       $("#daterange").daterangepicker({
+	    	    locale: {
+	    	        "format": 'MM월 DD일',
+	    	        "applyLabel": "확인",
+	    	        "cancelLabel": "취소",
+	    	        "daysOfWeek": ["일", "월", "화", "수", "목", "금", "토"],
+	    	        "monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
+	    	    },
+	    	    startDate: moment().format('MM/DD/YYYY'),
+	    	    endDate: moment().add(1, 'day').format('MM/DD/YYYY'), // 내일 날짜로 설정합니다.
+	    	    linkedCalendars: false,
+	    	    autoUpdateInput: false
+	    	});
     
     
     <%-- 캘린더 끝 --%>
@@ -951,7 +954,7 @@ $(document).ready(function() {
              $(this).val(previousStartDate.format('MM월 DD일') + ' ~ ' + previousEndDate.format('MM월 DD일') + '  ' + previousEndDate.diff(previousStartDate, 'days')  + '박');
              $("ul.disc-list > li.modal_date").text(previousStartDate.format('MM월 DD일') + ' ~ ' + previousEndDate.format('MM월 DD일'));
            } else {
-        	   console.log("히히히 엘스다");
+        	//   console.log("히히히 엘스다");
              $(this).data('daterangepicker').setStartDate(defaultStartDate);
              $(this).data('daterangepicker').setEndDate(defaultEndDate);
              $(this).val(defaultStartDate + ' ~ ' + defaultEndDate + '  ' + dateDiff + '박');
@@ -1573,7 +1576,6 @@ function myFunction_PrevRightSpan() {
 </head>
 <body>
 	<div id="container">
-	
 		
 		<div class="row custom-topcontents col-md-9" id="top">
 		
