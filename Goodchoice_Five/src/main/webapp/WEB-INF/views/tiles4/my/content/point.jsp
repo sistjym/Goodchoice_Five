@@ -3,21 +3,21 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<div id="content" class="sub_wrap my_wrap" data-v-f012d516="" data-v-6523adef="">
+<div id="content" class="sub_wrap my_wrap">
 	
                 
-    <main class="container align_rt" data-v-f012d516="">
-    	<input type="hidden" name="page" value="1" data-v-f012d516=""> 
-    	<h3 class="page-title pc-only" data-v-f012d516="">포인트</h3> 
-    	<header class="point-header" data-v-f012d516="">
-    		<div data-v-a44a2b76="" data-v-f012d516="">
-    			<div class="points-summary" data-v-a44a2b76="">
-    				<div class="upper-col" data-v-a44a2b76="">
-    					<div class="heading-text" data-v-a44a2b76="">
-    						<p class="heading-text__title" data-v-a44a2b76="">내 포인트</p> 
-    						<p class="heading-text__current-point" data-v-a44a2b76="">0 P</p>
+    <main class="container align_rt" >
+    	<input type="hidden" name="page" value="1" > 
+    	<h3 class="page-title pc-only" >포인트</h3> 
+    	<header class="point-header" >
+    		<div  >
+    			<div class="points-summary" >
+    				<div class="upper-col" >
+    					<div class="heading-text">
+    						<p class="heading-text__title" >내 포인트</p> 
+    						<p class="heading-text__current-point"> P</p>
     					</div> 
-    					<svg width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" class="icon-info" data-v-a44a2b76="">
+    					<svg width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" class="icon-info" >
     						<path fill-rule="evenodd" clip-rule="evenodd" d="M17.5 10a7.5 7.5 0 11-15 0 7.5 7.5 0 0115 0zM11 6a1 1 0 11-2 0 1 1 0 012 0zm0 9V9H9v6h2z" fill="#000" fill-opacity=".8"></path>
     					</svg>
     				</div> 
@@ -26,7 +26,7 @@
     		 		</div>
     		 	</div>
     		 </div> 
-    		 <nav class="point-filter" data-v-f012d516="">
+    		 <nav class="point-filter" >
     		 	<button class="btn-capsule btn-capsule--selected">
     		 		<span>전체</span>
     		 	</button>
@@ -42,6 +42,10 @@
     		 </nav>
 		</header> 
 		<section class="points-list"> 
+			<c:if test="${not empty requestScope.memberPointList}">
+			
+			</c:if> <%-- if 문 끝 나는 곳 --%>
+			
 			<c:if test="${empty requestScope.memberPointList}"> <%-- 포인트 기록이 없으면은 포인트 지급/차감내역이 없습니다. --%>
 		
 				<div style="text-align: center;">
