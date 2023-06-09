@@ -1,10 +1,11 @@
 @charset "UTF-8";
 
-body {font-family: Arial, Helvetica, sans-serif, 돋움; }
+body {font-family: Pretendard,"Pretendard_Alt","Apple SD Gothic Neo","맑은 고딕","Malgun Gothic",sans-serif!important;
+} }
 
 #mycontainer	{ padding:20px; }
 #myheader		{ display: flex; min-height:100px; position: relative; top: 60px;}
-#mycontent		{ min-height:900px; position: relative; top:60px; padding-top: 40px; background-color:#F5F5F5;}
-#myfooter		{ display: flex; min-height:120px; position: relative; top:60px; background-color:#555555; margin-bottom: 70px;}
+#mycontent		{ min-height:1200px; position: relative; top:60px; padding-top: 40px; background-color:#F5F5F5;}
+#myfooter		{ min-height:120px; position: relative; top:60px; background-color:#555555; margin-bottom: 70px;}
 	
 #myheader a {text-decoration:none;}

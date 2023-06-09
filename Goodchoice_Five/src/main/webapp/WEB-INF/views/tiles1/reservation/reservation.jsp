@@ -20,75 +20,115 @@
 
 </script>   
 
-		<div id="contents">
+		<div id="reserve_contents">
 			<div class="left">
-				<div>
-					<section class="info_chkin">
+				<div  class="info_chkin">
+					<section>
 						<h3>예약자 정보</h3>
 						<strong>예약자 이름 </strong> 
-						<p>
-							<input type="text" name="userName" placeholder="체크인시 필요한 정보입니다." maxlength="20" data-v-d5c1122e="">
+						<p class="inp_wrap remove">
+							<input type="text" name="userName" placeholder="체크인시 필요한 정보입니다." maxlength="20">
 						</p>
-						<p data-show="name" class="alert_txt" style="visibility: hidden" data-v-d5c1122e="">
+						<p data-show="name" class="alert_txt" style="visibility: hidden">
 				          	  한글, 영문, 숫자만 입력 가능. (문자 사이 공백은 1칸만 입력 가능)
 				        </p>
 				        <div>
 				        	<strong>휴대폰 번호 </strong>
-				        	<span class="safety_txt" data-v-413dfd7e="">개인 정보 보호를 위해 안심번호로 숙소에 전송됩니다.</span>
+				        	<span class="safety_txt">개인 정보 보호를 위해 안심번호로 숙소에 전송됩니다.</span>
 				        </div>
 				        <!-- 비회원 진행 시 인증 번호 입력하는 부분  -->
 				        <div class="phone_confirm">
-				        	<div class="input-box">
-				        		<input type="tel" name="userPhone" placeholder="체크인시 필요한 정보입니다." maxlength="13" value="" class="input" data-v-413dfd7e="">
-				        		<div data-v-413dfd7e="" class="cancel-icn-touch"><svg data-v-413dfd7e="" height="20" width="20" xmlns="http://www.w3.org/2000/svg" class="cancel-icn"><path data-v-413dfd7e="" d="M10 17.5a7.5 7.5 0 110-15 7.5 7.5 0 010 15zm0-8.914L7.172 5.757 5.757 7.172 8.586 10l-2.829 2.828 1.415 1.415L10 11.414l2.828 2.829 1.415-1.415L11.414 10l2.829-2.828-1.415-1.415z"></path></svg></div>
-				        	</div>
-							<button type="button" class="btn_send btn_confirm phone-auth-btn" data-v-413dfd7e="">
-						                인증번호 전송
-						    </button>
-						    <p data-show="tel" class="alert_txt error-message" style="" data-v-413dfd7e="">휴대폰 번호를 확인해 주세요.</p>
+				        	<p class="input-box2">
+				        		<input type="tel" name="userPhone" placeholder="체크인시 필요한 정보입니다." maxlength="13" value="" class="input validation-required-input">
+				        		<button type="button" class="btn_send btn_confirm phone-auth-btn" >
+							                인증번호 전송
+							    </button>
+							 
+				        	</p>
+				        	   <p data-show="tel" class="alert_txt error-message">휴대폰 번호를 확인해 주세요.</p>
+							
 				        </div>
-				        <div class="guest_login" style="display: block" data-v-d5c1122e=""><a data-v-d5c1122e="">
-						            로그인 후 예약하시면<br data-v-d5c1122e="">할인 쿠폰과 추가 혜택을 받을수
-						            있어요<br data-v-d5c1122e=""> <span data-v-d5c1122e="">로그인</span></a>
-			            </div>
+				        
 					</section>
 				</div>
-				<div>
-					<section class="price_wrap total_price" data-v-6119f4be="">
-						<p data-v-6119f4be="">
-							<strong data-v-6119f4be="">
-								<b data-v-6119f4be="">총 결제 금액</b>(VAT포함)
-							</strong>
-							<span class="in_price_app" data-v-6119f4be="">100,000원</span>
-						</p> <!----> 
-						<ul data-v-6119f4be=""><!----> 
-							<li data-v-6119f4be="">
-				                                    해당 객실가는 세금, 봉사료가 포함된 금액입니다
-				            </li> 
-				            <li data-v-6119f4be="">
-	                           	 결제완료 후 
-	                           	<span data-v-6119f4be="">예약자 이름</span>으로 바로
-			                    <span data-v-6119f4be="">체크인</span> 하시면 됩니다
-			                </li>
-			            </ul>
-                    </section>
-				</div>
-				<div>
-					<section  class="">
-					
-					</section>
-				</div>
+				<section class="pay_select" data-v-6119f4be="">
+					<h3 data-v-6119f4be="">결제수단 선택</h3> 
+					<select id="payment-select" class="select_type_1" data-v-6119f4be="">
+						<option  selected="selected" value="KAKAO" >카카오페이</option>
+						<option data-minprice="0" value="CARD">신용카드</option>	
+                    </select>
+                </section>
+                
+                
+                <!--  개인 정보 보호  박스 -->
+				<section class="agree">
+					<p class="all_check" data-v-d63b628c="">
+						<label data-v-d63b628c="">
+							<input type="checkbox" name="checkAll" class="inp_chk_02" data-v-d63b628c=""> 
+							<span data-v-d63b628c="">전체 동의</span>
+						</label>
+					</p> 
+					<p data-v-d63b628c="">
+						<input type="checkbox" name="checkOne" class="inp_chk_02" data-v-d63b628c=""> 
+						<span onclick="pop_agree_01();" data-v-d63b628c="">
+							<i data-v-d63b628c="">숙소이용규칙 및 취소/환불규정 동의</i><b data-v-d63b628c=""> (필수)</b>
+						</span>
+					</p> 
+					<p data-v-d63b628c="">
+						<input type="checkbox" name="checkOne" class="inp_chk_02" data-v-d63b628c=""> 
+						<span onclick="pop_agree_02();" data-v-d63b628c="">
+							<i data-v-d63b628c="">개인정보 수집 및 이용 동의</i><b data-v-d63b628c=""> (필수)</b>
+						</span>
+					</p> 
+					<p data-v-d63b628c="">
+						<input type="checkbox" name="checkOne" class="inp_chk_02" data-v-d63b628c=""> 
+						<span onclick="pop_agree_03();" data-v-d63b628c="">
+							<i data-v-d63b628c="">개인정보 제 3자 제공 동의</i><b data-v-d63b628c=""> (필수)</b>
+						</span></p> 
+					<p class="guest_chk_area" data-v-d63b628c="">
+						<input type="checkbox" name="checkOne" class="inp_chk_02" data-v-d63b628c=""> 
+						<span onclick="pop_agree_04();" data-v-d63b628c="">
+							<i data-v-d63b628c="">만 14세 이상 확인</i><b data-v-d63b628c=""> (필수)</b>
+						</span>
+					</p>
+				</section>
+		
 			</div>
 			
 			<div class="right">
 				<div>
-					<section>
-					
-					</section>
+					<section class="info">
+						<p class="name" ><strong data-v-33033856="">숙소이름</strong> 예: 엘리에나 호텔 </p>
+						<p><strong>객실타입/기간</strong> 예: 부티크 퀸 / 1박</p> 
+					    <p><strong>체크인</strong> 예: 06.08 목 15:00</p> 
+					    <p><strong>체크아웃</strong>예: 06.09 금 11:00 </p>
+				    </section>
+					<section class="total_price_pc">
+						<p id="price_box">
+							<strong>
+								<b >총 결제 금액</b>(VAT포함)
+							</strong>
+							<span class="price" >100,000원</span>
+						</p> 
+						<ul>
+							<li>
+				                                         ※ 해당 객실가는 세금, 봉사료가 포함된 금액입니다
+				            </li> 
+				            <li>
+	                                                                           ※ 결제완료 후 
+	                           	&nbsp;<span>예약자 이름</span>으로 바로
+			                    &nbsp;<span >체크인</span> 하시면 됩니다
+			                </li>
+			            </ul>
+                    </section>
 				</div>
-			</div>
-		
-		
+				<button type="button" class="btn_pay gra_left_right_red" >
+				  	 결제하기
+				</button>
+			</div> <!--  end of right -->
+			
+			
+			
 		
 		</div>  
     </body>
