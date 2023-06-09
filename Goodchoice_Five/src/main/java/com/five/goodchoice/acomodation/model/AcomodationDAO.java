@@ -107,6 +107,41 @@ public class AcomodationDAO implements InterAcomodationDAO {
 			
 			return subTopBtnDataMap;
 		}
+
+		// category_no를 입력받아서 그에 해당하는 prov_no 를 가져오는 메소드
+		@Override
+		public List<Map<String, String>> getCityListByCategory(String category_no) {
+			List<Map<String, String>> cityListByCategoryMap = sqlsession.selectList("acomodation.getCityListByCategory", category_no);
+			
+			return cityListByCategoryMap;
+		}
+
+		// category_no 와 prov_no 를 입력받아서 지역별 어느 지역구가 있는지 조회
+		@Override
+		public List<Map<String, String>> getDistrictListByCategoryProvNo(Map<String, String> paraMap) {
+			List<Map<String, String>> districtListByCategoryProvNoMap = sqlsession.selectList("acomodation.getDistrictListByCategoryProvNo", paraMap);
+			return districtListByCategoryProvNoMap;
+		}
+
+		//  입력된 날짜에 대해 예약이 가능한 지역번호별 객실번호를 가져온다.
+		@Override
+		public List<String> getAvailableRoomIdByProvNo(Map<String, Object> filter_condition_Map) {
+			List<String> availableRoomIdList = sqlsession.selectList("acomodation.getAvailableRoomIdByProvNo", filter_condition_Map);
+			return availableRoomIdList;
+		}
+
+		// 모텔이 존재하는 지역번호와 지역명을 가져와야 한다.
+		@Override
+		public List<Map<String, String>> getcityListByMotel() {
+			List<Map<String, String>> cityListByMotel = sqlsession.selectList("acomodation.getcityListByMotel");
+			return cityListByMotel;
+		}
+
+		@Override
+		public List<Map<String, String>> getDistrictListByProvNo(String prov_no) {
+			List<Map<String, String>> districtListByProvNoMap = sqlsession.selectList("acomodation.getDistrictListByProvNo", prov_no);
+			return districtListByProvNoMap;
+		}
 		
 		
 		

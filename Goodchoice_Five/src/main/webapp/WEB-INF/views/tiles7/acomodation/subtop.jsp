@@ -12,60 +12,9 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		
-		let prov_no = "";
-		const category_no = '${requestScope.filter_condition_Map.category_no}';
-		
-		
-		<%-- Ajax 로 district_no 입력해서 prov_name 과 sub_city_name 을 알아오자 --%>
-		$.ajax({
-			url:"<%= request.getContextPath()%>/getSubtopBtnData.gc",
-			data:{'district_no':'${requestScope.filter_condition_Map.district_no}'},
-			type:"get",
-			dataType:"json",
-			async:false, 
-			success:function(json){
-				
-				// console.log(JSON.stringify(json));
-				// {"prov_name":"서울","sub_city_name":"삼성/압구정/청담/논현"}
-				$(".btn-area > span").text(json.prov_name);
-				$(".sub_city").text(json.sub_city_name);
-				prov_no = json.prov_no;
-				
-			},
-			error: function(request, status, error){
-	            alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
-	        }
-			
-		});
-		
-		<%-- Ajax category_no를 입력받아서 그에 해당하는 prov_no 를 가져와서 .city에 넣어야 한다. --%>
-		$.ajax({
-			url:"<%= request.getContextPath()%>/getCityListByCategory.gc",
-			data:{'category_no':category_no},
-			type:"get",
-			dataType:"json",
-			//async:false, 
-			success:function(jsonArr){
-				
-			//	console.log(JSON.stringify(json));
-			// [{"prov_no":"1","prov_name":"서울"},{"prov_no":"2","prov_name":"경기"},{"prov_no":"4","prov_name":"제주"},{"prov_no":"5","prov_name":"부산"}]	
-				
-				if(jsonArr.length > 0){
-					
-					$.each(jsonArr, function(i, elmt){
-						// elmt -> json
-						$(".city").append("<li id='city_"+elmt.prov_no+"' class='city-a'>"+elmt.prov_name+"</li>");						
-					});
-					
-				}
-				
-			},
-			error: function(request, status, error){
-	            alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
-	        }
-			
-		});
-		
+		let prov_no = '${requestScope.filter_condition_Map.prov_no}';
+
+		<%-- 숙소중 모텔을 가진 prov_no 의 리스트를 가져와서 .city 에 입력해야한다. --%>
 		
 		let is_mouseover_area_pop = false; <%-- 지역 pop 내부에 mouseover 여부 --%>
 		$(".area_pop").css("display","none"); <%-- 초기에는 지역 pop 보이지 않음 --%>
@@ -79,7 +28,7 @@
 		
 		$(".btn-area").mouseenter( <%-- 서울 > 강남/역삼  에 mouseenter --%>
 		function(event){
-			showCityListByCategoryProvNo(category_no, prov_no);
+			showCityListByProvNo(prov_no);
 		});
 		
 		
@@ -105,10 +54,10 @@
 			$(event.target).css("cursor","pointer");
 			<%-- 기존에 있던 모든 <a> 를 removeClass 하고 이벤트가 발생한 <a>에 addClass --%>		
 			
-			//console.log($(event.target).attr("id").slice(-1));
+			// console.log($(event.target).attr("id").slice(-1));
 			// 1 2 4 5
 			prov_no = $(event.target).attr("id").slice(-1);
-			showCityListByCategoryProvNo(category_no, prov_no);
+			showCityListByProvNo(prov_no);
 			
 		});
 		
@@ -124,21 +73,19 @@
 		
 	});
 	
-	<%-- category_no 와 prov_no 를 입력받아서 지역별 어느 지역구가 있는지 구해야함 --%>
-	function showCityListByCategoryProvNo(category_no, prov_no){
+	<%-- prov_no 를 입력받아서 지역별 어느 지역구가 있는지 구해야함 --%>
+	function showCityListByProvNo(prov_no){
 	
 		$.ajax({
-			url:"<%= request.getContextPath()%>/showCityListByCategoryProvNo.gc",
-			data:{'category_no' : category_no, 'prov_no': prov_no},
+			url:"<%= request.getContextPath()%>/showCityListByProvNo.gc",
+			data:{'prov_no': prov_no},
 			type:"get",
 			dataType:"json",
 			async:false, 
 			success:function(jsonArr){
 				
 				//console.log(JSON.stringify(jsonArr));
-				/*
-				[{"district_no":"2","sub_city_name":"삼성/압구정/청담/논현","category_no":"2"},{"district_no":"3","sub_city_name":"잠실/방이/송파","category_no":"2"},{"district_no":"4","sub_city_name":"서초/방배/반포/교대","category_no":"2"},{"district_no":"5","sub_city_name":"서울역/이태원/용산","category_no":"2"}]
-				*/
+				
 				
 				if(jsonArr.length > 0){
 					
@@ -147,14 +94,12 @@
 					
 					$.each(jsonArr, function(i, elmt){
 						// elmt -> json
-						$(".city_child").append("<li><a href='<%=request.getContextPath()%>/acomodation/search/"+elmt.category_no+"/"+elmt.district_no+"'>"+elmt.sub_city_name+"</a></li>");						
+						$(".city_child").append("<li><a href='<%=request.getContextPath()%>/acomodation/search/2/"+elmt.district_no+"'>"+elmt.sub_city_name+"</a></li>");						
 					});
 
 					
 				}
-				
-				
-				
+					
 				/*
 					
  					<li><a href="#">강남/역삼/삼성/논현</a></li>
@@ -192,26 +137,35 @@
 		<section class="subtop">
 		 	<h2>
 		 	<c:choose>
-					<c:when test="${requestScope.filter_condition_Map.category_no eq 1}">
-						호텔
+					<c:when test="${prov_no eq 1}">
+						<c:set var="city" value="서울"></c:set>
 					</c:when>
-					<c:when test="${requestScope.filter_condition_Map.category_no eq 2}">
-						모텔
+					<c:when test="${prov_no eq 2}">
+						<c:set var="city" value="경기"></c:set>
 					</c:when>
-					<c:when test="${requestScope.filter_condition_Map.category_no eq 3}">
-						펜션
+					<c:when test="${prov_no eq 3}">
+						<c:set var="city" value="강원"></c:set>
+					</c:when>
+					<c:when test="${prov_no eq 4}">
+						<c:set var="city" value="제주"></c:set>
+					</c:when>
+					<c:when test="${prov_no eq 5}">
+						<c:set var="city" value="부산"></c:set>
 					</c:when>
 			</c:choose>
+				${city}지역편
 		 	</h2>
 		 	<div class="area">
 		 		<div class="btn-area">
-		 			<span></span>
-		 			<strong class="sub_city"></strong>
+		 			<span>${city}</span>
+		 			<strong class="sub_city">${city} 인기숙소</strong>
 		 		</div>
 		 		<div class="area_pop">
 		 			<div class="iscroll_01">
 		 				<ul class="city">
-		 				
+		 					<c:forEach var="city" items="${requestScope.cityListByMotel}">
+		 						<li id='city_${city.prov_no}' class='city-a'>${city.prov_name}</li>
+		 					</c:forEach>
 		 				</ul>
 		 			</div>
 		 			<div class="iscroll_02">

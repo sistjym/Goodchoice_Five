@@ -11,28 +11,22 @@
 	});
 
 </script>    
-				
-		<section class="btn_wrap_width_3">
-			<button type="button" id="DISTANCE" class="top_sort_btn btn btn-outline-none rounded my-2" onclick="goSearch(this.id)"><span>거리 순</span></button>
-			<button type="button" id="ROWPRICE" class="top_sort_btn btn btn-outline-none rounded my-2" onclick="goSearch(this.id)"><span>낮은 가격 순</span></button>
-			<button type="button" id="HIGHPRICE" class="top_sort_btn btn btn-outline-none rounded my-2" onclick="goSearch(this.id)"><span>높은 가격 순</span></button>
-		</section>
+			
 					
 		<section id="list">			
 			<section class="list-wrap">
 			
-				<c:if test="${empty requestScope.acomSearchList}">
+				<c:if test="${empty requestScope.acomListByProvNo}">
 					<div style="text-align: left; margin-top: 70px ;">검색조건에 맞는 숙소가 없습니다.</div>
 				</c:if>
 				<ul>					
-					<c:if test="${!empty requestScope.acomSearchList}">
+					<c:if test="${!empty requestScope.acomListByProvNo}">
 						
 					
-						<c:forEach var="acom" items="${requestScope.acomSearchList}">
-							<li onclick="javascript:location.href='<%=request.getContextPath()%>/details/detail.gc?acom_no=${acom.acom_no}&category_no=${filter_condition_Map.category_no}&check_in_date=${filter_condition_Map.check_in_date}&check_out_date=${filter_condition_Map.check_out_date}'">
+						<c:forEach var="acom" items="${requestScope.acomListByProvNo}">
+							<li onclick="javascript:location.href='<%=request.getContextPath()%>/details/detail.gc?acom_no=${acom.acom_no}&category_no=2&check_in_date=${filter_condition_Map.check_in_date}&check_out_date=${filter_condition_Map.check_out_date}'">
 								<div class="room-img">
-									
-									<img src="<%= request.getContextPath()%>/resources/images/논현올인.jpg" alt="" height="400"/>
+									<img src="<%= request.getContextPath()%>/resources/images/논현올인.jpg" alt="" height="300"/>
 									<!-- TODO. 숙소 이름을 공백을 제거한 다음 .jpg 를 붙여 이미지를 완성해야 한다. -->
 								</div>
 								<div class="room-info">
