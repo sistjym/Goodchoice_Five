@@ -61,7 +61,7 @@
 		</div>
 		
 		<div id="mysubtop">
-			<tiles:insertAttribute name="subtop" />
+			<tiles:insertAttribute name="subtop" /> 
 		</div>		
 		
 		<div id="mycontent">

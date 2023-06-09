@@ -5,6 +5,7 @@ body {font-family: Arial, Helvetica, sans-serif, 돋움; }
 #mycontainer	/* { padding:20px; } */
 #mycontent		{ 
 	min-height: 1200px;
+	max-width:1024px;
     position: relative;
     top: 60px;
     padding-top: 40px;
@@ -16,18 +17,26 @@ body {font-family: Arial, Helvetica, sans-serif, 돋움; }
 }
 
 #mysubtop{ 
-	min-height: 140px;
-    background-color: #eee;
+	min-height: 150px;
+    background-color: #f7323f;
+	margin-top: 70px;
+	
 }
 
-
+.subtop_title{
+	margin-top: 60px;
+	padding-top: 18px;
+	margin-left: 280px;
+	font-size: 27pt;
+	color: white;
+}
 
 #mysideinfo	{ 
 	min-height: 600px;
     position: relative;
     top: 60px;
     padding-top: 40px;
-    background-color: #F0FFFF;
+    background-color: #fff;
     float: left;
     width: 12%;
     margin-left: 15%;
