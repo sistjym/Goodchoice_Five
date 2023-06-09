@@ -1409,16 +1409,5 @@ public class AcomodationController {
 
 
 
-	// 업소 등록
-	@RequestMapping(value="/hostRegister.gc") 
-	public String hostRegister() {
-		return "host/accommodations_register.tiles3";
-	}
 	
-	
-	// 업소 정보 수정
-	@RequestMapping(value="/hostEdit.gc") 
-	public String hostEdit() {
-		return "host/accommodations_edit.tiles3";
-	}
 }

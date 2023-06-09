@@ -23,6 +23,29 @@
 		 border: none;
 	} 
 	
+	/* -- CSS 로딩화면 구현 시작(bootstrap 에서 가져옴) -- */    
+   div.loader {
+     border: 16px solid #f3f3f3;
+     border-radius: 50%;
+     border-top: 12px dotted blue;
+     border-right: 12px dotted green; 
+     border-bottom: 12px dotted red; 
+     border-left: 12px dotted pink; 
+     width: 120px;
+     height: 120px;
+     -webkit-animation: spin 2s linear infinite;
+     animation: spin 2s linear infinite;
+   }
+	@-webkit-keyframes spin {
+     0% { -webkit-transform: rotate(0deg); }
+     100% { -webkit-transform: rotate(360deg); }
+   }
+   
+   @keyframes spin {
+     0% { transform: rotate(0deg); }
+     100% { transform: rotate(360deg); }
+   }
+/* -- CSS 로딩화면 구현 끝(bootstrap 에서 가져옴) -- */
 
 </style>
 
@@ -48,6 +71,7 @@
 
 	$(document).ready(function(){
 		Buttonabled();
+		$("div.loader").hide(); // CSS 로딩화면 감추기
 	});
 	
 	function EmailCheck(Email) {
@@ -78,6 +102,8 @@
 	
 	function goMail() {
 		
+		$("div.loader").show(); // CSS 로딩화면 보여주기
+		
 		const Email = $("input#Email").val();
 		
 		const frm = document.myfrm;
@@ -93,6 +119,12 @@
 
 <div id="container">
 	<div style="margin: 0 auto; width:40%;">
+	
+		<%-- CSS 로딩화면 구현한것--%>
+	    <div style="display: flex">
+	       <div class="loader" style="margin: auto"></div>
+	    </div>
+		
 		<h3 style="margin-top: 120px; font-weight: bold; text-align: center;">비밀번호 재설정</h3>
 		<h6 style="margin-top: 30px; text-align: center;color:#0000008F" >회원가입 시 등록한 이메일 주소를 입력해 주세요.</h6>
 		<form name="myfrm" style="margin-top: 30px;">

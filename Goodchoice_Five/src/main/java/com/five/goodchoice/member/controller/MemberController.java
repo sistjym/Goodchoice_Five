@@ -289,7 +289,7 @@ public class MemberController {
 		
 		String Email = request.getParameter("Email");
 		
-		System.out.println("Email : " + Email);
+		// System.out.println("Email : " + Email);
 		
 		boolean isEmailExist = service.isEmailExist(Email);
 		
@@ -320,7 +320,7 @@ public class MemberController {
 			
 			
 		} catch (Exception e) {	// 메일 전송이 실패한 경우
-			System.out.println("~~~ 메일 전송에 실패함 ㅜㅜ ~~~");
+			// System.out.println("~~~ 메일 전송에 실패함 ㅜㅜ ~~~");
 			 message = "메일 전송에 실패하였습니다.";
 			 loc = "javascript:history.back()";
 			e.printStackTrace();
@@ -329,7 +329,10 @@ public class MemberController {
 			
 			
 		}// end of if(isUserExist) ----------------------------------------
-	
+		else {	// 입력한 이메일이 db에 없을 경우
+			 message = "가입된 이메일이 아닙니다.";
+			 loc = "javascript:history.back()";
+		}
 		
 		
 		mav.addObject("message", message);
@@ -390,55 +393,18 @@ public class MemberController {
 		boolean result = service.isKakaoExist(Sha256.encrypt(id));
 		
 		if(result) {
-			
-			
-			MemberVO loginuser = service.loginMemberforKakao(paraMap);
-			
-			System.out.println("loginuser: " +loginuser);
-			
-			if(loginuser == null) {	// 로그인 실패시 [존재하지않은 아이디 비번을 입력했을시]
-				String message = "아이디 또는 암호가 틀립니다.";
+			System.out.println("email : " + email);
+			if(service.checkDuplicateEmail(email)) {
+				String message = "이미 가입된 이메일입니다.";
 				String loc = "javascript:history.back()";
 				
 				mav.addObject("message", message);
 				mav.addObject("loc", loc);
 				
 				mav.setViewName("msg");
-				// /WEB-INF/views/[접두어]	msg	.jsp[접미어] 해서 /WEB-INF/views/msg.jsp 가된다.
 			}
-			else {	// 로그인 한지 1년 이내인 경우
-				
-				HttpSession session = request.getSession();
-				// 메모리에 생성되어져 있는 session 을 불러오는 것이다.
-				
-				session.setAttribute("loginuser", loginuser);
-				// session(세션)에 로그인 되어진 사용자 정보인 loginuser 을 키이름을 "loginuser" 으로 저장시켜두는 것이다.
-					String goBackURL = (String)session.getAttribute("goBackURL");
-					
-					if(goBackURL != null) {
-						mav.setViewName("redirect:"+goBackURL);
-						session.removeAttribute("goBackURL"); // 세션에서 반드시 제거해 주어야 한다.
-					}
-					
-					else {
-						mav.setViewName("redirect:/main/home.gc");  // 시작페이지로 이동
-					}
-					
-				}
-		}
-		else {
-			if(service.registerMemberforKakao(paraMap)) {
-				request.setAttribute("email", email);
-				request.setAttribute("id", id);
-				request.setAttribute("name", name);
-				
-				
-				
+			else {
 				MemberVO loginuser = service.loginMemberforKakao(paraMap);
-				
-				
-				// System.out.println("loginuser : " +loginuser);
-				
 				
 				if(loginuser == null) {	// 로그인 실패시 [존재하지않은 아이디 비번을 입력했을시]
 					String message = "아이디 또는 암호가 틀립니다.";
@@ -459,15 +425,71 @@ public class MemberController {
 					// session(세션)에 로그인 되어진 사용자 정보인 loginuser 을 키이름을 "loginuser" 으로 저장시켜두는 것이다.
 						String goBackURL = (String)session.getAttribute("goBackURL");
 						
-					if(goBackURL != null) {
-						mav.setViewName("redirect:"+goBackURL);
-						session.removeAttribute("goBackURL"); // 세션에서 반드시 제거해 주어야 한다.
+						if(goBackURL != null) {
+							mav.setViewName("redirect:"+goBackURL);
+							session.removeAttribute("goBackURL"); // 세션에서 반드시 제거해 주어야 한다.
+						}
+						
+						else {
+							mav.setViewName("redirect:/main/home.gc");  // 시작페이지로 이동
+						}
+						
 					}
+				}
+		}
+		else {
+			if(service.checkDuplicateEmail(email)) {
+				String message = "이미 가입된 이메일입니다.";
+				String loc = "javascript:history.back()";
+				
+				mav.addObject("message", message);
+				mav.addObject("loc", loc);
+				
+				mav.setViewName("msg");
+			}
+			else {
+				if(service.registerMemberforKakao(paraMap)) {
+					request.setAttribute("email", email);
+					request.setAttribute("id", id);
+					request.setAttribute("name", name);
 					
-					else {
-						mav.setViewName("redirect:/main/home.gc");  // 시작페이지로 이동
+				
+				
+					MemberVO loginuser = service.loginMemberforKakao(paraMap);
+					
+					
+					// System.out.println("loginuser : " +loginuser);
+					
+					
+					if(loginuser == null) {	// 로그인 실패시 [존재하지않은 아이디 비번을 입력했을시]
+						String message = "아이디 또는 암호가 틀립니다.";
+						String loc = "javascript:history.back()";
+						
+						mav.addObject("message", message);
+						mav.addObject("loc", loc);
+						
+						mav.setViewName("msg");
+						// /WEB-INF/views/[접두어]	msg	.jsp[접미어] 해서 /WEB-INF/views/msg.jsp 가된다.
 					}
-					
+					else {	// 로그인 한지 1년 이내인 경우
+						
+						HttpSession session = request.getSession();
+						// 메모리에 생성되어져 있는 session 을 불러오는 것이다.
+						
+						session.setAttribute("loginuser", loginuser);
+						// session(세션)에 로그인 되어진 사용자 정보인 loginuser 을 키이름을 "loginuser" 으로 저장시켜두는 것이다.
+							String goBackURL = (String)session.getAttribute("goBackURL");
+							
+						if(goBackURL != null) {
+							mav.setViewName("redirect:"+goBackURL);
+							session.removeAttribute("goBackURL"); // 세션에서 반드시 제거해 주어야 한다.
+						}
+						
+						else {
+							mav.setViewName("redirect:/main/home.gc");  // 시작페이지로 이동
+						}
+						
+					}
 				}
 			}
 		}
