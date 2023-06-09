@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>$(requestScope.abc.acom_name) | 여기 어때</title>
+<title>$(requestScope.abc.acom_name) + "| 여기 어때" </title>
   <!-- Required meta tags -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
@@ -18,8 +18,8 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" type="text/css" href="<%= ctxPath%>/resources/bootstrap-4.6.0-dist/css/bootstrap.min.css" > 
 
-  <!-- Font Awesome 5 Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <!-- Font Awesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
   <script src="https://kit.fontawesome.com/b7b1b05ad5.js" crossorigin="anonymous"></script>
   <!-- 직접 만든 CSS 1 -->
  

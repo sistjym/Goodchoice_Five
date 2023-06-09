@@ -1,0 +1,20 @@
+package com.five.goodchoice.detail.model;
+
+import java.util.List;
+import java.util.Map;
+
+public interface InterDetail_AcomodationDAO {
+
+	// 숙소번호가 존재하는지 알아오는 메소드
+	boolean is_Exist_acom_no(Map<String, String> paraMap);
+
+	// acom_no에 해당하는 숙소정보를 가져오기
+	AcomodationVO show_acom_Info(Map<String, String> paraMap);
+
+	// acom_no에 해당하는 숙소의 추가이미지 파일을 가져오기			
+	List<String> show_acom_add_imgList(Map<String, String> paraMap);
+
+	// 호텔의 스펙넘버만 가져오기
+	AcomodationVO show_Specno(Map<String, String> paraMap);
+
+}
