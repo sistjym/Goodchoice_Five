@@ -61,5 +61,52 @@ public class MemberDAO implements InterMemberDAO {
 		HostVO loginuser = sqlsession.selectOne("member.loginHost", paraMap);
 		return loginuser;
 	}
-
+	
+	
+	// 이메일 있는 지없는지 유무확인
+	@Override
+	public boolean isEmailExist(String Email) {
+		
+		int isEmailExist = sqlsession.selectOne("member.isEmailExist", Email);
+		return (isEmailExist == 1);
+	}
+	
+	// 비밀번호 업데이트
+	@Override
+	public int pwUpdate(Map<String, String> paraMap) {
+		int n = sqlsession.update("member.pwUpdate", paraMap);
+		return n;
+	}
+	
+	
+	// 카카오 아이디 있는지 확인
+	@Override
+	public boolean isKakaoExist(String id) {
+		int n = sqlsession.selectOne("member.isKakaoExist", id); 
+		return (n==1);
+	}
+	
+	
+	// 카카오 계정으로 로그인하기
+	@Override
+	public MemberVO loginMemberforKakao(Map<String, String> paraMap) {
+		
+		MemberVO loginuser = sqlsession.selectOne("member.loginMemberforKakao", paraMap);
+		System.out.println("loginuser : "+ loginuser);
+		return loginuser;
+	}
+	
+	
+	// 카카오 계정으로 가입하기
+	@Override
+	public boolean registerMemberforKakao(Map<String, String> paraMap) {
+		int result = sqlsession.insert("member.registerMemberforKakao", paraMap);
+		return (result == 1);
+	}
+	
+	
+	
+	
+	
+	
 }

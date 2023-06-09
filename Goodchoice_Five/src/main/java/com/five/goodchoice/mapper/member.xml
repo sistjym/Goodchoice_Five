@@ -25,22 +25,22 @@ FROM
 
 <select id="loginMember" parameterType="HashMap" resultType="com.five.goodchoice.member.model.MemberVO">
 	SELECT member_id, member_email, member_nickname, member_reg_date
-		     , point, is_deactivate, is_dormanant  
+		     , point, is_deactivate, is_dormanant , is_admin, is_kakao_user, kakao_id  
 		     , pwdchangegap 
 		     , NVL(lastlogingap, trunc(months_between(sysdate, member_reg_date), 0) ) AS lastlogingap 
         FROM 
         ( 
            select member_id, member_email, member_nickname, to_char(member_reg_date, 'yyyy-mm-dd') AS member_reg_date  
-                , point, is_deactivate, is_dormanant   
+                , point, is_deactivate, is_dormanant, is_admin, is_kakao_user, kakao_id  
                 , trunc(months_between(sysdate, lastpwd_change_date), 0) AS pwdchangegap 
            from tbl_member 
-           where is_deactivate = 0 and member_email = #{Email} and member_pwd = #{passwd}
+           where is_deactivate = 0 and is_kakao_user = 0 and member_email = #{email} and member_pwd = #{passwd}
         ) M 
         CROSS JOIN 
         ( 
            select trunc(months_between(sysdate, max(logindate)), 0) AS lastlogingap 
            from tbl_loginhistory 
-           where fk_member_email = #{Email} 
+           where fk_member_email = #{email} 
         ) H
 </select>
 
@@ -53,7 +53,7 @@ FROM
 <!-- tbl_loginhitory 테이블에 insert하기 -->
 <insert id="insertloginhistory" parameterType="HashMap">
 	insert into tbl_loginhistory(fk_member_email)
-	values(#{Email})
+	values(#{email})
 </insert>
 
 <select id="loginHost" resultType="com.five.goodchoice.member.model.HostVO" parameterType="HashMap">
@@ -62,17 +62,52 @@ FROM
 	where host_email = #{Email} and host_pwd = #{passwd}
 </select>
 
+<select id="isEmailExist" parameterType="String" resultType="int">
+	select count(*) 
+	from tbl_member
+	where is_deactivate = 0 and member_email = #{Email}
+</select>
+
+<update id="pwUpdate" parameterType="HashMap" >
+	update tbl_member set member_pwd = #{member_pwd}, lastpwd_change_date = sysdate
+	where member_email = #{email}
+</update>
+
+<select id="isKakaoExist" parameterType="String" resultType="int">
+	select count(*)
+	from tbl_member 
+	where is_kakao_user = 1 and kakao_id = #{id}
+</select>
 
 
 
+<select id="loginMemberforKakao" resultType="com.five.goodchoice.member.model.MemberVO" parameterType="HashMap">
+	SELECT member_id, member_email, member_nickname, member_reg_date
+		     , point, is_deactivate, is_dormanant , is_admin, is_kakao_user, kakao_id  
+		     , pwdchangegap 
+		     , NVL(lastlogingap, trunc(months_between(sysdate, member_reg_date), 0) ) AS lastlogingap 
+        FROM 
+        ( 
+           select member_id, member_email, member_nickname, to_char(member_reg_date, 'yyyy-mm-dd') AS member_reg_date  
+                , point, is_deactivate, is_dormanant, is_admin, is_kakao_user, kakao_id  
+                , trunc(months_between(sysdate, lastpwd_change_date), 0) AS pwdchangegap 
+           from tbl_member 
+           where is_kakao_user = 1 and member_email = #{email} and kakao_id = #{id}
+        ) M 
+        CROSS JOIN 
+        ( 
+           select trunc(months_between(sysdate, max(logindate)), 0) AS lastlogingap 
+           from tbl_loginhistory 
+           where fk_member_email = #{email} 
+        ) H
+</select>
 
 
 
-
-
-
-
-
+<insert id="registerMemberforKakao" parameterType="HashMap">
+	insert into tbl_member(member_id, member_email, member_nickname, is_kakao_user , kakao_id)
+	values(SEQ_MEMBER.nextval, #{email}, #{name}, 1, #{id})
+</insert>
 
 
 

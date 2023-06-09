@@ -10,8 +10,11 @@ header{
     left:0;
     right:0;
     height:72px;
-    transition: 0.4s;
+    margin-bottom:100px;
     background: #f7323f;
+  
+   
+   
 }
 
 header > section {
@@ -95,7 +98,7 @@ ul{
 .gnb_pc li ul {
     display: none;
     position: absolute;
-    top: 50;
+    top: 50px;
     left: 0;
     border-radius: 5px;
     padding: 10px;
@@ -119,7 +122,7 @@ ul.dropdown-content a {
 
 /* footer */
 footer {
-    overflow: hidden;
+   
     clear: both;
 
     width: 100%;

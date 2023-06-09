@@ -20,4 +20,20 @@ public interface InterMemberService {
 	
 	// 업주로 로그인
 	HostVO loginHost(Map<String, String> paraMap);
+	
+	// 이메일 있는 지없는지 유무확인
+	boolean isEmailExist(String Email);
+	
+	// 비밀번호 업데이트
+	int pwUpdate(Map<String, String> paraMap);
+	
+	// 카카오 계정이 저장되어있는지 확인
+	boolean isKakaoExist(String id);
+	
+	// 카카오 계정으로 로그인하기
+	MemberVO loginMemberforKakao(Map<String, String> paraMap);
+	
+	// 카카오 계정으로 가입
+	boolean registerMemberforKakao(Map<String, String> paraMap);
+
 }

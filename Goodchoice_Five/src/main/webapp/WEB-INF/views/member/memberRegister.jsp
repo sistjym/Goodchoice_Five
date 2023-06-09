@@ -44,7 +44,6 @@
 		width:100px;
 	}
 	
-
 </style>
 
 
@@ -78,6 +77,8 @@
 		host_flag = false;
 		$("div#host_register").hide();
 		setEventHandling();
+		$("button#Reghost").css({"background-color": "#fff", "color": "#bfbfbf"});
+		$("button#Regmember").css({"background-color": "#f2114c", "color": "#fff"});
 	      
 	});
 	
@@ -319,7 +320,8 @@
 	
 	
 	function goHostRegister() {
-			
+			$("button#Regmember").css({"background-color": "#fff", "color": "#bfbfbf"});
+			$("button#Reghost").css({"background-color": "#f2114c", "color": "#fff"});
 			$('button.bsNumcheck').removeClass("check_success");
 			$('button.bsNumcheck').addClass("check");
 			$('button.bsNumcheck').text("중복확인");
@@ -342,7 +344,8 @@
 	
 	function goMemberRegister() {
 		
-		
+		$("button#Reghost").css({"background-color": "#fff", "color": "#bfbfbf"});
+		$("button#Regmember").css({"background-color": "#f2114c", "color": "#fff"});
 		$('button.bsNumcheck').removeClass("check_success");
 		$('button.bsNumcheck').addClass("check");
 		$('button.bsNumcheck').text("중복확인");
@@ -433,7 +436,9 @@
 		
 		else {	// 호스트로 가입할때
 			// console.log("host_flag : " + host_flag);
-			// 이메일 	
+			// 이메일
+			
+			
 			if( $('input#inputEmail1').val() == "" ) {
 				alert('이메일은 필수 입력사항입니다.');	
 				$('input#inputEmail1').focus();
@@ -533,7 +538,7 @@
 		      </select>
 		      
 		    </div>
-		    <button type="button" class="btn emailcheck check col-sm-3" style="height: 50.22222px !important;background-color:#EBEBEB;
+		    <button type="button" class="btn emailcheck check col-sm-3" style="height: 50.22222px !important; font-weight: bold !important; background-color:#EBEBEB;color:#0000008F !important;
     														width: 106px !important;">중복확인</button>
 		  </div>
 		   <div><span id="error_email" style="color:red;"></span></div>
@@ -551,7 +556,7 @@
 		  <label class="nickname" for="nickname" style="color:#0000008F; font-weight: bold;">닉네임</label>
 		  <div class="form-group row nickname"  style="width:100%; display:flex;  margin-left: 3px;">
 		    <input type="text" style="height: 50px;" class="form-control col-sm-7" id="nickname" name="nickname" placeholder="닉네임 입력">
-		  	<button type="button" id="btn_random" class="btn col-sm-4 offset-sm-1" style="background-color: #EBEBEB; color:#0000008F; height: 50px;border-radius: 6px;font-weight: bold;" onclick="getRandomItem()" >딴거할래요</button>
+		  	<button type="button" id="btn_random" class="btn col-sm-4 offset-sm-1" style="background-color: #EBEBEB; color:#0000008F; height: 50px;border-radius: 6px;font-weight: bold !important;" onclick="getRandomItem()" >딴거할래요</button>
 		  	<div><span id="error_nickname" style="color:red;"></span></div>
 		  </div>
 		  	
@@ -559,7 +564,7 @@
 				 	<div class="form-group row" style="margin:10px 0px 0px 3px; ">
 					    <label for=business_id style="color:#0000008F; font-weight: bold;">사업자등록번호&nbsp;<span style="font-size: 10pt;">[-제외하고 입력하세요]</span></label>
 					    <input type="text" style="height:50px;"class="form-control col-sm-8" id="business_id" name="business_id" placeholder="사업자번호" maxlength="11">
-				  		<button type="button" class="btn bsNumcheck check col-sm-3 offset-sm-1" style="height: 50.22222px !important;background-color:#EBEBEB; 
+				  		<button type="button" class="btn bsNumcheck check col-sm-3 offset-sm-1" style="height: 50.22222px !important; font-weight: bold;background-color:#EBEBEB;color:#0000008F !important; 
     														width: 106px  !important;">중복확인</button>
 				  	</div>
 				  <div><span id="error_business_id" style="color:red;"></span></div>
