@@ -93,9 +93,11 @@
 	}
 	
 	.area_pop .city li {
-    padding: 0 0;
+    display: block;
+    padding: 0 0 0 32px;
     height: 27px;
     line-height: 27px;
+    color: rgba(0,0,0,0.78);
     font-size: 15px;
 	}
 	

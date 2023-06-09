@@ -116,6 +116,25 @@
       <put-attribute name="content" value="/WEB-INF/views/tiles6/{1}/{2}/{3}.jsp"/>
    </definition>
    
+   <definition name="layout-tiles7"  template="/WEB-INF/tiles/layout/layout-tiles5.jsp"> 
+      <put-attribute name="header"  value="/WEB-INF/tiles/tile2/header.jsp" />
+      <put-attribute name="subtop"  value="" />
+      <put-attribute name="content" value="" />
+      <put-attribute name="footer"  value="/WEB-INF/tiles/tile2/footer.jsp" />
+   </definition>
+   
+   <definition name="*/*.tiles7" extends="layout-tiles5">
+    <put-attribute name="content" value="/WEB-INF/views/tiles5/{1}/content/{2}.jsp"/>
+    <put-attribute name="subtop" value="/WEB-INF/views/tiles5/{1}/subtop.jsp"/>
+   </definition>
+   
+   <definition name="*/*/*.tiles7" extends="layout-tiles5">
+      <put-attribute name="content" value="/WEB-INF/views/tiles5/{1}/content/{2}/{3}.jsp"/>
+      <put-attribute name="subtop" value="/WEB-INF/views/tiles5/{1}/subtop.jsp"/>
+   </definition>
+   
+   
+   
    
 
 </tiles-definitions> 
