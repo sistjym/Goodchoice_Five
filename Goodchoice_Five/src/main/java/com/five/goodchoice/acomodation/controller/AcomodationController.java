@@ -531,7 +531,7 @@ public class AcomodationController {
 		request.setAttribute("acomListByProvNo", acomListByProvNo);
 		request.setAttribute("filter_condition_Map", filter_condition_Map);
 		
-		return "acomodation/acom_content.tiles5";
+		return "acomodation/acom_content.tiles7";
 	}	
 	
 	
