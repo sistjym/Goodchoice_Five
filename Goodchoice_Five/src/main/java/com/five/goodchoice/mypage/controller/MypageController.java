@@ -6,19 +6,18 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.five.goodchoice.member.model.MemberVO;
-import com.five.goodchoice.model.service.InterMypageService;
 
 @Controller
 public class MypageController {
 	
-	@Autowired
-	private InterMypageService service;
+	/*
+	 * @Autowired private InterMypageService service;
+	 */
 	
 	@RequestMapping(value="/myreservation.gc") 
 	public String my_page_1() {
@@ -35,9 +34,7 @@ public class MypageController {
 		paraMap.put("member_nickname", loginuser.getMember_nickname());
 		paraMap.put("member_pwd", loginuser.getMember_pwd());
 		
-		mav = service.mypageEnd(mav, request, paraMap);
 		
-		mav.setViewName("my/page.tiles4");
 		
 		return mav;
 	}
