@@ -473,3 +473,259 @@ legend{
 } */
 
 
+/*  결제   */
+#reserve_contents{
+	width: 1024px;
+    margin: 0 auto;
+   
+}
+.left{
+    float:left;
+  	width: 564px;
+    margin: 40px 88px 0 0;
+    padding-left: 30px;;
+    border: 0;
+  
+}
+
+.right{
+	float: right;
+    width: 310px;
+    margin: 40px 31px 0 0;
+    background: rgb(250,250,250);
+}
+
+.info {
+    margin: 39px 24px 0 24px;
+    padding: 0 0 31px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    background: none;
+}
+
+.info p {
+    position: relative;
+    margin-bottom: 29px;
+    padding-left: 0;
+    font-size: 20px;
+    line-height: 32px;
+    color: rgba(0,0,0,0.87);
+    text-align: left;
+}
+#price_box{
+	 padding-left: 16px;
+}
+.info p strong, .reserve .info div strong {
+    display: block !important;
+    position: relative;
+    margin-bottom: 6px;
+    font-size: 18px !important;
+    line-height: 1;
+    color: rgba(0,0,0,0.38);
+}
+
+.total_price_pc {
+    display: block;
+    padding: 39px 24px 33px!important;
+    background: none!important;
+}
+
+.total_price_pc p strong {
+    display: block;
+    font-size: 16px;
+    font-weight: 400;
+}
+.total_price_pc p span{
+    display: block;
+    padding: 19px 0 23px;
+    font-size: 24px;
+    font-weight: 700;
+    color: #e61c51;
+}
+
+.total_price_pc ul li {
+    margin-bottom: 2px;
+    padding-left: 16px;
+    background-size: 14px auto;
+    font-size: 16px;
+    line-height: 26px;
+    color: rgba(0,0,0,.72);
+}
+
+
+.btn_pay {
+    display: block;
+    width: 100%;
+    height: 56px;
+    border: none;
+    font-size: 15px;
+    line-height: 56px;
+    color: #fff;
+    text-align: center;
+    display: block;
+    border-radius: 0 0 4px 4px;
+    background-color: rgb(255, 0, 85);
+}
+
+.info_chkin {
+    padding: 0 0 10px 0 !important;
+}
+
+
+#reserve_contents > div.left > div > section > h3{
+    display: block;
+    margin: 0 0 42px 0;
+    font-weight: bold;
+    
+}
+
+
+.info_chkin strong {
+    display: block;
+    padding: 0 0 12px 0;
+    font-size: 18px;
+    font-weight: normal;
+    color: rgba(0,0,0,0.56);
+}
+.input-box {
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    padding: 8px 14px 8px 16px;
+    position: relative;
+    height: 48px;
+    padding: 0 40px 0 10px;
+    border-radius: 4px;
+}
+
+.input-box input {
+    border: none;
+    background: none;
+    width: 100%;
+    height: 20px;
+    margin-top: 10px;
+    font-size: 16px;
+    line-height: 1;
+    color: rgba(0, 0, 0, 0.56);
+    font-family: inherit;
+    position: relative;
+    outline: none;
+}
+
+.safety_txt {
+    padding-bottom: 14px;
+    font-size: 14px;
+    display: block;
+    color: rgba(0, 0, 0, 0.56);
+}
+
+.phone-auth-btn{
+    /* position: absolute; */
+    top: 0;
+    right: 0;
+    width: 100px;
+    height: 48px;
+    padding: 13px 0 10px;
+    border: none;
+    border-radius: 4px;
+    background: #ccc;
+    font-size: 15px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.alert_txt {
+    padding-top: 2px;
+    font-size: 13px;
+    color: rgb(230,28,81);
+}
+
+.input-box .input.validation-required-input {
+   box-sizing: border-box;
+    padding: 8px 14px 8px 16px;
+    width: 100%;
+    height: 48px;
+    border: none;
+    border: 1px solid rgba(0,0,0,.08);
+    border-radius: 4px;
+    font-weight: 400;
+    font-size: 18px;
+    color: rgba(0,0,0,.56);
+
+}
+.inp_wrap {
+    position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    height: 48px;
+    padding: 0 40px 0 10px;
+    border-radius: 4px;
+}
+
+.pay_select h3 {
+    display: block;
+    margin-bottom: 19px;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 54px 0 42px 0;
+}
+
+.select_type_1 {
+    height: 48px;
+    padding: 0 12px;
+    border: 1px solid rgba(0,0,0,.08);
+    border-radius: 4px;
+   
+    background-size: 25px auto;
+    font-size: 18px;
+    color: rgba(0,0,0,.56);
+    cursor: pointer;
+    width: 288px;
+}
+
+#reserve_contents .agree {
+    padding: 23px 0;
+    font-size: 16px;
+}
+
+#reserve_contents .agree p{
+    position: relative;
+    padding-top: 11px;
+    padding-bottom: 10px;
+    line-height: 1.2;
+    padding-left: 37px;
+}
+.agree .all_check {
+    font-weight: 700;
+}
+
+input[type="checkbox"].inp_chk_02 {
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: url(https://image.goodchoice.kr/images/web_v3/ico_chk.png) 0 0 no-repeat;
+    background-size: 24px auto;
+    cursor: pointer;
+}
+
+.agree p i {
+    font-style: normal;
+    text-decoration: underline;
+    color: rgba(0,0,0,.56);
+    cursor: pointer;
+}
+
+.agree span b {
+    font-weight: 400;
+    color: #e61c51;
+}
+ .agree {
+    padding: 23px 0;
+    font-size: 16px;
+}
+
+#reserve_contents .agree input {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    margin-top: -12px;
+}
+.f_icon{
+	margin:10px;
+}

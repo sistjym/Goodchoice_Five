@@ -69,7 +69,7 @@
 <div style="display: flex;">   
 <div style="width: 80%; min-height: 1100px; margin:auto; ">
 
-   <h2 style="margin: 50px 0;">통계정보(차트)</h2>
+   <h2>통계정보(차트)</h2>
    
    <form name="searchFrm" style="margin: 20px 0 50px 0; ">
       <select name="searchType" id="searchType" style="height: 30px;">

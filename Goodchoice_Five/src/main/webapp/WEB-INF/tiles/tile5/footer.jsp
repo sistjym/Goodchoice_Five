@@ -13,7 +13,7 @@
 	       <li><a href="#">여기어때 마케팅센터</a><span>|</span></li>
 	       <li><a href="#">액티비티 호스트센터</a><span>|</span></li>
 	       <li><a href="#"> HOTEL 여기어때</a><span>|</span></li>
-	       <li><a href="#">콘텐츠산업진흥법에의한 표시</a><span>
+	       <li><a href="#">콘텐츠산업진흥법에의한 표시</a><span>|</span></li>
 	   </ul>
 	   <p>
 	       <b>고객행복센터 1670-6250</b>
@@ -30,7 +30,7 @@
 	   </address>
 	   <div class="ico">
 	
-	       class="icon-ic_naverpost"><span>네이버포스트</span></a>
+	       <a class="icon-ic_naverpost"><span>네이버포스트</span></a>
 	   </div>
 	</div> 
 </footer>
