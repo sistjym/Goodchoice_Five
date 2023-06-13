@@ -35,7 +35,10 @@ public interface InterAcomodationService {
 	// 모텔이 존재하는 지역번호와 지역명을 가져와야 한다.
 	List<Map<String, String>> getcityListByMotel();
 
-	
+	// 지역별 하위지역 리스트를 가져온다.
 	List<Map<String, String>> getDistrictListByProvNo(String prov_no);
+
+	// 숙소번호별 스펙을 가져온다.
+	Map<String, String> getspecByAcom(String acom_no);
 
 }

@@ -378,11 +378,19 @@ public class AcomodationService implements InterAcomodationService {
 		return cityListByMotel;
 	}
 
-
+	// 지역별 하위지역 리스트를 가져온다.
 	@Override
 	public List<Map<String, String>> getDistrictListByProvNo(String prov_no) {
 		List<Map<String, String>> districtListByProvNoMap = dao.getDistrictListByProvNo(prov_no);
 		return districtListByProvNoMap;
+	}
+
+
+	// 숙소번호별 스펙을 가져온다.
+	@Override
+	public Map<String, String> getspecByAcom(String acom_no) {
+		Map<String, String> specByAcomMap = dao.getspecByAcom(acom_no);
+		return specByAcomMap;
 	}
 
 	
