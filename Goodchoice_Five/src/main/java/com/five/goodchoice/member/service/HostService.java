@@ -64,8 +64,11 @@ public class HostService implements InterHostService {
 	// 지역구번호 알아오기
 	@Override
 	public int getDistrictno(String postcode) {
+		
+		int index = postcode.indexOf(" ");
+		int secondIndex = postcode.indexOf(" ", index + 1);
 		String districtname = postcode.substring(0, 2);
-		String subdistrictname = postcode.substring(3, 6);
+		String subdistrictname = postcode.substring(index+1, secondIndex);
 		
 		System.out.println("districtname : " + districtname);
 		System.out.println("subdistrictname : " + subdistrictname);
@@ -77,6 +80,14 @@ public class HostService implements InterHostService {
 		
 		return n;
 		
+	}
+	
+	
+	// 숙소테이블에 insert
+	@Override
+	public int acomoRegister(Map<String, String> paraMap) {
+		int n = dao.acomoRegister(paraMap);
+		return n;
 	}
 	
 	
