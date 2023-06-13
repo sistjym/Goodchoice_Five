@@ -13,37 +13,30 @@
 
 	
 	$(document).ready(function(){
+		// 체크박스 제어 
+		$("#checkAll").click(function() {
+			if($("#checkAll").is(":checked")) $("input[name=checkOne]").prop("checked", true);
+			else $("input[name=checkOne]").prop("checked", false);
+		});
+	
+		$("input[name=checkOne]").click(function() {
+			var total = $("input[name=checkOne]").length;
+			var checked = $("input[name=checkOne]:checked").length;
+	
+			if(total != checked) $("#checkAll").prop("checked", false);
+			else $("#checkAll").prop("checked", true); 
+		});
 
 		
 		$("button#goReservation").bind("click", function() {
 			
-			
-			<%-- let popOption = "left=100,top=100,width=320,height=320";
-			let openUrl  ='<%= request.getContextPath()%>/reservation/paymentGateway.gc';
-			window.open(openUrl,'pop',popOption);
-			 --%>
-			<%-- 
-		    const frm = document.orderForm;
-		    
-		    frm.userName.value = $("input#userName").val();
-   	        frm.email.value = $("input#email").val();
-		    
-   	        frm.acommName.value = $("input#acommName").val();
-   	        frm.roomName.value = $("input#roomName").val();
-   	        frm.checkIn.value = $("input#checkIn").val();
-   	        frm.checkOut.value = $("input#checkOut").val();
-   	        frm.totalPrice.value = $("input#totalPrice").val(); 
-   	     
-   	        frm.method = "post";
-   	        frm.action = "<%= request.getContextPath()%>/reservation/paymentGateway.gc"; 
-   	        frm.submit();  --%>
    	        
-   	     var IMP = window.IMP;     // 생략가능
-   	     IMP.init('imp43877375');  // 중요!!  아임포트에 가입시 부여받은 "가맹점 식별코드". 
-   	     requestPay();
+	   	     var IMP = window.IMP;     // 생략가능
+	   	     IMP.init('imp43877375');  // 중요!!  아임포트에 가입시 부여받은 "가맹점 식별코드". 
+	   	     requestPay();
    	     
-   	  // end of click 결제하기
-		});	
+   	 
+		});	 // end of click 결제하기
 	
    });// end of $(document).ready(function(){})-----------------------
    
@@ -157,12 +150,24 @@
 	                    </select>
 	                </section> -->
 	                
+	                <!-- 할인 수단  -->
+	                <section class="price_wrap" >
+						<p>구매총액</p>	         
+						<input type="text" value="100,000원">
+						
+						<p>포인트</p>
+						<input type="text" value="포인트 사용 + ${sessionScope.loginuser.point}">
+						
+						<p>내 포인트</p>
+						<input type="text" value="100"><span><strong>P</strong></span>
+	                </section>
+	                
 	                
 	                <!--  개인 정보 보호  박스 -->
 					<section class="agree">
 						<p class="all_check" >
 							<label>
-								<input type="checkbox" name="checkAll" class="inp_chk_02"> 
+								<input type="checkbox" name="checkAll" id="checkAll" class="inp_chk_02"> 
 								<span>전체 동의</span>
 							</label>
 						</p> 
