@@ -26,7 +26,7 @@
    
    
    <definition name="layout-tiles2"  template="/WEB-INF/tiles/layout/layout-tiles2.jsp"> 
-      <put-attribute name="header"  value="/WEB-INF/tiles/tile2/header.jsp" />
+      <put-attribute name="header"  value="/WEB-INF/tiles/tile3/header.jsp" />
       <put-attribute name="subtop"  value="" />
       <put-attribute name="content" value="" />
       <put-attribute name="sideinfo"  value="" />
@@ -117,7 +117,7 @@
    </definition>
    
    <definition name="layout-tiles7"  template="/WEB-INF/tiles/layout/layout-tiles7.jsp"> 
-      <put-attribute name="header"  value="/WEB-INF/tiles/tile2/header.jsp" />
+      <put-attribute name="header"  value="/WEB-INF/tiles/tile3/header.jsp" />
       <put-attribute name="subtop"  value="" />
       <put-attribute name="content" value="" />
       <put-attribute name="footer"  value="/WEB-INF/tiles/tile1/footer.jsp" />
