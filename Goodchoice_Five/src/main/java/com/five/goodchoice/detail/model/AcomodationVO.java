@@ -11,19 +11,37 @@ public class AcomodationVO {
 	private String address;
 	private String extra_address;
 	private String sur_info;
-	
+	private String check_in_date;
+	private String check_out_date;
+
+
 	private String parking_info;
 	private String acom_latitude;
 	private String acom_longitude;
 	private String acom_image_add_name;
 	private String spec_name;
-	private String fk_category_no;
+	
+	////// 편의시설
+	private String category_fac_name;
+	
+	// 리뷰
+	private String review_subject;
+	private String review_content;
+	private String review_score;
+	private String review_image;
+	private String review_reg_date;
+	private String review_cnt;
+	
+	
 	
 	
 	public AcomodationVO() {}
 	
 	public AcomodationVO(String acom_no,String fk_spec_no,String fk_district_no,String fk_host_no,String acom_name,String acom_image,String address,String extra_address,String sur_info,
-								String parking_info,String acom_latitude,String acom_longitude, String acom_image_add_name, String spec_name , String fk_category_no) {
+								String check_in_date, String check_out_date ,
+								String parking_info,String acom_latitude,String acom_longitude, String acom_image_add_name, String spec_name,String category_fac_name
+								, String review_subject	, String review_content, String review_score, String review_image , String review_reg_date , String review_cnt    )
+	{
 		 super();
 		 this.acom_no = acom_no;
 		 this.fk_spec_no = fk_spec_no;
@@ -39,7 +57,89 @@ public class AcomodationVO {
 		 this.acom_longitude = acom_longitude;
 		 this.acom_image_add_name = acom_image_add_name;
 		 this.spec_name = spec_name;
-		 this.fk_category_no = fk_category_no;
+		 this.category_fac_name = category_fac_name;
+		 this.review_subject = review_subject; 
+		 this.review_content = review_content;
+		 this.review_score = review_score;
+		 this.review_image = review_score;
+		 this.review_reg_date = review_reg_date;
+		 this.review_cnt = review_cnt;
+		 this.check_in_date = check_in_date;
+		 this.check_out_date = check_out_date;
+		}
+	
+	
+	
+	public String getCheck_in_date() {
+		return check_in_date;
+	}
+
+	public void setCheck_in_date(String check_in_date) {
+		this.check_in_date = check_in_date;
+	}
+
+	public String getCheck_out_date() {
+		return check_out_date;
+	}
+
+	public void setCheck_out_date(String check_out_date) {
+		this.check_out_date = check_out_date;
+	}
+
+	public String getReview_subject() {
+		return review_subject;
+	}
+
+	public void setReview_subject(String review_subject) {
+		this.review_subject = review_subject;
+	}
+
+	public String getReview_content() {
+		return review_content;
+	}
+
+	public void setReview_content(String review_content) {
+		this.review_content = review_content;
+	}
+
+	public String getReview_score() {
+		return review_score;
+	}
+
+	public void setReview_score(String review_score) {
+		this.review_score = review_score;
+	}
+
+	public String getReview_image() {
+		return review_image;
+	}
+
+	public void setReview_image(String review_image) {
+		this.review_image = review_image;
+	}
+
+	public String getReview_reg_date() {
+		return review_reg_date;
+	}
+
+	public void setReview_reg_date(String review_reg_date) {
+		this.review_reg_date = review_reg_date;
+	}
+
+	public String getReview_cnt() {
+		return review_cnt;
+	}
+
+	public void setReview_cnt(String review_cnt) {
+		this.review_cnt = review_cnt;
+	}
+
+	public String getCategory_fac_name() {
+		return category_fac_name;
+	}
+
+	public void setCategory_fac_name(String category_fac_name) {
+		this.category_fac_name = category_fac_name;
 	}
 
 	public String getSpec_name() {
@@ -50,13 +150,6 @@ public class AcomodationVO {
 		this.spec_name = spec_name;
 	}
 
-	public String getFk_category_no() {
-		return fk_category_no;
-	}
-
-	public void setFk_category_no(String fk_category_no) {
-		this.fk_category_no = fk_category_no;
-	}
 
 	public String getAcom_image_add_name() {
 		return acom_image_add_name;

@@ -1,5 +1,6 @@
 package com.five.goodchoice.detail.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -14,11 +15,28 @@ public class RoomDAO implements InterRoomDAO {
 	@Resource
 	private SqlSessionTemplate sqlsession;
 	
-	// acom_no에 해당하는 객실의 정보 가져오기
+	// 객실 리스트 불러오기
 	@Override
-	public List<Map<String, String>> show_roomList(Map<String, String> paraMap) {
-		List<Map<String, String>> roomList = sqlsession.selectList("detail.show_roomList");
+	public List<RoomVO> getRoomList(Map<String, String> paraMap) {
+		List<RoomVO> roomList = sqlsession.selectList("detail.getRoomList", paraMap);
 		return roomList;
 	}
+	
+	// acom_no에 해당하는 각 객실의 추가이미지 가져오기
+	@Override
+	public ArrayList<RoomVO> getRoomOne(Map<String, String> paraMap) {
+		ArrayList<RoomVO> roomOne = sqlsession.selectOne("detail.getRoomOne", paraMap);
+		return roomOne;
+	}
+/*	
+	@Override
+	public List<String> getRoom_addImageList(String room_id) {
+		List<String> room_addImageList = sqlsession.selectList("detail.getRoom_addImageList", room_id);
+		return room_addImageList;
+	}
+
+*/
+	
+	
 
 }

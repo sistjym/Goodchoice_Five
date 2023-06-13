@@ -16,10 +16,23 @@
 	values(SEQ_HOST.nextval, #{email}, #{pwd}, #{onerName}, #{business_id}, #{companyName})
 </insert>
 
+<select id="getDistrictno" resultType="int" parameterType="HashMap">
+	SELECT district_no
+	FROM (
+	  SELECT d.district_no, district_name
+	  FROM tbl_province p
+	  JOIN tbl_district d ON p.prov_no = d.fk_prov_no
+	  WHERE p.prov_name = #{districtname}
+	) V
+	WHERE TRIM(V.district_name) = TRIM(#{subdistrictname})
+</select>
 
 
 
-
+<insert id="acomoRegister" parameterType="HashMap">
+INSERT INTO TBL_ACOMODATION(acom_no, fk_spec_no, fk_district_no, fk_host_no, acom_name, acom_image, address, extra_address, sur_info, parking_info, acom_latitude, acom_longitude)
+values(SEQ_ACOMODATION.nextval, #{accommodationSpec}, #{district_no}, #{host_no}, #{companyName}, #{AcomoImagefile}, #{address}, #{extra_address}, #{aroundInfo}, #{parkInfo}, #{lat}, #{lng})
+</insert>
 
 
 

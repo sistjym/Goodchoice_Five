@@ -43,6 +43,7 @@
                      <ul class="dropdown-content">
                         <a href="<%= ctxPath%>/main/home.gc">내정보</a>
                         <a href="<%= ctxPath%>/main/home.gc">예약 내역</a>
+                        <a href="<%= ctxPath%>/main/home.gc">포인트</a>
                     </ul>
                 </li> 	
                		

@@ -8,6 +8,8 @@ import javax.annotation.Resource;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.five.goodchoice.member.model.HostVO;
+
 @Repository
 public class Detail_AcomodationDAO implements InterDetail_AcomodationDAO {
 
@@ -24,9 +26,9 @@ public class Detail_AcomodationDAO implements InterDetail_AcomodationDAO {
 		
 		boolean is_Exist_acom_no = false; 
 		
-		int n = sqlsession.selectOne("detail.is_Exist_acom_no", paraMap);
+		String acom_no_cnt = sqlsession.selectOne("detail.is_Exist_acom_no", paraMap);
 		
-		if(n > 0) { // category_no exist
+		if(Integer.parseInt(acom_no_cnt) > 0) { // category_no exist
 			is_Exist_acom_no = true;
 		}
 		
@@ -36,29 +38,46 @@ public class Detail_AcomodationDAO implements InterDetail_AcomodationDAO {
 	
 	// acom_no에 해당하는 숙소정보를 가져오기
 	@Override
-	public AcomodationVO show_acom_Info(Map<String, String> paraMap) {
+	public AcomodationVO show_acom_Info(String acom_no) {
 
-		AcomodationVO daVO = sqlsession.selectOne("detail.show_acom_Info", paraMap);
+		AcomodationVO daVO = sqlsession.selectOne("detail.show_acom_Info", acom_no);
 		
 		return daVO;
 	}
 
-
-	// acom_no에 해당하는 숙소의 추가이미지 파일을 가져오기			
+	
+	// acom_no에 해당하는 숙소의 추가이미지 파일을 가져오기
 	@Override
-	public List<String> show_acom_add_imgList(Map<String, String> paraMap) {
-		
-		List<String> acom_add_imgList = sqlsession.selectList("detail.show_acom_add_imgList");
-				
+	public List<AcomodationVO> show_acom_add_imgList(Map<String, String> paraMap) {
+		List<AcomodationVO> acom_add_imgList = sqlsession.selectList("detail.show_acom_add_imgList", paraMap);
 		return acom_add_imgList;
 	}
 
-	
-	// 호텔의 스펙넘버만 가져오기
+	// 애초에 기본값을 '없음'이라고 해놓고  if문을 돌려서 잇을경우에만 나오게하자. nvl decode 지금 다 안된다.
 	@Override
-	public AcomodationVO show_Specno(Map<String, String> paraMap) {
-		AcomodationVO specVO = sqlsession.selectOne("detail.show_Specno");
-		return specVO;
+	public List<AcomodationVO> show_facilitiesList(Map<String, String> paraMap) {
+		List<AcomodationVO> facilitiesList	= sqlsession.selectList("detail.show_facilitiesList", paraMap);	
+		return facilitiesList;
 	}
+
+	// 호스트, 업주 정보 가져오기.
+	@Override
+	public HostVO showHostInfo(Map<String, String> paraMap) {
+		HostVO HostInfo = sqlsession.selectOne("detail.showHostInfo", paraMap);
+		return HostInfo;
+	}
+
+	
+	// 리뷰 리스트 가져오기
+	@Override
+	public List<AcomodationVO> show_ReviewList(Map<String, String> paraMap) {
+		List<AcomodationVO> reviewList = sqlsession.selectList("detail.show_ReviewList", paraMap);
+		return reviewList;
+	}
+
+
+	
+
+	
 
 }

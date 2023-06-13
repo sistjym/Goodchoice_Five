@@ -395,7 +395,6 @@ public class AcomodationController {
 			
 		}// end of if(filter_condition_Map.get("arr_fac_no") != null) ---------------------
 		
-		///////////////////////////////////////////////////////////////////////////////////
 		
 		// sort
 		String sort = (String)filter_condition_Map.get("sort");
@@ -404,8 +403,9 @@ public class AcomodationController {
 			message = "유효하지 않은 정렬 방식입니다.";
 		}
 
+
 		
-		///////////////////////////////////////////////////////////////////////////////////
+		
 		
 		
 		if(Boolean.parseBoolean(bool)) {
@@ -418,6 +418,8 @@ public class AcomodationController {
 		
 		return parametersValidityMap;
 	}
+	
+
 
 	// district_no 입력해서 prov_name 과 sub_city_name 을 알아오는 메소드
 	@ResponseBody
@@ -495,16 +497,21 @@ public class AcomodationController {
 	
 	@GetMapping("/acomodation/home/{prov_no}") // 지역별 모텔의 인기숙소를 보여준다.
 	public String acomodation_search_view(HttpServletRequest request, @PathVariable String prov_no) {
-
+ 
 		// https://www.goodchoice.kr/product/home/1
+		boolean isInvalidProvNo = false;
 
-		if(!Myutil.isNumericalStr(prov_no)) { // 여기에 DB에 모텔 카테고리에 존재하는 지역번호인지 판별하는 메소드가 추가되어야 한다.
-		
+		if(Myutil.check_Invalid_String(prov_no)) isInvalidProvNo = true;	
+		if(prov_no != null && !Myutil.isNumericalStr(prov_no)) isInvalidProvNo = true; // 여기에 DB에 모텔 카테고리에 존재하는 지역번호인지 판별하는 메소드가 추가되어야 한다.
+		else if(!isExistMotelInProvNo(prov_no)) isInvalidProvNo = true; 
+			
+	
+		if(isInvalidProvNo) {
 			request.setAttribute("message", "유효하지 않은 페이지 입니다.(존재하지 않는 지역번호)");
 			request.setAttribute("loc", "javascript:history.back()");
 			return "msg";
-			
 		}
+		
 		
 		String check_in_date = Myutil.getDefaultCheckInDate();
 		String check_out_date =  Myutil.getDefaultCheckOutDate();
@@ -560,6 +567,23 @@ public class AcomodationController {
 			
 		}
 
+		private boolean isExistMotelInProvNo(String prov_no) {
+			
+			boolean bool = false;
+			
+			List<Map<String, String>> motelMapList = service.getcityListByMotel();
+			
+			for(Map<String, String> motelMap : motelMapList) {
+				
+				if(prov_no.equals(motelMap.get("prov_no"))) {
+					bool = true;
+					break;
+				}
+			}
+			
+			return bool;
+			
+		}
 	
 	
 	
@@ -1038,7 +1062,6 @@ public class AcomodationController {
 	
 	
 	
-	
 
 
 
@@ -1529,16 +1552,5 @@ public class AcomodationController {
 
 
 
-	// 업소 등록
-	@RequestMapping(value="/hostRegister.gc") 
-	public String hostRegister() {
-		return "host/accommodations_register.tiles3";
-	}
-	
 	
-	// 업소 정보 수정
-	@RequestMapping(value="/hostEdit.gc") 
-	public String hostEdit() {
-		return "host/accommodations_edit.tiles3";
-	}
 }
