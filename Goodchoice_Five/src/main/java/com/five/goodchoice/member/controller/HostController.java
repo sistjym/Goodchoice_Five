@@ -17,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.five.goodchoice.common.Sha256;
 import com.five.goodchoice.member.model.MemberVO;
-import com.five.goodchoice.model.service.InterHostService;
+import com.five.goodchoice.member.service.InterHostService;
 
 @Controller
 public class HostController {

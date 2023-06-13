@@ -2,11 +2,13 @@ package com.five.goodchoice.member.controller;
 
 import java.util.HashMap;
 
+
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.collections4.map.HashedMap;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
@@ -31,12 +33,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.five.goodchoice.common.AES256;
-import com.five.goodchoice.model.service.InterAdminService;
+import com.five.goodchoice.member.service.InterAdminService;
+import com.five.goodchoice.util.Myutil;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.five.goodchoice.util.Myutil;
+
 
 @Controller
 public class AdminController {
@@ -54,26 +60,28 @@ public class AdminController {
 	 return "main/home.tiles1"; // /WEB-INF/views/tiles1/{1}/{2}.jsp }
 	}
 
-	// 관리자 페이지 승인 부분
-	@RequestMapping(value = "/acomm_approve.gc")
-	public String acomm_approve(HttpServletRequest request) {
-
-		String permission = request.getParameter("permission"); // 사용자가 선책한 승인여부
 	
-		Map<String, Object> paraMap = new HashMap<>();
-		
-		if (permission != null && !"".equals(permission)) {
-			paraMap.put("permission", permission);
-
-			request.setAttribute("permission", permission);
-		}
-
-		List<Map<String, String>> acommList = service.getAcommList(paraMap);
-
-		request.setAttribute("acommList", acommList);
-		
-		return "admin/acomm_approve.tiles3";
+	  // 관리자 페이지 승인 부분
+	  
+	  @RequestMapping(value = "/acomm_approve.gc") public String
+	  acomm_approve(HttpServletRequest request) {
+	  
+		  String permission = request.getParameter("permission"); // 사용자가 선책한 승인여부
+		  
+		  Map<String, Object> paraMap = new HashMap<>();
+		  
+		  if (permission != null && !"".equals(permission)) { paraMap.put("permission",
+		  permission);
+		  
+		  request.setAttribute("permission", permission); }
+		  
+		  List<Map<String, String>> acommList = service.getAcommList(paraMap);
+		  
+		  request.setAttribute("acommList", acommList);
+		  
+		  return "admin/acomm_approve.tiles3"; 
 	}
+	 
 
 	// 숙소 등록 권한 업데이트 하기 
 	@ResponseBody
@@ -352,6 +360,14 @@ public class AdminController {
 		return "admin/showAllAcomm.tiles3";
 	}
 	
+	
+	
+	
+	
+	
+	
+	
+	
 //  ===  HOST 리스트 Exel파일로 다운받기  ====
 	@RequestMapping(value="/excel/downloadExcelFile_acomm.gc")
 	public String downloadExcelFile_acomm(HttpServletRequest request, Model model){ // model 을 저장소 역할
@@ -616,9 +632,8 @@ public class AdminController {
 		return new Gson().toJson(jsonArr);
 	}
 	
-	
-	
-	
+
+	 
 	
 	
 	

@@ -93,6 +93,20 @@ public class AdminDAO implements InterAdminDAO {
 		List<Map<String, String>> reviewList = sqlsession.selectList("admin.getReviewList");
 		 return reviewList;
 	}
+
+	// 검색에 따른 게시문의 총합을 가져오는 함수
+	@Override
+	public int getTotalCount(Map<String, Object> paraMap) {
+		int n = sqlsession.selectOne("board.getTotalCount", paraMap);
+		return n;
+	}
+
+	// 페이징 처리가 있는 숙소 리스트 불러오기 
+	@Override
+	public List<Map<String, String>> getAcommListWithPaging(Map<String, Object> paraMap) {
+		List<Map<String, String>> acommList = sqlsession.selectList("admin.getAcommListWithPaging",paraMap);
+		return acommList;
+	}
 	
 	
 }
