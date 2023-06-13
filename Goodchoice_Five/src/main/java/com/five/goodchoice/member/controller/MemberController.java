@@ -22,7 +22,7 @@ import com.five.goodchoice.common.GoogleMail;
 import com.five.goodchoice.common.Sha256;
 import com.five.goodchoice.member.model.HostVO;
 import com.five.goodchoice.member.model.MemberVO;
-import com.five.goodchoice.model.service.InterMemberService;
+import com.five.goodchoice.member.service.InterMemberService;
 
 
 

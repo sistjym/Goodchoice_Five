@@ -23,6 +23,17 @@
 		from tbl_district
 	</select>
 	
+	<!-- # 117. 총 게시물 건수 구하기 - 검색이 있을 떄와 검색이 없을 떄로 나눈다.
+	<select id="getTotalCount" parameterType="HashMap" resultType="int">
+		 select count(*)
+		 from tbl_acomodation 
+		
+	  <if test="permission != ''">
+	 	 and lower(${permission}) like '%' || lower(#{searchWord}) || '%'
+	  </if>
+	</select>
+	-->
+	
 	 <!-- //테이블에에서 조건에 맞는 숙소 불러오기 -->
 	<resultMap type="HashMap" id="acom_Map">
 		<result property="FK_CATEGORY_NO"      column="FK_CATEGORY_NO"          javaType="String"/>
@@ -73,6 +84,7 @@
 		order by S.SPEC_NAME asc
 
 	</select>
+
 	
 	 <!-- //테이블에에서 조건에 맞는 호스트 불러오기 -->
 	<resultMap type="HashMap" id="host_Map">
@@ -93,6 +105,9 @@
 		order by IS_HOST_PERMISSION asc
 
 	</select>
+	
+	
+	
 	
 	<!-- 호스트 권한 업데이트 하기  -->
 	<update id="updatePermission" parameterType="HashMap">
