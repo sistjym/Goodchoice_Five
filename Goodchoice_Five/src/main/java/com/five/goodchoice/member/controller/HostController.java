@@ -19,7 +19,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.five.goodchoice.common.FileManager;
 import com.five.goodchoice.common.Sha256;
+import com.five.goodchoice.detail.model.AcomodationVO;
 import com.five.goodchoice.member.model.HostVO;
 import com.five.goodchoice.member.model.MemberVO;
 import com.five.goodchoice.member.service.InterHostService;
@@ -30,6 +32,8 @@ public class HostController {
 	@Autowired  //  TYPE 에 따라서 , SPRING 에서 알아서 BEAN 을 주입 해준다.
 	private InterHostService service ;
 	
+	 @Autowired     // Type에 따라 알아서 Bean 을 주입해준다.
+	 private FileManager fileManager;
 	
 	// 사업자등록 중복 유무 검사
 	@ResponseBody
@@ -107,21 +111,67 @@ public class HostController {
 		
 		String lat = mrequest.getParameter("lat");
 		String lng = mrequest.getParameter("lng");
-		String RoomImage = mrequest.getParameter("RoomImage");
-		String AcomoImage = mrequest.getParameter("AcomoImage");
+		
+		MultipartFile RoomImagefile = mrequest.getFile("RoomImage");
+		MultipartFile AcomoImagefile = mrequest.getFile("AcomoImage");
+		
 		String parkInfo = mrequest.getParameter("parkInfo");
 		
 		String companyName = mrequest.getParameter("companyName");
 		
 	    String postcode = mrequest.getParameter("postcode");
-		String address = mrequest.getParameter("address");
+	    int firstIndex = postcode.indexOf(' ');
+	    int secondIndex = postcode.indexOf(' ', firstIndex + 1);
+	    
+	    String address = postcode.substring(0, secondIndex);
+	    String extra_address = postcode.substring(secondIndex+1);
+	    
+		
 		String accommodationType = mrequest.getParameter("accommodationType");
 		String accommodationSpec = mrequest.getParameter("accommodationSpec");
-		String publicService = mrequest.getParameter("publicService");
 		
-		System.out.println("publicService : " + publicService);
-		System.out.println("RoomImage : " + RoomImage);
-		System.out.println("AcomoImage : " + AcomoImage);
+		String[] publicServices = mrequest.getParameterValues("publicService");
+		
+		
+		String aroundInfo1 = mrequest.getParameter("aroundInfo1");
+		String aroundInfo2 = mrequest.getParameter("aroundInfo2");
+		String aroundInfo3 = mrequest.getParameter("aroundInfo3");
+		
+		String aroundInfo = "";
+		if (aroundInfo1 != null && aroundInfo2 != null && aroundInfo3 != null) {
+			  // 3개 모두 입력했을 경우
+			  aroundInfo = aroundInfo1 + "/" + aroundInfo2 + "/" + aroundInfo3;
+			} else if (aroundInfo1 != null && aroundInfo2 != null) {
+			  // 2개만 입력했을 경우
+			  aroundInfo = aroundInfo1 + "/" + aroundInfo2;
+			} else if (aroundInfo1 != null && aroundInfo3 != null) {
+			  // 2개만 입력했을 경우
+			  aroundInfo = aroundInfo1 + "/" + aroundInfo3;
+			} else if (aroundInfo2 != null && aroundInfo3 != null) {
+			  // 2개만 입력했을 경우
+			  aroundInfo = aroundInfo2 + "/" + aroundInfo3;
+			}
+			else if (aroundInfo1 != null) {
+			  // 1개만 입력했을 경우 (aroundInfo1)
+			  aroundInfo = aroundInfo1;
+			} else if (aroundInfo2 != null) {
+			  // 1개만 입력했을 경우 (aroundInfo2)
+			  aroundInfo = aroundInfo2;
+			} else if (aroundInfo3 != null) {
+			  // 1개만 입력했을 경우 (aroundInfo3)
+			  aroundInfo = aroundInfo3;
+			}
+			else {
+			  // 1개도 입력하지 않았을 경우
+			  aroundInfo = null;
+			}
+		
+		
+		if(publicServices != null) {
+			for (String value : publicServices) {
+			//	service.insertCategoryFacility(value);
+		    }		
+		}
 		
 		List<MultipartFile> fileList_1 = mrequest.getFiles("file_arr1");
 		List<MultipartFile> fileList_2 = mrequest.getFiles("file_arr2");
@@ -144,13 +194,57 @@ public class HostController {
 			host_no = String.valueOf(loginuser.getHost_no());
 			// login_userid 는 로그인 되어진 사용자의 userid 이다.
 		}
+		
+		if(!AcomoImagefile.isEmpty()) {
+			session = mrequest.getSession();
+	        String root = session.getServletContext().getRealPath("/");
+	        String path = root+"resources"+File.separator+"files";
+	        
+	        /*
+	         2. 파일첨부를 위한 변수의 설정 및 값을 초기화 한 후 파일 올리기 
+	      */
+	         String newFileName = "";
+	         // WAS(톰캣)의 디스크에 저장될 파일명 
+	         
+	         byte[] bytes = null;
+	         // 첨부파일의 내용물을 담는 것 
+	         
+	         long fileSize = 0;
+	         // 첨부파일의 크기 
+	         
+	         try {
+	            bytes = AcomoImagefile.getBytes();
+	            // 첨부파일의 내용물을 읽어오는 것
+	            
+	            String originalFilename = AcomoImagefile.getOriginalFilename();
+	        
+	            newFileName = fileManager.doFileUpload(bytes, originalFilename, path);
+	            // 첨부되어진 파일을 업로드 하도록 하는 것이다
+	            
+	            paraMap.put("AcomoImagefile", originalFilename);
+	          
+	            
+	         } catch (Exception e) {
+	            e.printStackTrace();
+	         }
+	      }
+	    System.out.println("aroundInfo : " + aroundInfo);
+	    System.out.println("parkInfo : " + parkInfo);
+		System.out.println("AcomoImagefile : " + paraMap.get("AcomoImagefile"));
 		System.out.println("host_no : " + host_no);
 		System.out.println("companyName : " + companyName);
 		paraMap.put("host_no", host_no);
 		paraMap.put("companyName", companyName);
 		paraMap.put("lat", lat);
 		paraMap.put("lng", lng);
+		paraMap.put("address", address);
+		paraMap.put("extra_address", extra_address);
+		paraMap.put("aroundInfo", aroundInfo);
+		paraMap.put("parkInfo", parkInfo);
 		
+		int n = service.acomoRegister(paraMap);
+		
+		System.out.println("n : " +n);
 		
 	    String root = session.getServletContext().getRealPath("/");
 	    String path = root + "resources"+File.separator+"email_attach_file";

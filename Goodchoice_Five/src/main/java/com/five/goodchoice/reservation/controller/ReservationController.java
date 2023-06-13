@@ -80,7 +80,7 @@ public class ReservationController {
 		
 		  Date now = new Date();
 		  
-		  String reserve_id =  "reserv1"+now;
+		  String reserve_id =  "reserve"+now.hashCode();
 		  Map<String, String> paraMap = new HashMap<>();
 			paraMap.put("userName",userName);
 			paraMap.put("email",email);
@@ -92,15 +92,17 @@ public class ReservationController {
 			paraMap.put("checkOut",checkOut);
 			paraMap.put("totalPrice",totalPrice);
 			paraMap.put("reserve_id",reserve_id);
-		  
-			
-			
+	
 			
 			//예약테이블에 예약정보를 insert 
 			int n = service.insertReservationInfo(paraMap);
 			
-			System.out.println("테이ㅏ블 인서트 " + n);
+			System.out.println("테이블 인서트" + n);
+			
 			// insert에 성공하면 예약 확정 이메일 보내기 
+			if(n == 1) {
+				
+			}
 			
 			
 			

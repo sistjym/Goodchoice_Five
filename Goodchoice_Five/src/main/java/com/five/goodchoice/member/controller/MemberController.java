@@ -393,17 +393,7 @@ public class MemberController {
 		boolean result = service.isKakaoExist(Sha256.encrypt(id));
 		
 		if(result) {
-			System.out.println("email : " + email);
-			if(service.checkDuplicateEmail(email)) {
-				String message = "이미 가입된 이메일입니다.";
-				String loc = "javascript:history.back()";
-				
-				mav.addObject("message", message);
-				mav.addObject("loc", loc);
-				
-				mav.setViewName("msg");
-			}
-			else {
+			
 				MemberVO loginuser = service.loginMemberforKakao(paraMap);
 				
 				if(loginuser == null) {	// 로그인 실패시 [존재하지않은 아이디 비번을 입력했을시]
@@ -435,7 +425,7 @@ public class MemberController {
 						}
 						
 					}
-				}
+				
 		}
 		else {
 			if(service.checkDuplicateEmail(email)) {

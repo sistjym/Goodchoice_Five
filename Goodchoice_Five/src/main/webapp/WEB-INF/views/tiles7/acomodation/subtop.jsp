@@ -13,8 +13,7 @@
 	$(document).ready(function(){
 		
 		let prov_no = '${requestScope.filter_condition_Map.prov_no}';
-
-		<%-- 숙소중 모텔을 가진 prov_no 의 리스트를 가져와서 .city 에 입력해야한다. --%>
+			
 		
 		let is_mouseover_area_pop = false; <%-- 지역 pop 내부에 mouseover 여부 --%>
 		$(".area_pop").css("display","none"); <%-- 초기에는 지역 pop 보이지 않음 --%>

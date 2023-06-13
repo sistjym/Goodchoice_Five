@@ -24,6 +24,7 @@
 	  
 	  viewDateRangePicker(check_in_date, check_out_date);
 	  
+	  console.log($("#daterange").val());
 	  let date = $("#daterange").val(); // default date 오늘날짜 - 내일날짜
 	  
 	  let dateObj = {
@@ -124,6 +125,7 @@
 			    },
 		   startDate: check_in_date, 
 		   endDate: check_out_date
+		   
 	     
 	  });
 	  

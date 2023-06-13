@@ -29,7 +29,10 @@
 
 
 
-
+<insert id="acomoRegister" parameterType="HashMap">
+INSERT INTO TBL_ACOMODATION(acom_no, fk_spec_no, fk_district_no, fk_host_no, acom_name, acom_image, address, extra_address, sur_info, parking_info, acom_latitude, acom_longitude)
+values(SEQ_ACOMODATION.nextval, #{accommodationSpec}, #{district_no}, #{host_no}, #{companyName}, #{AcomoImagefile}, #{address}, #{extra_address}, #{aroundInfo}, #{parkInfo}, #{lat}, #{lng})
+</insert>
 
 
 
