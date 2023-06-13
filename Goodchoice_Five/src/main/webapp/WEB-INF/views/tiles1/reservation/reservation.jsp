@@ -119,7 +119,7 @@
 
 
 </script>   
-
+	<div id="content">
 		<div id="reserve_contents">
 			<form name="orderForm">
 				<div class="left">
@@ -236,7 +236,7 @@
 				
 			</form>
 				
-		
+			</div>
 		</div>  
     </body>
 </html>

@@ -97,7 +97,7 @@ public class ReservationController {
 			//예약테이블에 예약정보를 insert 
 			int n = service.insertReservationInfo(paraMap);
 			
-			System.out.println("테이ㅏ블 인서트 " + n);
+			System.out.println("테이블 인서트" + n);
 			// insert에 성공하면 예약 확정 이메일 보내기 
 			
 			
