@@ -9,5 +9,9 @@ public interface InterHostDAO {
 	
 	// 업주회원가입
 	boolean gohostRegister(Map<String, String> paraMap);
+	
+	// 지역구번호 알아오기
+	int getDistrictno(Map<String, String> paraMap);
+	
 
 }

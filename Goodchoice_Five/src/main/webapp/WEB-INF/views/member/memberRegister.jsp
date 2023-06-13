@@ -305,7 +305,7 @@
 		// 한글과 영어만 입력 가능한지 확인
 	    var pattern = /^[a-zA-Z가-힣0-9\s]*$/;
 	    if (!pattern.test(companyName)) {
-	      $('span#error_companyName').text('상호명은 한글과 영어만 입력 숫자만 가능합니다.');
+	      $('span#error_companyName').text('상호명은 한글과 영어 숫자만 입력 숫자만 가능합니다.');
 	      return;
 	    }
 	    if (companyName.length < 2 || companyName.length > 10) {
@@ -533,8 +533,8 @@
 		        <option value="@naver.com">naver.com</option>
 		        <option value="@hanmail.com">hanmail.com</option>
 		        <option value="@daum.net">daum.net</option>
-		        <option value="@google.com">google.com</option>
 		        <option value="@gamil.com">gamil.com</option>
+		        <option value="@nate.com">nate.com</option>
 		      </select>
 		      
 		    </div>

@@ -40,6 +40,9 @@
 <script type="text/javascript">
 
 	$(document).ready(function(){
+		
+		Buttonabled();
+		
 		$("input#email").val('${requestScope.email}') ;
 		
 		// PWD 유효성 검사 및 비밀번호 일치 검사
@@ -80,6 +83,22 @@
   		
   		
   	}// END OF FUNCTION PWDSAME()
+  	
+  	
+  	function Buttonabled() {
+		  $("#pwUpdate").prop("disabled", true).css("background-color", "#FAFAFA");
+
+		  $("input#passwd_check").on("input", function() {
+			const passwd = $('input#passwd').val().trim(); // 비밀번호 
+		    const passwd_check = $(this).val().trim();
+		    if (passwd == passwd_check) {
+		    	$("#pwUpdate").prop("disabled", false).css({"background-color": "#f2114c", "color": "#fff"});
+		    } else {
+		      $("#pwUpdate").prop("disabled", true).css("background-color", "#FAFAFA");
+		    }
+		  });
+		}
+  	
 	
 	function gopwUpdate() {
 		

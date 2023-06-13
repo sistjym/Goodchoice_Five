@@ -29,4 +29,15 @@ public class HostDAO implements InterHostDAO {
 		return (result==1);
 	}
 	
+	
+	// 지역구번호 알아오기
+	@Override
+	public int getDistrictno(Map<String, String> paraMap) {
+	  int n = sqlsession.selectOne("host.getDistrictno", paraMap);
+	
+	  return n;
+	}
+	
+	
+	
 }
