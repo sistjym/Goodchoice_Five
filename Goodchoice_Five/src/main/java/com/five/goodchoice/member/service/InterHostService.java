@@ -12,6 +12,9 @@ public interface InterHostService {
 	// 업주회원가입 
 	boolean gohostRegister(Map<String, String> paraMap);
 	
+	// 지역구번호 알아오기
+	int getDistrictno(String postcode);
+	
 	
 
 }

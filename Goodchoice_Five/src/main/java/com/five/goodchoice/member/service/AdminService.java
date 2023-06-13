@@ -11,6 +11,14 @@ import com.five.goodchoice.member.model.InterAdminDAO;
 
 
 
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.five.goodchoice.member.model.InterAdminDAO;
+
+
 @Service
 public class AdminService implements InterAdminService {
 
@@ -103,21 +111,20 @@ public class AdminService implements InterAdminService {
 		List<Map<String, String>> reviewList = dao.getReviewList(); 
 		return reviewList;
 	}
-
 	// 총게시물을 불러오ㄱㅣ
-	@Override
-	public int getTotalCount(Map<String, Object> paraMap) {
-		int n = dao.getTotalCount(paraMap);
-		return n;
-	}
+		@Override
+		public int getTotalCount(Map<String, Object> paraMap) {
+			int n = dao.getTotalCount(paraMap);
+			return n;
+		}
 
-	// 페이징 처리가 있는 숙소 리스트 불러오기 
-	@Override
-	public List<Map<String, String>> getAcommListWithPaging(Map<String, Object> paraMap) {
-		List<Map<String, String>> boardList = dao.getAcommListWithPaging(paraMap);
-		
-		return boardList;
-	}
+		// 페이징 처리가 있는 숙소 리스트 불러오기 
+		@Override
+		public List<Map<String, String>> getAcommListWithPaging(Map<String, Object> paraMap) {
+			List<Map<String, String>> boardList = dao.getAcommListWithPaging(paraMap);
+			
+			return boardList;
+		}
 
 	
 }

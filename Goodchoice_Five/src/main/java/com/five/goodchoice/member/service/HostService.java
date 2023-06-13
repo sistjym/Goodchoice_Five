@@ -11,6 +11,15 @@ import org.springframework.stereotype.Service;
 import com.five.goodchoice.common.AES256;
 import com.five.goodchoice.member.model.InterHostDAO;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.five.goodchoice.common.AES256;
+import com.five.goodchoice.member.model.InterHostDAO;
+
 @Service
 public class HostService implements InterHostService {
 
@@ -50,6 +59,26 @@ public class HostService implements InterHostService {
 		
 		return result;
 	}
+	
+	
+	// 지역구번호 알아오기
+	@Override
+	public int getDistrictno(String postcode) {
+		String districtname = postcode.substring(0, 2);
+		String subdistrictname = postcode.substring(3, 6);
+		
+		System.out.println("districtname : " + districtname);
+		System.out.println("subdistrictname : " + subdistrictname);
+		
+		Map<String, String> paraMap = new HashMap<>();
+		paraMap.put("districtname", districtname);
+		paraMap.put("subdistrictname", subdistrictname);
+		int n = dao.getDistrictno(paraMap);
+		
+		return n;
+		
+	}
+	
 	
 	
 	
