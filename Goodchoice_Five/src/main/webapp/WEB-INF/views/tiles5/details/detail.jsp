@@ -954,13 +954,39 @@ $(document).ready(function() {
 		
 		$("#daterange").val(formattedValue);
 		$("ul.disc-list > li.modal_date").text(defaultStartDate + '~' + defaultEndDate);
-	
+		
+		let html = "";
+		
+		$("div#item a.btn_resv").attr('href', '');
+	    
+		
+		var send_acom_name = '${requestScope.daVO.acom_name}';
+	       
+//       console.log("send_acom_name :" + send_acom_name);
+       
+       var send_anchorIndex = parseInt($("p#status_forp").text(), 10);
+       
+ //      console.log("send_anchorIndex :" + send_anchorIndex);
+       
+           
+       var send_room_type = "${RoomVO.room_type}";
+       
+ //      console.log("send_room_type :"  + send_room_type)
+       
+       var send_room_price = "${RoomVO.price}";
+	   
+       
+	       
        
        // 날짜 선택 시 이벤트 처리
        $("#daterange").on('apply.daterangepicker', function(ev, picker) {
          var startDate = picker.startDate;
          var endDate = picker.endDate;
          var diffInDays = endDate.diff(startDate, 'days');
+         
+         html = "";
+         
+         $("div#item a.btn_resv").attr('href', '');
 
          if (diffInDays > 7) {
            alert("최대 7박만 가능합니다");
@@ -970,12 +996,20 @@ $(document).ready(function() {
              $(this).val(previousStartDate.format('MM월 DD일') + ' ~ ' + previousEndDate.format('MM월 DD일') + '  ' + previousEndDate.diff(previousStartDate, 'days')  + '박');
              $("ul.disc-list > li.modal_date").text(previousStartDate.format('MM월 DD일') + ' ~ ' + previousEndDate.format('MM월 DD일'));
              
+             html += "/goodchoice/reservation/reservation.gc?acom_name='" + send_acom_name + "'&room_type='" + send_room_type + "'&dateDiff='" + send_date_bak + "'&check_in_date='" + send_checkin + "'&check_out_date='" + send_checkout + "'";
+ 			
+             $("div#item a.btn_resv").attr('href', html);
+             
            } else {
         	//   console.log("히히히 엘스다");
              $(this).data('daterangepicker').setStartDate(defaultStartDate);
              $(this).data('daterangepicker').setEndDate(defaultEndDate);
              $(this).val(defaultStartDate + ' ~ ' + defaultEndDate + '  ' + dateDiff + '박');
              $("ul.disc-list > li.modal_date").text(defaultStartDate + '~' + defaultEndDate);
+             
+             html += "/goodchoice/reservation/reservation.gc?acom_name='" + send_acom_name + "'&room_type='" + send_room_type + "'&dateDiff='" + send_date_bak + "'&check_in_date='" + send_checkin + "'&check_out_date='" + send_checkout + "'";
+ 			
+             $("div#item a.btn_resv").attr('href', html);
              
            }
          } else {
@@ -985,11 +1019,14 @@ $(document).ready(function() {
            send_checkout = endDate.format('YYYY-MM-DD');   // 보내는 체크아웃 날짜 업데이트
            send_date_bak = diffInDays ; 			// 보내는 숙박기간 업데이트
            
-           console.log("send_checkin : " + send_checkin);
+  //         console.log("send_checkin : " + send_checkin);
            
-           console.log("send_checkout : " + send_checkout);
+  //         console.log("send_checkout : " + send_checkout);
            
-           console.log("send_date_bak : " + send_date_bak);
+  //         console.log("send_date_bak : " + send_date_bak);
+           html += "/goodchoice/reservation/reservation.gc?acom_name='" + send_acom_name + "'&room_type='" + send_room_type + "'&dateDiff='" + send_date_bak + "'&check_in_date='" + send_checkin + "'&check_out_date='" + send_checkout + "'";
+			
+           $("div#item a.btn_resv").attr('href', html);
            
            // 선택한 값이 유지되도록 이전에 선택한 값을 업데이트
            previousStartDate = startDate.clone();
@@ -997,30 +1034,21 @@ $(document).ready(function() {
          }
        });
        
-       let html = "";
+       $("div#item a.btn_resv").attr('href', '');
        
-       var send_acom_name = '${requestScope.daVO.acom_name}';
-       
-       console.log("send_acom_name :" + send_acom_name);
-       
-       var send_anchorIndex = parseInt($("p#status_forp").text(), 10);
-       
-       console.log("send_anchorIndex :" + send_anchorIndex);
-       
-           
-       var send_room_type = "${RoomVO.room_type}"
-       
-       console.log("send_room_type :"  + send_room_type)
+       html = "";
        
        
-       console.log("send_checkin : " + send_checkin);
        
-       console.log("send_checkout : " + send_checkout);
+  //     console.log("send_checkin : " + send_checkin);
        
-       console.log("send_date_bak : " + send_date_bak);
+  //     console.log("send_checkout : " + send_checkout);
        
- 
-       html += "/goodchoice/reservation/reservation.gc?acom_name=' + send_acom_name + '&room_type=' + send_room_type + '&dateDiff=' + send_date_bak + '&check_in_date=' + send_checkin + '&check_out_date=' + send_checkout'";
+ //      console.log("send_date_bak : " + send_date_bak);
+       
+ 	    	
+       
+       html += "/goodchoice/reservation/reservation.gc?acom_name='" + send_acom_name + "'&room_type='" + send_room_type + "'&dateDiff='" + send_date_bak + "'&check_in_date='" + send_checkin + "'&check_out_date='" + send_checkout + "'";
 
        $("div#item a.btn_resv").attr('href', html);
 
