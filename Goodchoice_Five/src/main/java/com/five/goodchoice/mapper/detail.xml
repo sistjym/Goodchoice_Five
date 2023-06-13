@@ -16,70 +16,112 @@
 				
 		</select>
 	
-		
+	 
 		<!-- acom_no에 해당하는 숙소정보를 가져오기  -->
-		<select id="show_acom_Info" parameterType="HashMap" resultType="com.five.goodchoice.detail.model.AcomodationVO">
+		 
+		<select id="show_acom_Info" parameterType="String" resultType="com.five.goodchoice.detail.model.AcomodationVO">
 		
-			select acom_no, fk_spec_no , fk_district_no , fk_host_no , acom_name , acom_image , address , extra_address , sur_info ,
-				   nvl(parking_info,'-') , acom_latitude , acom_longitude
+			select acom_no, fk_district_no , fk_host_no , acom_name , acom_image , address , extra_address , sur_info ,
+				   nvl(parking_info,'없음') as parking_info , acom_latitude , acom_longitude ,  fk_spec_no 
 		    
 		    from tbl_acomodation
 		    
-		    where acom_no =  #{acom_no}
+		    where acom_no =  #{value}
 		
 		
-		</select>
+		</select> 
+		
+		
 		
 		
 		<!--  	acom_no에 해당하는 숙소의 추가이미지 파일을 가져오기	-->
-		<select id="show_acom_add_imgList" parameterType="HashMap" resultType="String">
-			
+		
+		<select id="show_acom_add_imgList" parameterType="HashMap" resultType="com.five.goodchoice.detail.model.AcomodationVO">
+		
 			select acom_image_add_name
 			from  tbl_acomo_add_img A join tbl_acomodation B
 			on A.fk_acom_no = B.acom_no 
-			where A.fk_acom_no = #{acom_no}
+			where acom_no = #{acom_no}
 			order by acom_image_add_no
 		
 		</select>
 		
 		
-		<!-- acom_no에 해당하는 객실의 정보 및 객실에 해당하는 추가이미지 가져오기   -->
 		
-		<resultMap type="HashMap" id="roomMap">
 		
-			<result property="room_no"         				 column="room_no" 	                javaType="String"/>
-			<result property="room_type"                     column="room_type"                 javaType="String"/>
-			<result property="room_image" 	                 column="room_image" 	            javaType="String"/>
-			<result property="price"           				 column="price" 		            javaType="String"/>
-			<result property="room_image_add_name"           column="room_image_add_name" 		javaType="String"/>
+		<!--acom_no에 해당하는 편의시설 가져오기 -->
+		
+		<select id="show_facilitiesList" parameterType="HashMap" resultType="com.five.goodchoice.detail.model.AcomodationVO">
+		
+			select category_fac_name
+            from tbl_acomodation A 
+            join tbl_facilities B
+            on A.acom_no = B.fk_acom_no
+            join tbl_category_facilities C
+            on B.fk_category_fac_no = C.category_fac_no
+            where A.acom_no = #{acom_no}
+		
+		</select>
+		
+		
+		<!-- acom_no에 해당하는 업주 정보 가져오기  -->
+		
+		<select id="showHostInfo" parameterType="HashMap" resultType="com.five.goodchoice.member.model.HostVO">
 			
-		</resultMap>
-	  	
-		<select id="show_roomList" parameterType="HashMap" resultMap="roomMap">
+			select nvl(cp_name,'없음')AS cp_name,host_name,host_email,cp_reg_no
+            from tbl_host A join tbl_acomodation B
+            on A.host_no = B.fk_host_no
+            where acom_no = #{acom_no}
+		
+		</select>
 		
 		
-			select A.room_no as room_no, A.room_type as room_type ,A.room_image as room_image, A.price as price, C.room_image_add_name as room_image_add_name
-			from tbl_room A 
-			join tbl_acomodation B   on A.fk_acom_no = B.acom_no
-			join tbl_room_add_img C  on A.room_id = C.fk_room_id
-			where A.fk_acom_no = #{acom_no} 
-			order by room_no
+			<!-- 리뷰 리스트 가져오기  --> 
 		
+		<select id="show_ReviewList" parameterType="HashMap" resultType="com.five.goodchoice.detail.model.AcomodationVO">
+		
+			SELECT A.review_subject as review_subject, A.review_content as review_content, 
+			A.review_score as review_score, A.review_image as review_image, 
+			A.review_reg_date as review_reg_date , (SELECT COUNT(*) FROM tbl_review A JOIN tbl_room B ON A.fk_room_id = B.room_id WHERE B.fk_acom_no = #{acom_no}) AS review_cnt
+			FROM tbl_review A
+			JOIN tbl_room B ON A.fk_room_id = B.room_id
+			WHERE B.fk_acom_no = #{acom_no}
+			order by review_reg_date      
+		
+		</select>
+		
+		
+		<!-- acom_no에 해당하는 객실 가져오기(Ajax)용 -->
+		
+		<select id="getRoomOne" parameterType="String" resultType="com.five.goodchoice.detail.model.RoomVO">
+		
+			select room_no,room_type ,room_image, price  , room_id
+			from tbl_room
+			where fk_acom_no = #{acom_no}
 		
 		
 		</select>
 		
-		<!-- 호텔의 스펙넘버만 가져오기     -->
 		
-		<select id="show_Specno" parameterType="HashMap" resultType="com.five.goodchoice.detail.model.AcomodationVO">
+		<!-- acom_no 에 해당하는 객실들의 추가이미지를 원하는 객실에만 해당하는 것만 가져오기 -->
+		
+		<select id="getRoomList" parameterType="HashMap" resultType="com.five.goodchoice.detail.model.RoomVO">
 			
-			    select B.spec_name as spec_name
-			    from  tbl_acomodation A join tbl_spec B
-			    on A.fk_spec_no = B.spec_no
-			    where A.acom_no = #{acom_no} and fk_category_no = 1
+			select room_no,room_type ,room_image, price  , room_id
+			from tbl_room
+			where fk_acom_no = #{acom_no}
 		
 		</select>
 		
+		<!--  
+			<select id="getRoom_addImageList" >
+			
+	
+	
+			
+			</select>
+		
+		-->
 		
 		
 </mapper>

@@ -1,5 +1,7 @@
 package com.five.goodchoice.detail.model;
 
+import java.util.List;
+
 public class RoomVO {
 
 	private String room_id;
@@ -8,10 +10,10 @@ public class RoomVO {
 	private String room_type;
 	private String room_image;
 	private String price;
-	private String room_image_add_no;
-	private String room_addimgcnt;
+	private String room_image_add_name;
+    private List<String> room_Add_ImageList;
 	
-	public RoomVO(String room_id, String fk_acom_no,String room_no,String room_type , String room_image , String price , String room_image_add_no, String room_addimgcnt) {
+	public RoomVO(String room_id, String fk_acom_no,String room_no,String room_type , String room_image , String price , String room_image_add_name , List<String> room_Add_ImageList) {
 		super();
 		this.room_id = room_id;
 		this.fk_acom_no =fk_acom_no;
@@ -19,16 +21,17 @@ public class RoomVO {
 		this.room_type = room_type;
 		this.room_image = room_image;
 		this.price = price;
-		this.room_image_add_no = room_image_add_no;
-		this.room_addimgcnt = room_addimgcnt;
+		this.room_image_add_name = room_image_add_name;
+		this.room_Add_ImageList = room_Add_ImageList;
 	}
 	
-	public String getRoom_addimgcnt() {
-		return room_addimgcnt;
+	
+	public List<String> getRoom_Add_ImageList() {
+		return room_Add_ImageList;
 	}
 
-	public void setRoom_addimgcnt(String room_addimgcnt) {
-		this.room_addimgcnt = room_addimgcnt;
+	public void setRoom_Add_ImageList(List<String> room_Add_ImageList) {
+		this.room_Add_ImageList = room_Add_ImageList;
 	}
 
 	public RoomVO() {}
@@ -81,12 +84,16 @@ public class RoomVO {
 		this.price = price;
 	}
 
-	public String getRoom_image_add_no() {
-		return room_image_add_no;
+
+	public String getRoom_image_add_name() {
+		return room_image_add_name;
 	}
 
-	public void setRoom_image_add_no(String room_image_add_no) {
-		this.room_image_add_no = room_image_add_no;
+
+	public void setRoom_image_add_name(String room_image_add_name) {
+		this.room_image_add_name = room_image_add_name;
 	}
+
+
 	
 }
