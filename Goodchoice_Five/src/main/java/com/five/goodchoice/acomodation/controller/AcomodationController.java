@@ -497,7 +497,7 @@ public class AcomodationController {
 	
 	@GetMapping("/acomodation/home/{prov_no}") // 지역별 모텔의 인기숙소를 보여준다.
 	public String acomodation_search_view(HttpServletRequest request, @PathVariable String prov_no) {
-
+ 
 		// https://www.goodchoice.kr/product/home/1
 		boolean isInvalidProvNo = false;
 
