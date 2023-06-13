@@ -13,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.five.goodchoice.common.AES256;
 import com.five.goodchoice.member.model.MemberVO;
-import com.five.goodchoice.model.service.InterMypageService;
+import com.five.goodchoice.mypage.service.InterMypageService;
 
 
 @Controller
@@ -30,15 +30,54 @@ public class MypageController {
 		return "my/reservation.tiles4";
 	}
 	@RequestMapping(value="/mypage.gc") 
-	public String memberEdit(HttpServletRequest request) {
-		return "my/page.tiles4";
+	public ModelAndView memberEdit(ModelAndView mav, HttpServletRequest request) {
+		// 내정보(회원정보)를 수정하기 위한 전제조건은 먼저 로그인을 해야 하는 것이다.
+		if(service.checkLogin()) {
+			// 로그인 했으면
+			String email = request.getParameter("email");
+
+			HttpSession session = request.getSession();
+			MemberVO loginuser = (MemberVO) session.getAttribute("loginuser");
+
+			try {
+				if(loginuser.getMember_email().equals(aes.encrypt(email))) {
+					// 로그인한 사용자가 자신의 정보를 수정하는 경우
+
+					mav.setViewName("my/page.tiles4");
+				}
+				else {
+					// 로그인한 사용자가 다른 사용자의 정보를 수정하려고 시도하는 경우
+					String message = "다른 사용자의 정보 변경은 불가합니다!!";
+					String loc = request.getContextPath()+"/main/home.gc";
+
+					mav.addObject("message", message);
+					mav.addObject("loc", loc);
+
+					mav.setViewName("msg");
+				}
+			} catch (UnsupportedEncodingException | GeneralSecurityException  e) {
+				e.printStackTrace();
+			}
+		}
+		else {
+			// 로그인 안 했으면
+			String message = "회원정보를 수정하기 위해서는 먼저 로그인을 하세요!!";
+			String loc = "javascript:history.back()";
+
+			mav.addObject("message", message);
+			mav.addObject("loc", loc);
+
+			mav.setViewName("msg");
+		}
+
+		return mav;
 	}
 
 	@RequestMapping(value="/mypoint.gc", method = {RequestMethod.POST}) 
 	public ModelAndView my_page_3(ModelAndView mav, HttpServletRequest request) {
 		
 		// 내정보(회원정보)를 수정하기 위한 전제조건은 먼저 로그인을 해야 하는 것이다.
-		if(service.checkLogin(request)) {
+		if(service.checkLogin()) {
 			// 로그인 했으면
 			String email = request.getParameter("email");
 
@@ -54,7 +93,7 @@ public class MypageController {
 				else {
 					// 로그인한 사용자가 다른 사용자의 정보를 수정하려고 시도하는 경우
 					String message = "다른 사용자의 정보 변경은 불가합니다!!";
-					String loc = "javascript:history.back()";
+					String loc = request.getContextPath()+"/main/home.gc";
 
 					mav.addObject("message", message);
 					mav.addObject("loc", loc);

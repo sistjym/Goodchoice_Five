@@ -4,8 +4,7 @@
 
 
 <div id="content" class="sub_wrap my_wrap">
-	
-                
+         
     <main class="container align_rt" >
     	<input type="hidden" name="page" value="1" > 
     	<h3 class="page-title pc-only" >포인트</h3> 

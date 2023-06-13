@@ -1,8 +1,6 @@
-package com.five.goodchoice.member.model;
+package com.five.goodchoice.mypage.model;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -13,7 +11,7 @@ public class MypageDAO implements InterMypageDAO {
 	private SqlSessionTemplate sqlsession;
 	
 	@Override
-	public boolean checkLogin(HttpServletRequest request) {
+	public boolean checkLogin() {
 		
 		
 		
