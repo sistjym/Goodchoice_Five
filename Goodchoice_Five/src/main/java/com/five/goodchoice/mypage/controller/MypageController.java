@@ -64,7 +64,7 @@ public class MypageController {
 		
 	}
 
-	@RequestMapping(value="/mypoint.gc", method = {RequestMethod.POST}) 
+	@RequestMapping(value="/mypoint.gc") 
 	public ModelAndView my_page_3(ModelAndView mav, HttpServletRequest request) {
 		
 		HttpSession session = request.getSession();
