@@ -33,7 +33,7 @@
 				  success:function(json){
 					
 					  if(json == 1) {
-	                         alert("숙소 등록에 성공했습니다!");
+	                         alert("숙소 등록/해제에 성공했습니다!");
 	                         document.location.reload();
 	                         
 	                   }
@@ -58,7 +58,7 @@
 	    	  
 	    	  
 	      }); // end of $("button#btnSearch").click(function()
-    	  
+
 	  });
     
 </script>   
@@ -76,6 +76,7 @@
           <option value="1">승인 완료</option>
           <option value="0">승인 대기 </option>
        </select>
+     
        <div class="btn_box">
 	       <button type="button" class="btn btn-secondary btn-sm" id="btnSearch">검색하기</button>
        </div>
@@ -114,7 +115,7 @@
 	</c:if>      
   </tbody>
 </table>
-   
+  
    </div>
 </div>
 </body>

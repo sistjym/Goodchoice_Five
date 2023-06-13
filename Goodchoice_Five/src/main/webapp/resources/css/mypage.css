@@ -523,11 +523,11 @@ div.payment-info-pc__bottom {
     border: none;
     display: flex;
 }
-p {
+/* p {
     position: relative;
     margin: 0 0 13px 0;
     font-size: 18px;
     color: rgba(0, 0, 0, 0.87);
     text-align: left;
-}  
+}   */
     

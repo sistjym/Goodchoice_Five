@@ -371,6 +371,18 @@
 	</select>
 	
 	
+	<resultMap type="HashMap" id="getspecByAcom_Map">
+		<result property="spec_no" 		 column="spec_no" 		javaType="String"/>
+		<result property="spec_name" 	 column="spec_name" 	javaType="String"/>
+	</resultMap>
+	<select id="getspecByAcom" parameterType="String" resultMap="getspecByAcom_Map">
+		select spec_no, spec_name
+		    from tbl_spec SPEC
+		    JOIN tbl_acomodation ACOM on SPEC.spec_no = ACOM.fk_spec_no
+		    where acom_no = #{acom_no}
+	</select>
+	
+	
 
 
 </mapper>

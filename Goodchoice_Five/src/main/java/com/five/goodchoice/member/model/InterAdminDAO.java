@@ -39,4 +39,10 @@ public interface InterAdminDAO {
 	// 리뷰리스트 불러오기
 	List<Map<String, String>> getReviewList();
 
+	// 검색에 따른 게시문의 총합을 가져오는 함수
+	int getTotalCount(Map<String, Object> paraMap);
+
+	// 페이징 처리가 있는 숙소 리스트 불러오기 
+	List<Map<String, String>> getAcommListWithPaging(Map<String, Object> paraMap);
+
 }

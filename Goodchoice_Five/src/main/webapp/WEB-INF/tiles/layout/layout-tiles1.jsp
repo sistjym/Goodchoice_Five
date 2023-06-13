@@ -20,7 +20,7 @@
 
   <!-- Font Awesome 5 Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-  <script src="https://kit.fontawesome.com/b7b1b05ad5.js" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/85a5037280.js" crossorigin="anonymous"></script>
   <!-- 직접 만든 CSS 1 -->
  
   <link rel="stylesheet" type="text/css" href="<%=ctxPath %>/resources/css/common.css" />

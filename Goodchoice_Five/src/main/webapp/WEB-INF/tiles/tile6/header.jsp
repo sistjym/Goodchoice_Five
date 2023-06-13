@@ -26,11 +26,9 @@
                  <li class="dropdown">
                     <button class="dropbtn">호스트 전용</button>
                      <ul class="dropdown-content">
-                        <a href="<%= ctxPath%>/showAllAcomm.gc">모든 숙소 보기</a>
-                        <a href="<%= ctxPath%>/showAllHost.gc">호스트 관리</a>
+                        <a href="<%= ctxPath%>/hostRegister.gc">숙소등록</a>
+                        <a href="<%= ctxPath%>/hostEdit.gc">숙소수정</a>
                         <a href="<%= ctxPath%>/acomm_approve.gc">숙소 등록 승인 하기</a>
-                        <a href="<%= ctxPath%>/main/home.gc">숙소 데이터 차트</a>
-                        <a href="<%= ctxPath%>/main/home.gc">모든 회원보기1</a>
                     </ul>
                 </li> 
                
