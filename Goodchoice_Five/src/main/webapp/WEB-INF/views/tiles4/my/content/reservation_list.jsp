@@ -18,6 +18,7 @@
 			<ul class="list_wrap">
 				<li class="reservation-detail">
 					<div class="reserve-div">
+						<input type="hidden" name="member_id" id="member_id" value="${sessionScope.loginuser.member_id}">
 						<button  type="button" data-order-number="23052314010DCAYE1" data-target-list="canceledList" class="btn_del">
         				삭제
     					</button> 
