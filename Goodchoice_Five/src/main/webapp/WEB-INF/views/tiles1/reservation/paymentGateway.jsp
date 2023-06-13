@@ -56,10 +56,10 @@ $(document).ready(function() {
 			2. jQuery를 이용한 방법
 			$(opener.location).attr("href", "javascript:부모창스크립트 함수명();");
 		*/
-			//opener.location.href = "javascript:goCoinUpdate('${requestScope.userid}','${requestScope.coinmoney}');";
-			window.opener.goOrderEnd();
-		//  $(opener.location).attr("href", "javascript:goCoinUpdate('${requestScope.userid}','${requestScope.coinmoney}');");
-			//$(opener.location).attr("href", "javascript:부모창스크립트 함수명();");
+			
+			window.opener.goOrderEnd;
+		    
+		
 		    self.close(); // 자신의 팝업창을 닫는 것이다.
 		  
 			
@@ -74,8 +74,7 @@ $(document).ready(function() {
 }); // end of $(document).ready()-----------------------------
 
 </script>
-</head>	
 
-<body>
+
 </body>
 </html>
