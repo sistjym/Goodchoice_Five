@@ -985,11 +985,11 @@ $(document).ready(function() {
            send_checkout = endDate.format('YYYY-MM-DD');   // 보내는 체크아웃 날짜 업데이트
            send_date_bak = diffInDays ; 			// 보내는 숙박기간 업데이트
            
-           console.log("send_checkin : " + send_checkin);
+//           console.log("send_checkin : " + send_checkin);
            
-           console.log("send_checkout : " + send_checkout);
+ //          console.log("send_checkout : " + send_checkout);
            
-           console.log("send_date_bak : " + send_date_bak);
+  //         console.log("send_date_bak : " + send_date_bak);
            
            // 선택한 값이 유지되도록 이전에 선택한 값을 업데이트
            previousStartDate = startDate.clone();
@@ -1001,23 +1001,24 @@ $(document).ready(function() {
        
        var send_acom_name = '${requestScope.daVO.acom_name}';
        
-       console.log("send_acom_name :" + send_acom_name);
+  //     console.log("send_acom_name :" + send_acom_name);
        
        var send_anchorIndex = parseInt($("p#status_forp").text(), 10);
        
-       console.log("send_anchorIndex :" + send_anchorIndex);
+   //    console.log("send_anchorIndex :" + send_anchorIndex);
        
            
-       var send_room_type = "${RoomVO.room_type}"
+       var send_room_type = "${RoomVO.room_type}";
        
-       console.log("send_room_type :"  + send_room_type)
+    //   console.log("send_room_type :"  + send_room_type)
        
+       var send_room_price = "${RoomVO.price}";
        
-       console.log("send_checkin : " + send_checkin);
+    //   console.log("send_checkin : " + send_checkin);
        
-       console.log("send_checkout : " + send_checkout);
+   //    console.log("send_checkout : " + send_checkout);
        
-       console.log("send_date_bak : " + send_date_bak);
+  //     console.log("send_date_bak : " + send_date_bak);
        
  
        html += "/goodchoice/reservation/reservation.gc?acom_name=' + send_acom_name + '&room_type=' + send_room_type + '&dateDiff=' + send_date_bak + '&check_in_date=' + send_checkin + '&check_out_date=' + send_checkout'";
