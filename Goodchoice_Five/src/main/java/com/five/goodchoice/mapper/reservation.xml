@@ -6,8 +6,8 @@
 <mapper namespace="reservation">
 		 
 	<insert id="insertReservationInfo" parameterType="HashMap">
-		insert into tbl_reservation(RESERV_ID, FK_ROOM_ID,FK_MEMBER_ID,CHECK_OUT_DATE,CHECK_IN_DATE,PRICE,RESERV_PERSON) 
-		values(${reserve_id}, '25CQL548', ${member_id}, ${checkOut}, ${checkIn}, ${totalPrice}, ${userName})
+		insert into tbl_reservation(RESERV_ID, FK_ROOM_ID, FK_MEMBER_ID, CHECK_OUT_DATE, CHECK_IN_DATE, PRICE, RESERV_STATUS, RESERV_PERSON) 
+		values( #{reserve_id}, '25CQL548', to_number(#{member_id}), to_date(#{checkOut},'yyyy-mm-dd'),  to_date(#{checkIn},'yyyy-mm-dd'), #{totalPrice}, 1 ,#{userName})
 	</insert>
 		
 		

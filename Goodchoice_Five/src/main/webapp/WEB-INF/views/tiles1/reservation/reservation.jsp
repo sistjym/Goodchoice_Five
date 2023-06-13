@@ -6,19 +6,23 @@
    String ctxPath = request.getContextPath();
 %>
 
-<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.2.js"></script>
 
 <script type="text/javascript">
 
 	
 	$(document).ready(function(){
+
 		
 		$("button#goReservation").bind("click", function() {
 			
 			
-			
-			
-			
+			<%-- let popOption = "left=100,top=100,width=320,height=320";
+			let openUrl  ='<%= request.getContextPath()%>/reservation/paymentGateway.gc';
+			window.open(openUrl,'pop',popOption);
+			 --%>
+			<%-- 
 		    const frm = document.orderForm;
 		    
 		    frm.userName.value = $("input#userName").val();
@@ -28,29 +32,90 @@
    	        frm.roomName.value = $("input#roomName").val();
    	        frm.checkIn.value = $("input#checkIn").val();
    	        frm.checkOut.value = $("input#checkOut").val();
-   	        frm.totalPrice.value = $("input#totalPrice").val();
-   	       
+   	        frm.totalPrice.value = $("input#totalPrice").val(); 
+   	     
    	        frm.method = "post";
-   	        frm.action = "<%= request.getContextPath()%>/reservation/paymentGateway.gc";
-   	        frm.submit();
-			
-			
-			
-		});// end of click 결제하기
-			
+   	        frm.action = "<%= request.getContextPath()%>/reservation/paymentGateway.gc"; 
+   	        frm.submit();  --%>
+   	        
+   	     var IMP = window.IMP;     // 생략가능
+   	     IMP.init('imp43877375');  // 중요!!  아임포트에 가입시 부여받은 "가맹점 식별코드". 
+   	     requestPay();
+   	     
+   	  // end of click 결제하기
+		});	
 	
    });// end of $(document).ready(function(){})-----------------------
    
    // Function declaration
    
-	function goOrderEnd() {
+	
+	   function requestPay() {
+	   	      // IMP.request_pay(param, callback) 결제창 호출
+	   	      IMP.request_pay({ // param
+	   	    	  pg : 'html5_inicis', // 결제방식 PG사 구분
+		   	      pay_method : 'card',	// 결제 수단
+		   	      merchant_uid : $("input#roomName").val() + new Date().getTime(), // 가맹점에서 생성/관리하는 고유 주문번호
+		   	      name : $("input#roomName").val(),	 // 코인충전 또는 order 테이블에 들어갈 주문명 혹은 주문 번호. (선택항목)원활한 결제정보 확인을 위해 입력 권장(PG사 마다 차이가 있지만) 16자 이내로 작성하기를 권장
+		   	      amount : 100,//100	// '${coinmoney}'  결제 금액 number 타입. 필수항목. 
+		   	      buyer_email : $("input#email").val(),  // 구매자 email
+		   	      buyer_name : $("input#userName").val(),	  // 구매자 이름 
+		   	      // buyer_tel : '${requestScope.mobile}',    // 구매자 전화번호 (필수항목)
+		   	      buyer_addr : '',  
+		   	      buyer_postcode : '',
+		   	      m_redirect_url : ''  // 휴대폰 사용시 결제 완료 후 action : 컨트롤러로 보내서 자체 db에 입력시킬것!
+	   	      }, function (rsp) { // callback
+	   	          if (rsp.success) {
+	   	        	  
+	   	        	const frm = document.orderForm;
+				    
+	   			    frm.userName.value = $("input#userName").val();
+	   		        frm.email.value = $("input#email").val();
+	   		        frm.email.value = $("input#email").val();
+	   			    
+	   		        frm.acommName.value = $("input#acommName").val();
+	   		        frm.roomName.value = $("input#roomName").val();
+	   		        frm.checkIn.value = $("input#checkIn").val();
+	   		        frm.checkOut.value = $("input#checkOut").val();
+	   		        frm.totalPrice.value = $("input#totalPrice").val();
+	   			
+	   				
+	   				frm.method="POST";
+	   				frm.action="<%= request.getContextPath()%>/reservation/reservationEnd.gc";
+	   				frm.submit();
+	   				
+	   			    self.close(); // 자신의 팝업창을 닫는 것이다.
+	   			    
+	   	          } else {
+	   	        	location.href="<%= request.getContextPath()%>/main/home.gc";
+	   	            
+	   	            alert("결제에 실패하였습니다.");
+	   	          }
+	   	      });
+
+				
+	   }
+   
+	   function goOrderEnd() {
+		   
+			const frm = document.orderForm;
+			    
+		    frm.userName.value = $("input#userName").val();
+	        frm.email.value = $("input#email").val();
+	        frm.email.value = $("input#email").val();
+		    
+	        frm.acommName.value = $("input#acommName").val();
+	        frm.roomName.value = $("input#roomName").val();
+	        frm.checkIn.value = $("input#checkIn").val();
+	        frm.checkOut.value = $("input#checkOut").val();
+	        frm.totalPrice.value = $("input#totalPrice").val();
 		
-		const frm = document.orderForm;
-		frm.member_id.value = $("input#member_id").val();
-		frm.method="POST";
-		frm.action="<%= request.getContextPath()%>/reservation/reservationEnd.gc";
-		frm.submit();
-	}
+			
+			frm.method="POST";
+			frm.action="<%= request.getContextPath()%>/reservation/reservationEnd.gc";
+			frm.submit();
+		}
+	   
 
 
 </script>   
@@ -138,9 +203,9 @@
 							<input type="text" name="roomName" id="roomName" value="TypeA/ 1박" readonly="readonly">
 							
 						    <p><strong>체크인</strong></p> 
-						    <input type="text" name="checkIn" id="checkIn" value="06.08 목 15:00"  readonly="readonly">
+						    <input type="text" name="checkIn" id="checkIn" value="2023-06-24"  readonly="readonly">
 						    <p><strong>체크아웃</strong></p>
-						    <input type="text" name="checkOut" id="checkOut" value="06.09 금 11:00"  readonly="readonly">
+						    <input type="text" name="checkOut" id="checkOut" value="2023-06-25"  readonly="readonly">
 					    </section>
 						<section class="total_price_pc">
 							<p id="price_box">
