@@ -527,9 +527,11 @@
 	   }
 	
 	function publicService() {
-		$('input[type="checkbox"][name="publicService"]:checked').each(function() {
-	 	   formData.append('publicService', $(this).val());
+		 var selectedValues = []; // 체크된 값을 저장할 배열
+		$('input[name="publicService"]:checked').each(function() {
+			 selectedValues.push($(this).val()); // 배열에 값을 추가
 	 	 });
+		 formData.append('publicService', selectedValues); // 배열 전체를 추가
 	}
 	
 	
@@ -809,14 +811,14 @@
          <th class="th_info" style="border:solid 1px #ddd;">편의시설 <br> 서비스 안내</th>
          <td>
          	 <div style="width: 100%; font-size: 14px;margin-left:10px; line-height: 30px;">
-	         	<input type="checkbox" name ="publicService"id="theme01" value="1" /><label style="width: 90px; margin-left:8px;" for="theme01">사우나</label>
-	         	<input type="checkbox" name ="publicService"id="theme02" value="2"/><label style="width: 90px; margin-left:8px;" for="theme02">야외테라스</label>
-	         	<input type="checkbox" name ="publicService"id="theme03" value="3"/><label style="width: 90px; margin-left:8px;" for="theme03">스파</label>
-	         	<input type="checkbox" name ="publicService"id="theme04" value="4"/><label style="width: 90px; margin-left:8px;" for="theme04">미니바</label><br>
-	         	<input type="checkbox" name ="publicService"id="theme05" value="5"/><label style="width: 90px; margin-left:8px;" for="theme05">욕실TV</label>
-	         	<input type="checkbox" name ="publicService"id="theme06" value="6"/><label style="width: 90px; margin-left:8px;" for="theme06">빔프로젝터</label>
-	         	<input type="checkbox" name ="publicService"id="theme07" value="7"/><label style="width: 90px; margin-left:8px;" for="theme07">당구대</label>
-	         	<input type="checkbox" name ="publicService"id="theme08" value="8"/><label style="width: 90px; margin-left:8px;" for="theme08">노래방</label><br>
+	         	<input type="checkbox" name ="publicService"id="theme01" value="17" /><label style="width: 90px; margin-left:8px;" for="theme01">사우나</label>
+	         	<input type="checkbox" name ="publicService"id="theme02" value="18"/><label style="width: 90px; margin-left:8px;" for="theme02">야외테라스</label>
+	         	<input type="checkbox" name ="publicService"id="theme03" value="19"/><label style="width: 90px; margin-left:8px;" for="theme03">스파</label>
+	         	<input type="checkbox" name ="publicService"id="theme04" value="20"/><label style="width: 90px; margin-left:8px;" for="theme04">미니바</label><br>
+	         	<input type="checkbox" name ="publicService"id="theme05" value="21"/><label style="width: 90px; margin-left:8px;" for="theme05">욕실TV</label>
+	         	<input type="checkbox" name ="publicService"id="theme06" value="22"/><label style="width: 90px; margin-left:8px;" for="theme06">빔프로젝터</label>
+	         	<input type="checkbox" name ="publicService"id="theme07" value="23"/><label style="width: 90px; margin-left:8px;" for="theme07">당구대</label>
+	         	<input type="checkbox" name ="publicService"id="theme08" value="24"/><label style="width: 90px; margin-left:8px;" for="theme08">노래방</label><br>
 	         	<input type="checkbox" name ="publicService"id="theme09" value="9"/><label style="width: 90px; margin-left:8px;" for="theme09">골프장</label>
 	         	<input type="checkbox" name ="publicService"id="theme10" value="10"/><label style="width: 90px; margin-left:8px;" for="theme10">레스토랑</label>
 	         	<input type="checkbox" name ="publicService"id="theme11" value="11"/><label style="width: 90px; margin-left:8px;" for="theme11">편의점</label>
@@ -825,14 +827,14 @@
 	         	<input type="checkbox" name ="publicService"id="theme14" value="14"/><label style="width: 90px; margin-left:8px;" for="theme14">전기밥솥</label>
 	         	<input type="checkbox" name ="publicService"id="theme15" value="15"/><label style="width: 90px; margin-left:8px;" for="theme15">욕실용품</label>
 	         	<input type="checkbox" name ="publicService"id="theme16" value="16" /><label style="width: 90px; margin-left:8px;" for="theme16">냉장고</label><br>
-	         	<input type="checkbox" name ="publicService"id="theme17" value="17"/><label style="width: 90px; margin-left:8px;" for="theme17">BBQ</label>
-	         	<input type="checkbox" name ="publicService"id="theme18" value="18"/><label style="width: 90px; margin-left:8px;" for="theme18">카페</label>
-	         	<input type="checkbox" name ="publicService"id="theme19" value="19" /><label style="width: 90px; margin-left:8px;" for="theme19">족구장</label>
-	         	<input type="checkbox" name ="publicService"id="theme20" value="20"/><label style="width: 90px; margin-left:8px;" for="theme20">놀이방</label><br>
-	         	<input type="checkbox" name ="publicService"id="theme21" value="21"/><label style="width: 90px; margin-left:8px;" for="theme21">에어컨</label>
-	         	<input type="checkbox" name ="publicService"id="theme22" value="22"/><label style="width: 90px; margin-left:8px;" for="theme22">전기밥솥</label>
-	         	<input type="checkbox" name ="publicService"id="theme23" value="23"/><label style="width: 90px; margin-left:8px;" for="theme23">욕실용품</label>
-	         	<input type="checkbox" name ="publicService"id="theme24" value="24"/><label style="width: 90px; margin-left:8px;" for="theme24">냉장고</label><br>
+	         	<input type="checkbox" name ="publicService"id="theme17" value="25"/><label style="width: 90px; margin-left:8px;" for="theme17">BBQ</label>
+	         	<input type="checkbox" name ="publicService"id="theme18" value="26"/><label style="width: 90px; margin-left:8px;" for="theme18">카페</label>
+	         	<input type="checkbox" name ="publicService"id="theme19" value="27" /><label style="width: 90px; margin-left:8px;" for="theme19">족구장</label>
+	         	<input type="checkbox" name ="publicService"id="theme20" value="28"/><label style="width: 90px; margin-left:8px;" for="theme20">놀이방</label><br>
+	         	<input type="checkbox" name ="publicService"id="theme21" value="29"/><label style="width: 90px; margin-left:8px;" for="theme21">에어컨</label>
+	         	<input type="checkbox" name ="publicService"id="theme22" value="30"/><label style="width: 90px; margin-left:8px;" for="theme22">전기밥솥</label>
+	         	<input type="checkbox" name ="publicService"id="theme23" value="31"/><label style="width: 90px; margin-left:8px;" for="theme23">욕실용품</label>
+	         	<input type="checkbox" name ="publicService"id="theme24" value="32"/><label style="width: 90px; margin-left:8px;" for="theme24">냉장고</label><br>
 	         </div>
          </td>
       </tr>

@@ -39,5 +39,13 @@ public class HostDAO implements InterHostDAO {
 	}
 	
 	
+	// 숙소테이블에 insert
+	@Override
+	public int acomoRegister(Map<String, String> paraMap) {
+		int n = sqlsession.insert("host.acomoRegister", paraMap);
+		return n;
+	}
+	
+	
 	
 }

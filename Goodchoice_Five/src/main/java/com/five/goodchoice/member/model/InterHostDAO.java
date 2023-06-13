@@ -12,6 +12,9 @@ public interface InterHostDAO {
 	
 	// 지역구번호 알아오기
 	int getDistrictno(Map<String, String> paraMap);
+
+	// 숙소테이블에 insert	
+	int acomoRegister(Map<String, String> paraMap);
 	
 
 }
