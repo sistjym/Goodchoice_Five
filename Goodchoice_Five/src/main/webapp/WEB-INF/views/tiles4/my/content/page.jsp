@@ -41,7 +41,6 @@
 					<input type="hidden" name="uno" value="20570882">
 					<input type="text" name="unick" aria-hidden="true" value="nickname">
 					<input type="text" name="uname" aria-hidden="true" value="reserved_name">
-					<input type="tel" name="uphone" aria-hidden="true" value="phone-num">
 				</div>
 
 				<section class="top_area">

@@ -1,11 +1,9 @@
-package com.five.goodchoice.model.service;
-
-import javax.servlet.http.HttpServletRequest;
+package com.five.goodchoice.mypage.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.five.goodchoice.member.model.InterMypageDAO;
+import com.five.goodchoice.mypage.model.InterMypageDAO;
 
 @Service
 public class MypageService implements InterMypageService {
@@ -15,8 +13,8 @@ public class MypageService implements InterMypageService {
 	
 	
 	@Override
-	public boolean checkLogin(HttpServletRequest request) {
-		boolean result = dao.checkLogin(request);
+	public boolean checkLogin() {
+		boolean result = dao.checkLogin();
 		return result;
 	}
 
