@@ -1,4 +1,4 @@
-package com.five.goodchoice.model.service;
+package com.five.goodchoice.member.service;
 
 import java.util.List;
 import java.util.Map;

@@ -33,7 +33,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.five.goodchoice.common.AES256;
-import com.five.goodchoice.model.service.InterAdminService;
+import com.five.goodchoice.member.service.InterAdminService;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
