@@ -59,7 +59,7 @@ public class DetailController {
 			
 			boolean is_Exist_acom_no = service.is_Exist_acom_no(paraMap); 
 			
-	//		System.out.println("확인용 : is_Exist_acom_no : " + is_Exist_acom_no);
+//			System.out.println("확인용 : is_Exist_acom_no : " + is_Exist_acom_no);
 			// true false
 			
 			///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -69,23 +69,23 @@ public class DetailController {
 			// acom_no에 해당하는 숙소정보를 가져오기+ 스펙넘버도 가져오기(Fk_spec_no)
 			AcomodationVO daVO = service.acom_Info(acom_no);
 			
-	//		System.out.println(daVO.getParking_info() + daVO.getAcom_image() + daVO.getAcom_name()  + daVO.getAcom_no() + daVO.getFk_spec_no() );
+//			System.out.println(daVO.getParking_info() + daVO.getAcom_image() + daVO.getAcom_name()  + daVO.getAcom_no() + daVO.getFk_spec_no() );
 			// 1객실당 1대의 차만 주차가 가능합니다(주차타워이용가능할경우 무료주차)/페라리, 람보르기니, 맥라렌 등 슈퍼카는 주차가 불가하오니 양해바랍니다./총 45대 주차시설 보유서초라바.jpg서초 라바28
 			
 			daVO.setCheck_in_date(paraMap.get("check_in_date")); 
 			daVO.setCheck_out_date(paraMap.get("check_out_date"));
 			
-	//		System.out.println("선택날짜는" + daVO.getCheck_in_date() + daVO.getCheck_out_date() );
+//			System.out.println("선택날짜는" + daVO.getCheck_in_date() + daVO.getCheck_out_date() );
 			
 			if(!daVO.getFk_spec_no().equals("1") || !daVO.getFk_spec_no().equals("2") || !daVO.getFk_spec_no().equals("3") || !daVO.getFk_spec_no().equals("4")) {
 				
-			//	System.out.println("호텔아닙니다...");
+//				System.out.println("호텔아닙니다...");
 				
 			}
 			
 			else {
 				
-			//	System.out.println("호텔의 스펙은 " + daVO.getFk_spec_no());
+//				System.out.println("호텔의 스펙은 " + daVO.getFk_spec_no());
 				
 			}
 			
@@ -100,16 +100,15 @@ public class DetailController {
 			
 			
 			// acom_no에 해당하는 숙소의 추가이미지 파일을 가져오기			
-		//	List<String>acom_add_imgList = service.show_acom_add_imgList(paraMap);
 
 			
 			List<AcomodationVO>show_acom_add_imgList = service.show_acom_add_imgList(paraMap);
 			
-	//		System.out.println("숙소추가이미지 리스트");
+//			System.out.println("숙소추가이미지 리스트");
 			
 			for(int i = 0; i<show_acom_add_imgList.size(); i++) {
 				
-			//	System.out.println(" 이건 추가이미지들리스트들인 show_acom_add_imgList" + show_acom_add_imgList.get(i));
+//				System.out.println(" 이건 추가이미지들리스트들인 show_acom_add_imgList" + show_acom_add_imgList.get(i));
 				
 			}
 			
@@ -127,7 +126,7 @@ public class DetailController {
 			
 			
 				
-		//		System.out.println("편의시설" + daVO.getCategory_fac_name() + show_facilitiesList.size());
+//				System.out.println("편의시설" + daVO.getCategory_fac_name() + show_facilitiesList.size());
 				
 				mav.addObject("show_facilitiesList",show_facilitiesList);
 				
@@ -141,7 +140,7 @@ public class DetailController {
 			
 			HostVO hostVO = service.showHostInfo(paraMap);
 			
-		//	System.out.println("호스트 정보:" + hostVO.getCp_name() + hostVO.getCp_reg_no() + hostVO.getHost_email() + hostVO.getHost_name() + daVO.getAddress() + daVO.getExtra_address());
+//			System.out.println("호스트 정보:" + hostVO.getCp_name() + hostVO.getCp_reg_no() + hostVO.getHost_email() + hostVO.getHost_name() + daVO.getAddress() + daVO.getExtra_address());
 			
 			mav.addObject("hostVO",hostVO);
 			
@@ -152,7 +151,7 @@ public class DetailController {
 			
 			
 				
-			// System.out.println(show_ReviewList.size());
+//			 System.out.println(show_ReviewList.size());
 				
 			mav.addObject("show_ReviewList",show_ReviewList);
 				
