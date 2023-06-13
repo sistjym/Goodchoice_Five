@@ -15,6 +15,9 @@ public interface InterHostService {
 	// 지역구번호 알아오기
 	int getDistrictno(String postcode);
 	
+	// 숙소테이블에 insert
+	int acomoRegister(Map<String, String> paraMap);
+	
 	
 
 }

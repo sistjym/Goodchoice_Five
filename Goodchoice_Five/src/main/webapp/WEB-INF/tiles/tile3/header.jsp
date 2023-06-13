@@ -20,17 +20,34 @@
                 <li>
                     <a href="#">예약내역</a>
                 </li>
-
+					
+				<c:if test="${sessionScope.loginuser.is_admin == 1}">	
+					
                  <li class="dropdown">
                     <button class="dropbtn"> 관리자 전용</button>
-                    <ul class="dropdown-content">
+                     <ul class="dropdown-content">
                         <a href="<%= ctxPath%>/showAllAcomm.gc">모든 숙소 보기</a>
                         <a href="<%= ctxPath%>/showAllHost.gc">호스트 관리</a>
                         <a href="<%= ctxPath%>/acomm_approve.gc">숙소 등록 승인 하기</a>
                         <a href="<%= ctxPath%>/main/home.gc">숙소 데이터 차트</a>
-                        <a href="<%= ctxPath%>/main/home.gc">모든 회원보기</a>
+                        <a href="<%= ctxPath%>/main/home.gc">모든 회원보기1</a>
                     </ul>
                 </li> 
+                
+                </c:if>
+                
+                <c:if test="${sessionScope.loginuser.is_admin == 0}">
+               	
+               	<li class="dropdown">
+                    <button class="dropbtn" > <span style="color:yellow;">${sessionScope.loginuser.member_nickname}</span> 님 </button>
+                     <ul class="dropdown-content">
+                        <a href="<%= ctxPath%>/main/home.gc">내정보</a>
+                        <a href="<%= ctxPath%>/main/home.gc">예약 내역</a>
+                        <a href="<%= ctxPath%>/main/home.gc">포인트</a>
+                    </ul>
+                </li> 	
+               		
+                </c:if>
 	
 				<c:if test="${sessionScope.loginuser == null}">
 					<li>

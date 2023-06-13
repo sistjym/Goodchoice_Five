@@ -173,6 +173,14 @@ div#top_right_upper p#top_address{
 
 }
 
+div#top_right_upper p#under_address{
+
+	color:   #a6a6a6;
+	
+	font-weight: 500;
+
+}
+
 
 div#top_right > div#top_right_lower{
 
@@ -896,6 +904,8 @@ $(document).ready(function() {
 		  var previousStartDate = null;  // 이전에 선택한 값을 저장할 변수
 	       var previousEndDate = null;
 		   
+	       var checkInDate = '${requestScope.daVO.check_in_date}';
+	       var checkOutDate = '${requestScope.daVO.check_out_date}';
 		  
 	       $("#daterange").daterangepicker({
 	    	    locale: {
@@ -905,8 +915,8 @@ $(document).ready(function() {
 	    	        "daysOfWeek": ["일", "월", "화", "수", "목", "금", "토"],
 	    	        "monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
 	    	    },
-	    	    startDate: moment().format('MM/DD/YYYY'),
-	    	    endDate: moment().add(1, 'day').format('MM/DD/YYYY'), // 내일 날짜로 설정합니다.
+	    	    startDate: moment(checkInDate, 'YYYY-MM-DD').format('MM/DD/YYYY'),
+	    	    endDate:  moment(checkOutDate, 'YYYY-MM-DD').format('MM/DD/YYYY'), // 내일 날짜로 설정합니다.
 	    	    linkedCalendars: false,
 	    	    autoUpdateInput: false
 	    	});
@@ -920,6 +930,9 @@ $(document).ready(function() {
        // 기본 날짜 설정
         var defaultStartDate = $("#daterange").data('daterangepicker').startDate.format('MM월 DD일');
 		var defaultEndDate = $("#daterange").data('daterangepicker').endDate.format('MM월 DD일');
+		
+	    var send_checkin = $("#daterange").data('daterangepicker').startDate.format('YYYY-MM-DD');   // 보내는 체크인 날짜
+	    var send_checkout = $("#daterange").data('daterangepicker').endDate.format('YYYY-MM-DD');	   // 보내는 체크아웃 날짜
 		
 		var startDateParts = defaultStartDate.split(' ');
 		var endDateParts = defaultEndDate.split(' ');
@@ -937,8 +950,11 @@ $(document).ready(function() {
 		
 		var formattedValue = defaultStartDate + ' ~ ' + defaultEndDate + '  ' + dateDiff + '박';
 		
+		var send_date_bak = dateDiff ;   // 보내는 숙박기간
+		
 		$("#daterange").val(formattedValue);
 		$("ul.disc-list > li.modal_date").text(defaultStartDate + '~' + defaultEndDate);
+	
        
        // 날짜 선택 시 이벤트 처리
        $("#daterange").on('apply.daterangepicker', function(ev, picker) {
@@ -953,23 +969,61 @@ $(document).ready(function() {
              $(this).data('daterangepicker').setEndDate(previousEndDate);
              $(this).val(previousStartDate.format('MM월 DD일') + ' ~ ' + previousEndDate.format('MM월 DD일') + '  ' + previousEndDate.diff(previousStartDate, 'days')  + '박');
              $("ul.disc-list > li.modal_date").text(previousStartDate.format('MM월 DD일') + ' ~ ' + previousEndDate.format('MM월 DD일'));
+             
            } else {
         	//   console.log("히히히 엘스다");
              $(this).data('daterangepicker').setStartDate(defaultStartDate);
              $(this).data('daterangepicker').setEndDate(defaultEndDate);
              $(this).val(defaultStartDate + ' ~ ' + defaultEndDate + '  ' + dateDiff + '박');
              $("ul.disc-list > li.modal_date").text(defaultStartDate + '~' + defaultEndDate);
+             
            }
          } else {
            $(this).val(startDate.format('MM월 DD일') + ' ~ ' + endDate.format('MM월 DD일') + '  ' + diffInDays + '박');
            $("ul.disc-list > li.modal_date").text(startDate.format('MM월 DD일') + '~' + endDate.format('MM월 DD일'));
+           send_checkin = startDate.format('YYYY-MM-DD');  // 보내는 체크인 날짜 업데이트
+           send_checkout = endDate.format('YYYY-MM-DD');   // 보내는 체크아웃 날짜 업데이트
+           send_date_bak = diffInDays ; 			// 보내는 숙박기간 업데이트
+           
+           console.log("send_checkin : " + send_checkin);
+           
+           console.log("send_checkout : " + send_checkout);
+           
+           console.log("send_date_bak : " + send_date_bak);
+           
            // 선택한 값이 유지되도록 이전에 선택한 값을 업데이트
            previousStartDate = startDate.clone();
            previousEndDate = endDate.clone();
          }
        });
        
-  
+       let html = "";
+       
+       var send_acom_name = '${requestScope.daVO.acom_name}';
+       
+       console.log("send_acom_name :" + send_acom_name);
+       
+       var send_anchorIndex = parseInt($("p#status_forp").text(), 10);
+       
+       console.log("send_anchorIndex :" + send_anchorIndex);
+       
+           
+       var send_room_type = "${RoomVO.room_type}"
+       
+       console.log("send_room_type :"  + send_room_type)
+       
+       
+       console.log("send_checkin : " + send_checkin);
+       
+       console.log("send_checkout : " + send_checkout);
+       
+       console.log("send_date_bak : " + send_date_bak);
+       
+ 
+       html += "/goodchoice/reservation/reservation.gc?acom_name=' + send_acom_name + '&room_type=' + send_room_type + '&dateDiff=' + send_date_bak + '&check_in_date=' + send_checkin + '&check_out_date=' + send_checkout'";
+
+       $("div#item a.btn_resv").attr('href', html);
+
     
     <%-- 캘린더에서 선택한 날짜들을 모달창에 뿌려주기 끝 --%>
 
@@ -1021,10 +1075,13 @@ $(document).ready(function() {
 	  
 	// 지도를 담을 영역의 DOM 레퍼런스
 	     var mapContainer = document.getElementById('map');
-	     
+	     var acomLatitude = ${requestScope.daVO.acom_latitude};
+	     var acomLongitude = ${requestScope.daVO.acom_longitude};     
+	
+	
 	     // 지도를 생성할때 필요한 기본 옵션
 	     var options = {
-	           center: new kakao.maps.LatLng(37.4864948886064, 127.013616931019), // 지도의 중심좌표. 반드시 존재해야함.
+	           center: new kakao.maps.LatLng(acomLatitude, acomLongitude), // 지도의 중심좌표. 반드시 존재해야함.
 	           <%--
 	               center 에 할당할 값은 kakao.maps.LatLng 클래스를 사용하여 생성한다.
 	               kakao.maps.LatLng 클래스의 2개 인자값은 첫번째 파라미터는 위도(latitude)이고, 두번째 파라미터는 경도(longitude)이다.
@@ -1042,8 +1099,8 @@ $(document).ready(function() {
 	         
 	      // GeoLocation을 이용해서 웹페이지에 접속한 사용자의 현재 위치를 확인하여 그 위치(위도,경도)를 지도의 중앙에 오도록 한다. 
 	      navigator.geolocation.getCurrentPosition(function(position) {
-	         var latitude = '37.4864948886064';   // 현위치의 위도
-	         var longitude = '127.013616931019'; // 현위치의 경도
+	         var latitude = acomLatitude;   // 현위치의 위도
+	         var longitude = acomLongitude; // 현위치의 경도
 	         //  console.log("현위치의 위도: "+latitude+", 현위치의 경도: "+longitude);
 	         
 	         // 마커가 표시될 위치를 geolocation으로 얻어온 현위치의 위.경도 좌표로 한다   
@@ -1098,7 +1155,7 @@ $(document).ready(function() {
 	   }   
 	   else {
 	      // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정한다.
-	      var locPosition = new kakao.maps.LatLng(37.4864948886064, 127.013616931019);     
+	      var locPosition = new kakao.maps.LatLng(acomLatitude, acomLongitude);     
 	        
 	      // 위의 
 	      // 마커이미지를 기본이미지를 사용하지 않고 다른 이미지로 사용할 경우의 이미지 주소 
@@ -1209,12 +1266,64 @@ $(document).ready(function() {
 		<%-- tab키 눌렀을 경우의 함수 끝 --%>  
   
 	  
+		
+		
+		
+		
+		
+	  	
+		<%-- 객실정보 가져오는 Ajax --%>
+	  
+	  	
+		<%--
+		
+		 var roomnArr = [];
+		   
+		   $.ajax({
+		      url:"<%= ctxPath%>/getRoomList.gc",
+		      data:{"room_no":"${requestScope.roomvo.room_no}"},
+		      dataType:"json",
+		      success:function(json){
+		         	 --%>
+		         // console.log(JSON.stringify(json));
+		         // JSON.stringify(json) 은 자바스크립트의 객체(배열)인 json 을 string 타입으로 변경시켜주는 것이다.
+		         <%--
+		            [{"STORENAME":"롯데백화점 본점","LNG":"126.98187860455485","ZINDEX":"1","STOREID":"store1","STOREIMG":"lotte02.png","STOREURL":"https://place.map.kakao.com/7858517","LAT":"37.56511284953554","STOREADDRESS":"서울 중구 을지로 30 (T)02-771-2500"},
+		             {"STORENAME":"신세계백화점 본점","LNG":"126.98098265772731","ZINDEX":"2","STOREID":"store2","STOREIMG":"shinsegae.png","STOREURL":"https://place.map.kakao.com/7969138","LAT":"37.56091181255155","STOREADDRESS":"서울 중구 소공로 63 (T)1588-1234"},
+		             {"STORENAME":"미래에셋센터원빌딩","LNG":"126.98512381778167","ZINDEX":"3","STOREID":"store3","STOREIMG":"miraeeset.png","STOREURL":"https://place.map.kakao.com/13057692","LAT":"37.567386065415086","STOREADDRESS":"서울 중구 을지로5길 26 (T)02-6030-0100"},
+		             {"STORENAME":"현대백화점신촌점","LNG":"126.935699","ZINDEX":"4","STOREID":"store4","STOREIMG":"hyundai01.png","STOREURL":"https://place.map.kakao.com/21695719","LAT":"37.556005","STOREADDRESS":"서울 서대문구 신촌로 83 현대백화점신촌점 (T)02-3145-2233"},
+		             {"STORENAME":"쌍용강북교육센터","LNG":"126.919557","ZINDEX":"5","STOREID":"store5","STOREIMG":"sist01.jpg","STOREURL":"https://place.map.kakao.com/16530319","LAT":"37.556583","STOREADDRESS":"서울 마포구 월드컵북로 21 풍성빌딩 2~4층 (T)02-336-8546"}] 
+		         --%>
+		         
+		         <%--
+		         $.each(json, function(index, item){
+		            var room = {};
+		            
+		            room.content = "<div class='mycontent'>"+ 
+		                               "  <div class='title'>"+ 
+		                               "    <a href='"+item.storeurl+"' target='_blank'><strong>"+item.storename+"</strong></a>"+  
+		                               "  </div>"+
+		                               "  <div class='desc'>"+ 
+		                               "    <img src='/MyMVC/images/"+item.storeimg+"'>"+  
+		                               "    <span class='address'>"+item.storeaddress+"</span>"+ 
+		                               "  </div>"+ 
+		                               "</div>";
+		                             
+		           
+		            
+		            roomnArr.push(room);
+		         });
+		         --%>
+		 <%--        
+		      },
+		      error: function(request, status, error){
+		         alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
+		       }
+
+		   });
 	  
 	  
-	  
-	  
-	  
-	  
+	  --%>
 	  
 	  
 	  
@@ -1576,6 +1685,21 @@ function myFunction_PrevRightSpan() {
 </head>
 <body>
 	<div id="container">
+	
+		<!-- 리뷰 평점 지역변수인거 막기위해 밖으로 빼둠 -->
+	
+		<c:if test="${not empty requestScope.show_ReviewList[0].review_cnt}">
+							<c:set var="totalScore" value="0" />
+							<c:forEach var="AcomodationVO" items="${requestScope.show_ReviewList}">
+							
+								
+								<c:set var="totalScore" value="${totalScore + AcomodationVO.review_score}" />
+							</c:forEach>
+							
+		</c:if>	
+		
+		<!-- 리뷰 평점 지역변수인거 막기위해 밖으로 빼둠 -->
+			
 		
 		<div class="row custom-topcontents col-md-9" id="top">
 		
@@ -1594,41 +1718,14 @@ function myFunction_PrevRightSpan() {
 						           <!--  -->
 						               <div class="carousel-inner w-100 col-12" role="listbox">
 						                         <div class="carousel-item active" id="img_init">
-						                             <img class="col-lg-3 col-md-4 col-sm-6 ci" style="cursor:pointer; " src="<%= ctxPath%>/resources/images/강남캠퍼스.jpg">
+						                             <img class="col-lg-3 col-md-4 col-sm-6 ci" style="cursor:pointer; " src="<%= ctxPath%>/resources/images/${requestScope.daVO.acom_image}">
 						                         </div>
-						                         <div class="carousel-item" id="1">
-						                             <img class="col-lg-3 col-md-4 col-sm-6 ci" style="cursor:pointer;" src="<%= ctxPath%>/resources/images/강남클릭_일반실_추가1.jpg">
-						                         </div>
-						                           <div class="carousel-item" id="2">
-						                             <img  class="col-lg-3 col-md-4 col-sm-6 ci" style="cursor:pointer;" src="<%= ctxPath%>/resources/images/강남클릭_일반실_추가2.jpg">
-						                         </div>
-						                           <div class="carousel-item" id="3">
-						                             <img  class="col-lg-3 col-md-4 col-sm-6 ci" style="cursor:pointer;" src="<%= ctxPath%>/resources/images/강남클릭_일반실_추가3.jpg">
-						                         </div>
-						                           <div class="carousel-item" id="4">
-						                             <img  class="col-lg-3 col-md-4 col-sm-6 ci" style="cursor:pointer;" src="<%= ctxPath%>/resources/images/강남클릭_일반실_추가4.jpg">
-						                         </div>
-						                           <div class="carousel-item" id="5">
-						                             <img  class="col-lg-3 col-md-4 col-sm-6 ci" style="cursor:pointer;" src="<%= ctxPath%>/resources/images/강남데미안_추가1.jpg">
-						                         </div>
-						                         <div class="carousel-item" id="5">
-						                             <img  class="col-lg-3 col-md-4 col-sm-6 ci" style="cursor:pointer;" src="<%= ctxPath%>/resources/images/강남데미안_추가2.jpg">
-						                         </div>
-						                         <div class="carousel-item" id="5">
-						                             <img  class="col-lg-3 col-md-4 col-sm-6 ci" style="cursor:pointer;" src="<%= ctxPath%>/resources/images/강남제리스플래닛_JerryRoom_추가1.jpg">
-						                         </div>
-						                         <div class="carousel-item" id="5">
-						                             <img  class="col-lg-3 col-md-4 col-sm-6 ci" style="cursor:pointer;" src="<%= ctxPath%>/resources/images/강남제리스플래닛_JerryRoom_추가2.jpg">
-						                         </div>
-						                         <div class="carousel-item" id="5">
-						                             <img  class="col-lg-3 col-md-4 col-sm-6 ci" style="cursor:pointer;" src="<%= ctxPath%>/resources/images/강남제리스플래닛_JerryRoom_추가3.jpg">
-						                         </div>
-						                         <div class="carousel-item" id="5">
-						                             <img  class="col-lg-3 col-md-4 col-sm-6 ci" style="cursor:pointer;" src="<%= ctxPath%>/resources/images/강남제리스플래닛_JerryRoom_추가4.jpg">
-						                         </div>
-						                         <div class="carousel-item" id="5">
-						                             <img  class="col-lg-3 col-md-4 col-sm-6 ci" style="cursor:pointer;" src="<%= ctxPath%>/resources/images/강남제리스플래닛_JerryRoom_추가5.jpg">
-						                         </div>
+						                         <c:forEach var="AcomodationVO" items="${requestScope.show_acom_add_imgList}">
+							                         <div class="carousel-item" id="1">
+							                             <img class="col-lg-3 col-md-4 col-sm-6 ci" style="cursor:pointer;" src="<%= ctxPath%>/resources/images/${AcomodationVO.acom_image_add_name}">
+							                         </div>
+						                         </c:forEach>
+						                           
 						                         
 						               </div>
 						               <!--  -->
@@ -1659,21 +1756,62 @@ function myFunction_PrevRightSpan() {
 			<div class="col-lg-5 col-md-5" id="top_right">
 				
 					<div id="top_right_upper">	
-						<div class="row" id="top_title">					
-							<p style="font-size: 24px; color: white; font-weight: 500; background-color:  #7171da;">4성급</p>	
-						    <h2 id="top_title">구운동 파티즈 - 구 메이트</h2>	
+						<div id="top_title">		
+
+							
+							<c:if test="${requestScope.daVO.fk_spec_no eq '1'}">
+							
+								 <span class="badge badge-pill" style=" background-color:  #7171da; height:40px; width: 80px; font-size: 20px; padding-top:7px; color:white; font-weight:normal;">5성급</span>
+								
+							</c:if>
+							
+							<c:if test="${requestScope.daVO.fk_spec_no eq '2'}">
+							
+								 <span class="badge badge-pill" style=" background-color:  #7171da; height:40px; width: 80px; font-size: 20px; padding-top:7px; color:white; font-weight:normal;">4성급</span>
+								
+							</c:if>	
+							
+							<c:if test="${requestScope.daVO.fk_spec_no eq '3'}">
+							
+								 <span class="badge badge-pill" style=" background-color:  #7575a3; height:40px; width: 80px; font-size: 20px; padding-top:7px; color:white; font-weight:normal;">3성급</span>
+								
+							</c:if>	
+							
+							<c:if test="${requestScope.daVO.fk_spec_no eq '4'}">
+							
+								 <span class="badge badge-pill" style=" background-color:  #7575a3; height:40px; width: 100px; font-size: 20px; padding-top:7px; color:white; font-weight:normal;">비지니스</span>
+								
+							</c:if>		
+						    
+						    <h2 id="top_title">${requestScope.daVO.acom_name}</h2>	
 						</div>		
-			            
+						
+						
+						
+			            <c:set var="scoreRatio" value="${totalScore/requestScope.show_ReviewList[0].review_cnt}" />
 						<ul class="list-group"  id="badge">	
 							<li class="d-flex justify-content-between align-items-center">
-							    <span class="badge badge-warning badge-pill">10.0</span>
-							    	<p class="col-md-6 col-sm-12 rec">추천해요</p>
-							    	
+											 <c:if test="${empty requestScope.show_ReviewList[0].review_cnt}">
+											    <span class="badge badge-warning badge-pill">0</span>
+											    <p class="col-md-6 col-sm-12 rec">글쎄요</p>
+											</c:if>
+											
+											<c:choose>
+											  <c:when test="${scoreRatio > 0 && scoreRatio < 8}">
+											    <span class="badge badge-warning badge-pill">${scoreRatio}</span>
+											    <p class="col-md-6 col-sm-12 rec">그냥그래요</p>
+											  </c:when>
+											  <c:when test="${scoreRatio > 8}">
+											    <span class="badge badge-warning badge-pill">${scoreRatio}</span>
+											    <p class="col-md-6 col-sm-12 rec">훌륭해요★</p>
+											  </c:when>
+											</c:choose>
+											
+
 							</li>
 						</ul>
-						<div>
-							<p id="top_address">경기 수원시 권선구 구운동 924-7</p>
-						
+						<div >
+							<p id="top_address">${requestScope.daVO.address} &nbsp; ${requestScope.daVO.extra_address}</p>
 						</div>
 						<div class="resv_cancel_top">
 							<p class="text-center">예약취소가능</p>
@@ -1684,13 +1822,19 @@ function myFunction_PrevRightSpan() {
 						<div class="col">
 							<div class="row">
 
-									<p id="sajang">사장님 한마디</p>
+									<p id="sajang">사장님 한마디 </p>
 									<div id="more_fold_toggleBtn" class="more_fold_btn">더보기</div>
 							</div>
 						
 							<div class="more_fold_inner">
 							
-								<p id="more_fold_myContent" class="more_fold_content">COEX 전시장, 도심공항터미널, 종합무역센터, 올림픽 메인스타디움에 인접해 있어 비즈니스,관광 등 다양한 목적의 여행객들에게 이상적입니다 COEX 전시장, 도심공항터미널, 종합무역센터, 올림픽 메인스타디움에 인접해 있어 비즈니스,관광 등 다양한 목적의 여행객들에게 이상적입니다 </p>
+								<p id="more_fold_myContent" class="more_fold_content">당신의 휴식과 편안함을 위한 최적의 선택, ${requestScope.daVO.acom_name}입니다.
+
+								${requestScope.daVO.acom_name} 은(는) 당신에게 최상의 숙박 경험을 제공하기 위해 고안되었습니다. 우리는 고객의 편의와 만족을 최우선으로 생각하며, 여러분의 휴식을 위한 편안한 공간을 제공합니다.
+																								
+								${requestScope.daVO.acom_name} 은(는) 최고의 휴식과 품격을 추구하는 고객들에게 최적의 선택입니다. 우리와 함께하는 숙박 경험은 평범함에서 벗어나 특별함을 느낄 수 있을 것입니다. 훌륭한 서비스와 아름다운 공간을 경험하며, 당신만의 소중한 추억을 만들어보세요.
+								
+								우리 ${requestScope.daVO.acom_name}에서 여러분을 환영합니다.</p>
 			    			
 							</div>
 							
@@ -1722,24 +1866,24 @@ function myFunction_PrevRightSpan() {
 		
 		  <div class="col-lg-8 calendar" id="night">
 		  	    <i class="fas fa-chevron-down"></i>
-		  		<input  type="text" id="daterange" readonly/>
+		  		<input  type="text" id="daterange" readonly></input>
 		  		
 		  		<p></p>
 		  
 		  </div>
 
 
-		
+	 <c:forEach var="RoomVO" items="${requestScope.getRoomList}" varStatus="status">  	
 	      <div id="item" class="col-lg-8">
 		      	 <div style="display:flex;">
 						<div class="col-lg-6 col-md-6 col-sm-6" >
-								<img src="<%= ctxPath%>/resources/images/강남캠퍼스.jpg" alt="thumbnail" class="img-thumbnail item_image">
+								<img src="<%= ctxPath%>/resources/images/${RoomVO.room_image}" alt="thumbnail" class="img-thumbnail item_image">
 								<a id="accomo_1_open" class="carousel-control-next"  role="button"  style="background-color: none; border: none;  height: 45px; margin-top: 280px; margin-right: 20px;" >
 								    <i class="fa-solid fa-photo-film"  onclick="myFunction_Show_accomo()"></i>
 								</a>
 						</div>			
 						<div class="col-lg-6 col-md-6 col-sm-6 ">
-							          <h5 class="col-sm-6 col-lg-12 mb-3 card-title" style="font-weight:600; ">슈페리어더블(오션뷰)</h5>
+							          <h5 class="col-sm-6 col-lg-12 mb-3 card-title" style="font-weight:600; ">${RoomVO.room_type}</h5>
 									 
 									  <div class="col-sm-6 col-lg-12 mb-3 card-body">
 									  
@@ -1747,21 +1891,21 @@ function myFunction_PrevRightSpan() {
 		
 										    <div style="display: flex; border-bottom: 1px solid rgba(128, 128, 128, 0.2);">
 										      <span class="badge badge-danger badge-pill special_price">예약특가</span>					    
-										      <h5 class="card-title item_special_price">109,900원</h5>
+										      <h5 class="card-title item_special_price">${RoomVO.price}</h5>
 										    </div>
 										    
 									    </div>
 									    <div  class="row col-lg-12">
 									     	<p>입실시간</p>
-									     	<p class="in_roomtime">15시 부터 </p>
+									     	<p class="in_roomtime">00시 부터 </p>
 									    </div> 	
 									    
 									    <div class="row col-lg-12" style=" border-bottom: 1px solid rgba(128, 128, 128, 0.2); ">
 									     	<p>퇴실시간</p>
-									     	<p class="out_roomtime">익일 11시 </p>
+									     	<p class="out_roomtime">익일 12시 </p>
 									    </div> 
 									    
-									      
+									    <p id="status_forp">${status.index}</p>
 									    
 									    
 									   <div class="room_101_btnannae" style="text-align:center; ">
@@ -1787,16 +1931,22 @@ function myFunction_PrevRightSpan() {
 											      <div class="modal-body">
 											        <p style="font-size: 10pt; color: #4d4d00; text-align:left;">편의시설</p>
 											        <ul class="disc-list" style="list-style-type: disc;">
-											        	
-											        	<li style="font-size: 10pt; color: #999999; text-align:left;">TV,냉장고,헤어드라이기</li>
-											        	
+											        	<c:if test="${not empty requestScope.show_facilitiesList}">
+												        	<c:forEach var="AcomodationVO" items="${requestScope.show_facilitiesList}">											        		
+												        			<li style="font-size: 10pt; color: #999999; text-align:left;">${AcomodationVO.category_fac_name}</li>												        		
+												        	</c:forEach> 	
+												        </c:if>	
+											        
+												        <c:if test="${empty requestScope.show_facilitiesList}">
+												        			<li style="font-size: 10pt; color: #999999; text-align:left;">없음</li>												        		
+												        </c:if>												        	
 											        </ul>
 													<div class="row col-lg-12" style=" border-bottom: 1px solid rgba(128, 128, 128, 0.2); "></div>
 													
 													<p style="font-size: 10pt; color: #4d4d00; text-align:left; margin-top:20px;">주차정보</p>
 											        <ul class="disc-list" style="list-style-type: disc;">
 											        	
-											        	<li style="font-size: 10pt; color:  #248f24; text-align:left;">건물내주차장이용</li>
+											        	<li style="font-size: 10pt; color:  #248f24; text-align:left;">${requestScope.daVO.parking_info}</li>
 											        	
 											        </ul>
 													<div class="row col-lg-12" style=" border-bottom: 1px solid rgba(128, 128, 128, 0.2); "></div>
@@ -1823,197 +1973,64 @@ function myFunction_PrevRightSpan() {
 						</div>
 				  </div>					
 	    			
-	    			
+<%-- 	    			   --%>
+	    				
+	    			<!-- <c:set var="new_roomno" value="${paraMap.roomnumber + status.index}"/> -->	
+
+	    				
 	    			  <div class="col-lg-10" id="carousel_underItem_wrap" style="display: none;">
 	    			    	<div style="margin-bottom:5px; text-align: right;">
 	    			    	  <a id="accomo_1_hide" role="button"  style="background-color: none; border: none; " >
 	    			    		<span><i class="fa-solid fa-rectangle-xmark" onclick="myFunction_Hide_accomo()"></i></span>			    			  	  			
 	    			  	  	  </a>	
 			    			</div>
-			    			<div id='carousel_underItem' >
-		        				<div id="carouselExampleControls" class="carousel slide" data-ride="carousel" data-interval ="false">
-		        					<ol class="carousel-indicators">
-									    <li data-target="#carouselExampleControls" data-slide-to="0" class="active"></li>
-									    <li data-target="#carouselExampleControls" data-slide-to="1"></li>
-									    <li data-target="#carouselExampleControls" data-slide-to="2"></li>
-									    <li data-target="#carouselExampleControls" data-slide-to="3"></li>
-									    <li data-target="#carouselExampleControls" data-slide-to="4"></li>
-									</ol>
-								  <div class="carousel-inner">
-								    <div class="carousel-item active">
-								      <img class="d-block w-100" src="<%= ctxPath%>/resources/images/강남제리스플래닛_JerryRoom_추가2.jpg" alt="First slide">
-								    </div>
-								    <div class="carousel-item">
-								      <img class="d-block w-100" src="<%= ctxPath%>/resources/images/강남제리스플래닛_JerryRoom_추가3.jpg" alt="Second slide">
-								    </div>
-								    <div class="carousel-item">
-								      <img class="d-block w-100" src="<%= ctxPath%>/resources/images/강남제리스플래닛_JerryRoom_추가4.jpg" alt="Third slide">
-								    </div>
-								    <div class="carousel-item">
-								      <img class="d-block w-100" src="<%= ctxPath%>/resources/images/강남제리스플래닛_JerryRoom_추가1.jpg" alt="Third slide">
-								    </div>
-								    <div class="carousel-item">
-								      <img class="d-block w-100" src="<%= ctxPath%>/resources/images/강남제리스플래닛_JerryRoom_추가3.jpg" alt="Third slide">
-								    </div>
-								  </div>
-								  
-									  <a class="carousel-control-prev col-lg-1" href="#carouselExampleControls" role="button" data-slide="prev" style="background-color:#d9d9d9; border-top-right-radius:7pt; border-bottom-right-radius:7pt;  height: 55px; margin-top: 197px;">
-									    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-									    <span class="sr-only">Previous</span>
-									  </a>
-								  
-			
-									  <a class="carousel-control-next col-lg-1" href="#carouselExampleControls" role="button" data-slide="next" style="background-color:#d9d9d9; border-top-left-radius:7pt; border-bottom-left-radius:7pt;   height: 55px; margin-top: 197px;">
-									    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-									    <span class="sr-only">Next</span>
-									  </a>
-								</div>									
-		       				</div>	
-	       				
+			    			
+				    			<div id='carousel_underItem'>
+			        				<div id="carouselExampleControls${status.index}" class="carousel slide" data-ride="carousel" data-interval ="false">
+	
+									  <div class="carousel-inner">
+													
+																										
+									  	<c:forEach var="RoomVO" items="${requestScope.getRoom_addImageList}" varStatus="status_sub">
+									   		 <!-- to_number('0')의 값을 첫 번째 반복문에 사용하고, 그 이후에는 to_number('1'), to_number('2') 등을 사용합니다 -->
+											
+											<%-- 여기부터 해서 다시 선생님께 물어보기. status.index를 적용시킨다는게 아직도 잘모르겠다고.. to_number()부분을 status.index를 사용해서 어떻게 적용하라는건지 모르겠다고 --%>
+											
+		    				    			 <c:if test="${status_sub.index == 0}">                 
+											    <div class="carousel-item active">
+											      <img class="d-block w-100" src="<%= ctxPath%>/resources/images/${RoomVO.room_image_add_name}" alt="First slide">
+											    </div>
+										 	</c:if>
+										 	
+										 	<c:if test="${status_sub.index > 0}">                 
+											    <div class="carousel-item">
+											      <img class="d-block w-100" src="<%= ctxPath%>/resources/images/${RoomVO.room_image_add_name}" alt="Second slide">
+											    </div>
+										 	</c:if>
+										 </c:forEach>
+										 	
+									  </div>
+									  
+										  
+									</div>									
+			       				</div>	
+	       		              <a class="carousel-control-prev col-lg-1" href="#carouselExampleControls${status.index}" role="button" data-slide="prev" style="background-color:#d9d9d9; border-top-right-radius:7pt; border-bottom-right-radius:7pt;  height: 55px; margin-top: 197px;">
+							    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+							    <span class="sr-only">Previous</span>
+							  </a>
+						  
+	
+							  <a class="carousel-control-next col-lg-1" href="#carouselExampleControls${status.index}" role="button" data-slide="next" style="background-color:#d9d9d9; border-top-left-radius:7pt; border-bottom-left-radius:7pt;   height: 55px; margin-top: 197px;">
+							    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+							    <span class="sr-only">Next</span>
+							  </a>
+	       					
 				 	 </div>
 							
 	        </div>
+  </c:forEach>  	       
 	        
 	        
-			        
-			 
-			 
-			  <div id="item_2" class="col-lg-8">
-		      	 <div style="display:flex;">
-						<div class="col-lg-6 col-md-6 col-sm-6" >
-								<img src="<%= ctxPath%>/resources/images/강남캠퍼스.jpg" alt="thumbnail" class="img-thumbnail item_image_2">
-								<a id="accomo_2_open" class="carousel-control-next"  role="button"  style="background-color: none; border: none;  height: 45px; margin-top: 280px; margin-right: 20px;" >
-								    <i class="fa-solid fa-photo-film"  onclick="myFunction_Show_accomo_2()"></i>
-								</a>
-						</div>			
-						<div class="col-lg-6 col-md-6 col-sm-6 ">
-							          <h5 class="col-sm-6 col-lg-12 mb-3 card-title" style="font-weight:600; ">슈페리어더블(오션뷰)</h5>
-									 
-									  <div class="col-sm-6 col-lg-12 mb-3 card-body">
-									  
-									  	<div style="height:80px;" >
-		
-										    <div style="display: flex; border-bottom: 1px solid rgba(128, 128, 128, 0.2);">
-										      <span class="badge badge-danger badge-pill special_price_2">예약특가</span>					    
-										      <h5 class="card-title item_special_price_2">109,900원</h5>
-										    </div>
-										    
-									    </div>
-									    <div  class="row col-lg-12">
-									     	<p>입실시간</p>
-									     	<p class="in_roomtime_2">15시 부터 </p>
-									    </div> 	
-									    
-									    <div class="row col-lg-12" style=" border-bottom: 1px solid rgba(128, 128, 128, 0.2); ">
-									     	<p>퇴실시간</p>
-									     	<p class="out_roomtime_2">익일 11시 </p>
-									    </div> 
-									   <div class="room_102_btnannae" style="text-align:center; ">
-										  <button type="button" class="annae_btn col-12" data-toggle="modal" data-target="#exampleModal_centered_2" style="background-color: transparent; border: none; margin: 18px 0;">
-										    <p style="color:#ff3300; font-weight: 600;">객실 이용 안내</p>
-										  </button>
-										  
-										  <!-- Modal -->
-											<!-- Modal 구성 요소는 현재 페이지 상단에 표시되는 대화 상자/팝업 창입니다. -->
-											<div class="modal fade" id="exampleModal_centered_2">
-											  <div class="modal-dialog modal-dialog-centered ">  
-											  
-											    <div class="modal-content">
-											      
-											      <!-- Modal header -->
-											      <div class="modal-header">
-											        <h5 class="modal-title" style="font-weight: bold;">객실 이용 안내</h5>
-											        <button type="button" class="close" data-dismiss="modal">&times;</button>
-											      </div>
-											      
-											      <!-- Modal body -->
-											      <div class="modal-body">
-											        <p style="font-size: 10pt; color: #4d4d00; text-align:left;">편의시설</p>
-											        <ul class="disc-list" style="list-style-type: disc;">
-											        	
-											        	<li style="font-size: 10pt; color: #999999; text-align:left;">TV,냉장고,헤어드라이기</li>
-											        	
-											        </ul>
-													<div class="row col-lg-12" style=" border-bottom: 1px solid rgba(128, 128, 128, 0.2); "></div>
-													
-													<p style="font-size: 10pt; color: #4d4d00; text-align:left; margin-top:20px;">주차정보</p>
-											        <ul class="disc-list" style="list-style-type: disc;">
-											        	
-											        	<li style="font-size: 10pt; color:  #248f24; text-align:left;">건물내주차장이용</li>
-											        	
-											        </ul>
-													<div class="row col-lg-12" style=" border-bottom: 1px solid rgba(128, 128, 128, 0.2); "></div>
-													
-													<p style="font-size: 10pt; color: #4d4d00; text-align:left; margin-top:20px;">선택날짜</p>
-											        <ul class="disc-list" style="list-style-type: disc;">
-											        	
-											        	<li class="modal_date" style="font-size: 10pt; color: #006699; text-align:left;"></li>
-											        	
-											        </ul>
-											        
-													
-											      </div>
-											      
-											     
-											    </div>
-											  </div>
-										   </div>	
-										</div>                             
-									    <a href="#" class="btn btn-danger col-lg-12 btn_resv_2">숙박 예약</a>
-									  </div>	 
-						</div>
-				  </div>					
-	    			
-	    			
-	    			  <div class="col-lg-10" id="carousel_underItem_wrap_2" style="display: none;">
-	    			    	<div style="margin-bottom:5px; text-align: right;">
-	    			    	  <a id="accomo_2_hide" role="button"  style="background-color: none; border: none; " >
-	    			    		<span><i class="fa-solid fa-rectangle-xmark" onclick="myFunction_Hide_accomo_2()"></i></span>			    			  	  			
-	    			  	  	  </a>	
-			    			</div>
-			    			<div id='carousel_underItem_2' >
-		        				<div id="carouselExampleControls2" class="carousel slide" data-ride="carousel" data-interval ="false">
-		        					<ol class="carousel-indicators">
-									    <li data-target="#carouselExampleControls2" data-slide-to="0" class="active"></li>
-									    <li data-target="#carouselExampleControls2" data-slide-to="1"></li>
-									    <li data-target="#carouselExampleControls2" data-slide-to="2"></li>
-									    <li data-target="#carouselExampleControls2" data-slide-to="3"></li>
-									    <li data-target="#carouselExampleControls2" data-slide-to="4"></li>
-									</ol>
-								  <div class="carousel-inner">
-								    <div class="carousel-item active">
-								      <img class="d-block w-100" src="<%= ctxPath%>/resources/images/강남제리스플래닛_JerryRoom_추가1.jpg" alt="First slide">
-								    </div>
-								    <div class="carousel-item">
-								      <img class="d-block w-100" src="<%= ctxPath%>/resources/images/강남제리스플래닛_JerryRoom_추가4.jpg" alt="Second slide">
-								    </div>
-								    <div class="carousel-item">
-								      <img class="d-block w-100" src="<%= ctxPath%>/resources/images/강남제리스플래닛_JerryRoom_추가2.jpg" alt="Third slide">
-								    </div>
-								    <div class="carousel-item">
-								      <img class="d-block w-100" src="<%= ctxPath%>/resources/images/강남제리스플래닛_JerryRoom_추가3.jpg" alt="Third slide">
-								    </div>
-								    <div class="carousel-item">
-								      <img class="d-block w-100" src="<%= ctxPath%>/resources/images/강남제리스플래닛_JerryRoom_추가1.jpg" alt="Third slide">
-								    </div>
-								  </div>
-								  
-									  <a class="carousel-control-prev col-lg-1" href="#carouselExampleControls2" role="button" data-slide="prev" style="background-color:#d9d9d9; border-top-right-radius:7pt; border-bottom-right-radius:7pt;  height: 55px; margin-top: 197px;">
-									    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-									    <span class="sr-only">Previous</span>
-									  </a>
-								  
-			
-									  <a class="carousel-control-next col-lg-1" href="#carouselExampleControls2" role="button" data-slide="next" style="background-color:#d9d9d9; border-top-left-radius:7pt; border-bottom-left-radius:7pt;   height: 55px; margin-top: 197px;">
-									    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-									    <span class="sr-only">Next</span>
-									  </a>
-								</div>									
-		       				</div>	
-	       				
-				 	 </div>
-							
-	        </div>       
 			        
 	     
 	        
@@ -2028,13 +2045,13 @@ function myFunction_PrevRightSpan() {
 							<p style="font-size: 12pt; color: #737373; text-align:left; font-weight:bold;">주변정보</p>
 					        <ul class="accordion_disc" style="list-style-type: disc;">
 					        	
-					        	<li style="font-size: 12pt; font-weight:600; color: #8c8c8c; text-align:left; font-weight:300;">제주국제공항 차량 10분/제주 이호테우 해변 차량 15분/한라생태숲 차량 25분</li>
+					        	<li style="font-size: 12pt; font-weight:600; color: #8c8c8c; text-align:left; font-weight:300;">${requestScope.daVO.sur_info}</li>
 					        	
 					        </ul>
 					        <p style="font-size: 12pt; color: #737373; text-align:left; font-weight:bold;">주차정보</p>
 					        <ul class="accordion_disc" style="list-style-type: disc;">
 					        	
-					        	<li style="font-size: 12pt; font-weight:600; color: #8c8c8c; text-align:left; font-weight:300;">* 1객실 1주차 가능 미리주차불가(전화문의사절)/1객실에 차량두대불가,퇴실후 주차불가/총 17대 주차시설 보유</li>
+					        	<li style="font-size: 12pt; font-weight:600; color: #8c8c8c; text-align:left; font-weight:300;">${requestScope.daVO.parking_info}</li>
 					        	
 					        </ul>
 					        <div style="border-bottom: solid 3px magenta; margin-top: 30px;"></div>
@@ -2074,37 +2091,31 @@ function myFunction_PrevRightSpan() {
 							<p style="font-size: 12pt; color: #737373; text-align:left; font-weight:bold;">상호</p>
 					        <ul class="accordion_disc" style="list-style-type: disc;">
 					        	
-					        	<li style="font-size: 12pt; font-weight:600; color: #8c8c8c; text-align:left; font-weight:300;">포레스타</li>
+					        	<li style="font-size: 12pt; font-weight:600; color: #8c8c8c; text-align:left; font-weight:300;">${requestScope.hostVO.cp_name}</li>
 					        	
 					        </ul>
 					        <p style="font-size: 12pt; color: #737373; text-align:left; font-weight:bold;">대표자명</p>
 					        <ul class="accordion_disc" style="list-style-type: disc;">
 					        	
-					        	<li style="font-size: 12pt; font-weight:600; color: #8c8c8c; text-align:left; font-weight:300;">ㅇㅇㅇ</li>
+					        	<li style="font-size: 12pt; font-weight:600; color: #8c8c8c; text-align:left; font-weight:300;">${requestScope.hostVO.host_name}</li>
 					        	
 					        </ul>
 					        <p style="font-size: 12pt; color: #737373; text-align:left; font-weight:bold;">주소</p>
 					        <ul class="accordion_disc" style="list-style-type: disc;">
 					        	
-					        	<li style="font-size: 12pt; font-weight:600; color: #8c8c8c; text-align:left; font-weight:300;">서울특별시 서대문구 연세로4길 16</li>
-					        	
-					        </ul>
-					        <p style="font-size: 12pt; color: #737373; text-align:left; font-weight:bold;">전화번호</p>
-					        <ul class="accordion_disc" style="list-style-type: disc;">
-					        	
-					        	<li style="font-size: 12pt; font-weight:600; color: #8c8c8c; text-align:left; font-weight:300;">11111111111</li>
+					        	<li style="font-size: 12pt; font-weight:600; color: #8c8c8c; text-align:left; font-weight:300;">${requestScope.daVO.address} &nbsp; ${requestScope.daVO.extra_address}</li>
 					        	
 					        </ul>
 					        <p style="font-size: 12pt; color: #737373; text-align:left; font-weight:bold;">이메일</p>
 					        <ul class="accordion_disc" style="list-style-type: disc;">
 					        	
-					        	<li style="font-size: 12pt; font-weight:600; color: #8c8c8c; text-align:left; font-weight:300;">SSangyoung@sist.com</li>
+					        	<li style="font-size: 12pt; font-weight:600; color: #8c8c8c; text-align:left; font-weight:300;">${requestScope.hostVO.host_email}</li>
 					        	
 					        </ul>
 					        <p style="font-size: 12pt; color: #737373; text-align:left; font-weight:bold;">사업자번호</p>
 					        <ul class="accordion_disc" style="list-style-type: disc;">
 					        	
-					        	<li style="font-size: 12pt; font-weight:600; color: #8c8c8c; text-align:left; font-weight:300;">12341234</li>
+					        	<li style="font-size: 12pt; font-weight:600; color: #8c8c8c; text-align:left; font-weight:300;">${requestScope.hostVO.cp_reg_no}</li>
 					        	
 					        </ul>
 						</div>
@@ -2116,9 +2127,19 @@ function myFunction_PrevRightSpan() {
 							<p style="font-size: 12pt; color: #737373; text-align:left; font-weight:bold;">편의시설 및 서비스</p>
 					        <ul class="accordion_disc" style="list-style-type: disc;">
 					        	
-					        	<li style="font-size: 12pt; font-weight:600; color: #8c8c8c; text-align:left; font-weight:300;">TV,냉장고,헤어드라이기</li>
+					        	 <c:if test="${not empty requestScope.show_facilitiesList}">
+						        	<c:forEach var="AcomodationVO" items="${requestScope.show_facilitiesList}">											        		
+						        			<li style="font-size: 12pt; font-weight:600; color: #8c8c8c; text-align:left; font-weight:300;">${AcomodationVO.category_fac_name}</li>												        		
+						        	</c:forEach> 	
+								</c:if>	
+												        
+						        <c:if test="${empty requestScope.show_facilitiesList}">
+						        			<li style="font-size: 12pt; font-weight:600; color: #8c8c8c; text-align:left; font-weight:300;">없음</li>												        		
+						        </c:if>	
 					        	
 					        </ul>
+					        
+					       
 					        
 						</div>
 					</section>	                      
@@ -2127,26 +2148,33 @@ function myFunction_PrevRightSpan() {
 		
 			
 		       <%-- 아코디언 끝 =================================================================================================== --%>	
-			
-			
-			
-			
-			
+
 	
 	<%-- review 탭 시작 ===================================================================================================  --%>		
 			
 			<div class="review_top col-lg-8 col-md-6 col-sm-4">
 				
 				<p style="display: flex; justify-content: center; font-size:25px; font-weight:bold; margin-bottom: -15px;">추천해요</p>
-				 <div style="display:flex;justify-content: center;">
-				 <label class="result_starr" style="font-size: 3em; color: transparent; text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);">★★★★★</label><p style="font-weight: bold; font-size: 35px; margin-left: 18px; margin-top:17px;">10.0</p>
-				 </div>
-				 
+				<c:if test="${not empty requestScope.show_ReviewList[0].review_cnt}">
+					 <div style="display:flex;justify-content: center;">
+					 	<label class="result_starr" style="font-size: 3em; color: transparent; text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);">★★★★★</label><p style="font-weight: bold; font-size: 35px; margin-left: 18px; margin-top:17px;">${totalScore/requestScope.show_ReviewList[0].review_cnt}</p>
+					 </div>
+				 </c:if>
+				 <c:if test="${empty requestScope.show_ReviewList[0].review_cnt}">
+					 <div style="display:flex;justify-content: center;">
+					 	<label class="result_starr" style="font-size: 3em; color: transparent; text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);">☆☆☆☆☆</label><p style="font-weight: bold; font-size: 35px; margin-left: 18px; margin-top:17px;">0</p>
+					 </div>
+				 </c:if>
 				<div style="display: flex; justify-content: center;">
 				
 					<p style="font-size: 17px;">전체리뷰 :</p>
 					<div style="display:flex;   gap: 55px;">
-						<strong>1983</strong>
+						<c:if test="${empty requestScope.show_ReviewList[0].review_cnt}">
+							<strong>&nbsp; - </strong>
+						</c:if>
+						<c:if test="${not empty requestScope.show_ReviewList[0].review_cnt}">
+							<strong>&nbsp; ${requestScope.show_ReviewList[0].review_cnt}</strong>
+						</c:if>
 						<div>
 							<button type="button" style="border:none; background-color:transparent;" data-toggle="modal" data-target="#exampleModal_scrolling_2">
 								<p>운영정책 ></p>
@@ -2204,17 +2232,31 @@ function myFunction_PrevRightSpan() {
 				<div class="col-lg-12" style="border: solid 1px gray; margin-top: 40px;"></div>
 			</div>
 			
-			<div class="review_content col-lg-8 col-md-6 col-sm-4">
-				
-				<p style="font-size:15px; font-weight: bold;">여기만한 곳은 어디에도 없을 거예요.</p>
-					<div style="display:flex;">
-						<label class="result_starr" style="color: transparent; text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);">★★★★★</label><p style="font-weight: 550; font-size: 19px; margin-left: 8px;">10</p>
-					</div>			
-				<p style="font-weight: lighter; color: #808080;">디럭스(주차불가) 객실 이용</p>
-				<p >음식이 친절합니다. 다신 안갈거같아요.~~음식이 친절합니다. 다신 안갈거같아요.~~음식이 친절합니다. 다신 안갈거같아요.~~음식이 친절합니다. 다신 안갈거같아요.~~음식이 친절합니다. 다신 안갈거같아요.~~음식이 친절합니다. 다신 안갈거같아요.~~음식이 친절합니다. 다신 안갈거같아요.~~음식이 친절합니다. 다신 안갈거같아요.~~</p>
-				<div class="col-lg-12" style="border: solid 1px gray; margin-top: 40px;"></div>
-			</div>
+			<c:if test="${empty requestScope.show_ReviewList[0].review_cnt}">
+					<div class="review_content col-lg-8 col-md-6 col-sm-4">
+						<p style="margin-left: 205px; font-weight:bold; font-size: 20px;">아직 리뷰가 존재하지 않습니다. 첫번째 리뷰의 주인공이 되세요!!</p>
+					</div>
+			</c:if>
 			
+			<c:if test="${not empty requestScope.show_ReviewList[0].review_cnt}">
+				<c:forEach var="AcomodationVO" items="${requestScope.show_ReviewList}">
+				
+					<div class="review_content col-lg-8 col-md-6 col-sm-4">
+						
+						<p style="font-size:15px; font-weight: bold;">${AcomodationVO.review_subject}</p>
+							<div style="display:flex;">
+								<label class="result_starr" style="color: transparent; text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);">★★★★★</label><p style="font-weight: 550; font-size: 19px; margin-left: 8px;">${AcomodationVO.review_score}</p>
+							</div>			
+						<p style="font-weight: lighter; color: #808080;">디럭스(주차불가) 객실 이용</p>
+						<p>${AcomodationVO.review_content}</p>
+						<p style="font-weight: lighter; color: #808080; font-size:10pt;">작성일자: ${AcomodationVO.review_reg_date}</p>
+						<div class="col-lg-12" style="border: solid 1px gray; margin-top: 40px;"></div>
+					</div>
+				</c:forEach>
+				
+			</c:if>
+			
+		
 			
 			
 			
@@ -2224,6 +2266,7 @@ function myFunction_PrevRightSpan() {
 			
 					
 					<%-- 리뷰 쓰는 것 태그 --%>
+					<%-- 
 					<form class="review_input" name="myform" id="myform" method="post">
 						<fieldset>
 							<span class="text-bold">별점을 선택해주세요</span>
@@ -2243,7 +2286,7 @@ function myFunction_PrevRightSpan() {
 									  placeholder="후기를 남겨주신 회원님께 BEST 후기를 선정하여 상품을 드리고 있습니다.!! 많은 참여부탁!!!"></textarea>
 						</div>
 				    </form>								
-				    
+				    --%>
 
 			
 		</div>	

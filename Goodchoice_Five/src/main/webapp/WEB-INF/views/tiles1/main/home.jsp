@@ -215,13 +215,13 @@
   <div id="contents">
                 <div class="main_link" id="link">
                     <ul>
-                        <li><a href="#" manu-link=1><span class="ico_01">&nbsp;</span>
+                        <li><a href="<%=request.getContextPath()%>/acomodation/home/1" manu-link=1><span class="ico_01">&nbsp;</span>
                                 <p>모텔</p>
                             </a></li>
-                        <li><a href="#" manu-link=1><span class="ico_02">&nbsp;</span>
+                        <li><a href="<%=request.getContextPath()%>/acomodation/search/1/2" manu-link=1><span class="ico_02">&nbsp;</span>
                                 <p>호텔 리조트</p>
                             </a></li>
-                        <li><a href="#" manu-link=1><span class="ico_03">&nbsp;</span>
+                        <li><a href="<%=request.getContextPath()%>/acomodation/search/3/18" manu-link=1><span class="ico_03">&nbsp;</span>
                                 <p>펜션</p>
                             </a></li>
                         <li><a href="#" manu-link=1><span class="ico_04">&nbsp;</span>

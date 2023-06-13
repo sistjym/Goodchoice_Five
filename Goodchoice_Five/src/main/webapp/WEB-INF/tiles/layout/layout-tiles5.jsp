@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>$(requestScope.abc.acom_name) + "| 여기 어때" </title>
+<title>${requestScope.daVO.acom_name}  | 여기 어때 </title>
   <!-- Required meta tags -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
