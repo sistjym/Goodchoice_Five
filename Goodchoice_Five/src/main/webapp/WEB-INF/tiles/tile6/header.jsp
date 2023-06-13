@@ -26,8 +26,8 @@
                  <li class="dropdown">
                     <button class="dropbtn">호스트 전용</button>
                      <ul class="dropdown-content">
-                        <a href="<%= ctxPath%>/showAllAcomm.gc">숙소등록</a>
-                        <a href="<%= ctxPath%>/showAllHost.gc">숙소수정</a>
+                        <a href="<%= ctxPath%>/hostRegister.gc">숙소등록</a>
+                        <a href="<%= ctxPath%>/hostEdit.gc">숙소수정</a>
                         <a href="<%= ctxPath%>/acomm_approve.gc">숙소 등록 승인 하기</a>
                     </ul>
                 </li> 

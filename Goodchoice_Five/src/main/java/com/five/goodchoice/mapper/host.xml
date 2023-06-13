@@ -16,6 +16,16 @@
 	values(SEQ_HOST.nextval, #{email}, #{pwd}, #{onerName}, #{business_id}, #{companyName})
 </insert>
 
+<select id="getDistrictno" resultType="int" parameterType="HashMap">
+	SELECT district_no
+	FROM (
+	  SELECT d.district_no, district_name
+	  FROM tbl_province p
+	  JOIN tbl_district d ON p.prov_no = d.fk_prov_no
+	  WHERE p.prov_name = #{districtname}
+	) V
+	WHERE TRIM(V.district_name) = TRIM(#{subdistrictname})
+</select>
 
 
 
