@@ -17,21 +17,21 @@ $(document).ready(function() {
 	
 $(document).on('scroll', function(){
     if($(window).scrollTop() > 130){
-        $("#header").removeClass("deactive");
-        $("#header").addClass("active");
-        $(".drop").removeClass("deactive");
-        $(".drop").addClass("active");
+        $("#header").removeClass("deactive2");
+        $("#header").addClass("active2");
+        $(".drop").removeClass("deactive2");
+        $(".drop").addClass("active2");
     }else{
-        $("#header").removeClass("active");
-        $("#header").addClass("deactive");
-        $(".drop").removeClass("active");
-        $(".drop").addClass("deactive");
+        $("#header").removeClass("active2");
+        $("#header").addClass("deactive2");
+        $(".drop").removeClass("active2");
+        $(".drop").addClass("deactive2");
     }
 })
 
 
 </script>
-    <header id="header" class="deactive" >
+    <header id="header" class="deactive2" >
     	<div > 
     
 	   
@@ -48,7 +48,7 @@ $(document).on('scroll', function(){
 						
 	                 <li class="dropdown" >
 	                    <button class="dropbtn"> 관리자 전용</button>
-	                     <ul class="dropdown-content"  class="deactive">
+	                     <ul class="dropdown-content"  class="deactive2">
 	                        <a class="drop" href="<%= ctxPath%>/showAllAcomm.gc">모든 숙소 보기</a>
 	                        <a class="drop" href="<%= ctxPath%>/showAllHost.gc">호스트 관리</a>
 	                        <a class="drop" href="<%= ctxPath%>/acomm_approve.gc">숙소 등록승인 </a>
