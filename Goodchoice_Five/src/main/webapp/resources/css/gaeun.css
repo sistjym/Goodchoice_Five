@@ -420,8 +420,9 @@ p {
 }
 
 fieldset{
-	padding:10px;
-	 border: 0.2rem outset #f7323f; 
+	 padding:10px;
+	 border: 0.2rem outset #0d3486; 
+	 margin-bottom: 30px;
 }
 
 legend{
