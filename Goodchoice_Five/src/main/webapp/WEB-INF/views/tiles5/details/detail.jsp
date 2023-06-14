@@ -868,12 +868,12 @@ $(document).ready(function() {
 	   		    // form 생성
 				const frm = $("form#searchFrm");
 				
-			$("input[name='acom_name_value']").val(acom_name);
-				$("input[name='room_type_value']").val(room_type);	
-				$("input[name='room_price_value']").val(room_price);	
-			$("input[name='send_date_bak_value']").val(send_date_bak);	
-			$("input[name='check_in_date_value']").val(check_in_date);	
-			$("input[name='check_out_date_value']").val(check_out_date);	
+				$("input[name='acom_name']").val(acom_name);
+				$("input[name='room_type']").val(room_type);	
+				$("input[name='room_price']").val(room_price);	
+			$("input[name='send_date_bak']").val(send_date_bak);	
+			$("input[name='check_in_date']").val(check_in_date);	
+			$("input[name='check_out_date']").val(check_out_date);		
 				
 			
 			
@@ -948,12 +948,12 @@ $(document).ready(function() {
 			   		    // form 생성
 						const frm = $("form#searchFrm");
 						
-					$("input[name='acom_name_value']").val(acom_name);
-						$("input[name='room_type_value']").val(room_type);	
-						$("input[name='room_price_value']").val(room_price);	
-					$("input[name='send_date_bak_value']").val(send_date_bak);	
-					$("input[name='check_in_date_value']").val(check_in_date);	
-					$("input[name='check_out_date_value']").val(check_out_date);	
+					$("input[name='acom_name']").val(acom_name);
+						$("input[name='room_type']").val(room_type);	
+						$("input[name='room_price']").val(room_price);	
+					$("input[name='send_date_bak']").val(send_date_bak);	
+					$("input[name='check_in_date']").val(check_in_date);	
+					$("input[name='check_out_date']").val(check_out_date);	
 						
 					
 						
@@ -1920,12 +1920,12 @@ function myFunction_PrevRightSpan() {
 										</div>         
 										
 										<form action="<%= ctxPath%>/reservation/reservation.gc" name="searchFrm" id="searchFrm">
-											<input name="acom_name_value"  type="hidden" value=""/>
-											<input name="room_type_value"  type="hidden" value=""/>
-											<input name="room_price_value"  type="hidden" value=""/>
-											<input name="send_date_bak_value"  type="hidden" value=""/>
-											<input name="check_in_date_value"  type="hidden" value=""/>
-											<input name="check_out_date_value"  type="hidden" value=""/>
+											<input name="acom_name"  type="hidden" value=""/>
+											<input name="room_type"  type="hidden" value=""/>
+											<input name="room_price"  type="hidden" value=""/>
+											<input name="send_date_bak"  type="hidden" value=""/>
+											<input name="check_in_date"  type="hidden" value=""/>
+											<input name="check_out_date"  type="hidden" value=""/>
 										   	<input type="submit" class="btn btn-danger col-lg-12 btn_resv" value="숙박예약"/>							
 										   	
 								        </form>

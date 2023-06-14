@@ -74,6 +74,7 @@ public class DetailController {
 //			System.out.println(daVO.getParking_info() + daVO.getAcom_image() + daVO.getAcom_name()  + daVO.getAcom_no() + daVO.getFk_spec_no() );
 			// 1객실당 1대의 차만 주차가 가능합니다(주차타워이용가능할경우 무료주차)/페라리, 람보르기니, 맥라렌 등 슈퍼카는 주차가 불가하오니 양해바랍니다./총 45대 주차시설 보유서초라바.jpg서초 라바28
 			
+			
 			daVO.setCheck_in_date(paraMap.get("check_in_date")); 
 			daVO.setCheck_out_date(paraMap.get("check_out_date"));
 			
