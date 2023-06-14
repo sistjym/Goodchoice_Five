@@ -160,21 +160,30 @@
 	</resultMap>
 	
 	<select id="acommCntByDistrict" resultMap="district_Map">
-		select  D.district_name AS district, count(*) AS cnt ,round(count(*) /(select count(*) from tbl_acomodation)*100 , 1) AS percentage
-		from tbl_acomodation A inner join tbl_district D
-		on A.fk_district_no = D.district_no
-		group by  D.district_name
-		order by D.district_name asc
+		select 
+		P.prov_name AS district,
+		count(*) AS cnt ,
+		round(count(*) /(select count(*) from tbl_acomodation)*100 , 1) AS percentage
+	
+    	from tbl_acomodation A inner join tbl_district D 
+        on A.fk_district_no = D.district_no
+        inner join tbl_province P
+		on D.fk_prov_no = P.prov_no
+		group by P.prov_name
+
+
 	</select>
 	
 	<!--  시티 가져오기 -->
 	<select id="acommCntByCity" parameterType="String" resultMap="district_Map">
-		select  D.sub_city_name AS city, count(*) AS cnt ,round(count(*) /(select count(*) from tbl_acomodation)*100 , 1) AS percentage
+		select  D.district_name AS city, count(*) AS cnt ,round(count(*) /(select count(*) from tbl_acomodation)*100 , 1) AS percentage
 		from tbl_acomodation A inner join tbl_district D
 		on A.fk_district_no = D.district_no
-        where D.district_name = #{district}
-		group by  D.sub_city_name 
-		order by D.sub_city_name asc
+        inner join tbl_province P
+		on D.fk_prov_no = P.prov_no
+        where P.prov_name = '${district}'
+		group by  D.district_name
+		order by  D.district_name asc
 
 	</select>
 	
