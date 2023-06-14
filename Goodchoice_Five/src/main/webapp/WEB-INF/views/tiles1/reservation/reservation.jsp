@@ -15,7 +15,8 @@
 	$(document).ready(function(){
 		// 체크박스 제어 
 		$("#checkAll").click(function() {
-			if($("#checkAll").is(":checked")) $("input[name=checkOne]").prop("checked", true);
+			if($("#checkAll").is(":checked")) 
+				$("input[name=checkOne]").prop("checked", true);
 			else $("input[name=checkOne]").prop("checked", false);
 		});
 	
@@ -27,16 +28,45 @@
 			else $("#checkAll").prop("checked", true); 
 		});
 
-		
+	
 		$("button#goReservation").bind("click", function() {
-			
-   	        
-	   	     var IMP = window.IMP;     // 생략가능
-	   	     IMP.init('imp43877375');  // 중요!!  아임포트에 가입시 부여받은 "가맹점 식별코드". 
-	   	     requestPay();
-   	     
+			if(!$("#checkAll").is(":checked")){
+				alert("약관에 동의하셔야 결제가 가능 합니다!");
+		   	    
+			}
+			else{
+				 var IMP = window.IMP;     // 생략가능
+		   	     IMP.init('imp43877375');  // 중요!!  아임포트에 가입시 부여받은 "가맹점 식별코드". 
+		   	     requestPay();
+			}
    	 
 		});	 // end of click 결제하기
+
+		
+		
+		// 포인트 적용 
+			$("button#pointApply").bind("click", function() {
+				//totalPrice 최종가격
+				//price
+				//user_point
+				let price = $("input#price").val();
+				
+				let point = document.getElementById("user_point").value;
+				console.log(point);
+				let totalprice = Number(price) - Number(point);
+				console.log(totalprice);
+				
+				
+				$("input#totalPrice").val(totalprice);
+
+
+				
+				
+				
+			})
+		
+	
+		
 	
    });// end of $(document).ready(function(){})-----------------------
    
@@ -64,7 +94,8 @@
 				    
 	   			    frm.userName.value = $("input#userName").val();
 	   		        frm.email.value = $("input#email").val();
-	   		        frm.email.value = $("input#email").val();
+	
+	   		        frm.user_point.value = $("input#user_point").val();
 	   			    
 	   		        frm.acommName.value = $("input#acommName").val();
 	   		        frm.roomName.value = $("input#roomName").val();
@@ -116,25 +147,25 @@
 		<div id="reserve_contents">
 			<form name="orderForm">
 				<div class="left">
-					<div  class="info_chkin">
-						<section>
-							<h3>예약자 정보</h3>
-							<strong>예약자 이름 </strong> 
+				  <h3 class="reserver_name">예약자 정보</h3>
+					<div class="info_chkin">
+						<section class="sub_info">
+							<strong >예약자 이름 </strong> 
 							<input type="hidden" name="member_id" id="member_id" value="${sessionScope.loginuser.member_id}">
 							<p class="inp_wrap remove">
-								<input type="text" name="userName" id="userName" placeholder="체크인시 필요한 정보입니다." maxlength="20" value="">
+								<input type="text" class="transInput" name="userName" id="userName" placeholder="체크인시 필요한 정보입니다." maxlength="200" value="">
 							</p>
 							<p data-show="name" class="alert_txt" style="visibility: hidden">
 					          	  한글, 영문, 숫자만 입력 가능. (문자 사이 공백은 1칸만 입력 가능)
 					        </p>
-					        <div>
+					        <div id="emailBox">
 					        	<strong>이메일 정보(확정 메일을 받을 이메일을 입력해주세요) </strong>
 					        	<span class="safety_txt">예약 확정시 이메일로 안내해드립니다</span>
 					        </div>
 					      
 					        <div class="phone_confirm">
 					        	<p class="inp_wrap remove">
-					        		<input type="tel" name="email" id="email"  maxlength="20" value="ske40109@gmail.com" class="input validation-required-input">
+					        		<input type="tel" name="email" id="email" class="transInput"  maxlength="150" value="" class="input validation-required-input">
 					        	</p>
 					        	   <p data-show="tel" class="alert_txt error-message">이메일을 확인해 주세요.</p>
 								
@@ -151,20 +182,36 @@
 	                </section> -->
 	                
 	                <!-- 할인 수단  -->
-	                <section class="price_wrap" >
-						<p>구매총액</p>	         
-						<input type="text" value="100,000원">
-						
-						<p>포인트</p>
-						<input type="text" value="포인트 사용 + ${sessionScope.loginuser.point}">
-						
-						<p>내 포인트</p>
-						<input type="text" value="100"><span><strong>P</strong></span>
+	                <h3 class="reserver_name">결제 정보</h3>
+	                <section class="price_wrap sub_info" >
+	                	<ul>
+	                		<li class="price_li">
+								<strong>구매총액</strong>   
+								<span >
+									<input  class="transInput price_box" id="price" type="text" value="100000" readonly="readonly">
+								</span>
+								
+	                		</li>
+	                		<li class="price_li">
+	                			<strong>포인트</strong>
+								<input class="transInput price_box" type="text" value="${sessionScope.loginuser.point} P" readonly="readonly">
+	                		</li>
+	                		<li class="price_li">
+								<strong>사용할 포인트</strong>
+								<input class="transInput price_box point" id="user_point" type="text" value="" placeholder="P">
+	                			
+	                		</li>
+	                		
+	                	</ul>
+	                	
+	                	<br><br>
+	                	<button type="button" id="pointApply">적용</button>
 	                </section>
 	                
 	                
 	                <!--  개인 정보 보호  박스 -->
-					<section class="agree">
+	                <h3 class="reserver_name">약관 동의</h3>
+					<section class="agree sub_info">
 						<p class="all_check" >
 							<label>
 								<input type="checkbox" name="checkAll" id="checkAll" class="inp_chk_02"> 
@@ -198,19 +245,23 @@
 			
 				</div>
 				
+				
+				
 				<div class="right">
+				
 					<div>
+					
 						<section class="info">
-							
 							<p class="name"><strong>숙소이름</strong></p>
-							<input type="text" name="acommName" id="acommName" value="하얏트 호텔" readonly="readonly">
+							<input class="transInput acomInfo" type="text" name="acommName" id="acommName" value="${requestScope.acom_name}" readonly="readonly">
+							
 							<p><strong>객실타입/기간</strong></p> 
-							<input type="text" name="roomName" id="roomName" value="TypeA/ 1박" readonly="readonly">
+							<input class="transInput acomInfo" type="text" name="roomName" id="roomName" value="${requestScope.room_type} / ${requestScope.send_date_bak}" readonly="readonly">
 							
 						    <p><strong>체크인</strong></p> 
-						    <input type="text" name="checkIn" id="checkIn" value="2023-06-24"  readonly="readonly">
+						    <input class="transInput acomInfo" type="text" name="checkIn" id="checkIn" value="${requestScope.check_in_date}"  readonly="readonly">
 						    <p><strong>체크아웃</strong></p>
-						    <input type="text" name="checkOut" id="checkOut" value="2023-06-25"  readonly="readonly">
+						    <input  class="transInput acomInfo" type="text" name="checkOut" id="checkOut" value="${requestScope.check_out_date}"  readonly="readonly">
 					    </section>
 						<section class="total_price_pc">
 							<p id="price_box">
@@ -219,8 +270,8 @@
 								</strong>
 								
 								<span class="price" >
-								<input type="text" name="totalPrice" id="totalPrice" value="100,000원"  readonly="readonly">
-								</span>
+								<input class="transInput acomInfo" type="text" name="totalPrice" id="totalPrice" value=""  readonly="readonly">
+								</span>.
 							</p> 
 							<ul>
 								<li>

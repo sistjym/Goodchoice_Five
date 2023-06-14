@@ -9,7 +9,11 @@
 		insert into tbl_reservation(RESERV_ID, FK_ROOM_ID, FK_MEMBER_ID, CHECK_OUT_DATE, CHECK_IN_DATE, PRICE, RESERV_STATUS, RESERV_PERSON) 
 		values( #{reserve_id}, '25CQL548', to_number(#{member_id}), to_date(#{checkOut},'yyyy-mm-dd'),  to_date(#{checkIn},'yyyy-mm-dd'), #{totalPrice}, 1 ,#{userName})
 	</insert>
-		
-		
+	
+	<update id="updatePoint" parameterType="HashMap">
+		update tbl_member 
+		set point = point - (to_number(#{user_point}) + #{totalPrice}*0.10)
+		where member_id = ${member_id}
+	</update>
 		
 </mapper>
