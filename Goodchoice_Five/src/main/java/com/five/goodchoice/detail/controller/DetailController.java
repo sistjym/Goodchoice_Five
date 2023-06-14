@@ -1,5 +1,7 @@
 package com.five.goodchoice.detail.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,11 +33,11 @@ public class DetailController {
 	private InterRoomSerivce room_service;
 	// 모텔 View	
 	
-	@RequestMapping(value="/details/detail.gc" , method = {RequestMethod.GET}, produces="text/plain;charset=UTF-8")
+	@RequestMapping(value="/details/detail.gc" , method = {RequestMethod.GET} , produces="text/plain;charset=UTF-8")
 	public ModelAndView detail_view(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) throws Exception {
 		
 			String acom_no = request.getParameter("acom_no");
-			
+						
 			String category_no = request.getParameter("category_no");
 			
 			String check_in_date = request.getParameter("check_in_date");
@@ -67,7 +69,7 @@ public class DetailController {
 
 			
 			// acom_no에 해당하는 숙소정보를 가져오기+ 스펙넘버도 가져오기(Fk_spec_no)
-			AcomodationVO daVO = service.acom_Info(acom_no);
+			AcomodationVO daVO = service.acom_Info(paraMap);
 			
 //			System.out.println(daVO.getParking_info() + daVO.getAcom_image() + daVO.getAcom_name()  + daVO.getAcom_no() + daVO.getFk_spec_no() );
 			// 1객실당 1대의 차만 주차가 가능합니다(주차타워이용가능할경우 무료주차)/페라리, 람보르기니, 맥라렌 등 슈퍼카는 주차가 불가하오니 양해바랍니다./총 45대 주차시설 보유서초라바.jpg서초 라바28
@@ -163,6 +165,53 @@ public class DetailController {
 			mav.addObject("getRoomList",getRoomList);
 			
 			///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			
+	/*		
+			String acom_name_Value = request.getParameter("acom_name");
+			String room_type_Value =  request.getParameter("room_type");
+			String dateDiff_Value =  request.getParameter("dateDiff");
+
+
+
+
+			// 받아온 값이 null이 아니라면 디코딩을 수행합니다.
+			if (acom_name_Value != null && room_type_Value != null  && dateDiff_Value != null ) {
+			    try {
+			        // UTF-8로 인코딩된 값을 디코딩합니다.
+			        String acom_name = URLDecoder.decode(acom_name_Value, "UTF-8");
+			        
+			        // 디코딩된 값 사용
+			        System.out.println(acom_name);
+			        
+			     // UTF-8로 인코딩된 값을 디코딩합니다.
+			        String room_type = URLDecoder.decode(room_type_Value, "UTF-8");
+			        
+			        // 디코딩된 값 사용
+			        System.out.println(room_type);
+			        			        
+			     // UTF-8로 인코딩된 값을 디코딩합니다.
+			        String dateDiff = URLDecoder.decode(dateDiff_Value, "UTF-8");
+			        
+			        // 디코딩된 값 사용
+			        System.out.println(dateDiff);
+			        
+			        // 디코딩된 값으로 추가적인 처리 수행
+			        // ...
+			        
+					paraMap.put("acom_name",acom_name);
+					
+					paraMap.put("room_type",room_type);
+					
+					paraMap.put("dateDiff",dateDiff);
+			        
+			    } catch (UnsupportedEncodingException e) {
+			        // 디코딩 실패 시 예외 처리
+			        e.printStackTrace();
+			    }
+			}
+			
+		*/	
+			
 			
 			
 			
