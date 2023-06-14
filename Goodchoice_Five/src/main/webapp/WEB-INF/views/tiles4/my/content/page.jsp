@@ -3,6 +3,80 @@
 <%
 	String ctxPath = request.getContextPath();
 %>
+
+<!-- Optional JavaScript -->
+<script type="text/javascript" src="<%= ctxPath%>/resources/js/jquery-3.6.4.min.js"></script>
+<script type="text/javascript" src="<%= ctxPath%>/resources/bootstrap-4.6.0-dist/js/bootstrap.bundle.min.js" ></script>
+
+<script type="text/javascript">
+
+	
+	$(document).ready(function(){		
+
+		
+		setEventHandling();
+		$("button.btns-wrap__edit-btn").css({"background-color": "#fff", "color": "#bfbfbf"});
+	    
+
+		$(".btns-wrap__edit-btn").click(function() {
+
+		  var section = $(this).closest("section");
+
+
+		  section.find(".modifying-section").show();
+		  section.find(".btns-wrap__edit-btn").hide();
+
+
+		  section.find(".btns-wrap__submit-btn, .btns-wrap__cancel-btn").show();
+		});
+		
+		$(".btns-wrap__cancel-btn").click(function() {
+
+			  var section = $(this).closest("section");
+
+
+			  section.find(".modifying-section, .btns-wrap__submit-btn, .btns-wrap__cancel-btn").hide();
+
+
+			  section.find(".btns-wrap__edit-btn").show();
+			});
+		
+	});
+	
+	function setEventHandling() {
+		
+		// 닉네임 유효성 검사
+		$('input#nickname').on('input', nicknameCheck);
+	}
+	
+	function nicknameCheck(e) {
+		const inputNickname = $("input#ran_nick").val();
+		
+		
+		const regExp = /^[가-힣]{2,10}$/;
+		if (!regExp.test(inputNickname)) {
+			$("span#error_nickname").text("한글 2자~10자만 입력 가능합니다.");
+		} else {
+			$("span#error_nickname").text("");
+		}
+	}
+	
+	
+	
+	let item = ['어피치', '초롱초롱', '튜브', '프로도', '라이언', '프로도', '뚜루뚜루', '멍멍이', '코코넛', '귀여웡', '안귀여웡', '비비안', '호호호', '콩닥콩닥', '무지한무지', '단무지', '무지개', '쿠키빵', '곰돌이', '꽃순이', '마빡딱대', '코카는제로', '배고파', '아깜짝아', '조장님바보', '키키케케'];
+
+	function changeNickname() {
+		  let randomItem = item[Math.floor(Math.random() * item.length)];
+		  $('input#ran_nick').val(randomItem);
+		  $("span#error_nickname").text("");
+		}
+	
+	
+	
+	
+
+</script>
+
 <div id="content" class="sub_wrap my_wrap">
 
 	<div class="align_rt">
@@ -12,20 +86,21 @@
 				<section class="top_area">
 					<strong>내 정보 수정</strong>
 					<div class="login_info">
-						<div class="dimg"><img src="https://image.goodchoice.kr/profile/ico/ico_21.png" alt=""></div>
-						<p>requestScope.member_email</p>
+						<div class="dimg"><img src="<%= ctxPath%>/resources/images/ico_21.png" alt=""></div>
+						<p>${sessionScope.dec_email}</p>
 					</div>
 
 					<div class="pw_input">
 						<div class="pw_input__title">
 							<b>닉네임</b>
-							<span class="title__uinfo">requestScope.member_nickname</span>
+							<span class="title__uinfo">${sessionScope.loginuser.member_nickname}</span>
 						</div>
 						<section class="modifying-section" style="display: none;">
 							<p class="inp_wrap remove form-errors">
-								<input type="text" value="nickname" placeholder="체크인시 필요한 정보입니다." data-input="unick" data-msg-required="닉네임을 입력하세요." data-rule-minlength="2" data-rule-maxlength="14" data-rule-spacechar="true" data-rule-specialchar="true">
+								<input type="text" name="ran_nick" value="${sessionScope.loginuser.member_nickname}" placeholder="체크인시 필요한 정보입니다." class="required_my" data-input="unick" data-msg-required="닉네임을 입력하세요." data-rule-minlength="2" data-rule-maxlength="14" data-rule-spacechar="true" data-rule-specialchar="true"/>
 							</p>
-							<button type="button" class="btn_etc btn_confirm active" onclick="changeNickname();">딴거할래요</button> <!-- 활성화 클래스 'active' -->
+							<button type="button" class="btn_etc btn_confirm active" onclick="changeNickname()">딴거할래요</button> <!-- 활성화 클래스 'active' -->
+							<div><span id="error_nickname" style="color:red;"></span></div>
 						</section>
 						<div class="pw_input__btns-wrap">
 							<button class="btns-wrap__edit-btn" type="button">수정</button>
@@ -51,7 +126,7 @@
 						</div>
 						<section class="modifying-section" style="display: none;">
 							<p class="inp_wrap remove form-errors">
-								<input type="text" id="uname" value="" placeholder="체크인시 필요한 정보입니다." data-input="uname" data-rule-spacechar="true" data-rule-specialchar="true">
+								<input type="text" id="uname" value="" placeholder="체크인시 필요한 정보입니다." class="required_my" data-input="uname" data-rule-spacechar="true" data-rule-specialchar="true">
 							</p>
 						</section>
 						<div class="pw_input__btns-wrap">
