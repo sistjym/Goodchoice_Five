@@ -91,37 +91,44 @@
 		</select>
 		
 		
-		<!-- acom_no에 해당하는 객실 가져오기(Ajax)용 -->
 		
-		<select id="getRoomOne" parameterType="String" resultType="com.five.goodchoice.detail.model.RoomVO">
-		
-			select room_no,room_type ,room_image, price  , room_id
-			from tbl_room
-			where fk_acom_no = #{acom_no}
-		
-		
-		</select>
-		
-		
-		<!-- acom_no 에 해당하는 객실들의 추가이미지를 원하는 객실에만 해당하는 것만 가져오기 -->
+		<!-- acom_no에 해당하는 객실 가져오기 -->
 		
 		<select id="getRoomList" parameterType="HashMap" resultType="com.five.goodchoice.detail.model.RoomVO">
 			
 			select room_no,room_type ,room_image, price  , room_id
 			from tbl_room
 			where fk_acom_no = #{acom_no}
-		
+			 order by room_no
+			
 		</select>
 		
-		<!--  
+		
+		<!-- acom_no에 해당하는 객실 가져오기  (추가이미지 가져오기 위한 ArrayList로 해놓은 것입니다.)-->
+	<!-- 	
+		<select id="getRoomOne" parameterType="HashMap" resultType="com.five.goodchoice.detail.model.RoomVO">
+		
+			select room_no,room_type ,room_image, price  , room_id
+			from tbl_room
+			where fk_acom_no = #{acom_no}
+			 order by room_no
+		
+		</select>
+	 -->	
+		
+		
+		<!-- acom_no에 해당하는 객실 추가 이미지 가져오기  -->
+		<!--   
 			<select id="getRoom_addImageList" >
-			
+				
+				select fk_room_id, room_image_add_name
+				from tbl_room_add_img
+				order by room_image_add_no
 	
 	
 			
 			</select>
-		
-		-->
-		
+	
+		 -->
 		
 </mapper>

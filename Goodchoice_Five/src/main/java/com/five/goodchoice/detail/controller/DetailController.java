@@ -170,7 +170,7 @@ public class DetailController {
 			
 			// room_id 일치할경우에만 들어가게 코딩
 		
-			/*
+	/*
 			ArrayList<RoomVO> getRoomOne = room_service.getRoomOne(paraMap);
 						
 			for(RoomVO room  : getRoomOne ){
@@ -182,8 +182,8 @@ public class DetailController {
 			}
 			
 			mav.addObject("getRoomOne",getRoomOne);
-			*/
-			
+		
+		*/	
 						
 
 			

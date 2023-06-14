@@ -843,7 +843,7 @@ $(document).ready(function() {
 		
 		var formattedValue = defaultStartDate + ' ~ ' + defaultEndDate + '  ' + dateDiff + '박';
 		
-		var send_date_bak = dateDiff+"박" ;   // 보내는 숙박기간
+		var send_date_bak = dateDiff + "박" ;   // 보내는 숙박기간
 		
 		$("#daterange").val(formattedValue);
 		$("ul.disc-list > li.modal_date").text(defaultStartDate + '~' + defaultEndDate);
@@ -852,7 +852,7 @@ $(document).ready(function() {
 		
 	    
 		
-		var send_acom_name = '${requestScope.daVO.acom_name}';
+		var send_acom_name = $("h2#top_title").text();
 		
 	       
 //       console.log("send_acom_name :" + send_acom_name);
@@ -879,7 +879,7 @@ $(document).ready(function() {
   //  	   console.log(send_room_price);
   //  	   console.log(send_room_type);
     	   
-           html += "/goodchoice/reservation/reservation.gc?acom_name='"+send_acom_name+"'&room_type='"+send_room_type+"'&room_price='"+send_room_price+"'&dateDiff='"+send_date_bak +"'&check_in_date='"+send_checkin+"'&check_out_date='"+send_checkout+"'";
+		   html += "/goodchoice/reservation/reservation.gc?acom_name=" + send_acom_name + "&room_type=" + send_room_type + "&room_price=" + send_room_price + "&dateDiff=" + send_date_bak + "&check_in_date=" + send_checkin + "&check_out_date=" + send_checkout;
 		   
            
            location.href = html;
@@ -925,7 +925,7 @@ $(document).ready(function() {
 		           $("ul.disc-list > li.modal_date").text(startDate.format('MM월 DD일') + '~' + endDate.format('MM월 DD일'));
 		           send_checkin = startDate.format('YYYY-MM-DD');  // 보내는 체크인 날짜 업데이트
 		           send_checkout = endDate.format('YYYY-MM-DD');   // 보내는 체크아웃 날짜 업데이트
-		           send_date_bak = diffInDays +"박" ; 			// 보내는 숙박기간 업데이트
+		           send_date_bak = diffInDays + "박"  ; 			// 보내는 숙박기간 업데이트
 		           
 		  //         console.log("send_checkin : " + send_checkin);
 		           
@@ -948,9 +948,8 @@ $(document).ready(function() {
 
 		 //     	   console.log(send_room_price);
 		 //     	   console.log(send_room_type);
-		      	   
-		             html += "/goodchoice/reservation/reservation.gc?acom_name='"+send_acom_name+"'&room_type='"+send_room_type+"'&room_price='"+send_room_price+"'&dateDiff='"+send_date_bak +"'&check_in_date='"+send_checkin+"'&check_out_date='"+send_checkout+"'";
-		  		   
+		      	   		  		   
+					html += "/goodchoice/reservation/reservation.gc?acom_name=" + send_acom_name + "&room_type=" + send_room_type + "&room_price=" + send_room_price + "&dateDiff=" + send_date_bak + "&check_in_date=" + send_checkin + "&check_out_date=" + send_checkout;
 		             
 		             location.href = html;
 
@@ -1730,13 +1729,17 @@ function myFunction_PrevRightSpan() {
 							<li class="d-flex justify-content-between align-items-center">
 											 <c:if test="${empty requestScope.show_ReviewList[0].review_cnt}">
 											    <span class="badge badge-warning badge-pill">0</span>
-											    <p class="col-md-6 col-sm-12 rec">글쎄요</p>
+											    <p class="col-md-6 col-sm-12 rec">-</p>
 											</c:if>
 											
 											<c:choose>
-											  <c:when test="${scoreRatio > 0 && scoreRatio < 8}">
+											  <c:when test="${scoreRatio > 0 && scoreRatio < 6}">
 											    <span class="badge badge-warning badge-pill">${scoreRatio}</span>
-											    <p class="col-md-6 col-sm-12 rec">그냥그래요</p>
+											    <p class="col-md-6 col-sm-12 rec">솔직히 별로에요</p>
+											  </c:when>
+											  <c:when test="${scoreRatio > 6 && scoreRatio < 8}">
+											    <span class="badge badge-warning badge-pill">${scoreRatio}</span>
+											    <p class="col-md-6 col-sm-12 rec">나쁘지 않아요</p>
 											  </c:when>
 											  <c:when test="${scoreRatio > 8}">
 											    <span class="badge badge-warning badge-pill">${scoreRatio}</span>
@@ -1927,20 +1930,20 @@ function myFunction_PrevRightSpan() {
 									  <div class="carousel-inner">
 													
 																										
-									  	<c:forEach var="RoomVO" items="${requestScope.getRoom_addImageList}" varStatus="status_sub">
+									  	<c:forEach var="room" items="${requestScope.getRoomOne}" varStatus="status_sub">
 									   		 <!-- to_number('0')의 값을 첫 번째 반복문에 사용하고, 그 이후에는 to_number('1'), to_number('2') 등을 사용합니다 -->
 											
 											<%-- 여기부터 해서 다시 선생님께 물어보기. status.index를 적용시킨다는게 아직도 잘모르겠다고.. to_number()부분을 status.index를 사용해서 어떻게 적용하라는건지 모르겠다고 --%>
 											
 		    				    			 <c:if test="${status_sub.index == 0}">                 
 											    <div class="carousel-item active">
-											      <img class="d-block w-100" src="<%= ctxPath%>/resources/images/${RoomVO.room_image_add_name}" alt="First slide">
+											      <img class="d-block w-100" src="<%= ctxPath%>/resources/images/${room.room_image_add_name}" alt="First slide">
 											    </div>
 										 	</c:if>
 										 	
 										 	<c:if test="${status_sub.index > 0}">                 
 											    <div class="carousel-item">
-											      <img class="d-block w-100" src="<%= ctxPath%>/resources/images/${RoomVO.room_image_add_name}" alt="Second slide">
+											      <img class="d-block w-100" src="<%= ctxPath%>/resources/images/${room.room_image_add_name}" alt="Second slide">
 											    </div>
 										 	</c:if>
 										 </c:forEach>
