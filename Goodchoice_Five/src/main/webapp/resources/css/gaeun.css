@@ -289,7 +289,7 @@ p {
 
 .sort_category{
     text-align: center;
-    margin-top: 50px;
+    margin-top: 80px;
     margin-bottom: 30px;
     font-weight: bold;
    
@@ -332,18 +332,8 @@ p {
     display: inline-block;
   }
   
-  /* Dropdown Content (Hidden by Default) */
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    min-width: 145px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-  }
 
-  /* Show the dropdown menu on hover */
-  .dropdown:hover .dropdown-content {display: block;}
-  
+
 
 /*admin css*/
 .admin_subject	{
@@ -356,7 +346,7 @@ p {
 
 .board_subject{
 	margin-bottom: 20px;
-	text-align: center;
+	text-align: left;
 }
 
 .btn_box{
@@ -563,8 +553,9 @@ legend{
     color: #fff;
     text-align: center;
     display: block;
-    border-radius: 0 0 4px 4px;
+    border-radius: 0 0 10px 10px;
     background-color: rgb(255, 0, 85);
+    margin-top: 150px;
 }
 
 .info_chkin {
@@ -681,8 +672,10 @@ legend{
 }
 
 #reserve_contents .agree {
-    padding: 23px 0;
+    padding: 15px 0;
     font-size: 16px;
+    padding-left: 40px;
+	padding-bottom: 30px;
 }
 
 #reserve_contents .agree p{
@@ -717,7 +710,7 @@ input[type="checkbox"].inp_chk_02 {
     color: #e61c51;
 }
  .agree {
-    padding: 23px 0;
+    padding: 15px 0;
     font-size: 16px;
 }
 
@@ -729,4 +722,80 @@ input[type="checkbox"].inp_chk_02 {
 }
 .f_icon{
 	margin:10px;
+}
+
+.transInput{
+	border: none;
+	background: transparent;
+	outline: none;
+} 
+
+#email{
+	height: 30px;
+	margin-top: 8px;
+	font-size: 12pt;
+	outline: none;
+	width: 500px;
+}
+
+#userName{
+	height: 30px;
+	margin-top: 8px;
+	font-size: 12pt;
+	outline: none;
+	width: 500px;
+	
+}
+
+#emailBox{
+	margin-top: 20px;
+}
+.reserver_name{
+	font-weight:bold;
+	margin-bottom: 25px;
+	color: #f57073;
+
+}
+section.price_wrap{
+	margin-top: 30px;
+}
+.price_wrap strong{
+	display: inline;
+    padding: 0 0 12px 0;
+    font-size: 18px;
+    font-weight: normal;
+    color: rgba(0,0,0,0.56);
+}
+.price_box{
+	margin-left: 30px;
+	float: right;
+	font-size: 16px;
+	text-align: right;
+}
+
+.price_li{
+	padding-top: 15px;
+}
+
+.sub_info{
+	padding-left: 40px;
+	padding-bottom: 30px;
+}
+
+#content{
+	margin-top:50px;
+}
+
+#user_point{
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    height: 40px;
+    border-radius: 4px;
+}
+#pointApply{
+	background-color: #f57073;
+	color:white;
+	border-color:#f57073;
+	height: 30px;
+	width: 40px;
+	float:right;
 }
