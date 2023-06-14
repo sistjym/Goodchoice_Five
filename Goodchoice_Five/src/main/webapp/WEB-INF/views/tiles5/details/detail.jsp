@@ -824,8 +824,8 @@ $(document).ready(function() {
         var defaultStartDate = $("#daterange").data('daterangepicker').startDate.format('MM월 DD일');
 		var defaultEndDate = $("#daterange").data('daterangepicker').endDate.format('MM월 DD일');
 		
-	    var send_checkin = $("#daterange").data('daterangepicker').startDate.format('YYYY-MM-DD');   // 보내는 체크인 날짜
-	    var send_checkout = $("#daterange").data('daterangepicker').endDate.format('YYYY-MM-DD');	   // 보내는 체크아웃 날짜
+	    var check_in_date = $("#daterange").data('daterangepicker').startDate.format('YYYY-MM-DD');   // 보내는 체크인 날짜
+	    var check_out_date = $("#daterange").data('daterangepicker').endDate.format('YYYY-MM-DD');	   // 보내는 체크아웃 날짜
 		
 		var startDateParts = defaultStartDate.split(' ');
 		var endDateParts = defaultEndDate.split(' ');
@@ -852,7 +852,7 @@ $(document).ready(function() {
 		
 	    
 		
-		var send_acom_name = $("h2#top_title").text();
+		var acom_name = $("h2#top_title").text();
 		
 	       
 //       console.log("send_acom_name :" + send_acom_name);
@@ -866,20 +866,20 @@ $(document).ready(function() {
            
       
          var parentValue = "";
-         var send_room_price = "";
-         var send_room_type = "";
+         var room_price = "";
+         var room_type = "";
    
        $('button.btn_resv').click(function() {
     	   html = "";
     	   // 클릭한 버튼의 index에 해당하는 처리를 수행
     	   parentValue = $(this).closest('div#room_middle_parent')
-    	   send_room_price = parentValue.find('h5#room_price').text();
-    	   send_room_type = parentValue.find('h5#room_type').text();
+    	   room_price = parentValue.find('h5#room_price').text();
+    	   room_type = parentValue.find('h5#room_type').text();
 
   //  	   console.log(send_room_price);
   //  	   console.log(send_room_type);
     	   
-		   html += "/goodchoice/reservation/reservation.gc?acom_name=" + send_acom_name + "&room_type=" + send_room_type + "&room_price=" + send_room_price + "&dateDiff=" + send_date_bak + "&check_in_date=" + send_checkin + "&check_out_date=" + send_checkout;
+		   html += "/goodchoice/reservation/reservation.gc?acom_name=" + acom_name + "&room_type=" + room_type + "&room_price=" + room_price + "&send_date_bak=" + send_date_bak + "&check_in_date=" + check_in_date + "&check_out_date=" + check_out_date;
 		   
            
            location.href = html;
@@ -900,8 +900,8 @@ $(document).ready(function() {
       
          
          parentValue = "";
-         send_room_price = "";
-         send_room_type = "";
+         room_price = "";
+         room_type = "";
          
 
 		         if (diffInDays > 7) {
@@ -923,8 +923,8 @@ $(document).ready(function() {
 		         } else {
 		           $(this).val(startDate.format('MM월 DD일') + ' ~ ' + endDate.format('MM월 DD일') + '  ' + diffInDays + '박');
 		           $("ul.disc-list > li.modal_date").text(startDate.format('MM월 DD일') + '~' + endDate.format('MM월 DD일'));
-		           send_checkin = startDate.format('YYYY-MM-DD');  // 보내는 체크인 날짜 업데이트
-		           send_checkout = endDate.format('YYYY-MM-DD');   // 보내는 체크아웃 날짜 업데이트
+		           check_in_date = startDate.format('YYYY-MM-DD');  // 보내는 체크인 날짜 업데이트
+		           check_out_date = endDate.format('YYYY-MM-DD');   // 보내는 체크아웃 날짜 업데이트
 		           send_date_bak = diffInDays + "박"  ; 			// 보내는 숙박기간 업데이트
 		           
 		  //         console.log("send_checkin : " + send_checkin);
@@ -943,13 +943,13 @@ $(document).ready(function() {
 		      	   // 클릭한 버튼의 index에 해당하는 처리를 수행
 		      	      html = "";
 		      	   parentValue = $(this).closest('div#room_middle_parent')
-		      	   send_room_price = parentValue.find('h5#room_price').text();
-		      	   send_room_type = parentValue.find('h5#room_type').text();
+		      	   room_price = parentValue.find('h5#room_price').text();
+		      	   room_type = parentValue.find('h5#room_type').text();
 
 		 //     	   console.log(send_room_price);
 		 //     	   console.log(send_room_type);
 		      	   		  		   
-					html += "/goodchoice/reservation/reservation.gc?acom_name=" + send_acom_name + "&room_type=" + send_room_type + "&room_price=" + send_room_price + "&dateDiff=" + send_date_bak + "&check_in_date=" + send_checkin + "&check_out_date=" + send_checkout;
+		   			 html += "/goodchoice/reservation/reservation.gc?acom_name=" + acom_name + "&room_type=" + room_type + "&room_price=" + room_price + "&send_date_bak=" + send_date_bak + "&check_in_date=" + check_in_date + "&check_out_date=" + check_out_date;
 		             
 		             location.href = html;
 
