@@ -54,8 +54,8 @@ public class AdminController {
 	
 	  // 관리자 페이지 승인 부분
 	  
-	  @RequestMapping(value = "/acomm_approve.gc") public String
-	  acomm_approve(HttpServletRequest request) {
+	  @RequestMapping(value = "/acomm_approve.gc") 
+	  public String  checkAuthority_acomm_approve(HttpServletRequest request) {
 	  
 		  String permission = request.getParameter("permission"); // 사용자가 선책한 승인여부
 		  
@@ -77,7 +77,7 @@ public class AdminController {
 	// 숙소 등록 권한 업데이트 하기 
 	@ResponseBody
 	@RequestMapping(value="/updatePermissionAcomm.gc")
-	public int updatePermissionAcomm(HttpServletRequest request) {
+	public int checkAuthority_updatePermissionAcomm(HttpServletRequest request) {
 
 		
 		String permission= request.getParameter("permission");
@@ -99,7 +99,7 @@ public class AdminController {
 	
 	// 관리자 모든 업주보기 + 권한 승인 기능
 	@RequestMapping(value = "/showAllHost.gc")
-	public String showAllHost(HttpServletRequest request) {
+	public String checkAuthority_showAllHost(HttpServletRequest request) {
 
 		
 		String permission = request.getParameter("permission"); // 사용자가 선책한 승인여부
@@ -125,7 +125,7 @@ public class AdminController {
 	// 호스트 권한 승인하기 
 	@ResponseBody
 	@RequestMapping(value="/updatePermission.gc")
-	public int updatePermission(HttpServletRequest request) {
+	public int checkAuthority_updatePermission(HttpServletRequest request) {
 
 		
 		String permission= request.getParameter("permission");

@@ -196,7 +196,7 @@ address {
 }
 
 
-.active{
+.active2{
   background-color: #0d3486;
   transition-duration: 0.5s;
   transition-timing-function: ease;
@@ -206,7 +206,7 @@ address {
   -webkit-transition-timing-function:ease;
 }
 
-.deactive{
+.deactive2{
   
   background-color: transparent;
   transition-duration: 0.5s;
