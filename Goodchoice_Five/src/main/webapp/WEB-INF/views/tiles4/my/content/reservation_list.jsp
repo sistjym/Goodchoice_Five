@@ -9,7 +9,7 @@
 		
 		<section class="list_fst">
 			<c:if test="">
-				<c:forEach >
+				<c:forEach items="${reserveList}" var="item">
 					<h3 class="liti">예약 내역</h3> 
 					<ul class="list_wrap">
 						<li class="reservation-detail">
@@ -38,22 +38,23 @@
 		        				</p>
         					</div>
         				</li>
+        			</ul>
 				</c:forEach>
 			</c:if>
 		</section>
 		
 		
 		<c:if test="">
-		<c:forEach>
+		
 		<section class="list_cancel">
 			<h3 class="liti">이용 내역</h3> 
 			<ul class="list_wrap"></ul>
 		</section> 
-		</c:forEach>
+		
 		</c:if>
 		
 		<c:if test="">
-		<c:forEach>
+		
 		<section class="list_cancel">
 			<h3 class="liti">취소 내역</h3> 
 			<ul class="list_wrap">
@@ -135,7 +136,7 @@
         		</li>
         	</ul>
 		</section>
-		</c:forEach>
+		<%-- </c:forEach> --%>
 		</c:if>
 	</div>
 </div>

@@ -50,7 +50,7 @@
 	}
 	
 	function nicknameCheck(e) {
-		const inputNickname = $("input#nickname").val();
+		const inputNickname = $("input#ran_nick").val();
 		
 		
 		const regExp = /^[가-힣]{2,10}$/;
@@ -65,9 +65,9 @@
 	
 	let item = ['어피치', '초롱초롱', '튜브', '프로도', '라이언', '프로도', '뚜루뚜루', '멍멍이', '코코넛', '귀여웡', '안귀여웡', '비비안', '호호호', '콩닥콩닥', '무지한무지', '단무지', '무지개', '쿠키빵', '곰돌이', '꽃순이', '마빡딱대', '코카는제로', '배고파', '아깜짝아', '조장님바보', '키키케케'];
 
-	function getRandomItem() {
+	function changeNickname() {
 		  let randomItem = item[Math.floor(Math.random() * item.length)];
-		  $('input#nickname').val(randomItem);
+		  $('input#ran_nick').val(randomItem);
 		  $("span#error_nickname").text("");
 		}
 	
@@ -97,9 +97,10 @@
 						</div>
 						<section class="modifying-section" style="display: none;">
 							<p class="inp_wrap remove form-errors">
-								<input type="text" value="${sessionScope.loginuser.member_nickname}" placeholder="체크인시 필요한 정보입니다." class="required_my" data-input="unick" data-msg-required="닉네임을 입력하세요." data-rule-minlength="2" data-rule-maxlength="14" data-rule-spacechar="true" data-rule-specialchar="true"/>
+								<input type="text" name="ran_nick" value="${sessionScope.loginuser.member_nickname}" placeholder="체크인시 필요한 정보입니다." class="required_my" data-input="unick" data-msg-required="닉네임을 입력하세요." data-rule-minlength="2" data-rule-maxlength="14" data-rule-spacechar="true" data-rule-specialchar="true"/>
 							</p>
-							<button type="button" class="btn_etc btn_confirm active" onclick="changeNickname();">딴거할래요</button> <!-- 활성화 클래스 'active' -->
+							<button type="button" class="btn_etc btn_confirm active" onclick="changeNickname()">딴거할래요</button> <!-- 활성화 클래스 'active' -->
+							<div><span id="error_nickname" style="color:red;"></span></div>
 						</section>
 						<div class="pw_input__btns-wrap">
 							<button class="btns-wrap__edit-btn" type="button">수정</button>

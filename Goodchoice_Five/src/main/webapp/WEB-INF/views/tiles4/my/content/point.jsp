@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%
+	String ctxPath = request.getContextPath();
+%>
 
 <div id="content" class="sub_wrap my_wrap">
          
@@ -14,7 +16,7 @@
     				<div class="upper-col" >
     					<div class="heading-text">
     						<p class="heading-text__title" >내 포인트</p> 
-    						<p class="heading-text__current-point"> P</p>
+    						<p class="heading-text__current-point">${sessionScope.loginuser.point} P</p>
     					</div> 
     					<svg width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" class="icon-info" >
     						<path fill-rule="evenodd" clip-rule="evenodd" d="M17.5 10a7.5 7.5 0 11-15 0 7.5 7.5 0 0115 0zM11 6a1 1 0 11-2 0 1 1 0 012 0zm0 9V9H9v6h2z" fill="#000" fill-opacity=".8"></path>
