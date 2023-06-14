@@ -16,6 +16,7 @@ div#myheader {
     box-sizing: border-box;
 } 
     
+    
 div.sub_top_wrap {
     height: 211px;
     background: #f7323f;
@@ -480,6 +481,23 @@ div.title-container {
     padding: 15px 0;
     border: none;
     margin-right: 16px;
+}
+input.required_my {
+	text-size-adjust: none;
+    visibility: visible;
+    outline: 0;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    appearance: none;
+    font-family: Pretendard, "Apple SD Gothic Neo", "맑은 고딕", 맑은고딕, "Malgun Gothic", sans-serif;
+    border-radius: 0px;
+    height: 20px;
+    line-height: 1;
+    border: none;
+    background: none;
+    width: 100%;
+    margin-top: 13px;
+    font-size: 18px;
+    color: rgba(0,0,0,0.56);
 }
 p.payment-info-pc__title {
     position: relative;

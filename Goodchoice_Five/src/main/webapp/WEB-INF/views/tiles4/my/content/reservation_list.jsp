@@ -1,18 +1,59 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	String ctxPath = request.getContextPath();
 %>
 <div class="align_rt">
 	<div class="reserve_list">
+		
 		<section class="list_fst">
-			<h3 class="liti">예약 내역</h3> 
-			<ul class="list_wrap"></ul>
-		</section> 
+			<c:if test="">
+				<c:forEach >
+					<h3 class="liti">예약 내역</h3> 
+					<ul class="list_wrap">
+						<li class="reservation-detail">
+							<div class="reserve-div">
+								<input type="hidden" name="member_id" id="member_id" value="${sessionScope.loginuser.member_id}"/>
+								<button  type="button" class="btn_del">
+        						삭제
+    							</button>
+    							<p class="pic">
+		    						<img  loading="lazy" srcset="https://image.goodchoice.kr/resize_354x184/adimg_new/779/203463/71325338f503e141b7d061d0eeb01053.jpg, https://image.goodchoice.kr/resize_531x276/adimg_new/779/203463/71325338f503e141b7d061d0eeb01053.jpg 1.5x , https://image.goodchoice.kr/resize_708x368/adimg_new/779/203463/71325338f503e141b7d061d0eeb01053.jpg 2x" src="https://image.goodchoice.kr/resize_354x184/adimg_new/779/203463/71325338f503e141b7d061d0eeb01053.jpg" alt="신촌 라뉘호텔" class="align">
+		    					</p> 
+    							<a href="<%= ctxPath%>/reservation-detail.gc" class="product-title">
+    								<i class="bg_w">예약취소</i> 
+    								<strong>신촌 라뉘호텔</strong> 
+    								<span style="display: block; padding-left: 20px; font-size: 18px;">
+								    	05.26 금
+								    		-
+								    	05.27 토
+								        •
+								        1박
+		        					</span> 
+        							<b>예약 상세 &gt;</b>
+        						</a> 
+	        					<p class="btn_re">
+		        					<a href="https://www.goodchoice.kr/product/detail?ano=779&amp;adcno=1&amp;sel_date=2023-05-23&amp;sel_date2=2023-05-23"> 다시 예약 </a>
+		        				</p>
+        					</div>
+        				</li>
+				</c:forEach>
+			</c:if>
+		</section>
+		
+		
+		<c:if test="">
+		<c:forEach>
 		<section class="list_cancel">
 			<h3 class="liti">이용 내역</h3> 
 			<ul class="list_wrap"></ul>
 		</section> 
+		</c:forEach>
+		</c:if>
+		
+		<c:if test="">
+		<c:forEach>
 		<section class="list_cancel">
 			<h3 class="liti">취소 내역</h3> 
 			<ul class="list_wrap">
@@ -94,5 +135,7 @@
         		</li>
         	</ul>
 		</section>
+		</c:forEach>
+		</c:if>
 	</div>
 </div>

@@ -18,7 +18,7 @@
                     <a href="#">내주변</a>
                 </li>
                 <li>
-                    <a href="#">예약내역</a>
+                    <a href="<%= ctxPath%>/myreservation.gc">예약내역</a>
                 </li>
 					
 				<c:if test="${sessionScope.loginuser.is_admin == 1}">	
@@ -41,9 +41,9 @@
                	<li class="dropdown">
                     <button class="dropbtn" > <span style="color:yellow;">${sessionScope.loginuser.member_nickname}</span> 님 </button>
                      <ul class="dropdown-content">
-                        <a href="<%= ctxPath%>/main/home.gc">내정보</a>
-                        <a href="<%= ctxPath%>/main/home.gc">예약 내역</a>
-                        <a href="<%= ctxPath%>/main/home.gc">포인트</a>
+                        <a href="<%= ctxPath%>/mypage.gc">내정보</a>
+                        <a href="<%= ctxPath%>/myreservation.gc">예약 내역</a>
+                        <a href="<%= ctxPath%>/mypoint">포인트</a>
                     </ul>
                 </li> 	
                		
