@@ -188,7 +188,7 @@
 	                		<li class="price_li">
 								<strong>구매총액</strong>   
 								<span >
-									<input  class="transInput price_box" id="price" type="text" value="100000" readonly="readonly">
+									<input class="transInput price_box" id="price" type="text" value="${requestScope.room_price}" readonly="readonly">
 								</span>
 								
 	                		</li>
@@ -291,6 +291,8 @@
 				</div> <!--  end of right -->
 				
 			</form>
+			
+			
 				
 			</div>
 		</div>  

@@ -19,14 +19,14 @@
 	 
 		<!-- acom_no에 해당하는 숙소정보를 가져오기  -->
 		 
-		<select id="show_acom_Info" parameterType="String" resultType="com.five.goodchoice.detail.model.AcomodationVO">
+		<select id="show_acom_Info" parameterType="HashMap" resultType="com.five.goodchoice.detail.model.AcomodationVO">
 		
 			select acom_no, fk_district_no , fk_host_no , acom_name , acom_image , address , extra_address , sur_info ,
 				   nvl(parking_info,'없음') as parking_info , acom_latitude , acom_longitude ,  fk_spec_no 
 		    
 		    from tbl_acomodation
 		    
-		    where acom_no =  #{value}
+		    where acom_no =  #{acom_no}
 		
 		
 		</select> 

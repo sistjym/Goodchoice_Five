@@ -760,15 +760,9 @@ $(document).ready(function() {
 		  
 	      
 	      myFunction_ChangeImage() // 어떤 이미지를 클릭해도 그냥 제일 처음 active 클래스를 가졌던 div 태그의 자식 img 태그가 앞으로 와버린다.
-	      
-	      
-	      
-	      
 
 		  myFunction_ClickImage();
-	      
-	      
-	    
+    
 	  });
 	
 
@@ -779,19 +773,12 @@ $(document).ready(function() {
 	
 	  <%-- div#top_right 캐러셀 및 캐러셀 위 배경부분 끝--%>
 	  
-	  
-	  
-	  
-
 	  <%-- 더보기 접기 토글 시작 --%>
 	  
 	  myFunction_FoldMore();
 	
 	  <%-- 더보기 접기 토글 끝 --%>
 
-	
-	
-  
 		<%-- 캘린더 시작 --%>
 		
 		  var previousStartDate = null;  // 이전에 선택한 값을 저장할 변수
@@ -848,12 +835,10 @@ $(document).ready(function() {
 		$("#daterange").val(formattedValue);
 		$("ul.disc-list > li.modal_date").text(defaultStartDate + '~' + defaultEndDate);
 		
-		let html = "";
 		
-	    
-		
-		var acom_name = $("h2#top_title").text();
-		
+		var acom_name = '${requestScope.daVO.acom_name}';
+				
+
 	       
 //       console.log("send_acom_name :" + send_acom_name);
        
@@ -862,30 +847,41 @@ $(document).ready(function() {
        
        //     console.log("send_checkout : " + send_checkout);
             
-      //      console.log("send_date_bak : " + send_date_bak);
+       //     console.log("send_date_bak : " + send_date_bak);
            
       
          var parentValue = "";
          var room_price = "";
          var room_type = "";
    
-       $('button.btn_resv').click(function() {
-    	   html = "";
-    	   // 클릭한 버튼의 index에 해당하는 처리를 수행
-    	   parentValue = $(this).closest('div#room_middle_parent')
-    	   room_price = parentValue.find('h5#room_price').text();
-    	   room_type = parentValue.find('h5#room_type').text();
+         
+         $('input.btn_resv').click(function() {
+	      	   // 클릭한 버튼의 index에 해당하는 처리를 수행
+	      	   //   html = "";
+	      	   parentValue = $(this).closest('div#room_middle_parent')
+	      	   room_price = parentValue.find('h5#room_price').text();
+	      	   room_type = parentValue.find('h5#room_type').text();
+	             
+	   		    // Set the form's action dynamically
+		//		  html += "/goodchoice/reservation/reservation.gc?acom_name="+acom_name+"&room_type="+room_type+"&room_price="+room_price+"&send_date_bak="+send_date_bak +"&check_in_date="+check_in_date+"&check_out_date="+ check_out_date+"";    			
 
-  //  	   console.log(send_room_price);
-  //  	   console.log(send_room_type);
-    	   
-		   html += "/goodchoice/reservation/reservation.gc?acom_name=" + acom_name + "&room_type=" + room_type + "&room_price=" + room_price + "&send_date_bak=" + send_date_bak + "&check_in_date=" + check_in_date + "&check_out_date=" + check_out_date;
-		   
-           
-           location.href = html;
+	   		    // form 생성
+				const frm = $("form#searchFrm");
+				
+				$("input[name='acom_name']").val(acom_name);
+				$("input[name='room_type']").val(room_type);	
+				$("input[name='room_price']").val(room_price);	
+			$("input[name='send_date_bak']").val(send_date_bak);	
+			$("input[name='check_in_date']").val(check_in_date);	
+			$("input[name='check_out_date']").val(check_out_date);		
+				
+			
+			
+	   		    frm.method = "get";
+				frm.submit();
 
-    	   
-    	 });   
+	      	   
+	      	 });       
       
        	
        	
@@ -939,23 +935,36 @@ $(document).ready(function() {
 		           previousEndDate = endDate.clone();
 		         }
 		         
-		         $('button.btn_resv').click(function() {
-		      	   // 클릭한 버튼의 index에 해당하는 처리를 수행
-		      	      html = "";
-		      	   parentValue = $(this).closest('div#room_middle_parent')
-		      	   room_price = parentValue.find('h5#room_price').text();
-		      	   room_type = parentValue.find('h5#room_type').text();
+		         $('input.btn_resv').click(function() {
+			      	   // 클릭한 버튼의 index에 해당하는 처리를 수행
+			      	   //   html = "";
+			      	   parentValue = $(this).closest('div#room_middle_parent')
+			      	   room_price = parentValue.find('h5#room_price').text();
+			      	   room_type = parentValue.find('h5#room_type').text();
+			             
+			   		    // Set the form's action dynamically
+		 		//		  html += "/goodchoice/reservation/reservation.gc?acom_name="+acom_name+"&room_type="+room_type+"&room_price="+room_price+"&send_date_bak="+send_date_bak +"&check_in_date="+check_in_date+"&check_out_date="+ check_out_date+"";    			
 
-		 //     	   console.log(send_room_price);
-		 //     	   console.log(send_room_type);
-		      	   		  		   
-		   			 html += "/goodchoice/reservation/reservation.gc?acom_name=" + acom_name + "&room_type=" + room_type + "&room_price=" + room_price + "&send_date_bak=" + send_date_bak + "&check_in_date=" + check_in_date + "&check_out_date=" + check_out_date;
-		             
-		             location.href = html;
+			   		    // form 생성
+						const frm = $("form#searchFrm");
+						
+					$("input[name='acom_name']").val(acom_name);
+						$("input[name='room_type']").val(room_type);	
+						$("input[name='room_price']").val(room_price);	
+					$("input[name='send_date_bak']").val(send_date_bak);	
+					$("input[name='check_in_date']").val(check_in_date);	
+					$("input[name='check_out_date']").val(check_out_date);	
+						
+					
+						
+				<%--	    frm.action = "<%= ctxPath%>/reservation/reservation.gc"; --%>
+			   		    frm.method = "get";
+						frm.submit();
 
-		      	   
-		      	 });   
-	
+			      	   
+			      	 });     
+		        
+				
        });
 
 
@@ -1733,20 +1742,22 @@ function myFunction_PrevRightSpan() {
 											</c:if>
 											
 											<c:choose>
-											  <c:when test="${scoreRatio > 0 && scoreRatio < 6}">
+											  <c:when test="${scoreRatio < 8.0 && scoreRatio >= 7.0}">
 											    <span class="badge badge-warning badge-pill">${scoreRatio}</span>
-											    <p class="col-md-6 col-sm-12 rec">솔직히 별로에요</p>
+											    <p class="col-md-6 col-sm-12 rec">좋아요</p>
 											  </c:when>
-											  <c:when test="${scoreRatio > 6 && scoreRatio < 8}">
+											  <c:when test="${scoreRatio < 9.0 && scoreRatio >= 8.0}">
 											    <span class="badge badge-warning badge-pill">${scoreRatio}</span>
-											    <p class="col-md-6 col-sm-12 rec">나쁘지 않아요</p>
+											    <p class="col-md-6 col-sm-12 rec">훌륭해요</p>
 											  </c:when>
-											  <c:when test="${scoreRatio > 8}">
+											  <c:when test="${scoreRatio >= 9.0}">
 											    <span class="badge badge-warning badge-pill">${scoreRatio}</span>
-											    <p class="col-md-6 col-sm-12 rec">훌륭해요★</p>
+											    <p class="col-md-6 col-sm-12 rec">추천해요</p>
 											  </c:when>
+											  <c:otherwise>
+											    <p class="col-md-6 col-sm-12 rec">글쎄요</p>
+											  </c:otherwise>
 											</c:choose>
-											
 
 							</li>
 						</ul>
@@ -1845,7 +1856,7 @@ function myFunction_PrevRightSpan() {
 									     	<p class="out_roomtime">익일 12시 </p>
 									    </div> 
 									    
-									    <p id="status_forp">${status.index}</p>
+									  <%-- <p id="status_forp">${status.index}</p> --%>  
 									    
 									    
 									   <div class="room_101_btnannae" style="text-align:center; ">
@@ -1907,7 +1918,17 @@ function myFunction_PrevRightSpan() {
 										   </div>	
 
 										</div>         
-										<button type="button" class="btn btn-danger col-lg-12 btn_resv"  value="1">숙박예약</button>
+										
+										<form action="<%= ctxPath%>/reservation/reservation.gc" name="searchFrm" id="searchFrm">
+											<input name="acom_name"  type="hidden" value=""/>
+											<input name="room_type"  type="hidden" value=""/>
+											<input name="room_price"  type="hidden" value=""/>
+											<input name="send_date_bak"  type="hidden" value=""/>
+											<input name="check_in_date"  type="hidden" value=""/>
+											<input name="check_out_date"  type="hidden" value=""/>
+										   	<input type="submit" class="btn btn-danger col-lg-12 btn_resv" value="숙박예약"/>							
+										   	
+								        </form>
 									  </div>	 
 						</div>
 				  </div>					
@@ -1916,7 +1937,7 @@ function myFunction_PrevRightSpan() {
 	    				
 	    			<!-- <c:set var="new_roomno" value="${paraMap.roomnumber + status.index}"/> -->	
 
-	    				
+	    			<!-- 	
 	    			  <div class="col-lg-10" id="carousel_underItem_wrap" style="display: none;">
 	    			    	<div style="margin-bottom:5px; text-align: right;">
 	    			    	  <a id="accomo_1_hide" role="button"  style="background-color: none; border: none; " >
@@ -1930,11 +1951,11 @@ function myFunction_PrevRightSpan() {
 									  <div class="carousel-inner">
 													
 																										
-									  	<c:forEach var="room" items="${requestScope.getRoomOne}" varStatus="status_sub">
+									  	<c:forEach var="room" items="${requestScope.getRoomOne}" varStatus="status_sub"> -->
 									   		 <!-- to_number('0')의 값을 첫 번째 반복문에 사용하고, 그 이후에는 to_number('1'), to_number('2') 등을 사용합니다 -->
 											
 											<%-- 여기부터 해서 다시 선생님께 물어보기. status.index를 적용시킨다는게 아직도 잘모르겠다고.. to_number()부분을 status.index를 사용해서 어떻게 적용하라는건지 모르겠다고 --%>
-											
+											<!-- 
 		    				    			 <c:if test="${status_sub.index == 0}">                 
 											    <div class="carousel-item active">
 											      <img class="d-block w-100" src="<%= ctxPath%>/resources/images/${room.room_image_add_name}" alt="First slide">
@@ -1965,11 +1986,10 @@ function myFunction_PrevRightSpan() {
 							  </a>
 	       					
 				 	 </div>
-							
+					-->  		
 	        </div>
   </c:forEach>  	       
-	        
-	        
+	       
 			        
 	     
 	        

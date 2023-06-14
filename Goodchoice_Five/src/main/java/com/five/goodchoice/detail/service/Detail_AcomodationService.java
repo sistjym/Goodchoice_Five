@@ -27,8 +27,8 @@ public class Detail_AcomodationService implements InterDetail_AcomodationService
 
 	// acom_no에 해당하는 숙소정보를 가져오기
 	@Override
-	public AcomodationVO acom_Info(String acom_no) {
-		AcomodationVO daVO = dadao.show_acom_Info(acom_no);
+	public AcomodationVO acom_Info(Map<String, String> paraMap) {
+		AcomodationVO daVO = dadao.show_acom_Info(paraMap);
 		return daVO;
 	}
 	
