@@ -133,7 +133,7 @@
 
 <div>
 <div>
-<h2 class="board_subject"> 등록된 모든 숙소(관리자 전용) </h2>
+
 <div class="sorting_wrapper">
 	<form name="searchFrm">
 	  <fieldset>
