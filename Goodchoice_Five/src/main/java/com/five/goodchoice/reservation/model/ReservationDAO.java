@@ -24,4 +24,11 @@ public class ReservationDAO implements InterReservationDAO {
 		return n;
 	}
 
+	// 사용한 초인트 뻬고 적립될 포인트 더하기
+	@Override
+	public int updatePoint(Map<String, String> paraMap) {
+		int n = sqlsession.insert("reservation.updatePoint", paraMap);
+		return n;
+	}
+
 }

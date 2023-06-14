@@ -74,6 +74,7 @@ public class ReservationController {
 		  String email = request.getParameter("email"); 
 		  String member_id = request.getParameter("member_id"); 
 		  
+		  String user_point = request.getParameter("user_point");
 		  String acommName = request.getParameter("acommName"); 
 		  String roomName = request.getParameter("roomName"); 
 		  String checkIn = request.getParameter("checkIn"); 
@@ -87,7 +88,7 @@ public class ReservationController {
 			paraMap.put("userName",userName);
 			paraMap.put("email",email);
 			paraMap.put("member_id",member_id);
-			
+			paraMap.put("user_point",user_point);
 			paraMap.put("acommName",acommName);
 			paraMap.put("roomName",roomName);
 			paraMap.put("checkIn",checkIn);
@@ -104,6 +105,9 @@ public class ReservationController {
 			// insert에 성공하면 예약 확정 이메일 보내기 
 			if(n == 1) {
 	
+				
+			 service.updatePoint(paraMap);
+			
 			// **** 주문이 완료되었을시 세션에 저장되어져 있는 loginuser 정보를 갱신하고
 		    //      이어서 주문이 완료되었다라는 email 보내주기  **** //
 			

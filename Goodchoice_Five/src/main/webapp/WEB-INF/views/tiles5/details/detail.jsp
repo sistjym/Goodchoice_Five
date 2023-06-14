@@ -415,7 +415,7 @@ div#item p.out_roomtime {
 
 
 
-div#item a.btn_resv{
+div#item button.btn_resv{
 
 	color:white;
 
@@ -438,113 +438,6 @@ div#item ul.disc-list li::before {
 
 /* div#item 룸넘버 101 끝 */
 
-
-/* div#item 룸넘버 102 시작 */
-
-
-div#item_2{
-		
-		padding-top: 30px;
-	
-		margin: 20px auto 0px auto;
-	
-		
-		
-		border: solid 1px #e0ebeb;
-		
-
-}
-
-
-  
- div#item_2 > div#carousel_underItem_wrap_2 {
-
-
-/* 	border: solid 3px blue; */
-	
-	margin-top:  33px;
-	margin-bottom:  33px;
-
-	padding-top: 7px;
-	padding-bottom: 25px;
-
-	  background-color: rgb(247, 247, 247);
-	
-	margin: 0 auto; /* 가운데 정렬을 위해 필요 */
-
-}
-
-
-
-
- div#item_2 > div#carousel_underItem_wrap_2 >  div#carousel_underItem_2 {
-  
-/*       border: solid 3px magenta; */
-  	   max-width: 600px; /* 원하는 너비로 조절 */
-   
-    margin: 0 auto; /* 가운데 정렬을 위해 필요 */
-  
-  
-  } 
-  
-
-
-div#item_2 img.item_image_2 {
-
-	
-
-	height: 337px;
-
-
-}
-
-
-div#item_2 span.special_price_2   {
-
-	margin-left: auto; 
-	font-weight: 700; 
-	border-radius: 2px; 
-	height:20px; 
-	margin-top: 27px;
-
-
-}
-
-div#item_2 h5.item_special_price_2 {
-
-	margin-top: 24px;
-
-}
-
-
-
-
-
-div#item_2 p.in_roomtime_2,
-div#item_2 p.out_roomtime_2 {
-
-	margin-left: auto;
-	font-weight: bold;
-
-}
-
-
-
-div#item_2 a.btn_resv_2 {
-
-	color:white;
-
-}
-
-
-
-div#item_2 ul.disc-list li::before {
-  content: "•";
-  margin-right: 5px;
-}
-
-
-/* div#item 룸넘버 102 끝 */
 
 
 
@@ -931,8 +824,8 @@ $(document).ready(function() {
         var defaultStartDate = $("#daterange").data('daterangepicker').startDate.format('MM월 DD일');
 		var defaultEndDate = $("#daterange").data('daterangepicker').endDate.format('MM월 DD일');
 		
-	    var send_checkin = $("#daterange").data('daterangepicker').startDate.format('YYYY-MM-DD');   // 보내는 체크인 날짜
-	    var send_checkout = $("#daterange").data('daterangepicker').endDate.format('YYYY-MM-DD');	   // 보내는 체크아웃 날짜
+	    var check_in_date = $("#daterange").data('daterangepicker').startDate.format('YYYY-MM-DD');   // 보내는 체크인 날짜
+	    var check_out_date = $("#daterange").data('daterangepicker').endDate.format('YYYY-MM-DD');	   // 보내는 체크아웃 날짜
 		
 		var startDateParts = defaultStartDate.split(' ');
 		var endDateParts = defaultEndDate.split(' ');
@@ -950,33 +843,53 @@ $(document).ready(function() {
 		
 		var formattedValue = defaultStartDate + ' ~ ' + defaultEndDate + '  ' + dateDiff + '박';
 		
-		var send_date_bak = dateDiff ;   // 보내는 숙박기간
+		var send_date_bak = dateDiff + "박" ;   // 보내는 숙박기간
 		
 		$("#daterange").val(formattedValue);
 		$("ul.disc-list > li.modal_date").text(defaultStartDate + '~' + defaultEndDate);
 		
 		let html = "";
 		
-		$("div#item a.btn_resv").attr('href', '');
 	    
 		
-		var send_acom_name = '${requestScope.daVO.acom_name}';
+		var acom_name = $("h2#top_title").text();
+		
 	       
 //       console.log("send_acom_name :" + send_acom_name);
        
-       var send_anchorIndex = parseInt($("p#status_forp").text(), 10);
-       
- //      console.log("send_anchorIndex :" + send_anchorIndex);
-       
-           
-       var send_room_type = "${RoomVO.room_type}";
-       
- //      console.log("send_room_type :"  + send_room_type)
-       
-       var send_room_price = "${RoomVO.price}";
 	   
+       //     console.log("send_checkin : " + send_checkin);
        
-	       
+       //     console.log("send_checkout : " + send_checkout);
+            
+      //      console.log("send_date_bak : " + send_date_bak);
+           
+      
+         var parentValue = "";
+         var room_price = "";
+         var room_type = "";
+   
+       $('button.btn_resv').click(function() {
+    	   html = "";
+    	   // 클릭한 버튼의 index에 해당하는 처리를 수행
+    	   parentValue = $(this).closest('div#room_middle_parent')
+    	   room_price = parentValue.find('h5#room_price').text();
+    	   room_type = parentValue.find('h5#room_type').text();
+
+  //  	   console.log(send_room_price);
+  //  	   console.log(send_room_type);
+    	   
+		   html += "/goodchoice/reservation/reservation.gc?acom_name=" + acom_name + "&room_type=" + room_type + "&room_price=" + room_price + "&send_date_bak=" + send_date_bak + "&check_in_date=" + check_in_date + "&check_out_date=" + check_out_date;
+		   
+           
+           location.href = html;
+
+    	   
+    	 });   
+      
+       	
+       	
+
        
        // 날짜 선택 시 이벤트 처리
        $("#daterange").on('apply.daterangepicker', function(ev, picker) {
@@ -984,73 +897,70 @@ $(document).ready(function() {
          var endDate = picker.endDate;
          var diffInDays = endDate.diff(startDate, 'days');
          
-         html = "";
+      
          
-         $("div#item a.btn_resv").attr('href', '');
+         parentValue = "";
+         room_price = "";
+         room_type = "";
+         
 
-         if (diffInDays > 7) {
-           alert("최대 7박만 가능합니다");
-           if (previousStartDate && previousEndDate) {
-             $(this).data('daterangepicker').setStartDate(previousStartDate);
-             $(this).data('daterangepicker').setEndDate(previousEndDate);
-             $(this).val(previousStartDate.format('MM월 DD일') + ' ~ ' + previousEndDate.format('MM월 DD일') + '  ' + previousEndDate.diff(previousStartDate, 'days')  + '박');
-             $("ul.disc-list > li.modal_date").text(previousStartDate.format('MM월 DD일') + ' ~ ' + previousEndDate.format('MM월 DD일'));
-             
-             html += "/goodchoice/reservation/reservation.gc?acom_name='" + send_acom_name + "'&room_type='" + send_room_type + "'&dateDiff='" + send_date_bak + "'&check_in_date='" + send_checkin + "'&check_out_date='" + send_checkout + "'";
- 			
-             $("div#item a.btn_resv").attr('href', html);
-             
-           } else {
-        	//   console.log("히히히 엘스다");
-             $(this).data('daterangepicker').setStartDate(defaultStartDate);
-             $(this).data('daterangepicker').setEndDate(defaultEndDate);
-             $(this).val(defaultStartDate + ' ~ ' + defaultEndDate + '  ' + dateDiff + '박');
-             $("ul.disc-list > li.modal_date").text(defaultStartDate + '~' + defaultEndDate);
-             
-             html += "/goodchoice/reservation/reservation.gc?acom_name='" + send_acom_name + "'&room_type='" + send_room_type + "'&dateDiff='" + send_date_bak + "'&check_in_date='" + send_checkin + "'&check_out_date='" + send_checkout + "'";
- 			
-             $("div#item a.btn_resv").attr('href', html);
-             
-           }
-         } else {
-           $(this).val(startDate.format('MM월 DD일') + ' ~ ' + endDate.format('MM월 DD일') + '  ' + diffInDays + '박');
-           $("ul.disc-list > li.modal_date").text(startDate.format('MM월 DD일') + '~' + endDate.format('MM월 DD일'));
-           send_checkin = startDate.format('YYYY-MM-DD');  // 보내는 체크인 날짜 업데이트
-           send_checkout = endDate.format('YYYY-MM-DD');   // 보내는 체크아웃 날짜 업데이트
-           send_date_bak = diffInDays ; 			// 보내는 숙박기간 업데이트
-           
-  //         console.log("send_checkin : " + send_checkin);
-           
-  //         console.log("send_checkout : " + send_checkout);
-           
-  //         console.log("send_date_bak : " + send_date_bak);
-           html += "/goodchoice/reservation/reservation.gc?acom_name='" + send_acom_name + "'&room_type='" + send_room_type + "'&dateDiff='" + send_date_bak + "'&check_in_date='" + send_checkin + "'&check_out_date='" + send_checkout + "'";
-			
-           $("div#item a.btn_resv").attr('href', html);
-           
-           // 선택한 값이 유지되도록 이전에 선택한 값을 업데이트
-           previousStartDate = startDate.clone();
-           previousEndDate = endDate.clone();
-         }
+		         if (diffInDays > 7) {
+		           alert("최대 7박만 가능합니다");
+		           if (previousStartDate && previousEndDate) {
+		             $(this).data('daterangepicker').setStartDate(previousStartDate);
+		             $(this).data('daterangepicker').setEndDate(previousEndDate);
+		             $(this).val(previousStartDate.format('MM월 DD일') + ' ~ ' + previousEndDate.format('MM월 DD일') + '  ' + previousEndDate.diff(previousStartDate, 'days')  + '박');
+		             $("ul.disc-list > li.modal_date").text(previousStartDate.format('MM월 DD일') + ' ~ ' + previousEndDate.format('MM월 DD일'));
+		            
+		           } else {
+		        //	   console.log("히히히 엘스다");
+		             $(this).data('daterangepicker').setStartDate(defaultStartDate);
+		             $(this).data('daterangepicker').setEndDate(defaultEndDate);
+		             $(this).val(defaultStartDate + ' ~ ' + defaultEndDate + '  ' + dateDiff + '박');
+		             $("ul.disc-list > li.modal_date").text(defaultStartDate + '~' + defaultEndDate);
+		
+		           }
+		         } else {
+		           $(this).val(startDate.format('MM월 DD일') + ' ~ ' + endDate.format('MM월 DD일') + '  ' + diffInDays + '박');
+		           $("ul.disc-list > li.modal_date").text(startDate.format('MM월 DD일') + '~' + endDate.format('MM월 DD일'));
+		           check_in_date = startDate.format('YYYY-MM-DD');  // 보내는 체크인 날짜 업데이트
+		           check_out_date = endDate.format('YYYY-MM-DD');   // 보내는 체크아웃 날짜 업데이트
+		           send_date_bak = diffInDays + "박"  ; 			// 보내는 숙박기간 업데이트
+		           
+		  //         console.log("send_checkin : " + send_checkin);
+		           
+		  //         console.log("send_checkout : " + send_checkout);
+		           
+		  //         console.log("send_date_bak : " + send_date_bak);
+		
+		           
+		           // 선택한 값이 유지되도록 이전에 선택한 값을 업데이트
+		           previousStartDate = startDate.clone();
+		           previousEndDate = endDate.clone();
+		         }
+		         
+		         $('button.btn_resv').click(function() {
+		      	   // 클릭한 버튼의 index에 해당하는 처리를 수행
+		      	      html = "";
+		      	   parentValue = $(this).closest('div#room_middle_parent')
+		      	   room_price = parentValue.find('h5#room_price').text();
+		      	   room_type = parentValue.find('h5#room_type').text();
+
+		 //     	   console.log(send_room_price);
+		 //     	   console.log(send_room_type);
+		      	   		  		   
+		   			 html += "/goodchoice/reservation/reservation.gc?acom_name=" + acom_name + "&room_type=" + room_type + "&room_price=" + room_price + "&send_date_bak=" + send_date_bak + "&check_in_date=" + check_in_date + "&check_out_date=" + check_out_date;
+		             
+		             location.href = html;
+
+		      	   
+		      	 });   
+	
        });
-       
-       $("div#item a.btn_resv").attr('href', '');
-       
-       html = "";
-       
-       
-       
-  //     console.log("send_checkin : " + send_checkin);
-       
-  //     console.log("send_checkout : " + send_checkout);
-       
- //      console.log("send_date_bak : " + send_date_bak);
-       
- 	    	
-       
-       html += "/goodchoice/reservation/reservation.gc?acom_name='" + send_acom_name + "'&room_type='" + send_room_type + "'&dateDiff='" + send_date_bak + "'&check_in_date='" + send_checkin + "'&check_out_date='" + send_checkout + "'";
 
-       $("div#item a.btn_resv").attr('href', html);
+
+       
+
 
     
     <%-- 캘린더에서 선택한 날짜들을 모달창에 뿌려주기 끝 --%>
@@ -1699,8 +1609,6 @@ function myFunction_PrevRightSpan() {
 	<%-- 탭키를 트리거 클릭하기 위한 함수 끝  --%>
 	
 	
-	
-	
 
 </script>
 
@@ -1821,13 +1729,17 @@ function myFunction_PrevRightSpan() {
 							<li class="d-flex justify-content-between align-items-center">
 											 <c:if test="${empty requestScope.show_ReviewList[0].review_cnt}">
 											    <span class="badge badge-warning badge-pill">0</span>
-											    <p class="col-md-6 col-sm-12 rec">글쎄요</p>
+											    <p class="col-md-6 col-sm-12 rec">-</p>
 											</c:if>
 											
 											<c:choose>
-											  <c:when test="${scoreRatio > 0 && scoreRatio < 8}">
+											  <c:when test="${scoreRatio > 0 && scoreRatio < 6}">
 											    <span class="badge badge-warning badge-pill">${scoreRatio}</span>
-											    <p class="col-md-6 col-sm-12 rec">그냥그래요</p>
+											    <p class="col-md-6 col-sm-12 rec">솔직히 별로에요</p>
+											  </c:when>
+											  <c:when test="${scoreRatio > 6 && scoreRatio < 8}">
+											    <span class="badge badge-warning badge-pill">${scoreRatio}</span>
+											    <p class="col-md-6 col-sm-12 rec">나쁘지 않아요</p>
 											  </c:when>
 											  <c:when test="${scoreRatio > 8}">
 											    <span class="badge badge-warning badge-pill">${scoreRatio}</span>
@@ -1910,8 +1822,8 @@ function myFunction_PrevRightSpan() {
 								    <i class="fa-solid fa-photo-film"  onclick="myFunction_Show_accomo()"></i>
 								</a>
 						</div>			
-						<div class="col-lg-6 col-md-6 col-sm-6 ">
-							          <h5 class="col-sm-6 col-lg-12 mb-3 card-title" style="font-weight:600; ">${RoomVO.room_type}</h5>
+						<div class="col-lg-6 col-md-6 col-sm-6" id="room_middle_parent">
+							          <h5 class="col-sm-6 col-lg-12 mb-3 card-title" id="room_type" style="font-weight:600; ">${RoomVO.room_type}</h5>
 									 
 									  <div class="col-sm-6 col-lg-12 mb-3 card-body">
 									  
@@ -1919,7 +1831,7 @@ function myFunction_PrevRightSpan() {
 		
 										    <div style="display: flex; border-bottom: 1px solid rgba(128, 128, 128, 0.2);">
 										      <span class="badge badge-danger badge-pill special_price">예약특가</span>					    
-										      <h5 class="card-title item_special_price">${RoomVO.price}</h5>
+										      <h5 class="card-title item_special_price" id="room_price">${RoomVO.price}</h5>
 										    </div>
 										    
 									    </div>
@@ -1995,8 +1907,7 @@ function myFunction_PrevRightSpan() {
 										   </div>	
 
 										</div>         
-										                    
-									    <a href="#" class="btn btn-danger col-lg-12 btn_resv">숙박 예약</a>
+										<button type="button" class="btn btn-danger col-lg-12 btn_resv"  value="1">숙박예약</button>
 									  </div>	 
 						</div>
 				  </div>					
@@ -2019,20 +1930,20 @@ function myFunction_PrevRightSpan() {
 									  <div class="carousel-inner">
 													
 																										
-									  	<c:forEach var="RoomVO" items="${requestScope.getRoom_addImageList}" varStatus="status_sub">
+									  	<c:forEach var="room" items="${requestScope.getRoomOne}" varStatus="status_sub">
 									   		 <!-- to_number('0')의 값을 첫 번째 반복문에 사용하고, 그 이후에는 to_number('1'), to_number('2') 등을 사용합니다 -->
 											
 											<%-- 여기부터 해서 다시 선생님께 물어보기. status.index를 적용시킨다는게 아직도 잘모르겠다고.. to_number()부분을 status.index를 사용해서 어떻게 적용하라는건지 모르겠다고 --%>
 											
 		    				    			 <c:if test="${status_sub.index == 0}">                 
 											    <div class="carousel-item active">
-											      <img class="d-block w-100" src="<%= ctxPath%>/resources/images/${RoomVO.room_image_add_name}" alt="First slide">
+											      <img class="d-block w-100" src="<%= ctxPath%>/resources/images/${room.room_image_add_name}" alt="First slide">
 											    </div>
 										 	</c:if>
 										 	
 										 	<c:if test="${status_sub.index > 0}">                 
 											    <div class="carousel-item">
-											      <img class="d-block w-100" src="<%= ctxPath%>/resources/images/${RoomVO.room_image_add_name}" alt="Second slide">
+											      <img class="d-block w-100" src="<%= ctxPath%>/resources/images/${room.room_image_add_name}" alt="Second slide">
 											    </div>
 										 	</c:if>
 										 </c:forEach>

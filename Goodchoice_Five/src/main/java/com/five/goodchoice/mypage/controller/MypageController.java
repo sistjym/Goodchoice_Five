@@ -2,6 +2,8 @@ package com.five.goodchoice.mypage.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
+import java.security.NoSuchAlgorithmException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -11,12 +13,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.five.goodchoice.common.AES256;
 import com.five.goodchoice.member.model.MemberVO;
 import com.five.goodchoice.mypage.service.InterMypageService;
 
 
 @Controller
 public class MypageController {
+	
+	@Autowired
+	private AES256 aes;
 	
 	@Autowired  //  TYPE 에 따라서 , SPRING 에서 알아서 BEAN 을 주입 해준다.
 	private InterMypageService service ;
@@ -49,7 +55,22 @@ public class MypageController {
 		HttpSession session = request.getSession();
 		MemberVO loginuser = (MemberVO)session.getAttribute("loginuser");
 		
+		
+		
 		if(loginuser != null) {
+			
+			String dec_email;
+			try {
+				dec_email = aes.decrypt(loginuser.getMember_email());
+				
+				session.setAttribute("dec_email", dec_email);
+			} catch (UnsupportedEncodingException | GeneralSecurityException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			session.setAttribute("loginuser", loginuser);
+			
 			mav.setViewName("my/page.tiles4");
 		}
 		else {
@@ -64,7 +85,7 @@ public class MypageController {
 		
 	}
 
-	@RequestMapping(value="/mypoint.gc") 
+	@RequestMapping(value="/mypoint.gc", method = {RequestMethod.GET}) 
 	public ModelAndView my_page_3(ModelAndView mav, HttpServletRequest request) {
 		
 		HttpSession session = request.getSession();

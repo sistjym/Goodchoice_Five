@@ -31,7 +31,7 @@ public class DetailController {
 	private InterRoomSerivce room_service;
 	// 모텔 View	
 	
-	@RequestMapping(value="/details/detail.gc" , method = {RequestMethod.GET})
+	@RequestMapping(value="/details/detail.gc" , method = {RequestMethod.GET}, produces="text/plain;charset=UTF-8")
 	public ModelAndView detail_view(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) throws Exception {
 		
 			String acom_no = request.getParameter("acom_no");
@@ -170,7 +170,7 @@ public class DetailController {
 			
 			// room_id 일치할경우에만 들어가게 코딩
 		
-			/*
+	/*
 			ArrayList<RoomVO> getRoomOne = room_service.getRoomOne(paraMap);
 						
 			for(RoomVO room  : getRoomOne ){
@@ -182,8 +182,8 @@ public class DetailController {
 			}
 			
 			mav.addObject("getRoomOne",getRoomOne);
-			*/
-			
+		
+		*/	
 						
 
 			
