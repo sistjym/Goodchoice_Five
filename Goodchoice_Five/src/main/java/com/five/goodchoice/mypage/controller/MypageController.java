@@ -2,11 +2,7 @@ package com.five.goodchoice.mypage.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
-import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -17,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.five.goodchoice.common.AES256;
-import com.five.goodchoice.detail.model.AcomodationVO;
-import com.five.goodchoice.detail.model.RoomVO;
 import com.five.goodchoice.member.model.MemberVO;
 import com.five.goodchoice.mypage.model.ReservationVO;
 import com.five.goodchoice.mypage.service.InterMypageService;
@@ -136,7 +130,13 @@ public class MypageController {
 	}
 	
 	
-	
+	@RequestMapping(value="/nickEdit.gc", method = {RequestMethod.POST}) 
+	public ModelAndView nickEdit(ModelAndView mav, HttpServletRequest request) {
+		
+		
+		
+		return mav;
+	}
 	
 	
 	
