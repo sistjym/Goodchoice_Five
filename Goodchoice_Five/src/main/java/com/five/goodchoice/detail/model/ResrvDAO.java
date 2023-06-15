@@ -15,11 +15,17 @@ public class ResrvDAO implements InterResrvDAO {
 	@Resource
 	private SqlSessionTemplate sqlsession;
 	
-	// 예약 리스트 불러오기
-	@Override
-	public List<ReservationVO> getReservationList(Map<String, String> paraMap) {
-		List<ReservationVO> reservationList = sqlsession.selectList("detail.getReservationList", paraMap);
-		return reservationList;
-	}
+	
+	 // 예약 리스트 불러오기
+	 /* 
+	 @Override 
+	 public ReservationVO getReservcount(Map<String, String>paraMap) { 
+		 
+		 ReservationVO reservcount = sqlsession.selectOne("detail.getReservcount", paraMap); 
+		 
+		 return reservcount; 
+		 
+	 }
+	 */
 
 }

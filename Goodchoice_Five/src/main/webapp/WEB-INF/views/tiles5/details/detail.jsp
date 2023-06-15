@@ -926,8 +926,8 @@ $(document).ready(function() {
          room_type = "";
          
 
-		         if (diffInDays > 7) {
-		           alert("최대 7박만 가능합니다");
+		         if (diffInDays > 6) {
+		           alert("최대 7일만 가능합니다");
 		           if (previousStartDate && previousEndDate) {
 		             $(this).data('daterangepicker').setStartDate(previousStartDate);
 		             $(this).data('daterangepicker').setEndDate(previousEndDate);

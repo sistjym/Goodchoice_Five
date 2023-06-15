@@ -50,18 +50,19 @@ public class DetailController {
 	@RequestMapping(value="/details/detail.gc" , method = {RequestMethod.GET} , produces="text/plain;charset=UTF-8")
 	public ModelAndView detail_view(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) throws Exception {
 		
-			String acom_no = request.getParameter("acom_no");
+			String method = request.getMethod();
+		
+			String acom_no = request.getParameter("acom_no").trim();
 						
-			String category_no = request.getParameter("category_no");
+			String category_no = request.getParameter("category_no").trim();
 			
-			String check_in_date = request.getParameter("check_in_date");
+			String check_in_date = request.getParameter("check_in_date").trim();
 			
-			String check_out_date = request.getParameter("check_out_date");
+			String check_out_date = request.getParameter("check_out_date").trim();
 			
-			boolean wrong_data_in_url = false; // url 에 잘못된 값을 입력했는지 여부 알아오기
-
+			String message ="";
+			String loc = "";
 			
-
 			Map<String,String>paraMap = new HashMap<>();
 			
 			paraMap.put("acom_no", acom_no);
@@ -72,310 +73,354 @@ public class DetailController {
 			
 			paraMap.put("check_out_date",check_out_date);
 			
-			
-			boolean is_Exist_acom_no = service.is_Exist_acom_no(paraMap); 
-			
-//			System.out.println("확인용 : is_Exist_acom_no : " + is_Exist_acom_no);
-			// true false
-			
-			///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-			// 숙소 번호 acom_no 가 존재한다면
+			boolean wrong_data_in_url = false; // url 에 잘못된 값을 입력했는지 여부 알아오기
 
-			
-			// acom_no에 해당하는 숙소정보를 가져오기+ 스펙넘버도 가져오기(Fk_spec_no)
-			AcomodationVO daVO = service.acom_Info(paraMap);
-			
-//			System.out.println(daVO.getParking_info() + daVO.getAcom_image() + daVO.getAcom_name()  + daVO.getAcom_no() + daVO.getFk_spec_no() );
-			// 1객실당 1대의 차만 주차가 가능합니다(주차타워이용가능할경우 무료주차)/페라리, 람보르기니, 맥라렌 등 슈퍼카는 주차가 불가하오니 양해바랍니다./총 45대 주차시설 보유서초라바.jpg서초 라바28
-			
-			
-			daVO.setCheck_in_date(paraMap.get("check_in_date")); 
-			daVO.setCheck_out_date(paraMap.get("check_out_date"));
-			
-//			System.out.println("선택날짜는" + daVO.getCheck_in_date() + daVO.getCheck_out_date() );
-			
-			if(!daVO.getFk_spec_no().equals("1") || !daVO.getFk_spec_no().equals("2") || !daVO.getFk_spec_no().equals("3") || !daVO.getFk_spec_no().equals("4")) {
+			if(!"POST".equalsIgnoreCase(method) ) { // "get" 
 				
-//				System.out.println("호텔아닙니다...");
 				
-			}
-			
-			else {
 				
-//				System.out.println("호텔의 스펙은 " + daVO.getFk_spec_no());
-				
-			}
-			
-			mav.addObject("daVO", daVO);
-			
-			
-			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
-			
+				if(acom_no != null && category_no!=null && check_in_date != null && check_out_date != null) {
+					
+
 					
 			
-			
-			
-			
-			// acom_no에 해당하는 숙소의 추가이미지 파일을 가져오기			
-
-			
-			List<AcomodationVO>show_acom_add_imgList = service.show_acom_add_imgList(paraMap);
-			
-//			System.out.println("숙소추가이미지 리스트");
-			
-			for(int i = 0; i<show_acom_add_imgList.size(); i++) {
+		
 				
-//				System.out.println(" 이건 추가이미지들리스트들인 show_acom_add_imgList" + show_acom_add_imgList.get(i));
-				
-			}
-			
-			mav.addObject("show_acom_add_imgList",show_acom_add_imgList);
-			
-			//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-			
-			
-			// acom_no에 해당하는 시설 가져오기 tbl_inroom_facilities 이용!!
-			
-			
-			
-			
-			List<AcomodationVO>show_facilitiesList = service.show_facilitiesList(paraMap);
-			
-			
-				
-//				System.out.println("편의시설" + daVO.getCategory_fac_name() + show_facilitiesList.size());
-				
-				mav.addObject("show_facilitiesList",show_facilitiesList);
-				
-			
-			
-			////////////////////////////////////////////////////////////////////////////////////////////////////////////
-			
-			
-			
-			// 호스트, 업주 정보 가져오기... 엑스트라 주소와 그냥 주소는 acomodationVO에서 찍어서 가져오기.
-			
-			HostVO hostVO = service.showHostInfo(paraMap);
-			
-//			System.out.println("호스트 정보:" + hostVO.getCp_name() + hostVO.getCp_reg_no() + hostVO.getHost_email() + hostVO.getHost_name() + daVO.getAddress() + daVO.getExtra_address());
-			
-			String email = hostVO.getHost_email();  // 이메일 받아오기
-			
-//			String decodeText = URLDecoder.decode(email, "UTF-8"); // 한번 디코드 한것
-			
-			try {
-				email = aes.decrypt(email);  // 이메일 복호화
-				
-				
-				
-			} catch (UnsupportedEncodingException | GeneralSecurityException e) {
-				
-				// System.out.println("히히 안됨");
-				
-			}
-			
-			hostVO.setHost_email(email);
-			
-			System.out.println("호스트 정보:" + hostVO.getCp_name() + hostVO.getCp_reg_no() + hostVO.getHost_email() + hostVO.getHost_name() + daVO.getAddress() + daVO.getExtra_address());
-			
-			
-			
-			mav.addObject("hostVO",hostVO);
-			
-			
-			// 리뷰 리스트 가져오기
-			
-			List<AcomodationVO> show_ReviewList = service.show_ReviewList(paraMap);
-			
-			
-				
-//			 System.out.println(show_ReviewList.size());
-				
-			mav.addObject("show_ReviewList",show_ReviewList);
-				
-
-			// acom_no에 해당하는 객실의 정보 가져오기 
-			List<RoomVO> getRoomList = room_service.getRoomList(paraMap);
+					
+					
+						try {
+							
+							// item_no 가 공백인지 여부
+							if(acom_no.trim().isEmpty() || category_no.trim().isEmpty() || check_in_date.trim().isEmpty() || check_out_date.trim().isEmpty()) {
+								//System.out.println("공백입니다.");
+								message = "item_no는 공백이 될 수 없습니다.";		
+								wrong_data_in_url = true;
+								
+								loc = "javascript:history.back()";
+								mav.addObject("message", message);
+								mav.addObject("loc", loc);
+								
+								mav.setViewName("details/msg.tiles5");
+								
+								return mav;
+							}// end of if(itemno.trim().isEmpty())-----------------------------------
+							
+							
+							
+							
+							
 						
+							// item_no 에 음수가 오는지 검사하는 여부
+							else if(Integer.parseInt(acom_no.trim()) < 0 || Integer.parseInt(category_no.trim()) < 0 ) {
+								
+							//	System.out.println("음수입니다.");
+								message = "acom_no 혹은 category_no  는 음수가 될 수 없습니다.";
+								wrong_data_in_url = true;
+								
+								loc = "javascript:history.back()";
+								mav.addObject("message", message);
+								mav.addObject("loc", loc);
+								
+								mav.setViewName("details/msg.tiles5");
+								
+								return mav;
+							}// end of else if(Integer.parseInt(itemno.trim()) < 0) -----------------------------
+							
+							
+							
+							
+							boolean is_Exist_acom_no = service.is_Exist_acom_no(paraMap); 
+							
+							if(!is_Exist_acom_no) {
+								message = "acom-no 가 DB에 존재하지 않습니다.";
+								
+								wrong_data_in_url = true;
+								
+								loc = "javascript:history.back()";
+								mav.addObject("message", message);
+								mav.addObject("loc", loc);
+								
+								mav.setViewName("details/msg.tiles5");
+								
+								return mav;
+								
+							}// end of if(!is_Exist_item_no)----------------------
+							
+							
+							
+							
+						}// end of try -------------------------------------
+						
+						
+						catch(NumberFormatException e) { // 유효하지 않은 문자를 item_no 로 입력하는 경우   
+				            
+				               	   boolean isDigit = true;
+				               
+					               char charArr[] = acom_no.trim().toCharArray();
+					               for(int i=0;i<charArr.length; i++) {
+					                  
+					                  if(charArr[i] != '-' && !Character.isDigit(charArr[i]) ) {
+					                	  
+					                     isDigit = false;
+					                     				                     
+					                     break;
+					                  }
+					                  
+					                  
+					                  
+					               }
+					               
+					               if(isDigit) {
+					                  
+					                  message = "acom_no 의 범위가 int 를 벗어났습니다.";
+					                  wrong_data_in_url = true;
+					                  
+					               }
+					               else {
+					                  
+					                  message = "acom_no는 문자형태가 올 수 없습니다.";
+					                  wrong_data_in_url = true;
+					                  
+					               }
+					               
+					               boolean isDigit_category = true;
+					               
+					               char charArr_category[] = category_no.trim().toCharArray();
+					               for(int i=0;i<charArr_category.length; i++) {
+					                  
+					                  if(charArr_category[i] != '-' && !Character.isDigit(charArr_category[i]) ) {
+					                	  
+					                	  isDigit_category = false;
+					                     				                     
+					                     break;
+					                  }
+					                  
+					                  
+					                  
+					               }
+					               
+					               if(isDigit_category) {
+					                  
+					                  message = "category_no 의 범위가 int 를 벗어났습니다.";
+					                  wrong_data_in_url = true;
+					                  
+					               }
+					               else {
+					                  
+					                  message = "category_no는 문자형태가 올 수 없습니다.";
+					                  wrong_data_in_url = true;
+					                  
+					               }
+					               
+					               
+
+				            }
+
+		
+								if(!wrong_data_in_url) { // 맞다면, 정상적으로 실행합니다.
+									
+//									System.out.println("확인용 : is_Exist_acom_no : " + is_Exist_acom_no);
+									// true false
+									
+									///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+									// 숙소 번호 acom_no 가 존재한다면
+
+									
+									// acom_no에 해당하는 숙소정보를 가져오기+ 스펙넘버도 가져오기(Fk_spec_no)
+									AcomodationVO daVO = service.acom_Info(paraMap);
+									
+//									System.out.println(daVO.getParking_info() + daVO.getAcom_image() + daVO.getAcom_name()  + daVO.getAcom_no() + daVO.getFk_spec_no() );
+									// 1객실당 1대의 차만 주차가 가능합니다(주차타워이용가능할경우 무료주차)/페라리, 람보르기니, 맥라렌 등 슈퍼카는 주차가 불가하오니 양해바랍니다./총 45대 주차시설 보유서초라바.jpg서초 라바28
+									
+									
+									daVO.setCheck_in_date(paraMap.get("check_in_date")); 
+									daVO.setCheck_out_date(paraMap.get("check_out_date"));
+									
+//									System.out.println("선택날짜는" + daVO.getCheck_in_date() + daVO.getCheck_out_date() );
+									
+									if(!daVO.getFk_spec_no().equals("1") || !daVO.getFk_spec_no().equals("2") || !daVO.getFk_spec_no().equals("3") || !daVO.getFk_spec_no().equals("4")) {
+										
+//										System.out.println("호텔아닙니다...");
+										
+									}
+									
+									else {
+										
+//										System.out.println("호텔의 스펙은 " + daVO.getFk_spec_no());
+										
+									}
+									
+									mav.addObject("daVO", daVO);
+									
+									
+									//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
+									
+											
+									
+									
+									
+									
+									// acom_no에 해당하는 숙소의 추가이미지 파일을 가져오기			
+
+									
+									List<AcomodationVO>show_acom_add_imgList = service.show_acom_add_imgList(paraMap);
+									
+//									System.out.println("숙소추가이미지 리스트");
+									
+									for(int i = 0; i<show_acom_add_imgList.size(); i++) {
+										
+//										System.out.println(" 이건 추가이미지들리스트들인 show_acom_add_imgList" + show_acom_add_imgList.get(i));
+										
+									}
+									
+									mav.addObject("show_acom_add_imgList",show_acom_add_imgList);
+									
+									//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+									
+									
+									// acom_no에 해당하는 시설 가져오기 tbl_inroom_facilities 이용!!
+									
+									
+									
+									
+									List<AcomodationVO>show_facilitiesList = service.show_facilitiesList(paraMap);
+									
+									
+										
+//										System.out.println("편의시설" + daVO.getCategory_fac_name() + show_facilitiesList.size());
+										
+										mav.addObject("show_facilitiesList",show_facilitiesList);
+										
+									
+									
+									////////////////////////////////////////////////////////////////////////////////////////////////////////////
+									
+									
+									
+									// 호스트, 업주 정보 가져오기... 엑스트라 주소와 그냥 주소는 acomodationVO에서 찍어서 가져오기.
+									
+									HostVO hostVO = service.showHostInfo(paraMap);
+									
+//									System.out.println("호스트 정보:" + hostVO.getCp_name() + hostVO.getCp_reg_no() + hostVO.getHost_email() + hostVO.getHost_name() + daVO.getAddress() + daVO.getExtra_address());
+									
+									String email = hostVO.getHost_email();  // 이메일 받아오기
+									
+//									String decodeText = URLDecoder.decode(email, "UTF-8"); // 한번 디코드 한것
+									
+									try {
+										email = aes.decrypt(email);  // 이메일 복호화
+										
+										
+										
+									} catch (UnsupportedEncodingException | GeneralSecurityException e) {
+										
+										// System.out.println("히히 안됨");
+										
+									}
+									
+									hostVO.setHost_email(email);
+									
+									System.out.println("호스트 정보:" + hostVO.getCp_name() + hostVO.getCp_reg_no() + hostVO.getHost_email() + hostVO.getHost_name() + daVO.getAddress() + daVO.getExtra_address());
+									
+									
+									
+									mav.addObject("hostVO",hostVO);
+									
+									
+									// 리뷰 리스트 가져오기
+									
+									List<AcomodationVO> show_ReviewList = service.show_ReviewList(paraMap);
+									
+									
+										
+//									 System.out.println(show_ReviewList.size());
+										
+									mav.addObject("show_ReviewList",show_ReviewList);
+										
+
+									// acom_no에 해당하는 객실의 정보 가져오기 
+									List<RoomVO> getRoomList = room_service.getRoomList(paraMap);
+												
+									
+
+									
+									mav.addObject("getRoomList",getRoomList);
+									
+									///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+									
+									
+							/*
+									ReservationVO rsvVO = resrv_service.getReservcount(paraMap);
+									
+								*/	
+									
+									
+							
+
+									
+									
+									mav.setViewName("details/detail.tiles5");
+//									    /WEB-INF/views/tiles5/details/detail.jsp  페이지를 만들어야 한다.
+									
+									
+									
+								    return mav;
+									
+
+
+							
+									
+								}// end of if(!wrong_data_in_url)
+								
+								else {
+									
+									loc = "javascript:history.back()";
+									mav.addObject("message", message);
+									mav.addObject("loc", loc);
+									
+									mav.setViewName("details/msg.tiles5");
+									
+									return mav;
+								}// end of else-------
+
+				}
 			
+								else { // itemno 가 null 이라면
+									
+									message = "acom_no나 category_no 는 null 이 될 수 없습니다.";
+									loc = "javascript:history.back()";
+									mav.addObject("message", message);
+									mav.addObject("loc", loc);
+									
+									mav.setViewName("details/msg.tiles5");
+									
+									return mav;
+								}// end of else--------------
+
+					}
 
 			
-			mav.addObject("getRoomList",getRoomList);
-			
-			///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-			
-		/*	
-			List<ReservationVO> getReservationList = resrv_service.getReservationList(paraMap);
-			
-			
-			JSONArray jsonArr = new JSONArray();
-			
-			if(getReservationList != null) {// DB 에서 넘어온값 roomList 이 잇다면
-				for( ReservationVO resrvvo : getReservationList ) {
-					JSONObject jsonobj = new JSONObject();
-					jsonobj.put("resv_check_in_date", resrvvo.getResv_check_in_date());
-					jsonobj.put("resv_check_out_date", resrvvo.getResv_check_out_date());
-					jsonobj.put("resv_room_id", resrvvo.getResv_room_id());
-					jsonobj.put("resv_room_type", resrvvo.getResv_room_type());
-					jsonobj.put("reserv_status", resrvvo.getReserv_status());
+					else {
+						// "post" 방식이므로 사용자가 웹브라우저 주소 창에서 장난쳐서 존재하지 않는 제품번호를 입력한 경우
 					
-					
-					jsonArr.put(jsonobj);
-					
-				}			
-			}		
+				
+						
+						 message = "검색하신 숙소는 존재하지 않습니다.";
+						 loc = "javascript:history.back()";
+							mav.addObject("message", message);
+							mav.addObject("loc", loc);
+							
+							mav.setViewName("details/msg.tiles5");
+							
+							return mav;
+					}
 			
-			String json = jsonArr.toString();
 			
-			mav.addObject("json",json);
-			*/
+
+			
+
 	
-
-			
-			
-	/*		
-			List<ReservationVO> getReservationList = resrv_service.getReservationList(paraMap);
-			
-			
-	
-			
-			
-			
-			for (ReservationVO reservation : getReservationList) {
-			    String reserv_check_in_date = reservation.getResv_check_in_date();
-			    String reserv_check_out_date = reservation.getResv_check_out_date();
-
-			    // 값을 사용하여 원하는 작업을 수행
-			    // 예: 출력, 계산, 조건 확인 등
-
-			    // 예시: reserv_check_in_date와 reserv_check_out_date 출력
-			    System.out.println("Check-in Date: " + reserv_check_in_date);
-			    System.out.println("Check-out Date: " + reserv_check_out_date);
-			}
-			
-		*/	
-			
-			
-			
-			
-			
-			
-			
-			
-
-	//		mav.addObject("getReservationList",getReservationList);
-			
-			
-			mav.setViewName("details/detail.tiles5");
-//			    /WEB-INF/views/tiles5/details/detail.jsp  페이지를 만들어야 한다.
-			
-			
-			
-		    return mav;
-			
-
-
-	}
-	/*
-	@ResponseBody
-	@RequestMapping(value="/details/detail_select.gc", method = {RequestMethod.GET}, produces="text/plain;charset=UTF-8") // 오로지 GET 방식만 허락하는 것임.
-	public String ajax_select(HttpServletRequest request, HttpServletResponse response)throws Exception {
-		
-		
-		String acom_no = request.getParameter("acom_no");
-
-		
-
-		
-
-		Map<String,String>paraMap = new HashMap<>();
-		
-		paraMap.put("acom_no", acom_no);
-		
-		List<ReservationVO> getReservationList = resrv_service.getReservationList(paraMap);
-		
-		JSONArray jsonArr = new JSONArray(); // []
-		
-		if(getReservationList != null) { // 선택되어진게 있다라면
-			for( ReservationVO resvvo : getReservationList) {
-				JSONObject jsonObj = new JSONObject();
-				jsonObj.put("resv_check_in_date",resvvo.getResv_check_in_date()); 
-				jsonObj.put("resv_check_out_date",resvvo.getResv_check_out_date()); 
-				jsonObj.put("resv_room_id",resvvo.getResv_room_id()); 
-				jsonObj.put("resv_room_type",resvvo.getResv_room_type()); 
-				jsonObj.put("reserv_status",resvvo.getReserv_status()); 
-
-				
-				jsonArr.put(jsonObj);// [{"no":601,"name":"이해리","writeday":2023-05-10 11:59:30}]
-			}// end of for ---------------------------------------------			
-		}
-		
-		for(int i=0; i<jsonArr.length(); i++) {
-			jsonArr.get(i);
-		}
-		
-		return jsonArr.toString(); // "[{"no":601,"name":"이해리","writeday":2023-05-10 11:59:30}]"
-
-	}
-	*/
-	
-/*
-	// 예약 리스트 불러오기
-	@ResponseBody
-	@RequestMapping(value="/details/detail.gc",method = {RequestMethod.GET}, produces="text/plain;charset=UTF-8")
-	public ModelAndView getReservationList(HttpServletRequest request, HttpServletResponse response , ModelAndView mav) throws Exception {
-		
-		String acom_no = request.getParameter("acom_no");
-		
-		Map<String,String>paraMap = new HashMap<>();
-		
-		paraMap.put("acom_no", acom_no);
-		
-
-		// 예왁관련 메소드 생성
-		
-		
-		List<ReservationVO> getReservationList = resrv_service.getReservationList(paraMap);
-		
-		
-		JSONArray jsonArr = new JSONArray();
-		
-		if(getReservationList != null) {// DB 에서 넘어온값 roomList 이 잇다면
-			for( ReservationVO resrvvo : getReservationList ) {
-				JSONObject jsonobj = new JSONObject();
-				jsonobj.put("resv_check_in_date", resrvvo.getResv_check_in_date());
-				jsonobj.put("resv_check_out_date", resrvvo.getResv_check_out_date());
-				jsonobj.put("resv_room_id", resrvvo.getResv_room_id());
-				jsonobj.put("resv_room_type", resrvvo.getResv_room_type());
-				jsonobj.put("reserv_status", resrvvo.getReserv_status());
-				
-				
-				jsonArr.put(jsonobj);
-				
-			}			
-		}		
-		
-		String json = jsonArr.toString();
-		
-		mav.addObject("json",json);
-		
-		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-			
-		
-		
-		
-		
-		
-		mav.setViewName("details/detail.tiles5");
-//		    /WEB-INF/views/tiles5/details/detail.jsp  페이지를 만들어야 한다.
-		
-		
-		
-	    return mav;	
-
-	}
-	*/
-
+}
 
 	
 	

@@ -14,12 +14,12 @@ public class ResrvService implements InterResrvSerivce {
 	
 	@Autowired
 	private InterResrvDAO resrv_dao;
-	
+	/*
 	// 예약 리스트 불러오기
 	@Override
-	public List<ReservationVO> getReservationList(Map<String, String> paraMap) {
-		List<ReservationVO> reservationList = resrv_dao.getReservationList(paraMap);
-		return reservationList;
+	public ReservationVO getReservcount(Map<String, String> paraMap) {
+		ReservationVO reservcount = resrv_dao.getReservcount(paraMap);
+		return reservcount;
 	}
-
+*/
 }
