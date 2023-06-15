@@ -26,22 +26,6 @@
                         <a href="<%= ctxPath%>/hostRegister.gc">숙소 수정하기</a>
                     </ul>
                 </li> 
-                
-                
-                <c:if test="${sessionScope.loginuser.is_admin == 0}">
-               	
-               	<li class="dropdown">
-                    
-                    <button class="dropbtn" > <span style="color:yellow;">${sessionScope.loginuser.member_nickname}</span> 님  페이지</button>
-                    
-                     <ul class="dropdown-content">
-                        <a href="<%= ctxPath%>/mypage.gc">내정보</a>
-                        <a href="<%= ctxPath%>/myreservation.gc">예약 내역</a>
-                        <a href="<%= ctxPath%>/mypoint.gc">포인트</a>
-                    </ul>
-                </li> 	
-               		
-                </c:if>
 	
 				<c:if test="${sessionScope.loginuser == null}">
 					<li>
