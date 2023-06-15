@@ -1,6 +1,7 @@
 package com.five.goodchoice.detail.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.security.GeneralSecurityException;
 import java.util.*;
 
@@ -158,17 +159,22 @@ public class DetailController {
 			
 //			System.out.println("호스트 정보:" + hostVO.getCp_name() + hostVO.getCp_reg_no() + hostVO.getHost_email() + hostVO.getHost_name() + daVO.getAddress() + daVO.getExtra_address());
 			
-			String email = hostVO.getHost_email();
+			String email = hostVO.getHost_email();  // 이메일 받아오기
+			
+//			String decodeText = URLDecoder.decode(email, "UTF-8"); // 한번 디코드 한것
 			
 			try {
-				email = aes.decrypt(email);
+				email = aes.decrypt(email);  // 이메일 복호화
 				
-				hostVO.setHost_email(email);
+				
 				
 			} catch (UnsupportedEncodingException | GeneralSecurityException e) {
-				e.printStackTrace();
+				
+				// System.out.println("히히 안됨");
+				
 			}
 			
+			hostVO.setHost_email(email);
 			
 			System.out.println("호스트 정보:" + hostVO.getCp_name() + hostVO.getCp_reg_no() + hostVO.getHost_email() + hostVO.getHost_name() + daVO.getAddress() + daVO.getExtra_address());
 			
