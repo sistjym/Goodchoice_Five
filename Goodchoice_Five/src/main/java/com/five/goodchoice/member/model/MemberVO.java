@@ -15,7 +15,6 @@ public class MemberVO {
 	private String is_kakao_user;
 	private String kakao_id;
 	
-	
 	private int pwdchangegap;          // select 용. 지금으로 부터 마지막으로 암호를 변경한지가 몇개월인지 알려주는 개월수(3개월 동안 암호를 변경 안 했을시 암호를 변경하라는 메시지를 보여주기 위함)  
 	private int lastlogingap;          // select 용. 지금으로 부터 마지막으로 로그인한지가 몇개월인지 알려주는 개월수(12개월 동안 로그인을 안 했을 경우 해당 로그인 계정을 비활성화 시키려고 함) 
 	
@@ -194,7 +193,7 @@ public class MemberVO {
 	public void setKakao_id(String kakao_id) {
 		this.kakao_id = kakao_id;
 	}
-	
+
 	
 
 	

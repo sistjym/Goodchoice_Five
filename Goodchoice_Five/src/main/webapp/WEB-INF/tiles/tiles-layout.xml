@@ -133,7 +133,19 @@
       <put-attribute name="subtop" value="/WEB-INF/views/tiles7/{1}/subtop.jsp"/>
    </definition>
    
+   <definition name="layout-tiles8"  template="/WEB-INF/tiles/layout/layout-tiles8.jsp"> 
+      <put-attribute name="header"  value="/WEB-INF/tiles/tile8/header.jsp" />
+      <put-attribute name="subtop"  value="" />
+      <put-attribute name="content" value="" />
+      <put-attribute name="sideinfo"  value="" />
+      <put-attribute name="footer"  value="/WEB-INF/tiles/tile8/footer.jsp" />
+   </definition>
    
+   <definition name="*/*.tiles8" extends="layout-tiles8">
+    <put-attribute name="content" value="/WEB-INF/views/tiles8/{1}/content/{2}.jsp"/>
+    <put-attribute name="subtop" value="/WEB-INF/views/tiles8/{1}/subtop.jsp"/>
+    <put-attribute name="sideinfo" value="/WEB-INF/views/tiles8/{1}/side.jsp"/>
+   </definition>
    
    
 
