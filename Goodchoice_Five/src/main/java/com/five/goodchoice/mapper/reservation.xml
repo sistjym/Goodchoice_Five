@@ -12,8 +12,8 @@
 	
 	<update id="updatePoint" parameterType="HashMap">
 		update tbl_member 
-		set point = point - (to_number(#{user_point}))
-		where member_id = ${member_id}
+		set point = to_number(point) - to_number(#{user_point}) + #{totalPoint}
+		where member_id = #{member_id}
 	</update>
 		
 </mapper>

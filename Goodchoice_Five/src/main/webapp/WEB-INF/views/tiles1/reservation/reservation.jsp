@@ -18,15 +18,18 @@
 	    let day_price = $("input#price1").val();
 		
 		let days = $("input#days").val();
-		const new_days = days.slice(0, -1);
+		
 		
 		console.log(day_price);
-		console.log(new_days);
-		let totalPrice = Number(day_price) * Number(new_days);
+		console.log(days);
+		let totalPrice = Number(day_price) * Number(days);
 		
 		$("input#price").val(totalPrice);
-		$("input#totalPrice").val(totalPrice);
-		
+	    $("input#totalPrice").val(totalPrice);
+	    let totalPoint = totalPrice * 0.1;
+	    $("input#totalPoint").val(totalPoint);
+	    
+	    //console.log(totalPrice * 0.1);
 		
 		// 체크박스 제어 
 		$("#checkAll").click(function() {
@@ -89,19 +92,26 @@
 				//totalPrice 최종가격
 				//price
 				//user_point
+				
+
+				if($("input#point").val() > $("input#user_point").val()){
+					alert("포인트 초과사용");
+					return false;
+				}
+				
 				let price = $("input#price").val();
+				console.log(price);
 				
 				let point = document.getElementById("user_point").value;
 				console.log(point);
 				let totalprice = Number(price) - Number(point);
+				totalprice = totalprice.toLocaleString();
 				console.log(totalprice);
-				
+			
 				
 				$("input#totalPrice").val(totalprice);
-
-
 				
-				
+
 				
 			})
 		
@@ -142,6 +152,7 @@
 	   		        frm.checkIn.value = $("input#checkIn").val();
 	   		        frm.checkOut.value = $("input#checkOut").val();
 	   		        frm.totalPrice.value = $("input#totalPrice").val();
+	   		        frm.totalPoint.value = $("input#totalPoint").val();
 	   			
 	   				
 	   				frm.method="POST";
@@ -166,14 +177,15 @@
 			    
 		    frm.userName.value = $("input#userName").val();
 	        frm.email.value = $("input#email").val();
-	        frm.email.value = $("input#email").val();
+	        frm.user_point.value = $("input#user_point").val();
 		    
+	        console.log(user_point);
 	        frm.acommName.value = $("input#acommName").val();
 	        frm.roomName.value = $("input#roomName").val();
 	        frm.checkIn.value = $("input#checkIn").val();
 	        frm.checkOut.value = $("input#checkOut").val();
 	        frm.totalPrice.value = $("input#totalPrice").val();
-		
+	        frm.totalPoint.value = $("input#totalPoint").val();
 			
 			frm.method="POST";
 			frm.action="<%= request.getContextPath()%>/reservation/reservationEnd.gc";
@@ -233,11 +245,11 @@
 	                		</li>
 	                		<li class="price_li">
 	                			<strong>포인트</strong>
-								<input class="transInput price_box" type="text" value="${sessionScope.loginuser.point} P" readonly="readonly">
+								<input class="transInput price_box" type="text" id="point" value="${sessionScope.loginuser.point} P" readonly="readonly">
 	                		</li>
 	                		<li class="price_li">
 								<strong>사용할 포인트</strong>
-								<input class="transInput price_box point" id="user_point" type="text" value="" placeholder="P">
+								<input class="transInput price_box point" id="user_point" name="user_point" type="text" value="" placeholder="P">
 	                			
 	                		</li>
 	                		
@@ -296,7 +308,7 @@
 							<input type="hidden" name="days" id="days" value="${requestScope.send_date_bak}" >
 							
 							<p><strong>객실타입/기간</strong></p> 
-							<input class="transInput acomInfo" type="text" name="roomName" id="roomName" value="${requestScope.room_type} / ${requestScope.send_date_bak}" readonly="readonly">
+							<input class="transInput acomInfo" type="text" name="roomName" id="roomName" value="${requestScope.room_type} / ${requestScope.send_date_bak} 박" readonly="readonly">
 							
 						    <p><strong>체크인</strong></p> 
 						    <input class="transInput acomInfo" type="text" name="checkIn" id="checkIn" value="${requestScope.check_in_date}"  readonly="readonly">
@@ -308,9 +320,17 @@
 								<strong>
 									<b >총 결제 금액</b>(VAT포함)
 								</strong>
+							
+								<span class="price"  >
+									<input style="display:inline;" class="transInput acomInfo" type="text" name="totalPrice" id="totalPrice" value=""  readonly="readonly"> 원 
+									
+								</span>
 								
-								<span class="price" >
-								<input class="transInput acomInfo" type="text" name="totalPrice" id="totalPrice" value=""  readonly="readonly">
+								<strong>
+									<b >적립예정 포인트</b>
+								</strong>
+								<span class="price"  >
+									<input style="display:inline;" class="transInput acomInfo" type="text" name="totalPoint" id="totalPoint" value=""  readonly="readonly"> P
 								</span>
 							</p> 
 							<ul>

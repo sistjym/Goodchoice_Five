@@ -94,11 +94,15 @@ public class ReservationController {
 		  String member_id = request.getParameter("member_id"); 
 		  
 		  String user_point = request.getParameter("user_point");
+		  
+		  System.out.println("포린트값" + user_point);
+		  
 		  String acommName = request.getParameter("acommName"); 
 		  String roomName = request.getParameter("roomName"); 
 		  String checkIn = request.getParameter("checkIn"); 
 		  String checkOut = request.getParameter("checkOut"); 
 		  String totalPrice = request.getParameter("totalPrice"); 
+		  String totalPoint = request.getParameter("totalPoint"); 
 		
 		  Date now = new Date();
 		  
@@ -112,8 +116,9 @@ public class ReservationController {
 			paraMap.put("roomName",roomName);
 			paraMap.put("checkIn",checkIn);
 			paraMap.put("checkOut",checkOut);
-			paraMap.put("totalPrice",totalPrice);
+			paraMap.put("totalPrice", totalPrice);
 			paraMap.put("reserve_id",reserve_id);
+			paraMap.put("totalPoint",totalPoint);
 	
 			
 			//예약테이블에 예약정보를 insert 
