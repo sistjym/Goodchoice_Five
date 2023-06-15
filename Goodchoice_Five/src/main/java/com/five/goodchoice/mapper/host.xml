@@ -29,15 +29,64 @@
 
 
 
-<insert id="acomoRegister" parameterType="HashMap">
+<insert id="acomoRegister" parameterType="HashMap" >
 INSERT INTO TBL_ACOMODATION(acom_no, fk_spec_no, fk_district_no, fk_host_no, acom_name, acom_image, address, extra_address, sur_info, parking_info, acom_latitude, acom_longitude)
 values(SEQ_ACOMODATION.nextval, #{accommodationSpec}, #{district_no}, #{host_no}, #{companyName}, #{AcomoImagefile}, #{address}, #{extra_address}, #{aroundInfo}, #{parkInfo}, #{lat}, #{lng})
+<selectKey resultType="int" keyProperty="acom_no" order="AFTER">SELECT SEQ_ACOMODATION.currval FROM DUAL</selectKey>
+</insert>
+
+ <select id="getAcomNo" resultType="int" parameterType="HashMap">
+	select acom_no
+	from TBL_ACOMODATION
+	where fk_host_no = to_number(#{host_no}) and acom_name = #{companyName}
+</select>  
+
+<!-- 
+<insert id="addAcomoImage" parameterType="HashMap">
+	<foreach item="filename" collection="AcomoImagenames" separator=";">
+	<![CDATA[insert into tbl_acomo_add_img(acom_image_add_no, fk_acom_no, acom_image_add_name) values
+			(SEQ_ACOM_ADD_IMG.nextval, ${acomNo}, ${filename})]]> 
+	</foreach>
+</insert> -->
+
+    <insert id="addAcomoImage" parameterType="HashMap">
+      INSERT INTO tbl_acomo_add_img (acom_image_add_no, fk_acom_no, acom_image_add_name)
+      SELECT SEQ_ACOM_ADD_IMG.nextval, A.* from(
+      <foreach item="filename" collection="AcomoImagenames" separator="UNION ALL ">
+         select #{acomNo}, #{filename} 
+         from dual
+      </foreach>
+      ) A
+   </insert>
+
+
+<insert id="roomRegister" parameterType="HashMap">
+INSERT INTO TBL_ROOM (room_id, fk_acom_no, room_no, room_type, room_image, price)
+VALUES(#{randomKey}, #{acomNo}, #{roomNo}, #{roomType}, #{RoomImagefile}, #{price})
+</insert>	
+
+
+<insert id="addRoomImage" parameterType="HashMap">
+      INSERT INTO tbl_room_add_img (room_image_add_no, fk_room_id, room_image_add_name)
+      SELECT SEQ_ACOM_ADD_IMG.nextval, A.* from(
+      <foreach item="filename" collection="RoomImagenames" separator="UNION ALL ">
+         select #{randomKey}, #{filename} 
+         from dual
+      </foreach>
+      ) A
 </insert>
 
 
 
-
-
+<insert id="insertpublicServices" parameterType="HashMap">
+  INSERT INTO TBL_FACILITIES (fac_no, fk_category_fac_no, fk_acom_no)
+      SELECT SEQ_FAC.nextval, A.* from(
+      <foreach item="publicvalue" collection="publicServicevalue" separator="UNION ALL ">
+         select #{publicvalue}, #{acomNo} 
+         from dual
+      </foreach>
+      ) A
+</insert>
 
 
 </mapper>

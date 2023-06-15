@@ -1,9 +1,11 @@
 package com.five.goodchoice.member.controller;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -106,8 +108,9 @@ public class HostController {
 	}
 	
 	// 업소 등록
+	@ResponseBody
 	@RequestMapping(value="/insertAcomoAndRoom.gc", method = {RequestMethod.POST}) 
-	public ModelAndView insertAcomoAndRoom(ModelAndView mav, MultipartHttpServletRequest mrequest) {
+	public String insertAcomoAndRoom(MultipartHttpServletRequest mrequest) {
 		
 		String lat = mrequest.getParameter("lat");
 		String lng = mrequest.getParameter("lng");
@@ -151,7 +154,7 @@ public class HostController {
 			  // 2개만 입력했을 경우
 			  aroundInfo = aroundInfo2 + "/" + aroundInfo3;
 			}
-			else if (aroundInfo1 != null) {
+			  else if (aroundInfo1 != null) {
 			  // 1개만 입력했을 경우 (aroundInfo1)
 			  aroundInfo = aroundInfo1;
 			} else if (aroundInfo2 != null) {
@@ -166,12 +169,12 @@ public class HostController {
 			  aroundInfo = null;
 			}
 		
+		String roomType = mrequest.getParameter("roomType");
+		String price = mrequest.getParameter("price");
+		String roomNo = mrequest.getParameter("roomNo");
 		
-		if(publicServices != null) {
-			for (String value : publicServices) {
-			//	service.insertCategoryFacility(value);
-		    }		
-		}
+		
+		
 		
 		List<MultipartFile> fileList_1 = mrequest.getFiles("file_arr1");
 		List<MultipartFile> fileList_2 = mrequest.getFiles("file_arr2");
@@ -228,11 +231,6 @@ public class HostController {
 	            e.printStackTrace();
 	         }
 	      }
-	    System.out.println("aroundInfo : " + aroundInfo);
-	    System.out.println("parkInfo : " + parkInfo);
-		System.out.println("AcomoImagefile : " + paraMap.get("AcomoImagefile"));
-		System.out.println("host_no : " + host_no);
-		System.out.println("companyName : " + companyName);
 		paraMap.put("host_no", host_no);
 		paraMap.put("companyName", companyName);
 		paraMap.put("lat", lat);
@@ -241,60 +239,220 @@ public class HostController {
 		paraMap.put("extra_address", extra_address);
 		paraMap.put("aroundInfo", aroundInfo);
 		paraMap.put("parkInfo", parkInfo);
+		paraMap.put("roomType", roomType);
+		paraMap.put("price", price);
+		paraMap.put("roomNo", roomNo);
 		
+		
+		int roomRegisterResult =0;
+		String root = "";
+		String path = "";
+		int n1 =0;
 		int n = service.acomoRegister(paraMap);
 		
-		System.out.println("n : " +n);
 		
-	    String root = session.getServletContext().getRealPath("/");
-	    String path = root + "resources"+File.separator+"email_attach_file";
-	    
-	    File dir = new File(path);
-	     if(!dir.exists()) {	// 폴더가 존재하지 않으면 폴더를 만들어라
-	    	 dir.mkdirs();
-	     }
-	     
-	     // >>> 첨부파일의 위의 path 경로에 올리기 <<< //
-	     String[] arr_attachFilename = null;	// 첨부된 파일name만 담는곳
-	     
-	     if(fileList_1 != null && fileList_1.size() >0) {
-	    	 
-	    	 arr_attachFilename = new String[fileList_1.size()];
-	    	 
-	    	 for(int i=0; i<fileList_1.size(); i++) {
-	    		 MultipartFile mtfile = fileList_1.get(i);
-	    		 // System.out.println("파일명 : " + mtfile.getOriginalFilename() + " / 파일크기 : " + mtfile.getSize());
-	    		 /*
-					파일명 : 결제관련IAMPORT사용방법 .zip / 파일크기 : 1202177
-					파일명 : berkelekle단가라포인트03.jpg / 파일크기 : 57641
-					파일명 : Electrolux냉장고_사용설명서.pdf / 파일크기 : 791567
-	    		  */
-	    		 
-	    		 
-	    		 	try {
-	    		 		//  == MultipartFile을 File 로 변환하여 탐색기 저장폴더에 저장하기 시작 == //
-		    		 	  File attachFile = new File(path+File.separator+mtfile.getOriginalFilename());
-		    		 	  mtfile.transferTo(attachFile);
-		    		 	//  == MultipartFile을 File 로 변환하여 탐색기 저장폴더에 저장하기 끝 == //	 	
-		    		 	  
-		    		 	  arr_attachFilename[i] = mtfile.getOriginalFilename();
+//		------------------------------------------------숙소 테이블에 insert--------------
+		if(n==1) {
+			
+			Map<String, Object> fileMap = new HashMap<>();
+			int acomNo = Integer.parseInt(String.valueOf(paraMap.get("acom_no")));
+			int[] arr_publicServicevalue = null;
+			
+			
+			if(publicServices != null) {
+				Map<String, Object> numMap = new HashMap<>();
+					 // value를 arr_publicServicevalue에 추가
+			        if (arr_publicServicevalue == null) {
+			            arr_publicServicevalue = new int[publicServices.length];
+			        }
+			        for (int i = 0; i < publicServices.length; i++) {
+			        	String value = publicServices[i];
+			        	arr_publicServicevalue[i] = Integer.parseInt(value);
+			            numMap.put("publicServicevalue", arr_publicServicevalue);
+			        }	
+			        numMap.put("acomNo", acomNo);
+			       int result = service.insertpublicServices(numMap);
+				
+			
+			}
+		     root = session.getServletContext().getRealPath("/");
+		     path = root + "resources"+File.separator+"acomo_attach_file";
+		    
+		    File dir = new File(path);
+		     if(!dir.exists()) {	// 폴더가 존재하지 않으면 폴더를 만들어라
+		    	 dir.mkdirs();
+		     }
+		     
+		     // >>> 첨부파일의 위의 path 경로에 올리기 <<< //
+		     String[] arr_attachFilename = null;	// 첨부된 파일name만 담는곳
+		     
+		     if(fileList_1 != null && fileList_1.size() >0) {
+		    	 
+		    	 arr_attachFilename = new String[fileList_1.size()];
+		    	
+		    	 
+		    	 
+		    	 for(int i=0; i<fileList_1.size(); i++) {
+		    		 MultipartFile mtfile = fileList_1.get(i);
+		    		 // System.out.println("파일명 : " + mtfile.getOriginalFilename() + " / 파일크기 : " + mtfile.getSize());
+		    		 /*
+						파일명 : 결제관련IAMPORT사용방법 .zip / 파일크기 : 1202177
+						파일명 : berkelekle단가라포인트03.jpg / 파일크기 : 57641
+						파일명 : Electrolux냉장고_사용설명서.pdf / 파일크기 : 791567
+		    		  */
 		    		 	
-	    		 	} catch (Exception e) {
-	    		 		e.printStackTrace();
-	    		 	}
-	    		 
-	    	 }// end of for --------------------------------------------
+		    		 
+		    		 	try {
+		    		 		//  == MultipartFile을 File 로 변환하여 탐색기 저장폴더에 저장하기 시작 == //
+			    		 	  File attachFile = new File(path+File.separator+mtfile.getOriginalFilename());
+			    		 	  mtfile.transferTo(attachFile);
+			    		 	//  == MultipartFile을 File 로 변환하여 탐색기 저장폴더에 저장하기 끝 == //	 	
+			    		 	  
+			    		 	  arr_attachFilename[i] = mtfile.getOriginalFilename();
+			    		 	  
+			    		 	 
+			    		 	 fileMap.put("AcomoImagenames", arr_attachFilename);
+			    		 	  
+			    		 	  
+		    		 	} catch (Exception e) {
+		    		 		e.printStackTrace();
+		    		 	}
+		    		 
+		    	 }// end of for --------------------------------------------
+		    	 fileMap.put("acomNo", acomNo);
+		    	 
+		    	 service.addAcomoImage(fileMap);
+		     }
+		     
+		     if(!RoomImagefile.isEmpty()) {
+					session = mrequest.getSession();
+			         root = session.getServletContext().getRealPath("/");
+			         path = root+"resources"+File.separator+"files";
+			        
+			        /*
+			         2. 파일첨부를 위한 변수의 설정 및 값을 초기화 한 후 파일 올리기 
+			      */
+			         String newFileName = "";
+			         // WAS(톰캣)의 디스크에 저장될 파일명 
+			         
+			         byte[] bytes = null;
+			         // 첨부파일의 내용물을 담는 것 
+			         
+			         long fileSize = 0;
+			         // 첨부파일의 크기 
+			         
+			         try {
+			            bytes = RoomImagefile.getBytes();
+			            // 첨부파일의 내용물을 읽어오는 것
+			            
+			            String originalFilename = RoomImagefile.getOriginalFilename();
+			        
+			            newFileName = fileManager.doFileUpload(bytes, originalFilename, path);
+			            // 첨부되어진 파일을 업로드 하도록 하는 것이다
+			            
+			            paraMap.put("RoomImagefile", originalFilename);
+			          
+			            
+			         } catch (Exception e) {
+			            e.printStackTrace();
+			         }
+			      }
+		     
+		     String randomString = generateRandomString(8);
+		     paraMap.put("randomKey", randomString);
+		     
+		     paraMap.put("acomNo", String.valueOf(acomNo));
+		     paraMap.put("roomType", roomType);
+		     paraMap.put("price", price);
+		     paraMap.put("roomNo", roomNo);
+		     roomRegisterResult = service.roomRegister(paraMap);
+		     
+		
+		     if(roomRegisterResult == 1) {
+		    	 
+		    	 Map<String, Object> fileMap1 = new HashMap<>();
+					
+					
+					
+					
+				     root = session.getServletContext().getRealPath("/");
+				     path = root + "resources"+File.separator+"room_attach_file";
+				    
+				    File dir1 = new File(path);
+				     if(!dir1.exists()) {	// 폴더가 존재하지 않으면 폴더를 만들어라
+				    	 dir1.mkdirs();
+				     }
+				     
+				     // >>> 첨부파일의 위의 path 경로에 올리기 <<< //
+				     String[] arr_attachFilename1 = null;	// 첨부된 파일name만 담는곳
+				     
+				     if(fileList_2 != null && fileList_2.size() >0) {
+				    	 
+				    	 arr_attachFilename1 = new String[fileList_2.size()];
+				    	
+				    	 
+				    	 
+				    	 for(int i=0; i<fileList_2.size(); i++) {
+				    		 MultipartFile mtfile = fileList_2.get(i);
+				    		 // System.out.println("파일명 : " + mtfile.getOriginalFilename() + " / 파일크기 : " + mtfile.getSize());
+				    		 /*
+								파일명 : 결제관련IAMPORT사용방법 .zip / 파일크기 : 1202177
+								파일명 : berkelekle단가라포인트03.jpg / 파일크기 : 57641
+								파일명 : Electrolux냉장고_사용설명서.pdf / 파일크기 : 791567
+				    		  */
+				    		 	
+				    		 
+				    		 	try {
+				    		 		//  == MultipartFile을 File 로 변환하여 탐색기 저장폴더에 저장하기 시작 == //
+					    		 	  File attachFile = new File(path+File.separator+mtfile.getOriginalFilename());
+					    		 	  mtfile.transferTo(attachFile);
+					    		 	//  == MultipartFile을 File 로 변환하여 탐색기 저장폴더에 저장하기 끝 == //	 	
+					    		 	  
+					    		 	 arr_attachFilename1[i] = mtfile.getOriginalFilename();
+					    		 	  
+					    		 	 
+					    		 	fileMap1.put("RoomImagenames", arr_attachFilename1);
+					    		 	  
+					    		 	  
+				    		 	} catch (Exception e) {
+				    		 		e.printStackTrace();
+				    		 	}
+				    		 
+				    	 }// end of for --------------------------------------------
+				    	 fileMap1.put("randomKey", randomString);
+				    	 
+				    	 service.addRoomImage(fileMap1);
+				     }
+		    	 
+		    	 
+		     }
+		     
+		}
+		JSONObject jsonObj = new JSONObject();
+		if(n*roomRegisterResult > 0) {
+			jsonObj.put("result", 1);
+		}
+		else {
+			jsonObj.put("result", 0);
+		}
 		
 		
-	    	/* Map<String, Object> paraMap = new HashMap<>();
-	    	 paraMap.put(key, value);*/
-	    	 
-	     }	 
-		
-		
-		return mav;
+		return jsonObj.toString();
 	}
 	
 	
+	// 랜덤하게 8글자 생성
+	public static String generateRandomString(int length) {
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        Random random = new Random();
+        StringBuilder sb = new StringBuilder(length);
+        
+        for (int i = 0; i < length; i++) {
+            int index = random.nextInt(characters.length());
+            sb.append(characters.charAt(index));
+        }
+        
+        return sb.toString();
+    }
 	
 }

@@ -188,7 +188,7 @@
 
 	      acomoDragDropEvent();
 	      
-	      
+	      $('input#address').on('input', lnglatinput);
 	      
 	      
 	      $('#roomModal-close').click(function() {
@@ -218,6 +218,15 @@
 	      }
 	    
 	    $('span#error_companyName').text("");
+	}
+	
+	function lnglatinput() {
+		const postcode = $('input#postcode').val();
+  	    const address = $("input#address").val();
+  	
+  	    $("input#address_hidden").val(postcode+address);
+  	
+  	    func_geocoder(postcode+address);
 	}
 	
 	function addressDaum() {
@@ -256,7 +265,7 @@
                     addr += extraAddr ;
                 
                 }
-
+					
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
                 document.getElementById("postcode").value = addr;
                 // 커서를 상세주소 필드로 이동한다.
@@ -317,7 +326,6 @@
 		let file_arr1 = []; // 첨부되어진 파일 정보를 담아 둘 배열 
 
 	   function acomoDragDropEvent() {
-
 	   $("div#dropArea").on('dragenter', function(event){   /* "dragenter" 이벤트는 드롭대상인 박스 안에 Drag 한 파일이 최초로 들어왔을 때 */
 	           event.preventDefault();
 	           event.stopPropagation();
@@ -334,17 +342,15 @@
 	          var files = event.originalEvent.dataTransfer.files; // 드롭된 파일 가져오기
 	          
 	          if (files != null && files != undefined) {
-	            
 	            const f = files[0];
 	             
 	            var fileInfo = $('div#fileInfo').html(); // 기존 파일 정보 가져오기
+	            
 	            
 	            for (var i = 0; i < files.length; i++) {
 	              var file = files[i];
 	              var fileName = file.name;
 	              var fileSize = file.size;
-	              
-	              
 
 	              if (fileSize <= 10 * 1024 * 1024) { // 파일 크기가 10MB 이하인 경우에만 처리
 	                 
@@ -439,11 +445,11 @@
           var files = event.originalEvent.dataTransfer.files; // 드롭된 파일 가져오기
           
           if (files != null && files != undefined) {
-            
             const f = files[0];
              
             var fileInfo = $('div#fileInfo_1').html(); // 기존 파일 정보 가져오기
             
+           
             for (var i = 0; i < files.length; i++) {
               var file = files[i];
               var fileName = file.name;
@@ -544,13 +550,6 @@
 			    var file = fileInput.files[0]
 			    formData.append('AcomoImage', file);
 		  });
-		  
-		  const postcode = $('input#postcode').val();
-      	  const address = $("input#address").val();
-      	
-      	  $("input#address_hidden").val(postcode+address);
-      	
-      	  func_geocoder(postcode+address);
 		}
 	
 	
@@ -656,10 +655,11 @@
 
          if (!hasInput) {
            alert("적어도 하나의 주변 정보를 작성해주세요.");
+           return;
          }
         	
-         if($("#roomType").val() == "other") {
-        	 alert('객실 유형을 선택해주세요');
+         if($("#roomType").val().trim() == "") {
+        	 alert('객실 유형을 입력해주세요');
  			 return ;
          }
          
@@ -669,11 +669,29 @@
         	 return;
          }
          
+         const roomNo = $("input#roomNo").val();         
+         if(!/^\d+$/.test(roomNo) || $("input#roomNo").val() == "") {
+        	 alert('방번호 입력란이 비어있거나 정상가는 숫자만 입력가능합니다.!!');
+        	 return;
+         }
+         
          const RoomImage = $("input#RoomImage");
          
          if(RoomImage.get(0).files.length === 0){
         	   alert('객실 대표 이미지를 추가 하셔야 합니다.');
         	    return;
+         }
+         
+         
+         const lat = $("input#lat").val();
+         const lng = $("input#lng").val();
+         if(lat =="" || lng == "") {
+        	 alert("올바른 주소를 입력해주세요");
+        	 $("input#postcode").val("");
+        	 $("input#address").val("");
+        	 $("input#postcode").focus();
+        	 
+        	 return;
          }
          
          
@@ -710,11 +728,14 @@
               success:function(json){
                   // console.log("~~~ 확인용 : " + JSON.stringify(json));
                   // ~~~ 확인용 : {"result":1}
+                  console.log("~~~ 확인용 : " + JSON.stringify(json));
                   if(json.result == 1) {
                 	  alert("관리자에게 숙소 검수 요청 되었습니다.");
                 	  location.href="<%= ctxPath%>/main/hosthome.gc";
                   }
                   else {
+                	  alert("숙소등록중 문제가 발생했습니다\\n 숙소등록을 다시 시도해주세요.");
+                	  location.href="<%= ctxPath%>/hostRegister.gc";	                	  
                   }
               },
               error: function(request, status, error){
@@ -776,7 +797,7 @@
      	</td>
       </tr>
       <tr class="align-bottom">
-        <th class="th_info" style="border:solid 1px #ddd;">업체 이미지 <br> (최대 20장)</th>
+        <th class="th_info" style="border:solid 1px #ddd;">업체 이미지 <br> (최대 10MB)</th>
         <td>
         	<div style="line-height: 22px !important; color:#0000008F !important; font-size:13px !important; width:100% !important;">
 	        	<p>* 객실 및 업체 전경, 로비, 주차장 등 업체의 전반적인 이미지를 업로드해주시기 바랍니다.</p>
@@ -795,7 +816,7 @@
 					      <h3>숙소 추가 이미지</h3>
 					      <div class="drop-area" id="dropArea">이곳에 숙소 사진을 드롭하세요</div>
 					      <p>* 여러장을 한꺼번에 드래그하여 업로드 할 수 있습니다.</p>
-					      <p style="color:red;">* 최대 20장 까지 등록이 가능합니다.</p>
+					      <p style="color:red;">* 최대 10MB 까지 등록이 가능합니다.</p>
 					      <p>*  사진 권장사이즈 : 1920 * 1080 또는 960 * 540</p>
 					      <h5 style="margin-top:20px;">업로드된 파일</h5>
 					      <div id="fileInfo" class="file-info"></div>
@@ -877,17 +898,14 @@
       	<td>
       		<div class="row text-center mt-3">
       			<span class="col-md-2" style="display:inline-block; margin-top:14px; font-size: 14px; font-weight: bold;">객실 유형</span>
-      			<select id="roomType"class="form-control col-md-6 offset-md-1" style="height: 50px;">
-      				<option value="other" selected>유형을 선택해주세요.</option>
-      				<option>스탠다드</option>
-      				<option>디럭스</option>
-      			</select>	
+				<input id="roomType" name="roomType"class="form-control col-md-6 offset-md-1" style="height: 50px;" placeholder="객실 유형을 입력해주세요"/>
       		</div>
       		<div class="row text-center mt-3"><span class="col-md-2" style="display:inline-block; margin-top:14px; font-size: 14px; font-weight: bold; margin-left:3px;">정상가</span><input type="text" id="price" name="price"class="form-control col-md-4 input_info" /><span style="display:inline-block; margin-top:14px; font-size: 14px; font-weight: bold; margin-left:3px;">원</span></div>
+      		<div class="row text-center mt-3"><span class="col-md-2" style="display:inline-block; margin-top:14px; font-size: 14px; font-weight: bold; margin-left:3px;">방번호</span><input type="text" id="roomNo" name="roomNo"class="form-control col-md-4 input_info" /><span style="display:inline-block; margin-top:14px; font-size: 14px; font-weight: bold; margin-left:3px;">호</span></div>
       	</td>
       </tr>
       <tr>
-      	<th class="th_info" style="border:solid 1px #ddd;">객실 이미지 정보 <br> (최대15장)</th>
+      	<th class="th_info" style="border:solid 1px #ddd;">객실 이미지 정보 <br> (최대10MB)</th>
       	<td>
       		<div style="line-height: 22px; color:#0000008F; font-size:13px; width:100%;">
 	        	<p>* 객실의 전반적인 이미지를 업로드 해주시기 바랍니다.</p>
@@ -906,7 +924,7 @@
 					      <h3>숙소 추가 이미지</h3>
 					      <div class="drop-area" id="dropArea_1">이곳에 숙소 사진을 드롭하세요</div>
 					      <p>* 여러장을 한꺼번에 드래그하여 업로드 할 수 있습니다.</p>
-					      <p style="color:red;">* 최대 15장 까지 등록이 가능합니다.</p>
+					      <p style="color:red;">* 최대 10MB 까지 등록이 가능합니다.</p>
 					      <p>*  사진 권장사이즈 : 1920 * 1080 또는 960 * 540</p>
 					      <h5 style="margin-top:20px;">업로드된 파일</h5>
 					      <div id="fileInfo_1" class="file-info"></div>
@@ -921,9 +939,9 @@
     </tbody>
   </table>
   <div class="text-center" style="padding: 20px 0px 20px 0px;">
-  	 <input type="text"  id="address_hidden"/>
-  	 <input type="text"  id="lat" name="lat"/>
-  	 <input type="text"  id="lng" name="lng"/>
+  	 <input type="hidden"  id="address_hidden"/>
+  	 <input type="hidden"  id="lat" name="lat"/>
+  	 <input type="hidden"  id="lng" name="lng"/>
      <button type="button" class="btn_save" onclick="goAcomoinspection()">숙소 검수 요청 ></button>
   </div>
   

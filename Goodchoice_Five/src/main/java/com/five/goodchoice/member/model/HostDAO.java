@@ -48,4 +48,45 @@ public class HostDAO implements InterHostDAO {
 	
 	
 	
+	/*
+	 * // 숙소번호 알아오기
+	 * 
+	 * @Override public int getAcomNo(Map<String, String> paraMap) { int n =
+	 * sqlsession.selectOne("host.getAcomNo", paraMap); return n; }
+	 */
+	
+	
+	// 숙소추가이미지
+	@Override
+	public int addAcomoImage(Map<String, Object> fileMap) {
+
+		int n = sqlsession.insert("host.addAcomoImage", fileMap);
+		return n;
+	}
+	
+	
+	// 객실 테이블에 insert
+	@Override
+	public int roomRegister(Map<String, String> paraMap) {
+		int n = sqlsession.insert("host.roomRegister", paraMap);
+		return n;
+	}
+	
+	// 객실추가이미지
+	@Override
+	public void addRoomImage(Map<String, Object> fileMap1) {
+		sqlsession.insert("host.addRoomImage", fileMap1);
+		
+	}
+	
+	
+	// 공용시설추가
+	@Override
+	public int insertpublicServices(Map<String, Object> numMap) {
+		int n = sqlsession.insert("host.insertpublicServices", numMap);  
+		return n;
+	}
+	
+	
+	
 }
