@@ -822,7 +822,7 @@
 					      <div id="fileInfo" class="file-info"></div>
 					      <div class="modal-buttons text-center">
 						      <button type="button" id="modal-confirm" style="margin-top:20px;">확인</button>
-					      </div>
+					      </div>   
 					    </div>
 					  </div>
         	</div>
