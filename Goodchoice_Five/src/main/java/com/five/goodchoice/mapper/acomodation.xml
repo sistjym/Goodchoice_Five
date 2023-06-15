@@ -6,6 +6,7 @@
 <mapper namespace="acomodation">
 		 
 	<select id="getAvailableRoomId" parameterType="HashMap" resultType="String">
+
 		WITH SEARCH_ROOM AS(
 		    select ROOM.room_id
 		    from 
@@ -21,14 +22,21 @@
 		)
 		select SR.room_id
 		from SEARCH_ROOM SR
-		LEFT JOIN tbl_reservation RES ON RES.fk_room_id = SR.room_id
+		LEFT JOIN 
+		(
+		    select *
+		    from tbl_reservation
+		    where reserv_status = '1'
+		) RES 
+		ON RES.fk_room_id = SR.room_id
 		AND(
-		        (to_date(#{check_in_date}, 'yyyy-MM-dd') BETWEEN RES.check_in_date AND (RES.check_out_date - 1))
-		        OR (to_date(#{check_out_date}, 'yyyy-MM-dd') + 1 BETWEEN (RES.check_in_date + 1) AND RES.check_out_date)
+		        (to_date(#{check_in_date} || '16:00:00', 'yyyy-MM-dd hh24:mi:ss') BETWEEN RES.check_in_date AND RES.check_out_date)
+		        OR (to_date(#{check_out_date} || '11:00:00', 'yyyy-MM-dd hh24:mi:ss') BETWEEN RES.check_in_date AND RES.check_out_date)
 		    )
 		WHERE
 		    RES.fk_room_id IS NULL
-		order by 1			
+		order by 1	
+						
 	</select>
 	
 	
