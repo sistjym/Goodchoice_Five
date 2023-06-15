@@ -1,16 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+	String ctxPath = request.getContextPath();
+%>s
+
 <!-- if문으로 예약 내역, 이용 내역, 취소 내역 각각 처리-->
 
 <div class="align_rt">
 	<div class="reserve_detail">
-	<c:forEach var="reservation" items="${requestScope.reservationList}" begin="1" end="1">
-		<c:if test="${reservation.reserv_status == '1'}">
-			<div class="info" style="background-image: url(&quot;https://image.goodchoice.kr/adimg_new/1742/104937/a6a12c63b7b24ad6b5f91366fc69829d.jpg&quot;);">
+	<c:forEach var="reservation" items="${requestScope.reservationList}">
+		<c:if test="${reservation.reserv_id != null && reservation.reserv_id == requestScope.reserv_id}">
+			<div class="info" style="background-image: url(&quot;<%= ctxPath%>/resources/images/${acom_image}&quot;);">
 				<div>
 					<i class="bg_w">예약내역</i> 
-					<strong style="font-weight: normal; display: block; margin-bottom: 9px; font-size: 24px; color: rgba(0, 0, 0, 0.87);">종로 부티크 호텔K</strong> 
+					<strong style="font-weight: normal; display: block; margin-bottom: 9px; font-size: 24px; color: rgba(0, 0, 0, 0.87);">${reservation.acom_name}</strong> 
 					<span style="margin-bottom: 9px; display: block; font-size: 20px; color: rgba(0, 0, 0, 0.87);" >
 						${reservation.check_in_date} - ${reservation.check_out_date} • 1박
 					</span>

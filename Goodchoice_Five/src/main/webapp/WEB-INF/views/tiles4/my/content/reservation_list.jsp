@@ -4,6 +4,23 @@
 <%
 	String ctxPath = request.getContextPath();
 %>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	
+});
+
+function getSendDateBak(checkInDate, checkOutDate) {
+	  const oneDay = 24 * 60 * 60 * 1000; // 1일을 밀리초로 표현
+	  const startDate = new Date(Date.parse(checkInDate));
+	  const endDate = new Date(Date.parse(checkOutDate));
+	  const diffDays = Math.round(Math.abs((startDate - endDate) / oneDay));
+	  return diffDays;
+	}
+
+</script>
+
 <div class="align_rt">
 	<div class="reserve_list">
 		
@@ -19,18 +36,20 @@
 		                            	삭제
 		                        </button>
 		                        <p class="pic">
-		                            <img loading="lazy" srcset="https://image.goodchoice.kr/resize_354x184/adimg_new/779/203463/71325338f503e141b7d061d0eeb01053.jpg, https://image.goodchoice.kr/resize_531x276/adimg_new/779/203463/71325338f503e141b7d061d0eeb01053.jpg 1.5x , https://image.goodchoice.kr/resize_708x368/adimg_new/779/203463/71325338f503e141b7d061d0eeb01053.jpg 2x" src="<%= ctxPath%>/resources/images/${reservation.fk_room_id}.jpg" alt="신촌 라뉘호텔" class="align">
+		                            <img loading="lazy" srcset="https://image.goodchoice.kr/resize_354x184/adimg_new/779/203463/71325338f503e141b7d061d0eeb01053.jpg, https://image.goodchoice.kr/resize_531x276/adimg_new/779/203463/71325338f503e141b7d061d0eeb01053.jpg 1.5x , https://image.goodchoice.kr/resize_708x368/adimg_new/779/203463/71325338f503e141b7d061d0eeb01053.jpg 2x" src="<%= ctxPath%>/resources/images/${reservation.acom_image}" alt="${reservation.acom_name}" class="align">
 		                        </p> 
-		                        <a href="<%= ctxPath%>/reservation-detail.gc" class="product-title">
+		                        <a href="<%= ctxPath%>/reservation-detail.gc?acom_name=${reservation.acom_name}&room_type=${reservation.room_type}&price=${reservation.price}&check_in_date=${reservation.check_in_date}&check_out_date=${reservation.check_out_date}&reserv_id=${reservation.reserv_id}" class="product-title">
 		                            <i class="bg_w">예약숙소</i> 
-		                            <strong>${reservation.fk_room_id}</strong> 
+		                            <strong>${reservation.room_type}</strong> 
 		                            <span style="display: block; padding-left: 20px; font-size: 18px;">
 		                                ${reservation.check_in_date} - ${reservation.check_out_date} • 1박
 		                            </span> 
 		                            <b>예약 상세 &gt;</b>
 		                        </a> 
 		                        <p class="btn_re">
-		                            <a href="https://www.goodchoice.kr/product/detail?ano=779&amp;adcno=1&amp;sel_date=2023-05-23&amp;sel_date2=2023-05-23"> 다시 예약 </a>
+		                            <%-- <a href="<%= ctxPath%>/reservation/reservation.gc?acom_name=${reservation.acom_name}&room_type=${reservation.room_type}&price=${reservation.price}&send_date_bak=${send_date_bak}&check_in_date=${reservation.check_in_date}&check_out_date=${reservation.check_out_date}"> 다시 예약 </a> --%>
+		                       <a href="<%= ctxPath%>/reservation/reservation.gc?acom_name=${reservation.acom_name}&room_type=${reservation.room_type}&price=${reservation.price}&check_in_date=${reservation.check_in_date}&check_out_date=${reservation.check_out_date}"> 다시 예약 </a>
+		                       
 		                        </p>
 		                    </div>
 		                </li>

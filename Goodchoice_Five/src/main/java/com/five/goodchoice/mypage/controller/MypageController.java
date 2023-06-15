@@ -113,8 +113,11 @@ public class MypageController {
 		HttpSession session = request.getSession();
 		MemberVO loginuser = (MemberVO)session.getAttribute("loginuser");
 		
+		String reserv_id = request.getParameter("reserv_id");
+		
 		if(loginuser != null) {
 			List<ReservationVO> reservationList = service.getAllReservations();
+			mav.addObject("reserv_id", reserv_id);
 	        mav.addObject("reservationList", reservationList);
 			mav.setViewName("my/reservation-detail.tiles4");
 		}
@@ -139,7 +142,13 @@ public class MypageController {
 	}
 	
 	
-	
+	@RequestMapping(value="/myreviewwrite.gc", method = {RequestMethod.POST}) 
+	public ModelAndView reviewWrite(ModelAndView mav, HttpServletRequest request) {
+		
+		
+		
+		return mav;
+	}
 	
 	
 	

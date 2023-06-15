@@ -23,7 +23,7 @@
     					</svg>
     				</div> 
     				<div class="lower-col">
-    					<p class="notice-text">30일 내<span class="font-weight--xb">0 P</span>가 소멸될 예정이에요.</p> 
+    					<p class="notice-text">30일 내 <span class="font-weight--xb">0 P</span>가 소멸될 예정이에요.</p> 
     		 		</div>
     		 	</div>
     		 </div> 

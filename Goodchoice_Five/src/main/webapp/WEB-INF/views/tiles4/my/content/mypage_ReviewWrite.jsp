@@ -241,7 +241,7 @@ div > ul > li {
      else{
 		 
 	 const frm = document.reviewRegister
-	 frm.action = "<%= ctxPath%>/mypage/reviewWrite.dak";
+	 frm.action = "<%= ctxPath%>/myreviewwrite.gc";
 	 frm.method = "post";
 	 frm.submit();
 	 }
@@ -318,5 +318,4 @@ div > ul > li {
 	</div>
 	
 </div>
-	
 	

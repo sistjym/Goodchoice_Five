@@ -6,9 +6,15 @@
 <mapper namespace="myreservation">
 
     <select id="getAllReservations" resultType="com.five.goodchoice.mypage.model.ReservationVO">
-        select *
-		from tbl_reservation
-		join tbl_room
-		on tbl_reservation.fk_room_id = tbl_room.room_id
+        select A.room_id, C.acom_no, A.room_no, A.room_type, B.price
+		     , B.reserv_id, fk_member_id, C.acom_name
+		     , to_char(B.check_out_date, 'yyyy-mm-dd') as check_out_date
+		     , to_char(B.check_in_date, 'yyyy-mm-dd') as check_in_date
+		     , B.reserv_status, B.reserv_person, C.acom_image
+		from tbl_room A
+		join tbl_reservation B
+		on A.room_id = B.fk_room_id
+		join tbl_acomodation C
+		on A.fk_acom_no = C.acom_no
     </select>
 </mapper>
