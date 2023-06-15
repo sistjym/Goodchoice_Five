@@ -12,7 +12,7 @@
 	
 	<update id="updatePoint" parameterType="HashMap">
 		update tbl_member 
-		set point = point - (to_number(#{user_point}) + #{totalPrice}*0.10)
+		set point = point - (to_number(#{user_point}))
 		where member_id = ${member_id}
 	</update>
 		
