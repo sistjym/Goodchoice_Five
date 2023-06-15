@@ -11,7 +11,7 @@ public interface InterDetail_AcomodationDAO {
 	boolean is_Exist_acom_no(Map<String, String> paraMap);
 
 	// acom_no에 해당하는 숙소정보를 가져오기
-	AcomodationVO show_acom_Info(String acom_no);
+	AcomodationVO show_acom_Info(Map<String, String> paraMap);
 	
 	// acom_no에 해당하는 숙소의 추가이미지 파일을 가져오기
 	List<AcomodationVO> show_acom_add_imgList(Map<String, String> paraMap);

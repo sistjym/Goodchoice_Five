@@ -76,7 +76,7 @@
          <option value="">통계선택하세요</option>
          <option value="acommTotalByDistrict">지역별 숙소 통계</option>
          <option value="totalAcommByspec">스펙별 숙소등록 건수</option>
-         <option value="acommTotalByCity">지역별 도시별 숙소 통계</option>
+         <option value="acommTotalByCity">하위 지역 도시별 숙소 비율</option>
          <option value="genderHireYear">평점 높은 숙소 top5</option>
           <option value="genderHireYear">달별 예약률</option>
       </select>
@@ -358,7 +358,7 @@
 	      			    },
 	      			    title: {
 	      			        align: 'center',
-	      			        text: '지역 도시별 숙소 비율'
+	      			        text: '하위 지역 도시별 숙소 비율'
 	      			    },
 	      			    subtitle: {
 	      			        align: 'left',

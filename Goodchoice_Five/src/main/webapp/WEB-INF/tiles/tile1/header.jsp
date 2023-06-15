@@ -11,7 +11,7 @@
     <header>
         <section class="header_category">
             <h1>
-                <a class href="<%= ctxPath%>/main/home.gc">여기어때</a>
+                <a href="<%= ctxPath%>/main/home.gc">여기어때</a>
             </h1>
             <ul class="gnb_pc">
                 <li>

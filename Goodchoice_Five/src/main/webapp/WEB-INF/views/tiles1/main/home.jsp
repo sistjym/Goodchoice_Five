@@ -310,7 +310,7 @@
                         <div class="top_wrapper slide-track">
 	                       
 	                        	 <p class="destination_1">
-	                                <a class="province">
+	                                <a class="province" href="<%= ctxPath%>/acomodation/home/4">
 	                                    <img class="destnationImg"
 	                                        src="https://pix6.agoda.net/geo/city/16901/1_16901_02.jpg?ca=6&ce=1&s=345x345&ar=1x1">
 	                                    <span class="destination_name">제주도</span>
@@ -319,24 +319,27 @@
 	                            </p>
 	                            
 	                              <p class="destination_1">
-	                                <a class="province">
+	                                <a class="province"  href="<%= ctxPath%>/acomodation/home/1">
 	                                    <img class="destnationImg"
-	                                        src="https://pix6.agoda.net/geo/city/14690/1_14690_02.jpg?ca=6&ce=1&s=345x345&ar=1x1">
+	                                        src="https://pix6.agoda.net/geo/city/14690/1_14690_02.jpg?ca=6&ce=1&s=345x345&ar=1x1"
+	                                       >
 	                                    <span class="destination_name">서울</span>
 	
 	                                </a>
 	                            </p>
+	                            
+	                           
 	                            <p class="destination_1">
-	                                <a class="province">
+	                                <a class="province"  href="<%= ctxPath%>/acomodation/home/2">
 	                                    <img class="destnationImg"
 	                                        src="https://pix6.agoda.net/geo/city/17234/1_17234_02.jpg?ca=6&ce=1&s=345x345&ar=1x1">
 	                                    <span class="destination_name">경기도</span>
 	
 	                                </a>
 	                            </p>
-	
+		
 	                            <p class="destination_1">
-	                                <a class="province">
+	                                <a class="province" href="<%= ctxPath%>/acomodation/home/5">
 	                                    <img class="destnationImg"
 	                                        src="https://pix6.agoda.net/geo/city/17172/1_17172_02.jpg?ca=6&ce=1&s=345x345&ar=1x1">
 	                                    <span class="destination_name">부산</span>

@@ -30,6 +30,25 @@ public class ReservationController {
 	
 	@RequestMapping(value="/reservation/reservation.gc")
 	public String requiredLogin_showReservationPage(HttpServletRequest request, HttpServletResponse response){
+
+		
+		
+		  String acom_name = request.getParameter("acom_name"); 
+		  String room_type = request.getParameter("room_type"); 
+		  String room_price = request.getParameter("room_price"); 
+		  String send_date_bak = request.getParameter("send_date_bak"); 
+		  String check_in_date = request.getParameter("check_in_date"); 
+		  String check_out_date = request.getParameter("check_out_date"); 
+		 
+		  request.setAttribute("acom_name", acom_name);
+		  request.setAttribute("room_type", room_type);
+		  request.setAttribute("room_price", room_price);
+		  request.setAttribute("send_date_bak", send_date_bak);
+		  request.setAttribute("check_in_date", check_in_date);
+		  request.setAttribute("check_out_date", check_out_date);
+		
+		
+		
 		
 		return "reservation/reservation.tiles1";
 		

@@ -38,9 +38,9 @@ public class Detail_AcomodationDAO implements InterDetail_AcomodationDAO {
 	
 	// acom_no에 해당하는 숙소정보를 가져오기
 	@Override
-	public AcomodationVO show_acom_Info(String acom_no) {
+	public AcomodationVO show_acom_Info(Map<String, String> paraMap) {
 
-		AcomodationVO daVO = sqlsession.selectOne("detail.show_acom_Info", acom_no);
+		AcomodationVO daVO = sqlsession.selectOne("detail.show_acom_Info", paraMap);
 		
 		return daVO;
 	}

@@ -7,7 +7,7 @@ body {font-family: Arial, Helvetica, sans-serif, 돋움; }
 	min-height: 1200px;
 	max-width:1024px;
     position: relative;
-    top: 60px;
+    top: 70px;
     padding-top: 40px;
     background-color: white;
     float: right;
@@ -34,7 +34,7 @@ body {font-family: Arial, Helvetica, sans-serif, 돋움; }
 #mysideinfo	{ 
 	min-height: 600px;
     position: relative;
-    top: 60px;
+    top: 100px;
     padding-top: 40px;
     background-color: #fff;
     float: left;

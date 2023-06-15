@@ -4,6 +4,9 @@
 
 /* hearder */
 
+*{
+	 scroll-behavior: smooth;
+}
 
 header{
     top:0;
@@ -124,7 +127,7 @@ ul{
     text-decoration: none;
    
 }
-.dropdown  a:hover{
+.dropdown a:hover{
 	 color: #f7323f;
 	 background:#F3EED9;
 }
@@ -193,7 +196,26 @@ address {
 }
 
 
+.active2{
+  background-color: #0d3486;
+  transition-duration: 0.5s;
+  transition-timing-function: ease;
 
+  
+  -webkit-transition-duration:0.4s;
+  -webkit-transition-timing-function:ease;
+}
+
+.deactive2{
+  
+  background-color: transparent;
+  transition-duration: 0.5s;
+  transition-timing-function: ease;
+ 
+  
+  -webkit-transition-duration:0.4s;
+  -webkit-transition-timing-function:ease;
+}
 
 
 
