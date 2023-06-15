@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.five.goodchoice.detail.model.AcomodationVO;
+import com.five.goodchoice.detail.model.ReservationVO;
 import com.five.goodchoice.detail.model.RoomVO;
 import com.five.goodchoice.detail.service.InterDetail_AcomodationService;
 import com.five.goodchoice.detail.service.InterRoomSerivce;
@@ -31,8 +32,12 @@ public class DetailController {
 	
 	@Autowired
 	private InterRoomSerivce room_service;
+	
+
+	
 	// 모텔 View	
 	
+	@ResponseBody
 	@RequestMapping(value="/details/detail.gc" , method = {RequestMethod.GET} , produces="text/plain;charset=UTF-8")
 	public ModelAndView detail_view(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) throws Exception {
 		
@@ -161,81 +166,17 @@ public class DetailController {
 
 			// acom_no에 해당하는 객실의 정보 가져오기 
 			List<RoomVO> getRoomList = room_service.getRoomList(paraMap);
+						
+			
 
 			
 			mav.addObject("getRoomList",getRoomList);
 			
 			///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-			
-	/*		
-			String acom_name_Value = request.getParameter("acom_name");
-			String room_type_Value =  request.getParameter("room_type");
-			String dateDiff_Value =  request.getParameter("dateDiff");
-
-
-
-
-			// 받아온 값이 null이 아니라면 디코딩을 수행합니다.
-			if (acom_name_Value != null && room_type_Value != null  && dateDiff_Value != null ) {
-			    try {
-			        // UTF-8로 인코딩된 값을 디코딩합니다.
-			        String acom_name = URLDecoder.decode(acom_name_Value, "UTF-8");
-			        
-			        // 디코딩된 값 사용
-			        System.out.println(acom_name);
-			        
-			     // UTF-8로 인코딩된 값을 디코딩합니다.
-			        String room_type = URLDecoder.decode(room_type_Value, "UTF-8");
-			        
-			        // 디코딩된 값 사용
-			        System.out.println(room_type);
-			        			        
-			     // UTF-8로 인코딩된 값을 디코딩합니다.
-			        String dateDiff = URLDecoder.decode(dateDiff_Value, "UTF-8");
-			        
-			        // 디코딩된 값 사용
-			        System.out.println(dateDiff);
-			        
-			        // 디코딩된 값으로 추가적인 처리 수행
-			        // ...
-			        
-					paraMap.put("acom_name",acom_name);
-					
-					paraMap.put("room_type",room_type);
-					
-					paraMap.put("dateDiff",dateDiff);
-			        
-			    } catch (UnsupportedEncodingException e) {
-			        // 디코딩 실패 시 예외 처리
-			        e.printStackTrace();
-			    }
-			}
-			
-		*/	
+				
 			
 			
 			
-			
-			// acom_no에 해당하는 각 객실의 추가이미지 가져오기
-			
-			// room_id 일치할경우에만 들어가게 코딩
-		
-	/*
-			ArrayList<RoomVO> getRoomOne = room_service.getRoomOne(paraMap);
-						
-			for(RoomVO room  : getRoomOne ){
-				   
-				   List<String> room_Add_ImageList = room_service.getRoom_addImageList(room.getRoom_id());       
-
-				   room.setRoom_Add_ImageList(room_Add_ImageList);
-
-			}
-			
-			mav.addObject("getRoomOne",getRoomOne);
-		
-		*/	
-						
-
 			
 			
 			mav.setViewName("details/detail.tiles5");
@@ -249,11 +190,11 @@ public class DetailController {
 
 	}
 	
-	/*
-	// 객실 리스트 불러오기
+/*
+	// 예약 리스트 불러오기
 	@ResponseBody
-	@RequestMapping(value="/getRoomList.gc",method = {RequestMethod.GET}, produces="text/plain;charset=UTF-8")
-	public String getRoomList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	@RequestMapping(value="/details/detail.gc",method = {RequestMethod.GET}, produces="text/plain;charset=UTF-8")
+	public String getReservationList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		String acom_no = request.getParameter("acom_no");
 		
@@ -261,28 +202,33 @@ public class DetailController {
 		
 		paraMap.put("acom_no", acom_no);
 		
-		List<RoomVO> roomList = room_service.getRoomList(paraMap);
+
+		// 예왁관련 메소드 생성
+		
+		
+		List<ReservationVO> getReservationList = reservation_service.getReservationList(paraMap);
+		
 		
 		JSONArray jsonArr = new JSONArray();
 		
-		if(roomList != null) {// DB 에서 넘어온값 roomList 이 잇다면
-			for( RoomVO roomvo : roomList ) {
+		if(getReservationList != null) {// DB 에서 넘어온값 roomList 이 잇다면
+			for( ReservationVO resvvo : getReservationList ) {
 				JSONObject jsonobj = new JSONObject();
-				jsonobj.put("room_id", roomvo.getRoom_id());
-				jsonobj.put("room_no", roomvo.getRoom_no());
-				jsonobj.put("room_type", roomvo.getRoom_type());
-				jsonobj.put("room_image", roomvo.getRoom_image());
-				jsonobj.put("price", roomvo.getPrice());
-				jsonobj.put("room_no", roomvo.getRoom_no());
+				jsonobj.put("resv_check_in_date", resvvo.getResv_check_in_date());
+				jsonobj.put("resv_check_out_date", resvvo.getResv_check_out_date());
+				jsonobj.put("resv_room_id", resvvo.getResv_room_id());
+				jsonobj.put("resv_room_type", resvvo.getResv_room_type());
+				jsonobj.put("reserv_status", resvvo.getReserv_status());
 				jsonArr.put(jsonobj);
 				
 			}			
 		}		
-		return 	jsonArr.toString();
+		
+		return jsonArr.toString(); 	
 
 	}
 	
-	*/
+*/
 	
 	
 	

@@ -79,14 +79,20 @@
 			<!-- 리뷰 리스트 가져오기  --> 
 		
 		<select id="show_ReviewList" parameterType="HashMap" resultType="com.five.goodchoice.detail.model.AcomodationVO">
-		
-			SELECT A.review_subject as review_subject, A.review_content as review_content, 
-			A.review_score as review_score, A.review_image as review_image, 
-			A.review_reg_date as review_reg_date , (SELECT COUNT(*) FROM tbl_review A JOIN tbl_room B ON A.fk_room_id = B.room_id WHERE B.fk_acom_no = #{acom_no}) AS review_cnt
-			FROM tbl_review A
-			JOIN tbl_room B ON A.fk_room_id = B.room_id
-			WHERE B.fk_acom_no = #{acom_no}
-			order by review_reg_date      
+						
+			select  A.review_subject as review_subject, A.review_content as review_content, 
+					A.review_score as review_score, A.review_image as review_image, 
+					A.review_reg_date as review_reg_date , (SELECT COUNT(*) FROM tbl_review A JOIN tbl_room B ON A.fk_room_id = B.room_id WHERE B.fk_acom_no = #{acom_no}) AS review_cnt,
+					B.room_type as review_room_type, C.member_nickname as review_member_nickname 
+			from tbl_review A 
+			join tbl_room B
+			on A.fk_room_id = B.room_id
+			join tbl_member C
+			on c.member_id = A.fk_member_id
+			where B.fk_acom_no = #{acom_no}
+			order by A.review_reg_date
+			
+			 
 		
 		</select>
 		
@@ -102,6 +108,12 @@
 			 order by room_no
 			
 		</select>
+		
+		<!--  예약 리스트 불러오기     -->
+		
+		
+		
+		
 		
 		
 		<!-- acom_no에 해당하는 객실 가져오기  (추가이미지 가져오기 위한 ArrayList로 해놓은 것입니다.)-->

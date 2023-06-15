@@ -31,6 +31,8 @@ public class AcomodationVO {
 	private String review_image;
 	private String review_reg_date;
 	private String review_cnt;
+	private String review_room_type;
+	private String review_member_nickname;
 	
 	
 	
@@ -40,7 +42,7 @@ public class AcomodationVO {
 	public AcomodationVO(String acom_no,String fk_spec_no,String fk_district_no,String fk_host_no,String acom_name,String acom_image,String address,String extra_address,String sur_info,
 								String check_in_date, String check_out_date ,
 								String parking_info,String acom_latitude,String acom_longitude, String acom_image_add_name, String spec_name,String category_fac_name
-								, String review_subject	, String review_content, String review_score, String review_image , String review_reg_date , String review_cnt    )
+								, String review_subject	, String review_content, String review_score, String review_image , String review_reg_date , String review_cnt, String review_room_type, String  review_member_nickname  )
 	{
 		 super();
 		 this.acom_no = acom_no;
@@ -66,10 +68,28 @@ public class AcomodationVO {
 		 this.review_cnt = review_cnt;
 		 this.check_in_date = check_in_date;
 		 this.check_out_date = check_out_date;
+		 this.review_room_type = review_room_type;
+		 this.review_member_nickname = review_member_nickname;
 		}
 	
 	
 	
+	public String getReview_room_type() {
+		return review_room_type;
+	}
+
+	public void setReview_room_type(String review_room_type) {
+		this.review_room_type = review_room_type;
+	}
+
+	public String getReview_member_nickname() {
+		return review_member_nickname;
+	}
+
+	public void setReview_member_nickname(String review_member_nickname) {
+		this.review_member_nickname = review_member_nickname;
+	}
+
 	public String getCheck_in_date() {
 		return check_in_date;
 	}

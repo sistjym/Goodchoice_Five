@@ -8,6 +8,8 @@
     String ctxPath = request.getContextPath();
     //    /Goodchoice_Five
 %>    
+
+
     
 <html>
 <head>
@@ -830,7 +832,7 @@ $(document).ready(function() {
 		
 		var formattedValue = defaultStartDate + ' ~ ' + defaultEndDate + '  ' + dateDiff + '박';
 		
-		var send_date_bak = dateDiff + "박" ;   // 보내는 숙박기간
+		var send_date_bak = dateDiff  ;   // 보내는 숙박기간
 		
 		$("#daterange").val(formattedValue);
 		$("ul.disc-list > li.modal_date").text(defaultStartDate + '~' + defaultEndDate);
@@ -921,7 +923,7 @@ $(document).ready(function() {
 		           $("ul.disc-list > li.modal_date").text(startDate.format('MM월 DD일') + '~' + endDate.format('MM월 DD일'));
 		           check_in_date = startDate.format('YYYY-MM-DD');  // 보내는 체크인 날짜 업데이트
 		           check_out_date = endDate.format('YYYY-MM-DD');   // 보내는 체크아웃 날짜 업데이트
-		           send_date_bak = diffInDays + "박"  ; 			// 보내는 숙박기간 업데이트
+		           send_date_bak = diffInDays   ; 			// 보내는 숙박기간 업데이트
 		           
 		  //         console.log("send_checkin : " + send_checkin);
 		           
@@ -1212,14 +1214,8 @@ $(document).ready(function() {
 	  
 		<%-- tab키 눌렀을 경우의 함수 끝 --%>  
   
-	  
-		
-		
-		
-		
-		
 	  	
-		<%-- 객실정보 가져오는 Ajax --%>
+		<%-- 예약정보 가져오는 Ajax --%>
 	  
 	  	
 		<%--
@@ -1272,36 +1268,10 @@ $(document).ready(function() {
 	  
 	  --%>
 	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
+
 	  
   
 });  // end of $(document).ready(function(){})-------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1764,9 +1734,7 @@ function myFunction_PrevRightSpan() {
 						<div >
 							<p id="top_address">${requestScope.daVO.address} &nbsp; ${requestScope.daVO.extra_address}</p>
 						</div>
-						<div class="resv_cancel_top">
-							<p class="text-center">예약취소가능</p>
-						</div>			
+							
 					</div>
 							
 					<div id="top_right_lower">
@@ -1824,7 +1792,7 @@ function myFunction_PrevRightSpan() {
 		  </div>
 
 
-	 <c:forEach var="RoomVO" items="${requestScope.getRoomList}" varStatus="status">  	
+	 <c:forEach var="RoomVO" items="${requestScope.getRoomList}">  	
 	      <div id="item" class="col-lg-8">
 		      	 <div style="display:flex;">
 						<div class="col-lg-6 col-md-6 col-sm-6" >
@@ -2033,14 +2001,12 @@ function myFunction_PrevRightSpan() {
 									<th style="border-bottom:1px solid #bfbfbf; background-color:#8c8c8c; color:white; font-weight:300; font-size:10pt; width:250px;">객실 등급</th>
 									<th style="border-bottom:1px solid #bfbfbf; border-left:1px solid #bfbfbf; background-color:#8c8c8c; color:white; font-weight:300; font-size:10pt;">월,화,수,목,금,토,일</th>
 								  </tr>	
+								    <c:forEach var="RoomVO" items="${requestScope.getRoomList}">
 									<tr><!-- 첫번째 줄 시작 -->
-									    <td style="border-left:1px solid #bfbfbf; border-right:1px solid #bfbfbf; border-bottom:1px solid #bfbfbf; font-weight:400;">디럭스(주차불가)</td>
-									    <td style="border-bottom:1px solid #bfbfbf; font-weight:400;">150000</td>
+									    <td style="border-left:1px solid #bfbfbf; border-right:1px solid #bfbfbf; border-bottom:1px solid #bfbfbf; font-weight:400;">${RoomVO.room_type}</td>
+									    <td style="border-bottom:1px solid #bfbfbf; font-weight:400;">${RoomVO.price}</td>
 									</tr><!-- 첫번째 줄 끝 -->
-									<tr><!-- 두번째 줄 시작 -->
-									    <td style="border-bottom:1px solid #bfbfbf; border-right:1px solid #bfbfbf; font-weight:400;">스위트(넷플리스 시청가능)</td>
-									    <td style="border-right:1px solid #bfbfbf; border-bottom:1px solid #bfbfbf; font-weight:400;">150000</td>
-									</tr><!-- 두번째 줄 끝 -->
+									</c:forEach>
 							    </table>
   				   </div>
 					</section>    
@@ -2113,10 +2079,52 @@ function myFunction_PrevRightSpan() {
 			
 			<div class="review_top col-lg-8 col-md-6 col-sm-4">
 				
-				<p style="display: flex; justify-content: center; font-size:25px; font-weight:bold; margin-bottom: -15px;">추천해요</p>
+				<c:if test="${empty requestScope.show_ReviewList[0].review_cnt}">				
+											    
+					 <p style="display: flex; justify-content: center; font-size:25px; font-weight:bold; margin-bottom: -15px;">아직 리뷰가 없어요...</p>
+						
+				</c:if>
+				
 				<c:if test="${not empty requestScope.show_ReviewList[0].review_cnt}">
+				
+					 <c:choose>
+					  <c:when test="${scoreRatio < 8.0 && scoreRatio >= 7.0}">
+					    <p style="display: flex; justify-content: center; font-size:25px; font-weight:bold; margin-bottom: -15px;">좋아요</p>
+					  </c:when>
+					  <c:when test="${scoreRatio < 9.0 && scoreRatio >= 8.0}">
+					    <p style="display: flex; justify-content: center; font-size:25px; font-weight:bold; margin-bottom: -15px;">훌륭해요</p>
+					  </c:when>
+					  <c:when test="${scoreRatio >= 9.0}">
+					    <p style="display: flex; justify-content: center; font-size:25px; font-weight:bold; margin-bottom: -15px;">추천해요</p>
+					  </c:when>
+					  <c:otherwise>
+						<p style="display: flex; justify-content: center; font-size:25px; font-weight:bold; margin-bottom: -15px;">글쎄요</p>				  
+						</c:otherwise>
+					</c:choose>
+				
 					 <div style="display:flex;justify-content: center;">
-					 	<label class="result_starr" style="font-size: 3em; color: transparent; text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);">★★★★★</label><p style="font-weight: bold; font-size: 35px; margin-left: 18px; margin-top:17px;">${totalScore/requestScope.show_ReviewList[0].review_cnt}</p>
+					 						
+						<c:choose>
+						  <c:when test="${scoreRatio >= 0.0 && scoreRatio < 2.0}">
+					 		<label class="result_starr" style="font-size: 3em; color: transparent; text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);">☆☆☆☆☆</label><p style="font-weight: bold; font-size: 35px; margin-left: 18px; margin-top:17px;">${scoreRatio}</p>
+						  </c:when>
+						  <c:when test="${scoreRatio >= 2.0 && scoreRatio < 4.0}">
+					 		<label class="result_starr" style="font-size: 3em; color: transparent; text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);">★☆☆☆☆</label><p style="font-weight: bold; font-size: 35px; margin-left: 18px; margin-top:17px;">${scoreRatio}</p>
+						  </c:when>
+						  <c:when test="${scoreRatio >= 4.0 && scoreRatio < 6.0}">
+					 		<label class="result_starr" style="font-size: 3em; color: transparent; text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);">★★☆☆☆</label><p style="font-weight: bold; font-size: 35px; margin-left: 18px; margin-top:17px;">${scoreRatio}</p>
+						  </c:when>
+						  <c:when test="${scoreRatio >= 6.0 && scoreRatio < 8.0}">
+					 		<label class="result_starr" style="font-size: 3em; color: transparent; text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);">★★★☆☆</label><p style="font-weight: bold; font-size: 35px; margin-left: 18px; margin-top:17px;">${scoreRatio}</p>
+						  </c:when>
+						  <c:when test="${scoreRatio >= 8.0 && scoreRatio < 10.0}">
+					 		<label class="result_starr" style="font-size: 3em; color: transparent; text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);">★★★★☆</label><p style="font-weight: bold; font-size: 35px; margin-left: 18px; margin-top:17px;">${scoreRatio}</p>
+						  </c:when>
+						  <c:otherwise>
+					 		<label class="result_starr" style="font-size: 3em; color: transparent; text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);">★★★★★</label><p style="font-weight: bold; font-size: 35px; margin-left: 18px; margin-top:17px;">${scoreRatio}</p>
+						  </c:otherwise>
+						</c:choose>
+										 
 					 </div>
 				 </c:if>
 				 <c:if test="${empty requestScope.show_ReviewList[0].review_cnt}">
@@ -2201,12 +2209,34 @@ function myFunction_PrevRightSpan() {
 				<c:forEach var="AcomodationVO" items="${requestScope.show_ReviewList}">
 				
 					<div class="review_content col-lg-8 col-md-6 col-sm-4">
-						
+					
 						<p style="font-size:15px; font-weight: bold;">${AcomodationVO.review_subject}</p>
 							<div style="display:flex;">
-								<label class="result_starr" style="color: transparent; text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);">★★★★★</label><p style="font-weight: 550; font-size: 19px; margin-left: 8px;">${AcomodationVO.review_score}</p>
+							
+									<c:choose>
+									  <c:when test="${AcomodationVO.review_score < 2.0 && AcomodationVO.review_score >= 0.0}">
+											<label class="result_starr" style="color: transparent; text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);">☆☆☆☆☆</label><p style="font-weight: 550; font-size: 19px; margin-left: 8px;">${AcomodationVO.review_score}</p>									  
+									  </c:when>
+									  <c:when test="${AcomodationVO.review_score < 4.0 && AcomodationVO.review_score >= 2.0}">
+											<label class="result_starr" style="color: transparent; text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);">★☆☆☆☆</label><p style="font-weight: 550; font-size: 19px; margin-left: 8px;">${AcomodationVO.review_score}</p>									  
+									  </c:when>
+									  <c:when test="${AcomodationVO.review_score < 6.0 && AcomodationVO.review_score >= 4.0}">
+											<label class="result_starr" style="color: transparent; text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);">★★☆☆☆</label><p style="font-weight: 550; font-size: 19px; margin-left: 8px;">${AcomodationVO.review_score}</p>									  
+									  </c:when>
+									  <c:when test="${AcomodationVO.review_score < 8.0 && AcomodationVO.review_score >= 6.0}">
+											<label class="result_starr" style="color: transparent; text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);">★★★☆☆</label><p style="font-weight: 550; font-size: 19px; margin-left: 8px;">${AcomodationVO.review_score}</p>									  
+									  </c:when>
+									  <c:when test="${AcomodationVO.review_score < 10.0 && AcomodationVO.review_score >= 8.0}">
+											<label class="result_starr" style="color: transparent; text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);">★★★★☆</label><p style="font-weight: 550; font-size: 19px; margin-left: 8px;">${AcomodationVO.review_score}</p>									  
+									  </c:when>
+									
+									  <c:otherwise>
+											<label class="result_starr" style="color: transparent; text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);">★★★★★</label><p style="font-weight: 550; font-size: 19px; margin-left: 8px;">${AcomodationVO.review_score}</p>									  											
+									  </c:otherwise>
+									</c:choose>
+									
 							</div>			
-						<p style="font-weight: lighter; color: #808080;">디럭스(주차불가) 객실 이용</p>
+						<p style="font-weight: lighter; color: #808080;">${AcomodationVO.review_room_type}객실 이용 · 닉네임: ${AcomodationVO.review_member_nickname} </p>
 						<p>${AcomodationVO.review_content}</p>
 						<p style="font-weight: lighter; color: #808080; font-size:10pt;">작성일자: ${AcomodationVO.review_reg_date}</p>
 						<div class="col-lg-12" style="border: solid 1px gray; margin-top: 40px;"></div>
@@ -2214,38 +2244,6 @@ function myFunction_PrevRightSpan() {
 				</c:forEach>
 				
 			</c:if>
-			
-		
-			
-			
-			
-			
-			
-		<%-- review 탭 끝 ===================================================================================================  --%>		
-			
-					
-					<%-- 리뷰 쓰는 것 태그 --%>
-					<%-- 
-					<form class="review_input" name="myform" id="myform" method="post">
-						<fieldset>
-							<span class="text-bold">별점을 선택해주세요</span>
-							<input type="radio" name="reviewStar" value="5" id="rate1"><label
-								for="rate1">★</label>
-							<input type="radio" name="reviewStar" value="4" id="rate2"><label
-								for="rate2">★</label>
-							<input type="radio" name="reviewStar" value="3" id="rate3"><label
-								for="rate3">★</label>
-							<input type="radio" name="reviewStar" value="2" id="rate4"><label
-								for="rate4">★</label>
-							<input type="radio" name="reviewStar" value="1" id="rate5"><label
-								for="rate5">★</label>
-						</fieldset>
-						<div>
-							<textarea class="col-auto form-control" type="text" id="reviewContents"
-									  placeholder="후기를 남겨주신 회원님께 BEST 후기를 선정하여 상품을 드리고 있습니다.!! 많은 참여부탁!!!"></textarea>
-						</div>
-				    </form>								
-				    --%>
 
 			
 		</div>	

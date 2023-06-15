@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.five.goodchoice.detail.model.AcomodationVO;
 import com.five.goodchoice.detail.model.InterDetail_AcomodationDAO;
-import com.five.goodchoice.detail.model.InterRoomDAO;
 import com.five.goodchoice.member.model.HostVO;
 
 @Service
