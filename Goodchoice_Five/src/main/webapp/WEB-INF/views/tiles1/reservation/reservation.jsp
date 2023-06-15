@@ -94,10 +94,10 @@
 				//user_point
 				
 
-				if($("input#point").val() > $("input#user_point").val()){
+				/* if($("input#point").val() > $("input#user_point").val()){
 					alert("포인트 초과사용");
 					return false;
-				}
+				} */
 				
 				let price = $("input#price").val();
 				console.log(price);
