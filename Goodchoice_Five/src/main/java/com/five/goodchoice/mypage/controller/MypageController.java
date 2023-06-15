@@ -3,6 +3,9 @@ package com.five.goodchoice.mypage.controller;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -14,7 +17,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.five.goodchoice.common.AES256;
+import com.five.goodchoice.detail.model.AcomodationVO;
+import com.five.goodchoice.detail.model.RoomVO;
 import com.five.goodchoice.member.model.MemberVO;
+import com.five.goodchoice.mypage.model.ReservationVO;
 import com.five.goodchoice.mypage.service.InterMypageService;
 
 
@@ -33,20 +39,22 @@ public class MypageController {
 		HttpSession session = request.getSession();
 		MemberVO loginuser = (MemberVO)session.getAttribute("loginuser");
 		
-		if(loginuser != null) {
-			mav.setViewName("my/reservation_list.tiles4");
-		}
-		else {
-			String message = "로그인이 필요한 페이지입니다.";
-			String loc = "javascript:history.back()";
-			
-			mav.addObject("message", message);
-			mav.addObject("loc", loc);
-			mav.setViewName("msg");
-		}
-		return mav;
 		
 		
+		if (loginuser != null) {
+	        List<ReservationVO> reservationList = service.getAllReservations();
+	        mav.addObject("reservationList", reservationList);
+	        mav.setViewName("my/reservation_list.tiles4");
+	    } else {
+	        String message = "로그인이 필요한 페이지입니다.";
+	        String loc = "javascript:history.back()";
+	        
+	        mav.addObject("message", message);
+	        mav.addObject("loc", loc);
+	        mav.setViewName("msg");
+	    }
+	    
+	    return mav;
 	}
 	@RequestMapping(value="/mypage.gc") 
 	public ModelAndView my_page_2(ModelAndView mav, HttpServletRequest request) {
@@ -112,6 +120,8 @@ public class MypageController {
 		MemberVO loginuser = (MemberVO)session.getAttribute("loginuser");
 		
 		if(loginuser != null) {
+			List<ReservationVO> reservationList = service.getAllReservations();
+	        mav.addObject("reservationList", reservationList);
 			mav.setViewName("my/reservation-detail.tiles4");
 		}
 		else {

@@ -8,43 +8,39 @@
 	<div class="reserve_list">
 		
 		<section class="list_fst">
-			<c:if test="">
-				<c:forEach items="${reserveList}" var="item">
-					<h3 class="liti">예약 내역</h3> 
-					<ul class="list_wrap">
-						<li class="reservation-detail">
-							<div class="reserve-div">
-								<input type="hidden" name="member_id" id="member_id" value="${sessionScope.loginuser.member_id}"/>
-								<button  type="button" class="btn_del">
-        						삭제
-    							</button>
-    							<p class="pic">
-		    						<img  loading="lazy" srcset="https://image.goodchoice.kr/resize_354x184/adimg_new/779/203463/71325338f503e141b7d061d0eeb01053.jpg, https://image.goodchoice.kr/resize_531x276/adimg_new/779/203463/71325338f503e141b7d061d0eeb01053.jpg 1.5x , https://image.goodchoice.kr/resize_708x368/adimg_new/779/203463/71325338f503e141b7d061d0eeb01053.jpg 2x" src="https://image.goodchoice.kr/resize_354x184/adimg_new/779/203463/71325338f503e141b7d061d0eeb01053.jpg" alt="신촌 라뉘호텔" class="align">
-		    					</p> 
-    							<a href="<%= ctxPath%>/reservation-detail.gc" class="product-title">
-    								<i class="bg_w">예약취소</i> 
-    								<strong>신촌 라뉘호텔</strong> 
-    								<span style="display: block; padding-left: 20px; font-size: 18px;">
-								    	05.26 금
-								    		-
-								    	05.27 토
-								        •
-								        1박
-		        					</span> 
-        							<b>예약 상세 &gt;</b>
-        						</a> 
-	        					<p class="btn_re">
-		        					<a href="https://www.goodchoice.kr/product/detail?ano=779&amp;adcno=1&amp;sel_date=2023-05-23&amp;sel_date2=2023-05-23"> 다시 예약 </a>
-		        				</p>
-        					</div>
-        				</li>
-        			</ul>
-				</c:forEach>
-			</c:if>
+		    <h3 class="liti">예약 내역</h3> 
+		    <c:forEach var="reservation" items="${requestScope.reservationList}">
+		        <c:if test="${reservation.reserv_status == '1' && reservation.fk_member_id == sessionScope.loginuser.member_id}">
+		            <ul class="list_wrap">
+		                <li class="reservation-detail">
+		                    <div class="reserve-div">
+		                        <input type="hidden" name="member_id" id="member_id" value="${sessionScope.loginuser.member_id}"/>
+		                        <button type="button" class="btn_del">
+		                            	삭제
+		                        </button>
+		                        <p class="pic">
+		                            <img loading="lazy" srcset="https://image.goodchoice.kr/resize_354x184/adimg_new/779/203463/71325338f503e141b7d061d0eeb01053.jpg, https://image.goodchoice.kr/resize_531x276/adimg_new/779/203463/71325338f503e141b7d061d0eeb01053.jpg 1.5x , https://image.goodchoice.kr/resize_708x368/adimg_new/779/203463/71325338f503e141b7d061d0eeb01053.jpg 2x" src="<%= ctxPath%>/resources/images/${reservation.fk_room_id}.jpg" alt="신촌 라뉘호텔" class="align">
+		                        </p> 
+		                        <a href="<%= ctxPath%>/reservation-detail.gc" class="product-title">
+		                            <i class="bg_w">예약숙소</i> 
+		                            <strong>${reservation.fk_room_id}</strong> 
+		                            <span style="display: block; padding-left: 20px; font-size: 18px;">
+		                                ${reservation.check_in_date} - ${reservation.check_out_date} • 1박
+		                            </span> 
+		                            <b>예약 상세 &gt;</b>
+		                        </a> 
+		                        <p class="btn_re">
+		                            <a href="https://www.goodchoice.kr/product/detail?ano=779&amp;adcno=1&amp;sel_date=2023-05-23&amp;sel_date2=2023-05-23"> 다시 예약 </a>
+		                        </p>
+		                    </div>
+		                </li>
+		            </ul>
+		        </c:if>
+		    </c:forEach>
 		</section>
 		
 		
-		<c:if test="">
+		<%-- <c:if test="">
 		
 		<section class="list_cancel">
 			<h3 class="liti">이용 내역</h3> 
@@ -136,7 +132,7 @@
         		</li>
         	</ul>
 		</section>
-		<%-- </c:forEach> --%>
-		</c:if>
+		</c:forEach>
+		</c:if> --%>
 	</div>
 </div>
