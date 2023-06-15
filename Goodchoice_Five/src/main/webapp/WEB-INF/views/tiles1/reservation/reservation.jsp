@@ -13,6 +13,22 @@
 
 	
 	$(document).ready(function(){
+		
+		
+		
+		let day_price = $("input#price1").val();
+		
+		let days = $("input#days").val();
+		const new_days = days.slice(0, -1);
+		
+		console.log(day_price);
+		console.log(new_days);
+		
+		let totalPrice = $("input#price").val(Number(day_price) * Number(new_days));
+		
+		
+		
+		
 		// 체크박스 제어 
 		$("#checkAll").click(function() {
 			if($("#checkAll").is(":checked")) 
@@ -30,6 +46,31 @@
 
 	
 		$("button#goReservation").bind("click", function() {
+			if($("input#userName").val() == ""){
+				alert("예약자 이름을 입력해주세요!");
+				return false;
+			}
+
+			if($("input#email").val() == ""){
+				alert("이메일을 입력해주세요!");
+				return false;
+			}
+			else{
+				var exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+
+				if(exptext.test($("input#email").val()) == false){
+
+					//이메일 형식이 알파벳+숫자@알파벳+숫자.알파벳+숫자 형식이 아닐경우			
+	
+					alert("이메일형식이 올바르지 않습니다.");
+					$("input#email").val("");
+					$("input#email").focus();
+	
+					return false;
+				}
+			}
+			
+			
 			if(!$("#checkAll").is(":checked")){
 				alert("약관에 동의하셔야 결제가 가능 합니다!");
 		   	    
@@ -159,7 +200,7 @@
 					          	  한글, 영문, 숫자만 입력 가능. (문자 사이 공백은 1칸만 입력 가능)
 					        </p>
 					        <div id="emailBox">
-					        	<strong>이메일 정보(확정 메일을 받을 이메일을 입력해주세요) </strong>
+					        	<strong>이메일 정보 </strong>
 					        	<span class="safety_txt">예약 확정시 이메일로 안내해드립니다</span>
 					        </div>
 					      
@@ -167,8 +208,6 @@
 					        	<p class="inp_wrap remove">
 					        		<input type="tel" name="email" id="email" class="transInput"  maxlength="150" value="" class="input validation-required-input">
 					        	</p>
-					        	   <p data-show="tel" class="alert_txt error-message">이메일을 확인해 주세요.</p>
-								
 					        </div>
 					        
 						</section>
@@ -188,6 +227,7 @@
 	                		<li class="price_li">
 								<strong>구매총액</strong>   
 								<span >
+									<input id="price1" type="hidden" value="${requestScope.room_price}" readonly="readonly">
 									<input class="transInput price_box" id="price" type="text" value="${requestScope.room_price}" readonly="readonly">
 								</span>
 								
@@ -254,6 +294,7 @@
 						<section class="info">
 							<p class="name"><strong>숙소이름</strong></p>
 							<input class="transInput acomInfo" type="text" name="acommName" id="acommName" value="${requestScope.acom_name}" readonly="readonly">
+							<input type="hidden" name="days" id="days" value="${requestScope.send_date_bak}" >
 							
 							<p><strong>객실타입/기간</strong></p> 
 							<input class="transInput acomInfo" type="text" name="roomName" id="roomName" value="${requestScope.room_type} / ${requestScope.send_date_bak}" readonly="readonly">
@@ -271,7 +312,7 @@
 								
 								<span class="price" >
 								<input class="transInput acomInfo" type="text" name="totalPrice" id="totalPrice" value=""  readonly="readonly">
-								</span>.
+								</span>
 							</p> 
 							<ul>
 								<li>

@@ -496,7 +496,7 @@ legend{
 
 .info p {
     position: relative;
-    margin-bottom: 29px;
+    margin-bottom: 15px;
     padding-left: 0;
     font-size: 20px;
     line-height: 32px;
@@ -799,4 +799,9 @@ section.price_wrap{
 	height: 30px;
 	width: 40px;
 	float:right;
+}
+.acomInfo{
+	margin-bottom:15px;
+	margin-left:10px;
+	font-size: 14pt;
 }
