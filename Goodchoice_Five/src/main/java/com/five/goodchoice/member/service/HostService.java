@@ -70,8 +70,6 @@ public class HostService implements InterHostService {
 		String districtname = postcode.substring(0, 2);
 		String subdistrictname = postcode.substring(index+1, secondIndex);
 		
-		System.out.println("districtname : " + districtname);
-		System.out.println("subdistrictname : " + subdistrictname);
 		
 		Map<String, String> paraMap = new HashMap<>();
 		paraMap.put("districtname", districtname);
@@ -88,6 +86,47 @@ public class HostService implements InterHostService {
 	public int acomoRegister(Map<String, String> paraMap) {
 		int n = dao.acomoRegister(paraMap);
 		return n;
+	}
+	
+	
+	
+	/*
+	 * // 숙소번호 알아오기
+	 * 
+	 * @Override public int getAcomNo(Map<String, String> paraMap) { int n =
+	 * dao.getAcomNo(paraMap); return n; }
+	 */
+	
+	
+	// 숙소추가이미지
+	@Override
+	public int addAcomoImage(Map<String, Object> fileMap) {
+		int n = dao.addAcomoImage(fileMap);
+		return n;
+	}
+	
+	
+	// 객실 테이블에 insert
+	@Override
+	public int roomRegister(Map<String, String> paraMap) {
+		int n = dao.roomRegister(paraMap);
+		return n;
+	}
+	
+	
+	// 객실추가이미지
+	@Override
+	public void addRoomImage(Map<String, Object> fileMap1) {
+		 dao.addRoomImage(fileMap1);
+		
+	}
+	
+	
+	// 공용시설 추가
+	@Override
+	public int insertpublicServices(Map<String, Object> numMap) {
+		 int n = dao.insertpublicServices(numMap);
+		  return n;
 	}
 	
 	

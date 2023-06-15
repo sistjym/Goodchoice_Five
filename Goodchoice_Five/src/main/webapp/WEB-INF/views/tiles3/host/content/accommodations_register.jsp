@@ -188,7 +188,7 @@
 
 	      acomoDragDropEvent();
 	      
-	      
+	      $('input#address').on('input', lnglatinput);
 	      
 	      
 	      $('#roomModal-close').click(function() {
@@ -218,6 +218,15 @@
 	      }
 	    
 	    $('span#error_companyName').text("");
+	}
+	
+	function lnglatinput() {
+		const postcode = $('input#postcode').val();
+  	    const address = $("input#address").val();
+  	
+  	    $("input#address_hidden").val(postcode+address);
+  	
+  	    func_geocoder(postcode+address);
 	}
 	
 	function addressDaum() {
@@ -256,7 +265,7 @@
                     addr += extraAddr ;
                 
                 }
-
+					
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
                 document.getElementById("postcode").value = addr;
                 // 커서를 상세주소 필드로 이동한다.
@@ -544,13 +553,6 @@
 			    var file = fileInput.files[0]
 			    formData.append('AcomoImage', file);
 		  });
-		  
-		  const postcode = $('input#postcode').val();
-      	  const address = $("input#address").val();
-      	
-      	  $("input#address_hidden").val(postcode+address);
-      	
-      	  func_geocoder(postcode+address);
 		}
 	
 	
@@ -656,10 +658,11 @@
 
          if (!hasInput) {
            alert("적어도 하나의 주변 정보를 작성해주세요.");
+           return;
          }
         	
-         if($("#roomType").val() == "other") {
-        	 alert('객실 유형을 선택해주세요');
+         if($("#roomType").val().trim() == "") {
+        	 alert('객실 유형을 입력해주세요');
  			 return ;
          }
          
@@ -669,11 +672,29 @@
         	 return;
          }
          
+         const roomNo = $("input#roomNo").val();         
+         if(!/^\d+$/.test(roomNo) || $("input#roomNo").val() == "") {
+        	 alert('방번호 입력란이 비어있거나 정상가는 숫자만 입력가능합니다.!!');
+        	 return;
+         }
+         
          const RoomImage = $("input#RoomImage");
          
          if(RoomImage.get(0).files.length === 0){
         	   alert('객실 대표 이미지를 추가 하셔야 합니다.');
         	    return;
+         }
+         
+         
+         const lat = $("input#lat").val();
+         const lng = $("input#lng").val();
+         if(lat =="" || lng == "") {
+        	 alert("올바른 주소를 입력해주세요");
+        	 $("input#postcode").val("");
+        	 $("input#address").val("");
+        	 $("input#postcode").focus();
+        	 
+        	 return;
          }
          
          
@@ -710,11 +731,14 @@
               success:function(json){
                   // console.log("~~~ 확인용 : " + JSON.stringify(json));
                   // ~~~ 확인용 : {"result":1}
+                  console.log("~~~ 확인용 : " + JSON.stringify(json));
                   if(json.result == 1) {
                 	  alert("관리자에게 숙소 검수 요청 되었습니다.");
                 	  location.href="<%= ctxPath%>/main/hosthome.gc";
                   }
                   else {
+                	  alert("숙소등록중 문제가 발생했습니다\\n 숙소등록을 다시 시도해주세요.");
+                	  location.href="<%= ctxPath%>/hostRegister.gc";	                	  
                   }
               },
               error: function(request, status, error){
@@ -877,13 +901,10 @@
       	<td>
       		<div class="row text-center mt-3">
       			<span class="col-md-2" style="display:inline-block; margin-top:14px; font-size: 14px; font-weight: bold;">객실 유형</span>
-      			<select id="roomType"class="form-control col-md-6 offset-md-1" style="height: 50px;">
-      				<option value="other" selected>유형을 선택해주세요.</option>
-      				<option>스탠다드</option>
-      				<option>디럭스</option>
-      			</select>	
+				<input id="roomType" name="roomType"class="form-control col-md-6 offset-md-1" style="height: 50px;" placeholder="객실 유형을 입력해주세요"/>
       		</div>
       		<div class="row text-center mt-3"><span class="col-md-2" style="display:inline-block; margin-top:14px; font-size: 14px; font-weight: bold; margin-left:3px;">정상가</span><input type="text" id="price" name="price"class="form-control col-md-4 input_info" /><span style="display:inline-block; margin-top:14px; font-size: 14px; font-weight: bold; margin-left:3px;">원</span></div>
+      		<div class="row text-center mt-3"><span class="col-md-2" style="display:inline-block; margin-top:14px; font-size: 14px; font-weight: bold; margin-left:3px;">방번호</span><input type="text" id="roomNo" name="roomNo"class="form-control col-md-4 input_info" /><span style="display:inline-block; margin-top:14px; font-size: 14px; font-weight: bold; margin-left:3px;">호</span></div>
       	</td>
       </tr>
       <tr>
