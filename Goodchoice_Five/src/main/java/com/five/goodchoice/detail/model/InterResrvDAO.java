@@ -6,8 +6,9 @@ import java.util.Map;
 public interface InterResrvDAO {
 	
 	// 예약 리스트 불러오기
-	List<ReservationVO> getReservationList(Map<String, String> paraMap);
+	/*
+	ReservationVO getReservcount(Map<String, String> paraMap);
 	
-	
+	*/
 
 }
