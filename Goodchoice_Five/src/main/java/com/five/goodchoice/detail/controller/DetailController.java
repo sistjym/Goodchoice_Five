@@ -1,7 +1,7 @@
 package com.five.goodchoice.detail.controller;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
+import java.security.GeneralSecurityException;
 import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,8 +20,11 @@ import com.five.goodchoice.detail.model.AcomodationVO;
 import com.five.goodchoice.detail.model.ReservationVO;
 import com.five.goodchoice.detail.model.RoomVO;
 import com.five.goodchoice.detail.service.InterDetail_AcomodationService;
+import com.five.goodchoice.detail.service.InterResrvSerivce;
 import com.five.goodchoice.detail.service.InterRoomSerivce;
 import com.five.goodchoice.member.model.HostVO;
+import com.five.goodchoice.common.AES256;
+
 
 
 @Controller
@@ -33,6 +36,11 @@ public class DetailController {
 	@Autowired
 	private InterRoomSerivce room_service;
 	
+	@Autowired
+	private InterResrvSerivce resrv_service;
+	
+	@Autowired
+    private AES256 aes;
 
 	
 	// 모텔 View	
@@ -150,6 +158,22 @@ public class DetailController {
 			
 //			System.out.println("호스트 정보:" + hostVO.getCp_name() + hostVO.getCp_reg_no() + hostVO.getHost_email() + hostVO.getHost_name() + daVO.getAddress() + daVO.getExtra_address());
 			
+			String email = hostVO.getHost_email();
+			
+			try {
+				email = aes.decrypt(email);
+				
+				hostVO.setHost_email(email);
+				
+			} catch (UnsupportedEncodingException | GeneralSecurityException e) {
+				e.printStackTrace();
+			}
+			
+			
+			System.out.println("호스트 정보:" + hostVO.getCp_name() + hostVO.getCp_reg_no() + hostVO.getHost_email() + hostVO.getHost_name() + daVO.getAddress() + daVO.getExtra_address());
+			
+			
+			
 			mav.addObject("hostVO",hostVO);
 			
 			
@@ -173,10 +197,67 @@ public class DetailController {
 			mav.addObject("getRoomList",getRoomList);
 			
 			///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-				
+			
+		/*	
+			List<ReservationVO> getReservationList = resrv_service.getReservationList(paraMap);
+			
+			
+			JSONArray jsonArr = new JSONArray();
+			
+			if(getReservationList != null) {// DB 에서 넘어온값 roomList 이 잇다면
+				for( ReservationVO resrvvo : getReservationList ) {
+					JSONObject jsonobj = new JSONObject();
+					jsonobj.put("resv_check_in_date", resrvvo.getResv_check_in_date());
+					jsonobj.put("resv_check_out_date", resrvvo.getResv_check_out_date());
+					jsonobj.put("resv_room_id", resrvvo.getResv_room_id());
+					jsonobj.put("resv_room_type", resrvvo.getResv_room_type());
+					jsonobj.put("reserv_status", resrvvo.getReserv_status());
+					
+					
+					jsonArr.put(jsonobj);
+					
+				}			
+			}		
+			
+			String json = jsonArr.toString();
+			
+			mav.addObject("json",json);
+			*/
+	
+
+			
+			
+	/*		
+			List<ReservationVO> getReservationList = resrv_service.getReservationList(paraMap);
+			
+			
+	
 			
 			
 			
+			for (ReservationVO reservation : getReservationList) {
+			    String reserv_check_in_date = reservation.getResv_check_in_date();
+			    String reserv_check_out_date = reservation.getResv_check_out_date();
+
+			    // 값을 사용하여 원하는 작업을 수행
+			    // 예: 출력, 계산, 조건 확인 등
+
+			    // 예시: reserv_check_in_date와 reserv_check_out_date 출력
+			    System.out.println("Check-in Date: " + reserv_check_in_date);
+			    System.out.println("Check-out Date: " + reserv_check_out_date);
+			}
+			
+		*/	
+			
+			
+			
+			
+			
+			
+			
+			
+
+	//		mav.addObject("getReservationList",getReservationList);
 			
 			
 			mav.setViewName("details/detail.tiles5");
@@ -189,12 +270,54 @@ public class DetailController {
 
 
 	}
+	/*
+	@ResponseBody
+	@RequestMapping(value="/details/detail_select.gc", method = {RequestMethod.GET}, produces="text/plain;charset=UTF-8") // 오로지 GET 방식만 허락하는 것임.
+	public String ajax_select(HttpServletRequest request, HttpServletResponse response)throws Exception {
+		
+		
+		String acom_no = request.getParameter("acom_no");
+
+		
+
+		
+
+		Map<String,String>paraMap = new HashMap<>();
+		
+		paraMap.put("acom_no", acom_no);
+		
+		List<ReservationVO> getReservationList = resrv_service.getReservationList(paraMap);
+		
+		JSONArray jsonArr = new JSONArray(); // []
+		
+		if(getReservationList != null) { // 선택되어진게 있다라면
+			for( ReservationVO resvvo : getReservationList) {
+				JSONObject jsonObj = new JSONObject();
+				jsonObj.put("resv_check_in_date",resvvo.getResv_check_in_date()); 
+				jsonObj.put("resv_check_out_date",resvvo.getResv_check_out_date()); 
+				jsonObj.put("resv_room_id",resvvo.getResv_room_id()); 
+				jsonObj.put("resv_room_type",resvvo.getResv_room_type()); 
+				jsonObj.put("reserv_status",resvvo.getReserv_status()); 
+
+				
+				jsonArr.put(jsonObj);// [{"no":601,"name":"이해리","writeday":2023-05-10 11:59:30}]
+			}// end of for ---------------------------------------------			
+		}
+		
+		for(int i=0; i<jsonArr.length(); i++) {
+			jsonArr.get(i);
+		}
+		
+		return jsonArr.toString(); // "[{"no":601,"name":"이해리","writeday":2023-05-10 11:59:30}]"
+
+	}
+	*/
 	
 /*
 	// 예약 리스트 불러오기
 	@ResponseBody
 	@RequestMapping(value="/details/detail.gc",method = {RequestMethod.GET}, produces="text/plain;charset=UTF-8")
-	public String getReservationList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ModelAndView getReservationList(HttpServletRequest request, HttpServletResponse response , ModelAndView mav) throws Exception {
 		
 		String acom_no = request.getParameter("acom_no");
 		
@@ -206,29 +329,48 @@ public class DetailController {
 		// 예왁관련 메소드 생성
 		
 		
-		List<ReservationVO> getReservationList = reservation_service.getReservationList(paraMap);
+		List<ReservationVO> getReservationList = resrv_service.getReservationList(paraMap);
 		
 		
 		JSONArray jsonArr = new JSONArray();
 		
 		if(getReservationList != null) {// DB 에서 넘어온값 roomList 이 잇다면
-			for( ReservationVO resvvo : getReservationList ) {
+			for( ReservationVO resrvvo : getReservationList ) {
 				JSONObject jsonobj = new JSONObject();
-				jsonobj.put("resv_check_in_date", resvvo.getResv_check_in_date());
-				jsonobj.put("resv_check_out_date", resvvo.getResv_check_out_date());
-				jsonobj.put("resv_room_id", resvvo.getResv_room_id());
-				jsonobj.put("resv_room_type", resvvo.getResv_room_type());
-				jsonobj.put("reserv_status", resvvo.getReserv_status());
+				jsonobj.put("resv_check_in_date", resrvvo.getResv_check_in_date());
+				jsonobj.put("resv_check_out_date", resrvvo.getResv_check_out_date());
+				jsonobj.put("resv_room_id", resrvvo.getResv_room_id());
+				jsonobj.put("resv_room_type", resrvvo.getResv_room_type());
+				jsonobj.put("reserv_status", resrvvo.getReserv_status());
+				
+				
 				jsonArr.put(jsonobj);
 				
 			}			
 		}		
 		
-		return jsonArr.toString(); 	
+		String json = jsonArr.toString();
+		
+		mav.addObject("json",json);
+		
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			
+		
+		
+		
+		
+		
+		mav.setViewName("details/detail.tiles5");
+//		    /WEB-INF/views/tiles5/details/detail.jsp  페이지를 만들어야 한다.
+		
+		
+		
+	    return mav;	
 
 	}
-	
-*/
+	*/
+
+
 	
 	
 	

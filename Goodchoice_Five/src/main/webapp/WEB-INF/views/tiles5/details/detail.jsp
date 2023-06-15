@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+       
 <%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
 
     
@@ -840,7 +840,7 @@ $(document).ready(function() {
 		
 		var acom_name = '${requestScope.daVO.acom_name}';
 				
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	       
 //       console.log("send_acom_name :" + send_acom_name);
        
@@ -855,7 +855,9 @@ $(document).ready(function() {
          var parentValue = "";
          var room_price = "";
          var room_type = "";
-   
+   		 
+         
+      
          
          $('input.btn_resv').click(function() {
 	      	   // 클릭한 버튼의 index에 해당하는 처리를 수행
@@ -887,7 +889,29 @@ $(document).ready(function() {
       
        	
        	
+         console.log('check_in_date :' + check_in_date);
+         console.log('check_out_date :' + check_out_date);
+         
+  /////////////////////////////////////       
+<%--
+  		$.ajax({
+			url:"<%= ctxPath%>/details/detail_select.gc",
+			type:"get",
+			dataType:"json",
+			success:function(json){
+				console.log("~~~ 확인용 : " + JSON.stringify(json));
+				
 
+				
+			},
+			error: function(request, status, error){
+	            alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
+	          }
+		});
+--%>
+         
+   ////////////////////////////////////////////////////      
+         
        
        // 날짜 선택 시 이벤트 처리
        $("#daterange").on('apply.daterangepicker', function(ev, picker) {
@@ -937,6 +961,15 @@ $(document).ready(function() {
 		           previousEndDate = endDate.clone();
 		         }
 		         
+		         console.log('check_in_date :' + check_in_date);
+		         console.log('check_out_date :' + check_out_date);
+		         
+		         
+		         
+		         
+		         
+		         
+		         
 		         $('input.btn_resv').click(function() {
 			      	   // 클릭한 버튼의 index에 해당하는 처리를 수행
 			      	   //   html = "";
@@ -971,7 +1004,7 @@ $(document).ready(function() {
 
 
        
-
+     
 
     
     <%-- 캘린더에서 선택한 날짜들을 모달창에 뿌려주기 끝 --%>
@@ -1218,31 +1251,30 @@ $(document).ready(function() {
 		<%-- 예약정보 가져오는 Ajax --%>
 	  
 	  	
-		<%--
-		
-		 var roomnArr = [];
+
+	<%--	
+		 var resrv_Arr = [];
 		   
 		   $.ajax({
-		      url:"<%= ctxPath%>/getRoomList.gc",
-		      data:{"room_no":"${requestScope.roomvo.room_no}"},
+			  url:"<%= ctxPath%>/details/detail_select.gc",
 		      dataType:"json",
 		      success:function(json){
-		         	 --%>
-		         // console.log(JSON.stringify(json));
+		         	 
+		          console.log(JSON.stringify(json));
 		         // JSON.stringify(json) 은 자바스크립트의 객체(배열)인 json 을 string 타입으로 변경시켜주는 것이다.
-		         <%--
-		            [{"STORENAME":"롯데백화점 본점","LNG":"126.98187860455485","ZINDEX":"1","STOREID":"store1","STOREIMG":"lotte02.png","STOREURL":"https://place.map.kakao.com/7858517","LAT":"37.56511284953554","STOREADDRESS":"서울 중구 을지로 30 (T)02-771-2500"},
-		             {"STORENAME":"신세계백화점 본점","LNG":"126.98098265772731","ZINDEX":"2","STOREID":"store2","STOREIMG":"shinsegae.png","STOREURL":"https://place.map.kakao.com/7969138","LAT":"37.56091181255155","STOREADDRESS":"서울 중구 소공로 63 (T)1588-1234"},
-		             {"STORENAME":"미래에셋센터원빌딩","LNG":"126.98512381778167","ZINDEX":"3","STOREID":"store3","STOREIMG":"miraeeset.png","STOREURL":"https://place.map.kakao.com/13057692","LAT":"37.567386065415086","STOREADDRESS":"서울 중구 을지로5길 26 (T)02-6030-0100"},
-		             {"STORENAME":"현대백화점신촌점","LNG":"126.935699","ZINDEX":"4","STOREID":"store4","STOREIMG":"hyundai01.png","STOREURL":"https://place.map.kakao.com/21695719","LAT":"37.556005","STOREADDRESS":"서울 서대문구 신촌로 83 현대백화점신촌점 (T)02-3145-2233"},
-		             {"STORENAME":"쌍용강북교육센터","LNG":"126.919557","ZINDEX":"5","STOREID":"store5","STOREIMG":"sist01.jpg","STOREURL":"https://place.map.kakao.com/16530319","LAT":"37.556583","STOREADDRESS":"서울 마포구 월드컵북로 21 풍성빌딩 2~4층 (T)02-336-8546"}] 
-		         --%>
 		         
-		         <%--
+		        //    [{"STORENAME":"롯데백화점 본점","LNG":"126.98187860455485","ZINDEX":"1","STOREID":"store1","STOREIMG":"lotte02.png","STOREURL":"https://place.map.kakao.com/7858517","LAT":"37.56511284953554","STOREADDRESS":"서울 중구 을지로 30 (T)02-771-2500"},
+		        //     {"STORENAME":"신세계백화점 본점","LNG":"126.98098265772731","ZINDEX":"2","STOREID":"store2","STOREIMG":"shinsegae.png","STOREURL":"https://place.map.kakao.com/7969138","LAT":"37.56091181255155","STOREADDRESS":"서울 중구 소공로 63 (T)1588-1234"},
+		         //    {"STORENAME":"미래에셋센터원빌딩","LNG":"126.98512381778167","ZINDEX":"3","STOREID":"store3","STOREIMG":"miraeeset.png","STOREURL":"https://place.map.kakao.com/13057692","LAT":"37.567386065415086","STOREADDRESS":"서울 중구 을지로5길 26 (T)02-6030-0100"},
+		         //    {"STORENAME":"현대백화점신촌점","LNG":"126.935699","ZINDEX":"4","STOREID":"store4","STOREIMG":"hyundai01.png","STOREURL":"https://place.map.kakao.com/21695719","LAT":"37.556005","STOREADDRESS":"서울 서대문구 신촌로 83 현대백화점신촌점 (T)02-3145-2233"},
+		         //    {"STORENAME":"쌍용강북교육센터","LNG":"126.919557","ZINDEX":"5","STOREID":"store5","STOREIMG":"sist01.jpg","STOREURL":"https://place.map.kakao.com/16530319","LAT":"37.556583","STOREADDRESS":"서울 마포구 월드컵북로 21 풍성빌딩 2~4층 (T)02-336-8546"}] 
+		       
+		         --%>
+		        <%--
 		         $.each(json, function(index, item){
-		            var room = {};
+		            var resrv = {};
 		            
-		            room.content = "<div class='mycontent'>"+ 
+		            resrv.content = "<div class='mycontent'>"+ 
 		                               "  <div class='title'>"+ 
 		                               "    <a href='"+item.storeurl+"' target='_blank'><strong>"+item.storename+"</strong></a>"+  
 		                               "  </div>"+
@@ -1254,10 +1286,10 @@ $(document).ready(function() {
 		                             
 		           
 		            
-		            roomnArr.push(room);
+		             resrv_Arr.push(resrv);
 		         });
-		         --%>
-		 <%--        
+		        --%>
+		<%--         
 		      },
 		      error: function(request, status, error){
 		         alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
@@ -1265,8 +1297,8 @@ $(document).ready(function() {
 
 		   });
 	  
-	  
 	  --%>
+	
 	  
 
 	  

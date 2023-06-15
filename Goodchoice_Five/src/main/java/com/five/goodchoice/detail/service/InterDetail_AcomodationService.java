@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.five.goodchoice.detail.model.AcomodationVO;
-import com.five.goodchoice.detail.model.RoomVO;
 import com.five.goodchoice.member.model.HostVO;
 
 public interface InterDetail_AcomodationService {
