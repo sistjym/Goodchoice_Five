@@ -15,18 +15,17 @@
 	$(document).ready(function(){
 		
 		
-		
-		let day_price = $("input#price1").val();
+	    let day_price = $("input#price1").val();
 		
 		let days = $("input#days").val();
 		const new_days = days.slice(0, -1);
 		
 		console.log(day_price);
 		console.log(new_days);
+		let totalPrice = Number(day_price) * Number(new_days);
 		
-		let totalPrice = $("input#price").val(Number(day_price) * Number(new_days));
-		
-		
+		$("input#price").val(totalPrice);
+		$("input#totalPrice").val(totalPrice);
 		
 		
 		// 체크박스 제어 
