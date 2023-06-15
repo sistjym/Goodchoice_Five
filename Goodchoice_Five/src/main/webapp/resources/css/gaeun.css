@@ -556,7 +556,7 @@ legend{
     display: block;
     border-radius: 0 0 10px 10px;
     background-color: rgb(255, 0, 85);
-    margin-top: 150px;
+    margin-top: 90px;
 }
 
 .info_chkin {
@@ -804,4 +804,11 @@ section.price_wrap{
 	margin-bottom:15px;
 	margin-left:10px;
 	font-size: 14pt;
+}
+
+#totalPrice{
+	width:80px;
+}
+#totalPoint{
+	width:80px;
 }
