@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ==== #29. mapper 기본설정 ==== -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="myreservation">
+
+    <select id="getAllReservations" resultType="com.five.goodchoice.mypage.model.ReservationVO">
+        select *
+		from tbl_reservation
+		join tbl_room
+		on tbl_reservation.fk_room_id = tbl_room.room_id
+    </select>
+</mapper>

@@ -40,9 +40,9 @@
                     <button class="dropbtn" > <span style="color:yellow;">${sessionScope.loginuser.member_nickname}</span> 님  페이지</button>
                     
                      <ul class="dropdown-content">
-                        <a href="<%= ctxPath%>/main/home.gc">내정보</a>
-                        <a href="<%= ctxPath%>/main/home.gc">예약 내역</a>
-                        <a href="<%= ctxPath%>/main/home.gc">포인트</a>
+                        <a href="<%= ctxPath%>/mypage.gc">내정보</a>
+                        <a href="<%= ctxPath%>/myreservation.gc">예약 내역</a>
+                        <a href="<%= ctxPath%>/mypoint.gc">포인트</a>
                     </ul>
                 </li> 	
                		
