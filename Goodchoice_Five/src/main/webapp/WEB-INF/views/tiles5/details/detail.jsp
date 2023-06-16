@@ -2017,7 +2017,7 @@ function myFunction_PrevRightSpan() {
 								    <c:forEach var="RoomVO" items="${requestScope.getRoomList}">
 									<tr><!-- 첫번째 줄 시작 -->
 									    <td style="border-left:1px solid #bfbfbf; border-right:1px solid #bfbfbf; border-bottom:1px solid #bfbfbf; font-weight:400;">${RoomVO.room_type}</td>
-									    <td style="border-bottom:1px solid #bfbfbf; font-weight:400;">${RoomVO.price}</td>
+									    <td style="border-bottom:1px solid #bfbfbf; font-weight:400;"><fmt:formatNumber value="${RoomVO.price}" pattern="#,###"/></td>
 									</tr><!-- 첫번째 줄 끝 -->
 									</c:forEach>
 							    </table>

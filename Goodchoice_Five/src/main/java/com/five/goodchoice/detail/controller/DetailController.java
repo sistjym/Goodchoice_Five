@@ -1,7 +1,6 @@
 package com.five.goodchoice.detail.controller;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.security.GeneralSecurityException;
 import java.util.*;
 
@@ -327,7 +326,7 @@ public class DetailController {
 									
 									hostVO.setHost_email(email);
 									
-									System.out.println("호스트 정보:" + hostVO.getCp_name() + hostVO.getCp_reg_no() + hostVO.getHost_email() + hostVO.getHost_name() + daVO.getAddress() + daVO.getExtra_address());
+	//								System.out.println("호스트 정보:" + hostVO.getCp_name() + hostVO.getCp_reg_no() + hostVO.getHost_email() + hostVO.getHost_name() + daVO.getAddress() + daVO.getExtra_address());
 									
 									
 									
