@@ -1059,8 +1059,8 @@ $(document).ready(function() {
 	  
 	// 지도를 담을 영역의 DOM 레퍼런스
 	     var mapContainer = document.getElementById('map');
-	     var acomLatitude = ${requestScope.daVO.acom_latitude};
-	     var acomLongitude = ${requestScope.daVO.acom_longitude};     
+	     var acomLatitude = '${requestScope.daVO.acom_latitude}';
+	     var acomLongitude = '${requestScope.daVO.acom_longitude}';     
 	
 	
 	     // 지도를 생성할때 필요한 기본 옵션
