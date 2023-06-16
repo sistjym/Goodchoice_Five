@@ -94,19 +94,19 @@
 				//user_point
 				
 
-				/* if($("input#point").val() > $("input#user_point").val()){
+				 if($("input#point").val() < $("input#user_point").val()){
 					alert("포인트 초과사용");
 					return false;
-				} */
+				}
 				
 				let price = $("input#price").val();
-				console.log(price);
+				//console.log(price);
 				
 				let point = document.getElementById("user_point").value;
-				console.log(point);
+				//console.log(point);
 				let totalprice = Number(price) - Number(point);
 				totalprice = totalprice.toLocaleString();
-				console.log(totalprice);
+				//console.log(totalprice);
 			
 				
 				$("input#totalPrice").val(totalprice);
@@ -249,7 +249,7 @@
 	                		</li>
 	                		<li class="price_li">
 								<strong>사용할 포인트</strong>
-								<input class="transInput price_box point" id="user_point" name="user_point" type="text" value="" placeholder="P">
+								<input class="transInput price_box point" id="user_point" name="user_point" type="text" value="0" placeholder="P">
 	                			
 	                		</li>
 	                		
@@ -330,7 +330,7 @@
 									<b >적립예정 포인트</b>
 								</strong>
 								<span class="price"  >
-									<input style="display:inline;" class="transInput acomInfo" type="text" name="totalPoint" id="totalPoint" value=""  readonly="readonly"> P
+									<input style="display:inline;" class="transInput acomInfo" type="text" name="totalPoint" id="totalPoint" value="0"  readonly="readonly"> P
 								</span>
 							</p> 
 							<ul>
