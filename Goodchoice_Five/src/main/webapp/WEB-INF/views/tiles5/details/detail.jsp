@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
        
 <%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 
     
 <%
@@ -1842,7 +1844,8 @@ function myFunction_PrevRightSpan() {
 		
 										    <div style="display: flex; border-bottom: 1px solid rgba(128, 128, 128, 0.2);">
 										      <span class="badge badge-danger badge-pill special_price">예약특가</span>					    
-										      <h5 class="card-title item_special_price" id="room_price">${RoomVO.price}</h5>
+										      <h5 class="card-title item_special_price" id="room_price"><fmt:formatNumber value="${RoomVO.price}" pattern="#,###"/></h5>
+										      
 										    </div>
 										    
 									    </div>

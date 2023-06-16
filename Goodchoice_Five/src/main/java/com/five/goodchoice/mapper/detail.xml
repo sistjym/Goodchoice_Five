@@ -15,6 +15,16 @@
 		   where acom_no = #{acom_no}
 				
 		</select>
+		
+		<select id="is_Exist_category_no" parameterType="HashMap" resultType="String">
+			
+		   select count(*) as category_no_cnt
+		   
+		   from tbl_acom_category
+		   
+		   where category_no = #{category_no}
+				
+		</select>
 	
 	 
 		<!-- acom_no에 해당하는 숙소정보를 가져오기  -->

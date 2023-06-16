@@ -110,11 +110,11 @@ public class DetailController {
 							
 							
 						
-							// item_no 에 음수가 오는지 검사하는 여부
-							else if(Integer.parseInt(acom_no.trim()) < 0 || Integer.parseInt(category_no.trim()) < 0 ) {
+							// acom_no 에 음수가 오는지 검사하는 여부
+							else if(Integer.parseInt(acom_no.trim()) < 0 || Integer.parseInt(category_no.trim()) < 0) {
 								
 							//	System.out.println("음수입니다.");
-								message = "acom_no 혹은 category_no  는 음수가 될 수 없습니다.";
+								message = "acom_no 혹은 category_no 는 음수가 될 수 없습니다.";
 								wrong_data_in_url = true;
 								
 								loc = "javascript:history.back()";
@@ -125,14 +125,16 @@ public class DetailController {
 								
 								return mav;
 							}// end of else if(Integer.parseInt(itemno.trim()) < 0) -----------------------------
-							
+							 
 							
 							
 							
 							boolean is_Exist_acom_no = service.is_Exist_acom_no(paraMap); 
 							
-							if(!is_Exist_acom_no) {
-								message = "acom-no 가 DB에 존재하지 않습니다.";
+							boolean is_Exist_category_no = service.is_Exist_category_no(paraMap);
+							
+							if(!is_Exist_acom_no || ! is_Exist_category_no) {
+								message = "acom_no 혹은 category_no 가 DB에 존재하지 않습니다.";
 								
 								wrong_data_in_url = true;
 								
@@ -149,10 +151,11 @@ public class DetailController {
 							
 							
 							
+							
 						}// end of try -------------------------------------
 						
 						
-						catch(NumberFormatException e) { // 유효하지 않은 문자를 item_no 로 입력하는 경우   
+						catch(NumberFormatException e) { // 유효하지 않은 문자를 acom_no 와 category_no 로 입력하는 경우   
 				            
 				               	   boolean isDigit = true;
 				               
