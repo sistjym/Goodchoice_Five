@@ -45,8 +45,8 @@
 			let item = ['어피치', '초롱초롱', '튜브', '프로도', '라이언', '프로도', '뚜루뚜루', '멍멍이', '코코넛', '귀여웡', '안귀여웡', '비비안', '호호호', '콩닥콩닥', '무지한무지', '단무지', '무지개', '쿠키빵', '곰돌이', '꽃순이', '마빡딱대', '코카는제로', '배고파', '아깜짝아', '조장님바보', '키키케케'];
 
 				  let randomItem = item[Math.floor(Math.random() * item.length)];
-				  $("input#ran_nick").val("");
-				  $("input#ran_nick").val(randomItem);
+				  $("input#nickname").val("");
+				  $("input#nickname").val(randomItem);
 				  $("span#error_nickname").text("");
 				  $("span#error_nickname").hide();
 		});
@@ -56,12 +56,12 @@
 	function setEventHandling() {
 		
 		// 닉네임 유효성 검사
-		$('input#ran_nick').on('input', nicknameCheck);
+		$('input#nickname').on('input', nicknameCheck);
 	}
 	
 	
 	function nicknameCheck(e) {
-		const inputNickname = $("input#ran_nick").val();
+		const inputNickname = $("input#nickname").val();
 		
 		
 		const regExp = /^[가-힣]{2,10}$/;
@@ -104,7 +104,7 @@
 						</div>
 						<section class="modifying-section" style="display: none;">
 							<p class="inp_wrap remove form-errors">
-								<input type="text" id="ran_nick" value="${sessionScope.loginuser.member_nickname}" placeholder="체크인시 필요한 정보입니다." class="required_my" data-input="unick" data-msg-required="닉네임을 입력하세요." data-rule-minlength="2" data-rule-maxlength="14" data-rule-spacechar="true" data-rule-specialchar="true"/>
+								<input type="text" name="nickname" id="nickname" value="${sessionScope.loginuser.member_nickname}" placeholder="체크인시 필요한 정보입니다." class="required_my" data-input="unick" data-msg-required="닉네임을 입력하세요." data-rule-minlength="2" data-rule-maxlength="14" data-rule-spacechar="true" data-rule-specialchar="true"/>
 							</p>
 							<button type="button" id="btn_rannick" class="btn_etc btn_confirm active">딴거할래요</button> <!-- 활성화 클래스 'active' -->
 							<div><span id="error_nickname" style="color: red; position: inherit;"></span></div>
@@ -117,7 +117,7 @@
 					</div>
 				</section>
 			</form>
-			<form name="form2" action="https://www.goodchoice.kr/my/mypageInfoUpdate" autocomplete="off" method="post" novalidate="novalidate" data-form="uname">
+			<form name="form2" action="<%= ctxPath%>/nickEdit.gc" autocomplete="off" method="post" novalidate="novalidate" data-form="uname">
 				<!-- 폼전송시 전달되는 data target element -->
 				<div class="mypageForm__form-inputs-wrap" aria-hidden="true">
 					<input type="hidden" name="uno" value="20570882">
@@ -133,7 +133,7 @@
 						</div>
 						<section class="modifying-section" style="display: none;">
 							<p class="inp_wrap remove form-errors">
-								<input type="text" id="uname" value="" placeholder="체크인시 필요한 정보입니다." class="required_my" data-input="uname" data-rule-spacechar="true" data-rule-specialchar="true">
+								<input type="text" name="reserved_name" id="uname" value="" placeholder="체크인시 필요한 정보입니다." class="required_my" data-input="uname" data-rule-spacechar="true" data-rule-specialchar="true">
 							</p>
 						</section>
 						<div class="pw_input__btns-wrap">
@@ -147,13 +147,13 @@
 
 			
 
-			<p class="bot_link"><a href="">비밀번호 변경</a> &gt;</p>
+			<p class="bot_link"><a href="<%= ctxPath%>/pwdChange.gc">비밀번호 변경</a> &gt;</p>
 		</div>
 
 		<div class="bot_btn">
 			<p>여기어때를 이용하고 싶지 않으신가요?</p>
-			<button type="button" onclick="pop_twobtn('ell','로그아웃 하시겠습니까?','취소','로그아웃','close_layer()','logoutPro()');">로그아웃</button>
-			<button type="button"><a href="https://www.goodchoice.kr/my/withdraw">회원탈퇴</a></button>
+			<button type="button"><a href="<%= ctxPath%>/memberLogout.gc">로그아웃</a></button>
+			<button type="button"><a href="">회원탈퇴</a></button>
 		</div>
 	</div>
 </div>

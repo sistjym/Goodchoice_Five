@@ -17,4 +17,15 @@
 		join tbl_acomodation C
 		on A.fk_acom_no = C.acom_no
     </select>
+    
+    <update id="nickEdit" parameterType="HashMap">
+		update tbl_member set member_nickname = #{nickname}
+		where member_email = #{email}
+	</update>
+	
+   	<update id="pwdUpdate" parameterType="HashMap">
+		update tbl_member set member_pwd = #{pwd}
+		where member_email = #{email}
+	</update>
+   	
 </mapper>

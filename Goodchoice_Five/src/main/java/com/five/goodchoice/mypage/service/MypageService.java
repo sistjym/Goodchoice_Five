@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.five.goodchoice.detail.model.RoomVO;
+import com.five.goodchoice.member.model.MemberVO;
 import com.five.goodchoice.mypage.model.InterMypageDAO;
 import com.five.goodchoice.mypage.model.ReservationVO;
 
@@ -20,6 +21,33 @@ public class MypageService implements InterMypageService {
 	public List<ReservationVO> getAllReservations() {
 		List<ReservationVO> getAllReservations = dao.getAllReservations();
 	    return getAllReservations;
+	}
+
+
+	@Override
+	public int nickEdit(Map<String, String> paraMap) {
+		
+		int n = dao.nickEdit(paraMap);
+		
+		return n;
+	}
+
+
+	@Override
+	public int reservNameEdit(Map<String, String> paraMap) {
+		
+		int n = dao.reservNameEdit(paraMap);
+		
+		return n;
+	}
+
+
+	@Override
+	public int pwdUpdate(Map<String, String> paraMap) {
+		
+		int n = dao.pwdUpdate(paraMap);
+		
+		return n;
 	}
 	
 	

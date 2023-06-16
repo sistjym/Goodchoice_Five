@@ -7,6 +7,8 @@ import javax.annotation.Resource;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.five.goodchoice.member.model.MemberVO;
+
 @Repository
 public class MypageDAO implements InterMypageDAO {
 
@@ -18,6 +20,25 @@ public class MypageDAO implements InterMypageDAO {
 		List<ReservationVO> getAllReservations = sqlsession.selectList("myreservation.getAllReservations");
         return getAllReservations;
     }
+
+	@Override
+	public int nickEdit(Map<String, String> paraMap) {
+		
+		int n = sqlsession.update("myreservation.nickEdit", paraMap);
+		return n;
+	}
+
+	@Override
+	public int reservNameEdit(Map<String, String> paraMap) {
+		int n = sqlsession.insert("myreservation.reservNameEdit", paraMap);
+		return n;
+	}
+
+	@Override
+	public int pwdUpdate(Map<String, String> paraMap) {
+		int n = sqlsession.update("myreservation.pwdUpdate", paraMap);
+		return n;
+	}
 
 	
 	
