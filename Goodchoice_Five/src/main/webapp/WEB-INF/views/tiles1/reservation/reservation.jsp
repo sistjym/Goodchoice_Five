@@ -15,17 +15,25 @@
 	$(document).ready(function(){
 		
 		
-	    let day_price = $("input#price1").val();
+		
+	    let day_priceStr = $("input#price1").val();
+	    
+	    const day_price = day_priceStr.replace(/,/g, "");
+	    
 		
 		let days = $("input#days").val();
 		
 		
 		console.log(day_price);
 		console.log(days);
-		let totalPrice = Number(day_price) * Number(days);
+		
+		let totalPrice = day_price * Number(days);
+		
+		console.log(totalPrice);
 		
 		$("input#price").val(totalPrice);
-	    $("input#totalPrice").val(totalPrice);
+		totalPrice_str = totalPrice.toLocaleString();
+	    $("input#totalPrice").val(totalPrice_str);
 	    let totalPoint = totalPrice * 0.1;
 	    $("input#totalPoint").val(totalPoint);
 	    
@@ -105,14 +113,12 @@
 				let point = document.getElementById("user_point").value;
 				//console.log(point);
 				let totalprice = Number(price) - Number(point);
-				totalprice = totalprice.toLocaleString();
+				//totalprice = totalprice.toLocaleString();
 				//console.log(totalprice);
 			
-				
-				$("input#totalPrice").val(totalprice);
-				
+				let totalPrice_str = totalprice.toLocaleString();
+				$("input#totalPrice").val(totalPrice_str);
 
-				
 			})
 		
 	
