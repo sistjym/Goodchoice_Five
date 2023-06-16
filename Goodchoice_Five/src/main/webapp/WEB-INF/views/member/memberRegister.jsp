@@ -533,7 +533,7 @@
 		        <option value="@naver.com">naver.com</option>
 		        <option value="@hanmail.com">hanmail.com</option>
 		        <option value="@daum.net">daum.net</option>
-		        <option value="@gamil.com">gamil.com</option>
+		        <option value="@gmail.com">gmail.com</option>
 		        <option value="@nate.com">nate.com</option>
 		      </select>
 		      
