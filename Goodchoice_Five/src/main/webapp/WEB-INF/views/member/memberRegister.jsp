@@ -373,7 +373,7 @@
 	
 	
 	
-	let item = ['어피치', '초롱초롱', '튜브', '프로도', '라이언', '프로도', '뚜루뚜루', '멍멍이', '코코넛', '귀여웡', '안귀여웡', '비비안', '호호호', '콩닥콩닥', '무지한무지', '단무지', '무지개', '쿠키빵', '곰돌이', '꽃순이', '마빡딱대', '코카는제로', '배고파', '아깜짝아', '조장님바보', '키키케케'];
+	let item = ['어피치', '초롱초롱', '튜브', '프로도', '라이언', '프로도', '뚜루뚜루', '멍멍이', '코코넛', '귀여웡', '안귀여웡', '비비안', '호호호', '콩닥콩닥', '무지한무지', '단무지', '무지개', '쿠키빵', '곰돌이', '꽃순이', '마빡딱대', '코카는제로', '배고파', '아깜짝아', '조장님바보', '키키케케', '선생님멍충이'];
 
 	function getRandomItem() {
 		  let randomItem = item[Math.floor(Math.random() * item.length)];
@@ -533,7 +533,7 @@
 		        <option value="@naver.com">naver.com</option>
 		        <option value="@hanmail.com">hanmail.com</option>
 		        <option value="@daum.net">daum.net</option>
-		        <option value="@gamil.com">gamil.com</option>
+		        <option value="@gmail.com">gmail.com</option>
 		        <option value="@nate.com">nate.com</option>
 		      </select>
 		      

@@ -139,7 +139,7 @@ public class GoogleMail {
         				+ "<p style='color:#f2114c'>안녕하세요.</p>"
         				+ "<p>여기어때 회원의 본인 확인을 위해 발송된 메일입니다.</p>"
         				+ "<p>비밀번호 재설정을 하시려면 아래의 버튼을 클릭해주세요.</p>"
-        				+ "<div style='width:272px; height:60px; margin-left: 260px; margin-top:30px; text-align:center;'><a href='http://localhost:9090/goodchoice/passwdEdit.gc?email="+enEmail+"' style='display: block;padding: 19px 0;color: #fff;font-size: 18px;font-weight: bold;background: #f45858;text-align: center;text-decoration: none;border-radius: 5px;'>비밀번호 재설정</a>"
+        				+ "<div style='width:272px; height:60px; margin: 0 auto; margin-top:30px;'class><a href='http://localhost:9090/goodchoice/passwdEdit.gc?email="+enEmail+"' style='display: block;padding: 19px 0;color: #fff;font-size: 18px;font-weight: bold;background: #f45858;text-align: center;text-decoration: none;border-radius: 5px;'>비밀번호 재설정</a>"
         				+ "</div>"
         			 + "</div>" , "text/html;charset=UTF-8");
                 

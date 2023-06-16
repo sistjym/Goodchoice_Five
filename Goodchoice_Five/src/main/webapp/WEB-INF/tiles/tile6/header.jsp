@@ -23,7 +23,7 @@
                     <button class="dropbtn">호스트 전용</button>
                      <ul class="dropdown-content">
                         <a href="<%= ctxPath%>/hostRegister.gc">숙소 등록하기</a>
-                        <a href="<%= ctxPath%>/hostRegister.gc">숙소 수정하기</a>
+                        <a href="<%= ctxPath%>/hostEdit.gc">숙소 수정하기</a>
                     </ul>
                 </li> 
 	

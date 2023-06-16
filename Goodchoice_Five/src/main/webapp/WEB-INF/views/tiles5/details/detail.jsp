@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
        
 <%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 
     
 <%
@@ -1057,8 +1059,8 @@ $(document).ready(function() {
 	  
 	// 지도를 담을 영역의 DOM 레퍼런스
 	     var mapContainer = document.getElementById('map');
-	     var acomLatitude = ${requestScope.daVO.acom_latitude};
-	     var acomLongitude = ${requestScope.daVO.acom_longitude};     
+	     var acomLatitude = '${requestScope.daVO.acom_latitude}';
+	     var acomLongitude = '${requestScope.daVO.acom_longitude}';     
 	
 	
 	     // 지도를 생성할때 필요한 기본 옵션
@@ -1548,7 +1550,11 @@ function myFunction_PrevRightSpan() {
 		
 		$("div#item a#accomo_1_open").click(function(){
 			
-			$("div#carousel_underItem_wrap").show();
+			const this_csrl = $(this).closest("div#item")
+			
+			this_csrl.find("div#carousel_underItem_wrap").show();
+			
+			
 			
 		});
 		
@@ -1561,7 +1567,9 @@ function myFunction_PrevRightSpan() {
 		
 		$("div#item a#accomo_1_hide").click(function(){
 			
-			$("div#carousel_underItem_wrap").hide();
+			const this_csrl_hide = $(this).closest("div#item")
+			
+			this_csrl_hide.find("div#carousel_underItem_wrap").hide();
 			
 		});
 		
@@ -1572,34 +1580,7 @@ function myFunction_PrevRightSpan() {
 	<%-- 객실 추가이미지 더보기 접기  (첫번째 객식 101)--%>
 	
 	
-<%-- 객실 추가이미지 더보기 접기  (두번째 객식 102)--%>
-	
-	function myFunction_Show_accomo_2(){
-		
-		$("div#item_2 a#accomo_2_open").click(function(){
-			
-			$("div#carousel_underItem_wrap_2").show();
-			
-		});
-		
-		
-		
-	}
-	
-	
-	function myFunction_Hide_accomo_2(){
-		
-		$("div#item_2 a#accomo_2_hide").click(function(){
-			
-			$("div#carousel_underItem_wrap_2").hide();
-			
-		});
-		
-		
-		
-	}
-	
-	<%-- 객실 추가이미지 더보기 접기  (두번째 객식 102)--%>
+
 	
 	
 	<%-- 탭키를 트리거 클릭하기 위한 함수  --%>
@@ -1824,7 +1805,7 @@ function myFunction_PrevRightSpan() {
 		  </div>
 
 
-	 <c:forEach var="RoomVO" items="${requestScope.getRoomList}">  	
+	 <c:forEach var="RoomVO" items="${requestScope.getRoomList}" varStatus ="status">   	
 	      <div id="item" class="col-lg-8">
 		      	 <div style="display:flex;">
 						<div class="col-lg-6 col-md-6 col-sm-6" >
@@ -1842,7 +1823,8 @@ function myFunction_PrevRightSpan() {
 		
 										    <div style="display: flex; border-bottom: 1px solid rgba(128, 128, 128, 0.2);">
 										      <span class="badge badge-danger badge-pill special_price">예약특가</span>					    
-										      <h5 class="card-title item_special_price" id="room_price">${RoomVO.price}</h5>
+										      <h5 class="card-title item_special_price" id="room_price"><fmt:formatNumber value="${RoomVO.price}" pattern="#,###"/></h5>
+										      
 										    </div>
 										    
 									    </div>
@@ -1937,7 +1919,7 @@ function myFunction_PrevRightSpan() {
 	    				
 	    			<!-- <c:set var="new_roomno" value="${paraMap.roomnumber + status.index}"/> -->	
 
-	    			<!-- 	
+	    			
 	    			  <div class="col-lg-10" id="carousel_underItem_wrap" style="display: none;">
 	    			    	<div style="margin-bottom:5px; text-align: right;">
 	    			    	  <a id="accomo_1_hide" role="button"  style="background-color: none; border: none; " >
@@ -1951,20 +1933,19 @@ function myFunction_PrevRightSpan() {
 									  <div class="carousel-inner">
 													
 																										
-									  	<c:forEach var="room" items="${requestScope.getRoomOne}" varStatus="status_sub"> -->
+									  	<c:forEach var="RoomVO" items="${requestScope.getRoom_addImageList}" varStatus="status_sub"> -->
 									   		 <!-- to_number('0')의 값을 첫 번째 반복문에 사용하고, 그 이후에는 to_number('1'), to_number('2') 등을 사용합니다 -->
 											
-											<%-- 여기부터 해서 다시 선생님께 물어보기. status.index를 적용시킨다는게 아직도 잘모르겠다고.. to_number()부분을 status.index를 사용해서 어떻게 적용하라는건지 모르겠다고 --%>
-											<!-- 
+										
 		    				    			 <c:if test="${status_sub.index == 0}">                 
 											    <div class="carousel-item active">
-											      <img class="d-block w-100" src="<%= ctxPath%>/resources/images/${room.room_image_add_name}" alt="First slide">
+											      <img class="d-block w-100" src="<%= ctxPath%>/resources/images/${RoomVO.room_image_add_name}" alt="First slide">
 											    </div>
 										 	</c:if>
 										 	
 										 	<c:if test="${status_sub.index > 0}">                 
 											    <div class="carousel-item">
-											      <img class="d-block w-100" src="<%= ctxPath%>/resources/images/${room.room_image_add_name}" alt="Second slide">
+											      <img class="d-block w-100" src="<%= ctxPath%>/resources/images/${RoomVO.room_image_add_name}" alt="Second slide">
 											    </div>
 										 	</c:if>
 										 </c:forEach>
@@ -1986,7 +1967,7 @@ function myFunction_PrevRightSpan() {
 							  </a>
 	       					
 				 	 </div>
-					-->  		
+					 		
 	        </div>
   </c:forEach>  	       
 	       
@@ -2036,7 +2017,7 @@ function myFunction_PrevRightSpan() {
 								    <c:forEach var="RoomVO" items="${requestScope.getRoomList}">
 									<tr><!-- 첫번째 줄 시작 -->
 									    <td style="border-left:1px solid #bfbfbf; border-right:1px solid #bfbfbf; border-bottom:1px solid #bfbfbf; font-weight:400;">${RoomVO.room_type}</td>
-									    <td style="border-bottom:1px solid #bfbfbf; font-weight:400;">${RoomVO.price}</td>
+									    <td style="border-bottom:1px solid #bfbfbf; font-weight:400;"><fmt:formatNumber value="${RoomVO.price}" pattern="#,###"/></td>
 									</tr><!-- 첫번째 줄 끝 -->
 									</c:forEach>
 							    </table>

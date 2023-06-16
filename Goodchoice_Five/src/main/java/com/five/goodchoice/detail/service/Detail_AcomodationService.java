@@ -59,6 +59,13 @@ public class Detail_AcomodationService implements InterDetail_AcomodationService
 		return reviewList;
 	}
 	
+	// 카테고리가 존재하는지 확인
+	@Override
+	public boolean is_Exist_category_no(Map<String, String> paraMap) {
+		boolean is_Exist_category_no =	 dadao.is_Exist_category_no(paraMap);
+		return is_Exist_category_no;
+	}
+	
 
 		
 				

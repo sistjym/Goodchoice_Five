@@ -75,6 +75,21 @@ public class Detail_AcomodationDAO implements InterDetail_AcomodationDAO {
 		return reviewList;
 	}
 
+	// 카테고리가 존재하는지 확인
+	@Override
+	public boolean is_Exist_category_no(Map<String, String> paraMap) {
+		
+		boolean is_Exist_category_no = false; 
+		
+		String category_no_cnt = sqlsession.selectOne("detail.is_Exist_category_no", paraMap);
+		
+		if(Integer.parseInt(category_no_cnt) > 0) { // category_no exist
+			is_Exist_category_no = true;
+		}
+		
+		return is_Exist_category_no;
+	}
+
 
 	
 

@@ -1,6 +1,5 @@
 package com.five.goodchoice.detail.model;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -30,13 +29,13 @@ public class RoomDAO implements InterRoomDAO {
 		ArrayList<RoomVO> roomOne = sqlsession.selectOne("detail.getRoomOne", paraMap);
 		return roomOne;
 	}
-
+*/
 	@Override
-	public List<String> getRoom_addImageList(String room_id) {
-		List<String> room_addImageList = sqlsession.selectList("detail.getRoom_addImageList", room_id);
+	public List<RoomVO> getRoom_addImageList(Map<String, String> paraMap) {
+		List<RoomVO> room_addImageList = sqlsession.selectList("detail.getRoom_addImageList", paraMap);
 		return room_addImageList;
 	}
-*/
+
 
 	
 	

@@ -330,11 +330,12 @@ public class MemberController {
 			
 		}// end of if(isUserExist) ----------------------------------------
 		else {	// 입력한 이메일이 db에 없을 경우
+			 sendMailSuccess = false;
 			 message = "가입된 이메일이 아닙니다.";
 			 loc = "javascript:history.back()";
 		}
 		
-		
+		mav.addObject("sendMailSuccess", sendMailSuccess);
 		mav.addObject("message", message);
 		mav.addObject("loc", loc);
 		
@@ -476,7 +477,14 @@ public class MemberController {
 						}
 						
 						else {
-							mav.setViewName("redirect:/main/home.gc");  // 시작페이지로 이동
+							String message = "카카오톡으로 회원가입 되었습니다";
+							String loc = request.getContextPath()+"/main/home.gc";
+							
+							mav.addObject("message", message);
+							mav.addObject("loc", loc);
+							
+							mav.setViewName("msg");
+							
 						}
 						
 					}
