@@ -175,16 +175,20 @@ public class DetailController {
 					               
 					               if(isDigit) {
 					                  
-					                  message = "acom_no 의 범위가 int 를 벗어났습니다.";
+					                  message = "acom_no 혹은 category_no 의 범위가 int 를 벗어났습니다.";
 					                  wrong_data_in_url = true;
 					                  
 					               }
 					               else {
 					                  
-					                  message = "acom_no는 문자형태가 올 수 없습니다.";
+					                  message = "acom_no 혹은 category_no 는 문자형태가 올 수 없습니다.";
 					                  wrong_data_in_url = true;
 					                  
 					               }
+					               
+					               
+					               
+					               ////////////////////////////////////////////////////////////////////////////////
 					               
 					               boolean isDigit_category = true;
 					               
@@ -204,13 +208,13 @@ public class DetailController {
 					               
 					               if(isDigit_category) {
 					                  
-					                  message = "category_no 의 범위가 int 를 벗어났습니다.";
+					                  message = "acom_no 혹은 category_no 의 범위가 int 를 벗어났습니다.";
 					                  wrong_data_in_url = true;
 					                  
 					               }
 					               else {
 					                  
-					                  message = "category_no는 문자형태가 올 수 없습니다.";
+					                  message = "acom_no 혹은 category_no는 문자형태가 올 수 없습니다.";
 					                  wrong_data_in_url = true;
 					                  
 					               }
