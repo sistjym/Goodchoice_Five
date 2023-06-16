@@ -66,9 +66,9 @@ $(document).on('scroll', function(){
 	                    <button class="dropbtn" > <span style="color:yellow;">${sessionScope.loginuser.member_nickname}</span> 님  페이지</button>
 	                    
 	                     <ul class="dropdown-content" class="deactive2" >
-	                        <a href="<%= ctxPath%>/main/home.gc">내정보</a>
-	                        <a href="<%= ctxPath%>/main/home.gc">예약 내역</a>
-	                        <a href="<%= ctxPath%>/main/home.gc">포인트</a>
+	                        <a class="drop" href="<%= ctxPath%>/main/home.gc">내정보</a>
+	                        <a class="drop" href="<%= ctxPath%>/main/home.gc">예약 내역</a>
+	                        <a class="drop" href="<%= ctxPath%>/main/home.gc">포인트</a>
 	                    </ul>
 	                </li> 	
 	               		

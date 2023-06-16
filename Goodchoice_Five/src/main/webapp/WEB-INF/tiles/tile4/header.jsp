@@ -48,12 +48,12 @@ $(document).on('scroll', function(){
 						
 	                 <li class="dropdown" >
 	                    <button class="dropbtn"> 관리자 전용</button>
-	                     <ul class="dropdown-content"  >
+	                     <ul class="dropdown-content"  class="deactive2">
 	                        <a class="drop" href="<%= ctxPath%>/showAllAcomm.gc">모든 숙소 보기</a>
 	                        <a class="drop" href="<%= ctxPath%>/showAllHost.gc">호스트 관리</a>
 	                        <a class="drop" href="<%= ctxPath%>/acomm_approve.gc">숙소 등록승인 </a>
 	                        <a class="drop" href="<%= ctxPath%>/viewChart.gc">데이터 차트</a>
-	                     
+	                      
 	                    </ul>
 	                </li> 
 	                
@@ -65,10 +65,10 @@ $(document).on('scroll', function(){
 	                    
 	                    <button class="dropbtn" > <span style="color:yellow;">${sessionScope.loginuser.member_nickname}</span> 님  페이지</button>
 	                    
-	                     <ul class="dropdown-content" class="deactive2 drop">
-	                        <a href="<%= ctxPath%>/main/home.gc">내정보</a>
-	                        <a href="<%= ctxPath%>/main/home.gc">예약 내역</a>
-	                        <a href="<%= ctxPath%>/main/home.gc">포인트</a>
+	                     <ul class="dropdown-content" class="deactive2" >
+	                        <a class="drop" href="<%= ctxPath%>/main/home.gc">내정보</a>
+	                        <a class="drop" href="<%= ctxPath%>/main/home.gc">예약 내역</a>
+	                        <a class="drop" href="<%= ctxPath%>/main/home.gc">포인트</a>
 	                    </ul>
 	                </li> 	
 	               		
