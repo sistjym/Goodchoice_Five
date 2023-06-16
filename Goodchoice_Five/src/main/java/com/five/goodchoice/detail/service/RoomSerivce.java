@@ -29,13 +29,13 @@ public class RoomSerivce implements InterRoomSerivce {
 		ArrayList<RoomVO> roomOne = rdao.getRoomOne(paraMap);
 		return roomOne;
 	}
-
+*/
 	@Override
-	public List<String> getRoom_addImageList(String room_id) {
-		List<String> room_addImageList = rdao.getRoom_addImageList(room_id);
+	public List<RoomVO> getRoom_addImageList(Map<String, String> paraMap) {
+		List<RoomVO> room_addImageList = rdao.getRoom_addImageList(paraMap);
 		return room_addImageList;
 	}
-*/
+
 
 	
 

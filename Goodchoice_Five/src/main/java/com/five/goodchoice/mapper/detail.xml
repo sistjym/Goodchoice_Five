@@ -119,8 +119,18 @@
 			
 		</select>
 		
-		<!--  예약 리스트 불러오기     -->
+		<!--  객실추가이미지 가져오기     -->
 		
+		<select id="getRoom_addImageList" parameterType="HashMap" resultType="com.five.goodchoice.detail.model.RoomVO">
+		
+			select A.room_no,A.room_type,C.room_image_add_name 
+			from tbl_room A 
+			join tbl_acomodation B   on A.fk_acom_no = B.acom_no
+			join tbl_room_add_img C  on A.room_id = C.fk_room_id
+			where A.fk_acom_no = #{acom_no} 
+			order by room_no
+		
+		</select>
 	
 	
 		

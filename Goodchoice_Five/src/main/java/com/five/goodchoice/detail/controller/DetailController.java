@@ -90,7 +90,7 @@ public class DetailController {
 					
 						try {
 							
-							// item_no 가 공백인지 여부
+							
 							if(acom_no.trim().isEmpty() || category_no.trim().isEmpty() || check_in_date.trim().isEmpty() || check_out_date.trim().isEmpty()) {
 								//System.out.println("공백입니다.");
 								message = "item_no는 공백이 될 수 없습니다.";		
@@ -358,9 +358,13 @@ public class DetailController {
 								*/	
 									
 									
-							
+									List<RoomVO> getRoom_addImageList = room_service.getRoom_addImageList(paraMap);
 
 									
+									
+									mav.addObject("getRoom_addImageList",getRoom_addImageList);
+									
+
 									
 									mav.setViewName("details/detail.tiles5");
 //									    /WEB-INF/views/tiles5/details/detail.jsp  페이지를 만들어야 한다.
