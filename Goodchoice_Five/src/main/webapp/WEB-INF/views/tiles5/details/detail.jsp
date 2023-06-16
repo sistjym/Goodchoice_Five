@@ -30,9 +30,8 @@ div#container{
 
 div#top{
 	
-	
- 	border:solid 10px white; 
-	margin-top: 40px;
+
+	margin-top: 100px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -46,16 +45,12 @@ div#top{
 
 div#top_right{
 
- 	border:solid 5px white; 
+ /*	border:solid 5px none;  */
 	
 }
 
 
-div#top_right{
 
- 	border:solid 5px white; 
-	
-}
 
 
 
@@ -130,7 +125,7 @@ img.ci{
 
 div#top_right > div#top_right_upper{
 
- 		border:solid 10px white; 
+ 	/*	border:solid 10px white; */
 	
 
 }
