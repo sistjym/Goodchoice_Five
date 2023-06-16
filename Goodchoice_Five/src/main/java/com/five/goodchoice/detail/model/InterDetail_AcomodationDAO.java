@@ -25,6 +25,9 @@ public interface InterDetail_AcomodationDAO {
 	// 리뷰 리스트 가져오기
 	List<AcomodationVO> show_ReviewList(Map<String, String> paraMap);
 	
+	// 카테고리가 존재하는지 확인
+	boolean is_Exist_category_no(Map<String, String> paraMap);
+	
 	
 	
 				

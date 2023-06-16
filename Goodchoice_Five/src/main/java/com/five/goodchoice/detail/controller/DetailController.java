@@ -1,7 +1,6 @@
 package com.five.goodchoice.detail.controller;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.security.GeneralSecurityException;
 import java.util.*;
 
@@ -90,7 +89,7 @@ public class DetailController {
 					
 						try {
 							
-							// item_no 가 공백인지 여부
+							
 							if(acom_no.trim().isEmpty() || category_no.trim().isEmpty() || check_in_date.trim().isEmpty() || check_out_date.trim().isEmpty()) {
 								//System.out.println("공백입니다.");
 								message = "item_no는 공백이 될 수 없습니다.";		
@@ -110,11 +109,11 @@ public class DetailController {
 							
 							
 						
-							// item_no 에 음수가 오는지 검사하는 여부
-							else if(Integer.parseInt(acom_no.trim()) < 0 || Integer.parseInt(category_no.trim()) < 0 ) {
+							// acom_no 에 음수가 오는지 검사하는 여부
+							else if(Integer.parseInt(acom_no.trim()) < 0 || Integer.parseInt(category_no.trim()) < 0) {
 								
 							//	System.out.println("음수입니다.");
-								message = "acom_no 혹은 category_no  는 음수가 될 수 없습니다.";
+								message = "acom_no 혹은 category_no 는 음수가 될 수 없습니다.";
 								wrong_data_in_url = true;
 								
 								loc = "javascript:history.back()";
@@ -125,14 +124,16 @@ public class DetailController {
 								
 								return mav;
 							}// end of else if(Integer.parseInt(itemno.trim()) < 0) -----------------------------
-							
+							 
 							
 							
 							
 							boolean is_Exist_acom_no = service.is_Exist_acom_no(paraMap); 
 							
-							if(!is_Exist_acom_no) {
-								message = "acom-no 가 DB에 존재하지 않습니다.";
+							boolean is_Exist_category_no = service.is_Exist_category_no(paraMap);
+							
+							if(!is_Exist_acom_no || ! is_Exist_category_no) {
+								message = "acom_no 혹은 category_no 가 DB에 존재하지 않습니다.";
 								
 								wrong_data_in_url = true;
 								
@@ -149,10 +150,11 @@ public class DetailController {
 							
 							
 							
+							
 						}// end of try -------------------------------------
 						
 						
-						catch(NumberFormatException e) { // 유효하지 않은 문자를 item_no 로 입력하는 경우   
+						catch(NumberFormatException e) { // 유효하지 않은 문자를 acom_no 와 category_no 로 입력하는 경우   
 				            
 				               	   boolean isDigit = true;
 				               
@@ -172,16 +174,20 @@ public class DetailController {
 					               
 					               if(isDigit) {
 					                  
-					                  message = "acom_no 의 범위가 int 를 벗어났습니다.";
+					                  message = "acom_no 혹은 category_no 의 범위가 int 를 벗어났습니다.";
 					                  wrong_data_in_url = true;
 					                  
 					               }
 					               else {
 					                  
-					                  message = "acom_no는 문자형태가 올 수 없습니다.";
+					                  message = "acom_no 혹은 category_no 는 문자형태가 올 수 없습니다.";
 					                  wrong_data_in_url = true;
 					                  
 					               }
+					               
+					               
+					               
+					               ////////////////////////////////////////////////////////////////////////////////
 					               
 					               boolean isDigit_category = true;
 					               
@@ -201,13 +207,13 @@ public class DetailController {
 					               
 					               if(isDigit_category) {
 					                  
-					                  message = "category_no 의 범위가 int 를 벗어났습니다.";
+					                  message = "acom_no 혹은 category_no 의 범위가 int 를 벗어났습니다.";
 					                  wrong_data_in_url = true;
 					                  
 					               }
 					               else {
 					                  
-					                  message = "category_no는 문자형태가 올 수 없습니다.";
+					                  message = "acom_no 혹은 category_no는 문자형태가 올 수 없습니다.";
 					                  wrong_data_in_url = true;
 					                  
 					               }
@@ -320,7 +326,7 @@ public class DetailController {
 									
 									hostVO.setHost_email(email);
 									
-									System.out.println("호스트 정보:" + hostVO.getCp_name() + hostVO.getCp_reg_no() + hostVO.getHost_email() + hostVO.getHost_name() + daVO.getAddress() + daVO.getExtra_address());
+	//								System.out.println("호스트 정보:" + hostVO.getCp_name() + hostVO.getCp_reg_no() + hostVO.getHost_email() + hostVO.getHost_name() + daVO.getAddress() + daVO.getExtra_address());
 									
 									
 									
@@ -355,9 +361,13 @@ public class DetailController {
 								*/	
 									
 									
-							
+									List<RoomVO> getRoom_addImageList = room_service.getRoom_addImageList(paraMap);
 
 									
+									
+									mav.addObject("getRoom_addImageList",getRoom_addImageList);
+									
+
 									
 									mav.setViewName("details/detail.tiles5");
 //									    /WEB-INF/views/tiles5/details/detail.jsp  페이지를 만들어야 한다.
