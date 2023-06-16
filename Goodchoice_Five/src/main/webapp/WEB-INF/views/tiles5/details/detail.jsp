@@ -31,7 +31,7 @@ div#container{
 div#top{
 	
 
-	margin-top: 100px;
+	margin-top: 80px;
     margin-left: auto;
     margin-right: auto;
 }
