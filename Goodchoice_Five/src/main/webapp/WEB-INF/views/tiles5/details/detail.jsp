@@ -666,6 +666,8 @@ div.review_content {
 }
 
 
+
+
   
 </style>
 
@@ -886,13 +888,13 @@ $(document).ready(function() {
       
        	
        	
-         console.log('check_in_date :' + check_in_date);
-         console.log('check_out_date :' + check_out_date);
+//         console.log('check_in_date :' + check_in_date);
+//         console.log('check_out_date :' + check_out_date);
          
   /////////////////////////////////////       
 <%--
   		$.ajax({
-			url:"<%= ctxPath%>/details/detail_select.gc",
+			url:"/details/detail_select.gc",
 			type:"get",
 			dataType:"json",
 			success:function(json){
@@ -1297,7 +1299,7 @@ $(document).ready(function() {
 	  --%>
 	
 	  
-
+//	  func_detail_select();
 	  
   
 });  // end of $(document).ready(function(){})-------------------------------------------------------
@@ -1596,6 +1598,64 @@ function myFunction_PrevRightSpan() {
 	<%-- 탭키를 트리거 클릭하기 위한 함수 끝  --%>
 	
 	
+	<%--
+	function func_detail_select(){
+		 
+		 var resrv_Arr = [];
+		 
+		 const resv_check_in_date = $("input#resv_check_in_date").val();
+		 const resv_check_out_date = $("input#resv_check_out_date").val();
+		 const resv_room_type = $("input#resv_room_type").val();
+		 const resv_room_id = $("input#resv_room_id").val();
+		 const reserv_status = $("input#reserv_status").val();
+
+		 
+		 $.ajax({
+			  url:"/details/detail_select.gc",
+		      dataType:"json",
+		      success:function(json){
+		         	 
+		          console.log(JSON.stringify(json));
+		             --%> 
+		         // JSON.stringify(json) 은 자바스크립트의 객체(배열)인 json 을 string 타입으로 변경시켜주는 것이다.
+		         
+		        //    [{"STORENAME":"롯데백화점 본점","LNG":"126.98187860455485","ZINDEX":"1","STOREID":"store1","STOREIMG":"lotte02.png","STOREURL":"https://place.map.kakao.com/7858517","LAT":"37.56511284953554","STOREADDRESS":"서울 중구 을지로 30 (T)02-771-2500"},
+		        //     {"STORENAME":"신세계백화점 본점","LNG":"126.98098265772731","ZINDEX":"2","STOREID":"store2","STOREIMG":"shinsegae.png","STOREURL":"https://place.map.kakao.com/7969138","LAT":"37.56091181255155","STOREADDRESS":"서울 중구 소공로 63 (T)1588-1234"},
+		         //    {"STORENAME":"미래에셋센터원빌딩","LNG":"126.98512381778167","ZINDEX":"3","STOREID":"store3","STOREIMG":"miraeeset.png","STOREURL":"https://place.map.kakao.com/13057692","LAT":"37.567386065415086","STOREADDRESS":"서울 중구 을지로5길 26 (T)02-6030-0100"},
+		         //    {"STORENAME":"현대백화점신촌점","LNG":"126.935699","ZINDEX":"4","STOREID":"store4","STOREIMG":"hyundai01.png","STOREURL":"https://place.map.kakao.com/21695719","LAT":"37.556005","STOREADDRESS":"서울 서대문구 신촌로 83 현대백화점신촌점 (T)02-3145-2233"},
+		         //    {"STORENAME":"쌍용강북교육센터","LNG":"126.919557","ZINDEX":"5","STOREID":"store5","STOREIMG":"sist01.jpg","STOREURL":"https://place.map.kakao.com/16530319","LAT":"37.556583","STOREADDRESS":"서울 마포구 월드컵북로 21 풍성빌딩 2~4층 (T)02-336-8546"}] 
+		   
+		        
+		        <%--
+		         $.each(json, function(index, item){
+		            var resrv = {};
+		            
+		            resrv.content = "<div class='mycontent'>"+ 
+		                               "  <div class='title'>"+ 
+		                               "    <a href='"+item.storeurl+"' target='_blank'><strong>"+item.storename+"</strong></a>"+  
+		                               "  </div>"+
+		                               "  <div class='desc'>"+ 
+		                               "    <img src='/MyMVC/images/"+item.storeimg+"'>"+  
+		                               "    <span class='address'>"+item.storeaddress+"</span>"+ 
+		                               "  </div>"+ 
+		                               "</div>";
+		                             
+		           
+		            
+		             resrv_Arr.push(resrv);
+		         });
+		        --%>
+	       <%--
+		      },
+		      error: function(request, status, error){
+		         alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
+		       }
+
+		   });
+		 
+	 }
+	--%>
+	
 
 </script>
 
@@ -1622,7 +1682,6 @@ function myFunction_PrevRightSpan() {
 		</c:if>	
 		
 		<!-- 리뷰 평점 지역변수인거 막기위해 밖으로 빼둠 -->
-			
 		
 		<div class="row custom-topcontents col-md-9" id="top">
 		

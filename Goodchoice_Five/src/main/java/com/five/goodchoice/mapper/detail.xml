@@ -131,9 +131,24 @@
 			order by room_no
 		
 		</select>
-	
-	
 		
 		
+		<!-- 에약리스트 구하기 -->
+<!-- 	
+		<select id="show_ReservList" parameterType="HashMap" resultType="com.five.goodchoice.detail.model.ReservationVO">
+		
+			
+			select A.check_in_date as resv_check_in_date, A.check_out_date as resv_check_out_date, A.reserv_status as reserv_status  ,B.room_id as resv_room_id , B.room_type as resv_room_type  
+		    from tbl_reservation A
+		    join tbl_room B
+		    on A.fk_room_id = B.room_id
+		    where B.fk_acom_no = #{acom_no}
+		    order by B.fk_acom_no
+		
+		
+		
+		</select>
+		
+	 -->	
 		
 </mapper>

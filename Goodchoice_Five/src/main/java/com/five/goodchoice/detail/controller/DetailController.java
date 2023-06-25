@@ -17,10 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.five.goodchoice.detail.model.AcomodationVO;
-import com.five.goodchoice.detail.model.ReservationVO;
 import com.five.goodchoice.detail.model.RoomVO;
 import com.five.goodchoice.detail.service.InterDetail_AcomodationService;
-import com.five.goodchoice.detail.service.InterResrvSerivce;
 import com.five.goodchoice.detail.service.InterRoomSerivce;
 import com.five.goodchoice.member.model.HostVO;
 import com.five.goodchoice.common.AES256;
@@ -35,9 +33,7 @@ public class DetailController {
 	
 	@Autowired
 	private InterRoomSerivce room_service;
-	
-	@Autowired
-	private InterResrvSerivce resrv_service;
+
 	
 	@Autowired
     private AES256 aes;
@@ -311,7 +307,6 @@ public class DetailController {
 									
 									String email = hostVO.getHost_email();  // 이메일 받아오기
 									
-//									String decodeText = URLDecoder.decode(email, "UTF-8"); // 한번 디코드 한것
 									
 									try {
 										email = aes.decrypt(email);  // 이메일 복호화
@@ -353,12 +348,7 @@ public class DetailController {
 									mav.addObject("getRoomList",getRoomList);
 									
 									///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-									
-									
-							/*
-									ReservationVO rsvVO = resrv_service.getReservcount(paraMap);
-									
-								*/	
+
 									
 									
 									List<RoomVO> getRoom_addImageList = room_service.getRoom_addImageList(paraMap);
@@ -430,9 +420,8 @@ public class DetailController {
 			
 
 	
-}
+	}
 
-	
 	
 	
 }
